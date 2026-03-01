@@ -1,0 +1,89 @@
+# =============================================================================
+# Self-Monitoring Alert Rules
+# Phase 1: 모니터링 스택 자체에 대한 헬스체크 규칙
+# =============================================================================
+
+groups:
+  - name: monitoring-stack-health
+    interval: 30s
+    rules:
+      # -----------------------------------------------------------------------
+      # Core Stack 가용성
+      # -----------------------------------------------------------------------
+      - alert: VictoriaMetricsDown
+        expr: up{job="victoriametrics"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "VictoriaMetrics가 응답하지 않습니다"
+          description: "VictoriaMetrics({{ $labels.instance }})가 1분 이상 다운 상태입니다."
+
+      - alert: AlertmanagerDown
+        expr: up{job="alertmanager"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Alertmanager가 응답하지 않습니다"
+          description: "Alertmanager({{ $labels.instance }})가 1분 이상 다운 상태입니다."
+
+      - alert: GrafanaDown
+        expr: up{job="grafana"} == 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Grafana가 응답하지 않습니다"
+          description: "Grafana({{ $labels.instance }})가 2분 이상 다운 상태입니다."
+
+      # -----------------------------------------------------------------------
+      # VictoriaMetrics 리소스
+      # -----------------------------------------------------------------------
+      - alert: VMHighMemoryUsage
+        expr: process_resident_memory_bytes{job="victoriametrics"} / 1024 / 1024 > 1024
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "VictoriaMetrics 메모리 사용량이 높습니다"
+          description: "VictoriaMetrics 메모리 사용량: {{ $value | printf \"%.0f\" }}MB (1GB 초과)"
+
+      - alert: VMSlowInserts
+        expr: rate(vm_slow_row_inserts_total[5m]) > 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "VictoriaMetrics slow insert 발생"
+          description: "데이터 쓰기 지연이 발생하고 있습니다. 디스크 I/O 또는 리소스 부족 확인 필요."
+
+      - alert: VMTooManyTimeSeries
+        expr: vm_rows{type="storage/small"} > 5000000
+        for: 10m
+        labels:
+          severity: info
+        annotations:
+          summary: "VictoriaMetrics 시계열 수가 많습니다"
+          description: "현재 {{ $value | printf \"%.0f\" }}개 시계열. 홈랩 규모 대비 과도할 수 있음."
+
+      # -----------------------------------------------------------------------
+      # Scrape 실패 감지
+      # -----------------------------------------------------------------------
+      - alert: ScrapeTargetDown
+        expr: up == 0
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Scrape target {{ $labels.job }} 다운"
+          description: "{{ $labels.job }}({{ $labels.instance }})에서 3분 이상 메트릭 수집 실패."
+
+      - alert: HighScrapeErrors
+        expr: rate(vm_promscrape_scrapes_failed_total[5m]) > 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "메트릭 수집 에러 발생"
+          description: "VictoriaMetrics promscrape에서 수집 실패가 지속되고 있습니다."

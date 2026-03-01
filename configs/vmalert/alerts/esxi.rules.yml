@@ -1,0 +1,148 @@
+# =============================================================================
+# ESXi / vCenter Alert Rules (Phase 2)
+# vmware_exporter 메트릭 기반
+# =============================================================================
+
+groups:
+  - name: esxi-host-alerts
+    interval: 60s
+    rules:
+      # -----------------------------------------------------------------------
+      # Critical: 호스트 가용성
+      # -----------------------------------------------------------------------
+      - alert: ESXiHostNotResponding
+        expr: vmware_host_power_state != 1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "ESXi 호스트 다운: {{ $labels.host_name }}"
+          description: "ESXi 호스트 {{ $labels.host_name }}이 2분 이상 응답하지 않습니다. Power state: {{ $value }}"
+
+      - alert: VCenterUnreachable
+        expr: up{job="vmware"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "vCenter 연결 불가"
+          description: "vmware_exporter가 vCenter(172.24.0.10)에 2분 이상 연결할 수 없습니다."
+
+      # -----------------------------------------------------------------------
+      # Critical: 스토리지
+      # -----------------------------------------------------------------------
+      - alert: DatastoreAlmostFull
+        expr: >
+          (vmware_datastore_capacity_size - vmware_datastore_freespace_size)
+          / vmware_datastore_capacity_size > 0.9
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Datastore 90% 초과: {{ $labels.ds_name }}"
+          description: >
+            Datastore {{ $labels.ds_name }}의 사용률이
+            {{ $value | humanizePercentage }}입니다. 즉시 정리가 필요합니다.
+
+      # -----------------------------------------------------------------------
+      # Warning: 호스트 리소스
+      # -----------------------------------------------------------------------
+      - alert: ESXiHighCPU
+        expr: vmware_host_cpu_usage / vmware_host_cpu_max * 100 > 85
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "ESXi CPU 과부하: {{ $labels.host_name }}"
+          description: >
+            {{ $labels.host_name }}의 CPU 사용률이
+            {{ $value | printf "%.1f" }}%로 10분 이상 85%를 초과합니다.
+
+      - alert: ESXiHighMemory
+        expr: vmware_host_memory_usage / vmware_host_memory_max * 100 > 90
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "ESXi 메모리 부족: {{ $labels.host_name }}"
+          description: >
+            {{ $labels.host_name }}의 메모리 사용률이
+            {{ $value | printf "%.1f" }}%로 10분 이상 90%를 초과합니다.
+
+      - alert: DatastoreHighUsage
+        expr: >
+          (vmware_datastore_capacity_size - vmware_datastore_freespace_size)
+          / vmware_datastore_capacity_size > 0.75
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Datastore 75% 초과: {{ $labels.ds_name }}"
+          description: >
+            Datastore {{ $labels.ds_name }}의 사용률이
+            {{ $value | humanizePercentage }}입니다.
+
+      - alert: ESXiHighNetworkUsage
+        expr: vmware_host_net_usage / 1024 > 800
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "ESXi 네트워크 과부하: {{ $labels.host_name }}"
+          description: >
+            {{ $labels.host_name }}의 네트워크 사용량이
+            {{ $value | printf "%.0f" }}MB/s로 높습니다.
+
+  - name: esxi-vm-alerts
+    interval: 60s
+    rules:
+      # -----------------------------------------------------------------------
+      # Warning: VM 상태
+      # -----------------------------------------------------------------------
+      - alert: VMHighCPU
+        expr: vmware_vm_cpu_usage_average / vmware_vm_num_cpu / 100 > 90
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "VM CPU 과부하: {{ $labels.vm_name }}"
+          description: >
+            VM {{ $labels.vm_name }}(호스트: {{ $labels.host_name }})의
+            CPU 사용률이 15분 이상 90%를 초과합니다.
+
+      - alert: VMHighMemory
+        expr: >
+          vmware_vm_mem_usage_average / vmware_vm_memory_max * 100 > 90
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "VM 메모리 부족: {{ $labels.vm_name }}"
+          description: >
+            VM {{ $labels.vm_name }}(호스트: {{ $labels.host_name }})의
+            메모리 사용률이 15분 이상 90%를 초과합니다.
+
+      # -----------------------------------------------------------------------
+      # Info: VM 이벤트
+      # -----------------------------------------------------------------------
+      - alert: VMPoweredOff
+        expr: vmware_vm_power_state == 0
+        for: 5m
+        labels:
+          severity: info
+        annotations:
+          summary: "VM 꺼짐: {{ $labels.vm_name }}"
+          description: >
+            VM {{ $labels.vm_name }}(호스트: {{ $labels.host_name }})이
+            5분 이상 꺼진 상태입니다.
+
+      - alert: VMSnapshotExists
+        expr: vmware_vm_snapshots > 0
+        for: 24h
+        labels:
+          severity: info
+        annotations:
+          summary: "VM 스냅샷 장기 보유: {{ $labels.vm_name }}"
+          description: >
+            VM {{ $labels.vm_name }}에 스냅샷이 24시간 이상 존재합니다.
+            스냅샷은 디스크를 빠르게 소비하므로 정리를 검토하세요.

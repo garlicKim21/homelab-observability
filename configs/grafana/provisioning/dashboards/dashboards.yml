@@ -1,0 +1,18 @@
+# =============================================================================
+# Grafana Dashboard Provisioning
+# JSON 대시보드 파일을 자동 로드
+# =============================================================================
+
+apiVersion: 1
+
+providers:
+  - name: "Basphere Observability"
+    orgId: 1
+    folder: "Basphere"
+    type: file
+    disableDeletion: false
+    editable: true
+    updateIntervalSeconds: 30
+    options:
+      path: /etc/grafana/provisioning/dashboards/json
+      foldersFromFilesStructure: false

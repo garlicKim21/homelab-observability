@@ -1,0 +1,178 @@
+# =============================================================================
+# Synology NAS Alert Rules (Phase 4)
+# SNMP Exporter 메트릭 기반 - Synology DS1515+
+# =============================================================================
+
+groups:
+  - name: nas-availability
+    interval: 60s
+    rules:
+      # -----------------------------------------------------------------------
+      # Critical: NAS 가용성
+      # -----------------------------------------------------------------------
+      - alert: NASDown
+        expr: up{job="snmp_nas"} == 0
+        for: 3m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Synology NAS 다운"
+          description: "Synology DS1515+(172.24.0.100)에서 3분 이상 SNMP 응답이 없습니다."
+
+      - alert: NASSystemFailure
+        expr: synology_system_status != 1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Synology NAS 시스템 이상"
+          description: "NAS 시스템 상태가 비정상입니다 (status: {{ $value }}). 즉시 확인 필요."
+
+      - alert: NASPowerFailure
+        expr: synology_power_status != 1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Synology NAS 전원 이상"
+          description: "NAS 전원 상태가 비정상입니다. UPS 또는 PSU 확인 필요."
+
+  - name: nas-storage
+    interval: 60s
+    rules:
+      # -----------------------------------------------------------------------
+      # Critical: RAID 및 디스크
+      # -----------------------------------------------------------------------
+      - alert: NASRaidDegraded
+        expr: synology_raid_status == 11
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "NAS RAID Degraded: {{ $labels.raidName }}"
+          description: >
+            Synology NAS RAID {{ $labels.raidName }}이 Degraded 상태입니다.
+            디스크 교체가 필요합니다. 데이터 손실 위험!
+
+      - alert: NASRaidCrashed
+        expr: synology_raid_status == 12
+        for: 0s
+        labels:
+          severity: critical
+        annotations:
+          summary: "NAS RAID Crashed: {{ $labels.raidName }}"
+          description: >
+            Synology NAS RAID {{ $labels.raidName }}이 Crashed 상태입니다.
+            즉시 조치가 필요합니다!
+
+      - alert: NASRaidNotNormal
+        expr: synology_raid_status != 1 and synology_raid_status != 11 and synology_raid_status != 12
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "NAS RAID 비정상 상태: {{ $labels.raidName }}"
+          description: "Synology NAS RAID {{ $labels.raidName }} 상태 코드: {{ $value }}"
+
+      - alert: NASDiskFailed
+        expr: synology_disk_status >= 4
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "NAS 디스크 장애: {{ $labels.diskID }}"
+          description: >
+            Synology NAS 디스크 {{ $labels.diskID }}({{ $labels.diskModel }})에
+            장애가 발생했습니다 (status: {{ $value }}). 교체 필요.
+
+      - alert: NASStorageAlmostFull
+        expr: >
+          (synology_raid_total_size - synology_raid_free_size)
+          / synology_raid_total_size > 0.9
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: "NAS 스토리지 90% 초과: {{ $labels.raidName }}"
+          description: "Synology NAS RAID {{ $labels.raidName }} 사용률이 {{ $value | humanizePercentage }}입니다."
+
+      - alert: NASStorageHighUsage
+        expr: >
+          (synology_raid_total_size - synology_raid_free_size)
+          / synology_raid_total_size > 0.75
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: "NAS 스토리지 75% 초과: {{ $labels.raidName }}"
+          description: "Synology NAS RAID {{ $labels.raidName }} 사용률이 {{ $value | humanizePercentage }}입니다."
+
+  - name: nas-resources
+    interval: 60s
+    rules:
+      # -----------------------------------------------------------------------
+      # Warning: CPU/메모리 리소스
+      # -----------------------------------------------------------------------
+      - alert: NASHighCPU
+        expr: 100 - synology_cpu_idle{job="snmp_nas"} > 80
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "NAS CPU 과부하"
+          description: "Synology NAS CPU 사용률 {{ $value | printf \"%.1f\" }}%가 10분 이상 80%를 초과합니다."
+
+      - alert: NASHighMemory
+        expr: (1 - (synology_memory_available{job="snmp_nas"} + synology_memory_buffer{job="snmp_nas"} + synology_memory_cached{job="snmp_nas"}) / synology_memory_total{job="snmp_nas"}) * 100 > 85
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "NAS 메모리 부족"
+          description: "Synology NAS 메모리 사용률 {{ $value | printf \"%.1f\" }}%가 10분 이상 85%를 초과합니다."
+
+  - name: nas-hardware
+    interval: 60s
+    rules:
+      # -----------------------------------------------------------------------
+      # Warning: 하드웨어 상태
+      # -----------------------------------------------------------------------
+      - alert: NASDiskTempHigh
+        expr: synology_disk_temperature > 50
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "NAS 디스크 과열: {{ $labels.diskID }}"
+          description: >
+            디스크 {{ $labels.diskID }}({{ $labels.diskModel }}) 온도
+            {{ $value }}°C (10분 이상 50°C 초과). 냉각 확인 필요.
+
+      - alert: NASSystemTempHigh
+        expr: synology_system_temperature > 60
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "NAS 시스템 과열"
+          description: "Synology NAS 시스템 온도 {{ $value }}°C (10분 이상 60°C 초과)."
+
+      - alert: NASFanFailure
+        expr: synology_system_fan_status != 1 or synology_cpu_fan_status != 1
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "NAS 팬 이상"
+          description: "Synology NAS 팬 상태가 비정상입니다. 하드웨어 점검 필요."
+
+      - alert: NASHighStorageIO
+        expr: synology_storageio_load > 90
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "NAS 스토리지 I/O 과부하: {{ $labels.storageioDevice }}"
+          description: >
+            Synology NAS 디바이스 {{ $labels.storageioDevice }}의
+            I/O load가 {{ $value }}%로 15분 이상 90%를 초과합니다.

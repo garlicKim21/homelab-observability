@@ -1,0 +1,257 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "links": [
+    { "title": "Overview", "url": "/d/homelab-overview", "type": "link", "targetBlank": false, "keepTime": true }
+  ],
+  "panels": [
+    {
+      "title": "Status",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "collapsed": false
+    },
+    {
+      "title": "Server Status",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 1 },
+      "targets": [{ "expr": "up{job=\"observer_node\"}", "legendFormat": "Observer" }],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
+          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "Uptime",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 1 },
+      "targets": [{ "expr": "node_time_seconds{job=\"observer_node\"} - node_boot_time_seconds{job=\"observer_node\"}", "legendFormat": "Uptime" }],
+      "fieldConfig": { "defaults": { "unit": "s" } },
+      "options": { "colorMode": "none", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "System",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
+      "collapsed": false
+    },
+    {
+      "title": "CPU Usage",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 6 },
+      "targets": [{ "expr": "100 - (avg(rate(node_cpu_seconds_total{job=\"observer_node\", mode=\"idle\"}[5m])) * 100)", "legendFormat": "CPU" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 60 }, { "color": "red", "value": 80 }] }
+        }
+      }
+    },
+    {
+      "title": "Memory Usage",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 6 },
+      "targets": [{ "expr": "(1 - node_memory_MemAvailable_bytes{job=\"observer_node\"} / node_memory_MemTotal_bytes{job=\"observer_node\"}) * 100", "legendFormat": "Memory" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] }
+        }
+      }
+    },
+    {
+      "title": "OS Disk (/)",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 6, "x": 12, "y": 6 },
+      "targets": [{ "expr": "(1 - node_filesystem_avail_bytes{job=\"observer_node\", mountpoint=\"/\"} / node_filesystem_size_bytes{job=\"observer_node\", mountpoint=\"/\"}) * 100", "legendFormat": "Root (/)" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 90 }] }
+        }
+      }
+    },
+    {
+      "title": "Data Disk (/data)",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 6, "x": 18, "y": 6 },
+      "targets": [{ "expr": "(1 - node_filesystem_avail_bytes{job=\"observer_node\", mountpoint=\"/data\"} / node_filesystem_size_bytes{job=\"observer_node\", mountpoint=\"/data\"}) * 100", "legendFormat": "Data (/data)" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 75 }, { "color": "red", "value": 85 }] }
+        }
+      }
+    },
+    {
+      "title": "Load Average",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 12 },
+      "targets": [
+        { "expr": "node_load1{job=\"observer_node\"}", "legendFormat": "1m" },
+        { "expr": "node_load5{job=\"observer_node\"}", "legendFormat": "5m" },
+        { "expr": "node_load15{job=\"observer_node\"}", "legendFormat": "15m" }
+      ],
+      "fieldConfig": { "defaults": { "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "Memory Breakdown",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 12 },
+      "targets": [
+        { "expr": "node_memory_MemTotal_bytes{job=\"observer_node\"} - node_memory_MemAvailable_bytes{job=\"observer_node\"}", "legendFormat": "Used" },
+        { "expr": "node_memory_Cached_bytes{job=\"observer_node\"}", "legendFormat": "Cached" },
+        { "expr": "node_memory_Buffers_bytes{job=\"observer_node\"}", "legendFormat": "Buffers" },
+        { "expr": "node_memory_MemAvailable_bytes{job=\"observer_node\"}", "legendFormat": "Available" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "custom": { "fillOpacity": 30, "stacking": { "mode": "normal" } }
+        }
+      }
+    },
+    {
+      "title": "Monitoring Stack",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 19 },
+      "collapsed": false
+    },
+    {
+      "title": "VictoriaMetrics",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 3, "x": 0, "y": 20 },
+      "targets": [{ "expr": "up{job=\"victoriametrics\"}", "legendFormat": "VM" }],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
+          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "Grafana",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 3, "x": 3, "y": 20 },
+      "targets": [{ "expr": "up{job=\"grafana\"}", "legendFormat": "Grafana" }],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
+          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "vmalert",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 3, "x": 6, "y": 20 },
+      "targets": [{ "expr": "up{job=\"vmalert\"}", "legendFormat": "vmalert" }],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
+          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "Alertmanager",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 3, "x": 9, "y": 20 },
+      "targets": [{ "expr": "up{job=\"alertmanager\"}", "legendFormat": "AM" }],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
+          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "Active Time Series",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 20 },
+      "targets": [{ "expr": "vm_rows{type=\"storage/small\"}", "legendFormat": "Series" }],
+      "fieldConfig": { "defaults": { "unit": "short" } },
+      "options": { "colorMode": "none", "graphMode": "area", "textMode": "value" }
+    },
+    {
+      "title": "Ingestion Rate",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 8, "x": 0, "y": 24 },
+      "targets": [{ "expr": "rate(vm_rows_inserted_total[5m])", "legendFormat": "{{ type }}" }],
+      "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 20 } } }
+    },
+    {
+      "title": "Storage Size",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 8, "x": 8, "y": 24 },
+      "targets": [{ "expr": "vm_data_size_bytes", "legendFormat": "{{ type }}" }],
+      "fieldConfig": { "defaults": { "unit": "bytes", "custom": { "fillOpacity": 20 } } }
+    },
+    {
+      "title": "VM Memory Usage",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 8, "x": 16, "y": 24 },
+      "targets": [{ "expr": "process_resident_memory_bytes{job=\"victoriametrics\"}", "legendFormat": "RSS" }],
+      "fieldConfig": { "defaults": { "unit": "bytes", "custom": { "fillOpacity": 20 } } }
+    },
+    {
+      "title": "Network",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 31 },
+      "collapsed": false
+    },
+    {
+      "title": "Network Traffic",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 32 },
+      "targets": [
+        { "expr": "rate(node_network_receive_bytes_total{job=\"observer_node\", device!~\"lo|docker.*|br-.*|veth.*\"}[5m]) * 8", "legendFormat": "{{ device }} Rx" },
+        { "expr": "-rate(node_network_transmit_bytes_total{job=\"observer_node\", device!~\"lo|docker.*|br-.*|veth.*\"}[5m]) * 8", "legendFormat": "{{ device }} Tx" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "bps", "custom": { "fillOpacity": 20 } } }
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": ["homelab", "observer", "monitoring"],
+  "templating": {
+    "list": [
+      {
+        "current": { "selected": false, "text": "VictoriaMetrics", "value": "VictoriaMetrics" },
+        "hide": 2,
+        "name": "DS_VICTORIAMETRICS",
+        "type": "datasource",
+        "query": "prometheus"
+      }
+    ]
+  },
+  "time": { "from": "now-6h", "to": "now" },
+  "title": "Observer Server",
+  "uid": "observer"
+}

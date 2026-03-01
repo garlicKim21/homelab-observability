@@ -1,0 +1,41 @@
+# =============================================================================
+# Grafana Datasource Provisioning
+# =============================================================================
+
+apiVersion: 1
+
+datasources:
+  # VictoriaMetrics (Prometheus 호환)
+  - name: VictoriaMetrics
+    type: prometheus
+    access: proxy
+    url: http://victoriametrics:8428
+    isDefault: true
+    editable: false
+    jsonData:
+      timeInterval: "30s"
+      httpMethod: POST
+
+  # Loki (로그)
+  - name: Loki
+    type: loki
+    access: proxy
+    url: http://loki:3100
+    editable: false
+    jsonData:
+      maxLines: 1000
+      derivedFields:
+        # 로그에서 host_ip를 추출하여 VictoriaMetrics 메트릭과 연동
+        - datasourceUid: victoriametrics
+          matcherRegex: "host_ip=(\\d+\\.\\d+\\.\\d+\\.\\d+)"
+          name: host_ip
+          url: ""
+
+  # Alertmanager
+  - name: Alertmanager
+    type: alertmanager
+    access: proxy
+    url: http://alertmanager:9093
+    editable: false
+    jsonData:
+      implementation: prometheus

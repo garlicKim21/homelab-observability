@@ -1,0 +1,127 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "graphTooltip": 1,
+  "panels": [
+    {
+      "title": "Status",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "collapsed": false
+    },
+    {
+      "title": "Switch Status",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 1 },
+      "targets": [{ "expr": "up{job=\"snmp_switch\"}", "legendFormat": "SG2218" }],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
+          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "Uptime",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 1 },
+      "targets": [{ "expr": "sysUpTime{job=\"snmp_switch\"} / 100", "legendFormat": "Uptime" }],
+      "fieldConfig": { "defaults": { "unit": "s" } },
+      "options": { "colorMode": "none" }
+    },
+    {
+      "title": "Active Ports",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 1 },
+      "targets": [{ "expr": "count(ifOperStatus{job=\"snmp_switch\"} == 1)", "legendFormat": "Active" }],
+      "options": { "colorMode": "value" }
+    },
+    {
+      "title": "Traffic",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
+      "collapsed": false
+    },
+    {
+      "title": "Port Traffic (Top 10)",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 6 },
+      "targets": [
+        { "expr": "topk(10, rate(ifHCInOctets{job=\"snmp_switch\"}[5m]) * 8)", "legendFormat": "{{ ifDescr }} In" },
+        { "expr": "topk(10, -rate(ifHCOutOctets{job=\"snmp_switch\"}[5m]) * 8)", "legendFormat": "{{ ifDescr }} Out" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "bps", "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "Errors & Discards",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 14 },
+      "collapsed": false
+    },
+    {
+      "title": "Port Errors",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 15 },
+      "targets": [
+        { "expr": "rate(ifInErrors{job=\"snmp_switch\"}[5m])", "legendFormat": "{{ ifDescr }} InErr" },
+        { "expr": "rate(ifOutErrors{job=\"snmp_switch\"}[5m])", "legendFormat": "{{ ifDescr }} OutErr" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "pps", "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "Port Discards",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 15 },
+      "targets": [
+        { "expr": "rate(ifInDiscards{job=\"snmp_switch\"}[5m])", "legendFormat": "{{ ifDescr }} InDisc" },
+        { "expr": "rate(ifOutDiscards{job=\"snmp_switch\"}[5m])", "legendFormat": "{{ ifDescr }} OutDisc" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "pps", "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "Port Info",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 22 },
+      "collapsed": false
+    },
+    {
+      "title": "Port Speed",
+      "type": "table",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 23 },
+      "targets": [{ "expr": "ifSpeed{job=\"snmp_switch\"}", "format": "table", "instant": true }],
+      "transformations": [
+        { "id": "organize", "options": { "excludeByName": { "Time": true, "__name__": true, "job": true, "instance": true }, "renameByName": { "ifDescr": "Port", "Value": "Speed (bps)" } } }
+      ]
+    },
+    {
+      "title": "Port Status",
+      "type": "table",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 23 },
+      "targets": [{ "expr": "ifOperStatus{job=\"snmp_switch\"}", "format": "table", "instant": true }],
+      "transformations": [
+        { "id": "organize", "options": { "excludeByName": { "Time": true, "__name__": true, "job": true, "instance": true }, "renameByName": { "ifDescr": "Port", "Value": "Status" } } }
+      ],
+      "fieldConfig": { "overrides": [{ "matcher": { "id": "byName", "options": "Status" }, "properties": [{ "id": "mappings", "value": [{ "options": { "1": { "text": "UP", "color": "green" }, "2": { "text": "DOWN", "color": "red" } }, "type": "value" }] }] }] }
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 39,
+  "tags": ["homelab", "switch", "network"],
+  "templating": {
+    "list": [
+      { "current": { "selected": false, "text": "VictoriaMetrics", "value": "VictoriaMetrics" }, "hide": 2, "name": "DS_VICTORIAMETRICS", "type": "datasource", "query": "prometheus" }
+    ]
+  },
+  "time": { "from": "now-6h", "to": "now" },
+  "title": "TP-Link SG2218 Switch",
+  "uid": "sg2218-switch"
+}

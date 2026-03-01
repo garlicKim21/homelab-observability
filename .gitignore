@@ -1,0 +1,19 @@
+# Environment & secrets
+.env
+configs/snmp_exporter/snmp.yml
+homelab-infra-arch.txt
+docs/architecture.md
+
+# Docker volumes data
+data/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# OMC
+.omc/

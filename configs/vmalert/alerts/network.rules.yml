@@ -1,0 +1,94 @@
+# =============================================================================
+# Network Device Alert Rules (Phase 4)
+# SNMP Exporter 메트릭 기반 - TP-Link SG2218, ipTime AP
+# =============================================================================
+
+groups:
+  - name: switch-alerts
+    interval: 30s
+    rules:
+      # -----------------------------------------------------------------------
+      # Critical: 스위치 가용성
+      # -----------------------------------------------------------------------
+      - alert: SwitchDown
+        expr: up{job="snmp_switch"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "TP-Link SG2218 스위치 다운"
+          description: "SG2218(172.24.0.2)에서 2분 이상 SNMP 응답이 없습니다. 네트워크 인프라 점검 필요."
+
+      # -----------------------------------------------------------------------
+      # Warning: 포트 상태 및 에러
+      # -----------------------------------------------------------------------
+      - alert: SwitchPortDown
+        expr: ifOperStatus{job="snmp_switch"} == 2
+        for: 5m
+        labels:
+          severity: info
+        annotations:
+          summary: "스위치 포트 다운: {{ $labels.ifDescr }}"
+          description: "SG2218 포트 {{ $labels.ifDescr }}이 5분 이상 다운 상태입니다."
+
+      - alert: SwitchPortErrors
+        expr: rate(ifInErrors{job="snmp_switch"}[5m]) + rate(ifOutErrors{job="snmp_switch"}[5m]) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "스위치 포트 에러: {{ $labels.ifDescr }}"
+          description: "SG2218 포트 {{ $labels.ifDescr }}에서 패킷 에러가 발생하고 있습니다 ({{ $value | printf \"%.1f\" }} errors/s)."
+
+      - alert: SwitchPortHighUtilization
+        expr: >
+          (rate(ifHCInOctets{job="snmp_switch"}[5m]) + rate(ifHCOutOctets{job="snmp_switch"}[5m])) * 8
+          / ifSpeed{job="snmp_switch"} > 0.8
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "스위치 포트 대역폭 80% 초과: {{ $labels.ifDescr }}"
+          description: "SG2218 포트 {{ $labels.ifDescr }}의 대역폭 사용률이 10분 이상 80%를 초과합니다."
+
+      - alert: SwitchHighDiscards
+        expr: rate(ifInDiscards{job="snmp_switch"}[5m]) + rate(ifOutDiscards{job="snmp_switch"}[5m]) > 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "스위치 포트 패킷 폐기: {{ $labels.ifDescr }}"
+          description: "SG2218 포트 {{ $labels.ifDescr }}에서 패킷 폐기가 발생하고 있습니다."
+
+      - alert: SwitchRestarted
+        expr: sysUpTime{job="snmp_switch"} < 600
+        for: 0s
+        labels:
+          severity: info
+        annotations:
+          summary: "SG2218 스위치 재시작 감지"
+          description: "SG2218의 uptime이 10분 미만입니다. 최근 재시작된 것으로 보입니다."
+
+  - name: ap-alerts
+    interval: 60s
+    rules:
+      # -----------------------------------------------------------------------
+      # Warning: AP 가용성
+      # -----------------------------------------------------------------------
+      - alert: APDown
+        expr: up{job="snmp_ap"} == 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "ipTime AP 다운"
+          description: "ipTime AX300BCM에서 5분 이상 SNMP 응답이 없습니다."
+
+      - alert: APRestarted
+        expr: sysUpTime{job="snmp_ap"} < 600
+        for: 0s
+        labels:
+          severity: info
+        annotations:
+          summary: "ipTime AP 재시작 감지"
+          description: "ipTime AX300BCM의 uptime이 10분 미만입니다."

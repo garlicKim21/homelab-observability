@@ -1,0 +1,194 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "graphTooltip": 1,
+  "panels": [
+    {
+      "title": "VM Status",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "collapsed": false
+    },
+    {
+      "title": "VMs Powered On",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 1 },
+      "targets": [{ "expr": "count(vmware_vm_power_state == 1)", "legendFormat": "Powered On" }],
+      "fieldConfig": { "defaults": { "thresholds": { "steps": [{ "color": "green", "value": null }] } } },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "VMs Powered Off",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 1 },
+      "targets": [{ "expr": "count(vmware_vm_power_state == 0) or vector(0)", "legendFormat": "Powered Off" }],
+      "fieldConfig": { "defaults": { "thresholds": { "steps": [{ "color": "blue", "value": null }, { "color": "yellow", "value": 1 }] } } },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "CPU",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
+      "collapsed": false
+    },
+    {
+      "title": "VM CPU Usage (MHz)",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 6 },
+      "targets": [{ "expr": "topk(10, vmware_vm_cpu_usage_average)", "legendFormat": "{{ vm_name }}" }],
+      "fieldConfig": { "defaults": { "unit": "rotmhz", "min": 0, "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "VM CPU Ready",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 6 },
+      "targets": [{ "expr": "topk(10, vmware_vm_cpu_ready_summation)", "legendFormat": "{{ vm_name }}" }],
+      "fieldConfig": { "defaults": { "unit": "short", "min": 0, "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "Memory",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 14 },
+      "collapsed": false
+    },
+    {
+      "title": "VM Memory Usage (MB)",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 8, "x": 0, "y": 15 },
+      "targets": [{ "expr": "topk(10, vmware_vm_mem_usage_average)", "legendFormat": "{{ vm_name }}" }],
+      "fieldConfig": { "defaults": { "unit": "decmbytes", "min": 0, "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "VM Memory Active",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 8, "x": 8, "y": 15 },
+      "targets": [{ "expr": "topk(10, vmware_vm_mem_active_average)", "legendFormat": "{{ vm_name }}" }],
+      "fieldConfig": { "defaults": { "unit": "deckbytes", "min": 0, "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "VM Memory Swap",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 8, "x": 16, "y": 15 },
+      "targets": [{ "expr": "topk(10, vmware_vm_mem_swapped_average)", "legendFormat": "{{ vm_name }}" }],
+      "fieldConfig": { "defaults": { "unit": "deckbytes", "min": 0, "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "Disk",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 22 },
+      "collapsed": false
+    },
+    {
+      "title": "VM Disk I/O",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 23 },
+      "targets": [
+        { "expr": "topk(10, vmware_vm_disk_read_average)", "legendFormat": "{{ vm_name }} Read" },
+        { "expr": "topk(10, vmware_vm_disk_write_average)", "legendFormat": "{{ vm_name }} Write" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "KBs", "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "VM Disk Latency",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 23 },
+      "targets": [{ "expr": "topk(10, vmware_vm_disk_maxTotalLatency_latest)", "legendFormat": "{{ vm_name }}" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms", "min": 0,
+          "custom": { "fillOpacity": 10 },
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 20 }, { "color": "red", "value": 50 }] }
+        }
+      }
+    },
+    {
+      "title": "Network",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 30 },
+      "collapsed": false
+    },
+    {
+      "title": "VM Network Rx/Tx",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 31 },
+      "targets": [
+        { "expr": "topk(10, vmware_vm_net_received_average)", "legendFormat": "{{ vm_name }} Rx" },
+        { "expr": "topk(10, -vmware_vm_net_transmitted_average)", "legendFormat": "{{ vm_name }} Tx" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "KBs", "custom": { "fillOpacity": 15 } } }
+    },
+    {
+      "title": "Guest Storage",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 38 },
+      "collapsed": false
+    },
+    {
+      "title": "Guest Disk Usage (%)",
+      "type": "bargauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 24, "x": 0, "y": 39 },
+      "targets": [{ "expr": "(vmware_vm_guest_disk_capacity - vmware_vm_guest_disk_free) / vmware_vm_guest_disk_capacity * 100", "legendFormat": "{{ vm_name }} {{ disk_path }}" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 90 }] }
+        }
+      },
+      "options": { "orientation": "horizontal", "displayMode": "gradient" }
+    },
+    {
+      "title": "Inventory",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 45 },
+      "collapsed": false
+    },
+    {
+      "title": "Snapshots",
+      "type": "table",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 46 },
+      "targets": [
+        { "expr": "vmware_vm_snapshots > 0", "format": "table", "instant": true, "refId": "count" },
+        { "expr": "vmware_vm_snapshot_timestamp_seconds > 0", "format": "table", "instant": true, "refId": "ts" }
+      ],
+      "description": "VMs with active snapshots. Old snapshots consume disk space and should be cleaned regularly."
+    },
+    {
+      "title": "Guest Tools Status",
+      "type": "table",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 46 },
+      "targets": [
+        { "expr": "vmware_vm_guest_tools_running_status", "format": "table", "instant": true, "refId": "running" },
+        { "expr": "vmware_vm_guest_tools_version_status", "format": "table", "instant": true, "refId": "version" }
+      ],
+      "fieldConfig": {
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Value #running" }, "properties": [{ "id": "mappings", "value": [{ "options": { "0": { "text": "Not Running", "color": "red" }, "1": { "text": "Running", "color": "green" } }, "type": "value" }] }] }
+        ]
+      }
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 39,
+  "tags": ["homelab", "vmware", "vm"],
+  "templating": {
+    "list": [
+      { "current": { "selected": false, "text": "VictoriaMetrics", "value": "VictoriaMetrics" }, "hide": 2, "name": "DS_VICTORIAMETRICS", "type": "datasource", "query": "prometheus" }
+    ]
+  },
+  "time": { "from": "now-6h", "to": "now" },
+  "title": "Virtual Machines",
+  "uid": "vms-detail"
+}

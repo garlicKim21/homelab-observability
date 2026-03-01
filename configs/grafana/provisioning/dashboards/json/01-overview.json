@@ -1,0 +1,415 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "links": [
+    { "title": "ESXi Hosts", "url": "/d/esxi-hosts", "type": "link", "targetBlank": false, "keepTime": true },
+    { "title": "VMs", "url": "/d/vms-detail", "type": "link", "targetBlank": false, "keepTime": true },
+    { "title": "OPNsense", "url": "/d/opnsense-firewall", "type": "link", "targetBlank": false, "keepTime": true },
+    { "title": "NAS", "url": "/d/synology-nas", "type": "link", "targetBlank": false, "keepTime": true },
+    { "title": "Switch", "url": "/d/sg2218-switch", "type": "link", "targetBlank": false, "keepTime": true },
+    { "title": "AP", "url": "/d/iptime-ap", "type": "link", "targetBlank": false, "keepTime": true },
+    { "title": "Logs", "url": "/d/logs-explorer", "type": "link", "targetBlank": false, "keepTime": true },
+    { "title": "OCI Cloud", "url": "/d/oci-cloud", "type": "link", "targetBlank": false, "keepTime": true },
+    { "title": "Observer", "url": "/d/observer", "type": "link", "targetBlank": false, "keepTime": true }
+  ],
+  "panels": [
+    {
+      "title": "Device Status",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "collapsed": false
+    },
+    {
+      "title": "vCenter",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 3, "x": 0, "y": 1 },
+      "targets": [{ "expr": "up{job=\"vmware\"}", "legendFormat": "vCenter" }],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
+          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "OPNsense API",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 3, "x": 3, "y": 1 },
+      "targets": [{ "expr": "up{job=\"opnsense\"}", "legendFormat": "OPN API" }],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
+          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "OPNsense Node",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 3, "x": 6, "y": 1 },
+      "targets": [{ "expr": "up{job=\"opnsense_node\"}", "legendFormat": "OPN Node" }],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
+          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "SG2218 Switch",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 3, "x": 9, "y": 1 },
+      "targets": [{ "expr": "up{job=\"snmp_switch\"}", "legendFormat": "SG2218" }],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
+          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "Synology NAS",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 3, "x": 12, "y": 1 },
+      "targets": [{ "expr": "up{job=\"snmp_nas\"}", "legendFormat": "NAS" }],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
+          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "ipTime AP",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 3, "x": 15, "y": 1 },
+      "targets": [{ "expr": "up{job=\"snmp_ap\", instance=\"192.168.0.2\"}", "legendFormat": "AP" }],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
+          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "OCI Cloud",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 2, "x": 18, "y": 1 },
+      "targets": [{ "expr": "up{job=\"oci_node\"}", "legendFormat": "ratatosk" }],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
+          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "Observer",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 2, "x": 20, "y": 1 },
+      "targets": [{ "expr": "up{job=\"observer_node\"}", "legendFormat": "Observer" }],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
+          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "Active Alerts",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 2, "x": 22, "y": 1 },
+      "targets": [{ "expr": "count(ALERTS{alertstate=\"firing\"}) or vector(0)", "legendFormat": "Firing" }],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 1 }, { "color": "red", "value": 3 }] }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+    },
+    {
+      "title": "Resource Usage",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
+      "collapsed": false
+    },
+    {
+      "title": "ESXi Host CPU",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 6 },
+      "targets": [{ "expr": "vmware_host_cpu_usage / vmware_host_cpu_max * 100", "legendFormat": "{{ host_name }}" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] }
+        }
+      }
+    },
+    {
+      "title": "ESXi Host Memory",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 6 },
+      "targets": [{ "expr": "vmware_host_memory_usage / vmware_host_memory_max * 100", "legendFormat": "{{ host_name }}" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 80 }, { "color": "red", "value": 90 }] }
+        }
+      }
+    },
+    {
+      "title": "OPNsense CPU",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 6, "x": 12, "y": 6 },
+      "targets": [{ "expr": "100 - (avg(rate(node_cpu_seconds_total{job=\"opnsense_node\", mode=\"idle\"}[5m])) * 100)", "legendFormat": "CPU" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 60 }, { "color": "red", "value": 80 }] }
+        }
+      }
+    },
+    {
+      "title": "OPNsense Memory",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 6, "x": 18, "y": 6 },
+      "targets": [{ "expr": "(1 - (node_memory_free_bytes{job=\"opnsense_node\"} + node_memory_inactive_bytes{job=\"opnsense_node\"} + node_memory_cache_bytes{job=\"opnsense_node\"} + node_memory_buffer_bytes{job=\"opnsense_node\"}) / node_memory_size_bytes{job=\"opnsense_node\"}) * 100", "legendFormat": "Memory" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] }
+        }
+      }
+    },
+    {
+      "title": "Resource Usage 2",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 12 },
+      "collapsed": false
+    },
+    {
+      "title": "NAS CPU",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 4, "x": 0, "y": 13 },
+      "targets": [{ "expr": "100 - synology_cpu_idle{job=\"snmp_nas\"}", "legendFormat": "synology_cpu_idle" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 60 }, { "color": "red", "value": 80 }] }
+        }
+      }
+    },
+    {
+      "title": "NAS Memory",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 4, "x": 4, "y": 13 },
+      "targets": [{ "expr": "(1 - (synology_memory_available{job=\"snmp_nas\"} + synology_memory_buffer{job=\"snmp_nas\"} + synology_memory_cached{job=\"snmp_nas\"}) / synology_memory_total{job=\"snmp_nas\"}) * 100", "legendFormat": "synology_memory_available" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] }
+        }
+      }
+    },
+    {
+      "title": "OCI CPU",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 4, "x": 8, "y": 13 },
+      "targets": [{ "expr": "100 - (avg(rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"idle\"}[5m])) * 100)", "legendFormat": "node_cpu_seconds_total" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 60 }, { "color": "red", "value": 80 }] }
+        }
+      }
+    },
+    {
+      "title": "OCI Memory",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 4, "x": 12, "y": 13 },
+      "targets": [{ "expr": "(1 - node_memory_MemAvailable_bytes{job=\"oci_node\"} / node_memory_MemTotal_bytes{job=\"oci_node\"}) * 100", "legendFormat": "node_memory_MemAvailable_bytes" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] }
+        }
+      }
+    },
+    {
+      "title": "Observer CPU",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 4, "x": 16, "y": 13 },
+      "targets": [{ "expr": "100 - (avg(rate(node_cpu_seconds_total{job=\"observer_node\", mode=\"idle\"}[5m])) * 100)", "legendFormat": "node_cpu_seconds_total" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 60 }, { "color": "red", "value": 80 }] }
+        }
+      }
+    },
+    {
+      "title": "Observer Memory",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 4, "x": 20, "y": 13 },
+      "targets": [{ "expr": "(1 - node_memory_MemAvailable_bytes{job=\"observer_node\"} / node_memory_MemTotal_bytes{job=\"observer_node\"}) * 100", "legendFormat": "node_memory_MemAvailable_bytes" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] }
+        }
+      }
+    },
+    {
+      "title": "Disk Overview",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 19 },
+      "collapsed": false
+    },
+    {
+      "title": "Disk Usage",
+      "type": "bargauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 5, "w": 24, "x": 0, "y": 20 },
+      "targets": [
+        { "expr": "(1 - node_filesystem_avail_bytes{job=\"opnsense_node\", mountpoint=\"/\"} / node_filesystem_size_bytes{job=\"opnsense_node\", mountpoint=\"/\"}) * 100", "legendFormat": "OPNsense /" },
+        { "expr": "(1 - node_filesystem_avail_bytes{job=\"oci_node\", mountpoint=\"/\"} / node_filesystem_size_bytes{job=\"oci_node\", mountpoint=\"/\"}) * 100", "legendFormat": "OCI /" },
+        { "expr": "(1 - node_filesystem_avail_bytes{job=\"oci_node\", mountpoint=\"/data\"} / node_filesystem_size_bytes{job=\"oci_node\", mountpoint=\"/data\"}) * 100", "legendFormat": "OCI /data" },
+        { "expr": "(1 - node_filesystem_avail_bytes{job=\"observer_node\", mountpoint=\"/\"} / node_filesystem_size_bytes{job=\"observer_node\", mountpoint=\"/\"}) * 100", "legendFormat": "Observer /" },
+        { "expr": "(1 - node_filesystem_avail_bytes{job=\"observer_node\", mountpoint=\"/data\"} / node_filesystem_size_bytes{job=\"observer_node\", mountpoint=\"/data\"}) * 100", "legendFormat": "Observer /data" },
+        { "expr": "(synology_raid_total_size{raidName=\"Volume 1\"} - synology_raid_free_size{raidName=\"Volume 1\"}) / synology_raid_total_size{raidName=\"Volume 1\"} * 100", "legendFormat": "NAS Volume 1" },
+        { "expr": "(synology_raid_total_size{raidName=\"Volume 2\"} - synology_raid_free_size{raidName=\"Volume 2\"}) / synology_raid_total_size{raidName=\"Volume 2\"} * 100", "legendFormat": "NAS Volume 2" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 75 }, { "color": "red", "value": 90 }] }
+        }
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+    {
+      "title": "Storage",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 25 },
+      "collapsed": false
+    },
+    {
+      "title": "NAS System Temp",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 5, "w": 8, "x": 0, "y": 26 },
+      "targets": [{ "expr": "synology_system_temperature", "legendFormat": "Temperature" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius",
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 45 }, { "color": "red", "value": 60 }] }
+        }
+      },
+      "options": { "colorMode": "background" }
+    },
+    {
+      "title": "NAS RAID Usage",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 5, "w": 16, "x": 8, "y": 26 },
+      "targets": [{ "expr": "(synology_raid_total_size - synology_raid_free_size) / synology_raid_total_size * 100", "legendFormat": "{{ raidName }}" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 75 }, { "color": "red", "value": 90 }] }
+        }
+      }
+    },
+    {
+      "title": "Network",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 31 },
+      "collapsed": false
+    },
+    {
+      "title": "WAN Traffic",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 32 },
+      "targets": [
+        { "expr": "rate(node_network_receive_bytes_total{job=\"opnsense_node\", device=\"igc5\"}[5m]) * 8", "legendFormat": "Inbound" },
+        { "expr": "-rate(node_network_transmit_bytes_total{job=\"opnsense_node\", device=\"igc5\"}[5m]) * 8", "legendFormat": "Outbound" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "bps", "custom": { "fillOpacity": 20 } } }
+    },
+    {
+      "title": "Gateway RTT",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 32 },
+      "targets": [{ "expr": "opnsense_gateways_rtt_milliseconds", "legendFormat": "{{ name }}" }],
+      "fieldConfig": { "defaults": { "unit": "ms", "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "Alerts",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 39 },
+      "collapsed": false
+    },
+    {
+      "title": "Firing Alerts",
+      "type": "table",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 24, "x": 0, "y": 40 },
+      "targets": [{ "expr": "ALERTS{alertstate=\"firing\"}", "format": "table", "instant": true }],
+      "transformations": [
+        { "id": "organize", "options": { "excludeByName": { "Time": false, "__name__": true, "alertstate": true }, "indexByName": {} } }
+      ]
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": ["homelab", "overview"],
+  "templating": {
+    "list": [
+      {
+        "current": { "selected": false, "text": "VictoriaMetrics", "value": "VictoriaMetrics" },
+        "hide": 2,
+        "name": "DS_VICTORIAMETRICS",
+        "type": "datasource",
+        "query": "prometheus"
+      }
+    ]
+  },
+  "time": { "from": "now-6h", "to": "now" },
+  "title": "Overview",
+  "uid": "homelab-overview"
+}

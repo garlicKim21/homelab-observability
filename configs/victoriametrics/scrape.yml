@@ -1,0 +1,234 @@
+# =============================================================================
+# VictoriaMetrics Scrape Configuration
+# Phase 1: 자기 자신 + Core Stack 컴포넌트 모니터링
+# =============================================================================
+
+global:
+  scrape_interval: 30s
+  scrape_timeout: 10s
+
+scrape_configs:
+  # VictoriaMetrics 자체 메트릭
+  - job_name: "victoriametrics"
+    static_configs:
+      - targets: ["victoriametrics:8428"]
+        labels:
+          instance: "victoriametrics"
+
+  # vmalert 메트릭
+  - job_name: "vmalert"
+    static_configs:
+      - targets: ["vmalert:8880"]
+        labels:
+          instance: "vmalert"
+
+  # Alertmanager 메트릭
+  - job_name: "alertmanager"
+    static_configs:
+      - targets: ["alertmanager:9093"]
+        labels:
+          instance: "alertmanager"
+
+  # Grafana 메트릭
+  - job_name: "grafana"
+    static_configs:
+      - targets: ["grafana:3000"]
+        labels:
+          instance: "grafana"
+
+  # =========================================================================
+  # Phase 2: vmware_exporter (vCenter/ESXi)
+  # =========================================================================
+  - job_name: "vmware"
+    scrape_interval: 60s
+    scrape_timeout: 50s
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["vmware_exporter:9272"]
+        labels:
+          instance: "vcenter"
+
+  # =========================================================================
+  # Phase 3: OPNsense 모니터링
+  # opnsense-exporter: 방화벽, 게이트웨이, DNS, VPN 등 (OPNsense API)
+  # node_exporter: CPU, 메모리, 디스크, 네트워크 (OPNsense 플러그인)
+  # =========================================================================
+  - job_name: "opnsense"
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    static_configs:
+      - targets: ["opnsense-exporter:8080"]
+        labels:
+          instance: "cerberus"
+          device_type: "firewall"
+
+  - job_name: "opnsense_node"
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    static_configs:
+      - targets: ["cerberus.basphere.local:9100"]
+        labels:
+          instance: "cerberus"
+          device_type: "firewall"
+
+  # =========================================================================
+  # Phase 4: SNMP Exporter (스위치, NAS, AP)
+  # =========================================================================
+
+  # --- TP-Link SG2218 ---
+  - job_name: "snmp_switch"
+    scrape_interval: 30s
+    scrape_timeout: 15s
+    static_configs:
+      - targets: ["sw.basphere.local"]  # SG2218 (172.24.0.2)
+        labels:
+          device: "sg2218"
+          device_type: "switch"
+    metrics_path: /snmp
+    params:
+      module: ["if_mib"]
+      auth: ["basphere_v3_des"]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: snmp_exporter:9116
+
+  # --- Synology NAS ---
+  - job_name: "snmp_nas"
+    scrape_interval: 60s
+    scrape_timeout: 30s
+    static_configs:
+      - targets: ["storage.basphere.local"]  # Synology DS1515+ (172.24.0.100)
+        labels:
+          device: "ds1515"
+          device_type: "nas"
+    metrics_path: /snmp
+    params:
+      module: ["synology"]
+      auth: ["basphere_v3_nas"]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: snmp_exporter:9116
+
+  # --- ipTime AP ---
+  - job_name: "snmp_ap"
+    scrape_interval: 60s
+    scrape_timeout: 15s
+    static_configs:
+      - targets: ["192.168.0.2"]  # ipTime AX300BCM (ap.basphere.local)
+        labels:
+          device: "ax300bcm"
+          device_type: "ap"
+    metrics_path: /snmp
+    params:
+      module: ["if_mib"]
+      auth: ["basphere_v3_ap"]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: snmp_exporter:9116
+
+  # =========================================================================
+  # Blackbox Exporter (HTTP/HTTPS 엔드포인트 프로빙)
+  # =========================================================================
+  - job_name: "blackbox_http"
+    scrape_interval: 60s
+    scrape_timeout: 15s
+    metrics_path: /probe
+    params:
+      module: ["http_2xx_tls"]
+    static_configs:
+      - targets: ["https://ratatosk.io"]
+        labels:
+          service: "ratatosk"
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox_exporter:9115
+
+  - job_name: "blackbox_internal"
+    scrape_interval: 60s
+    scrape_timeout: 15s
+    metrics_path: /probe
+    params:
+      module: ["http_2xx"]
+    static_configs:
+      - targets: ["http://10.0.0.100:3001"]
+        labels:
+          service: "umami"
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox_exporter:9115
+
+  # =========================================================================
+  # PostgreSQL Exporter (ratatosk DB 모니터링)
+  # =========================================================================
+  - job_name: "oci_postgres"
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    static_configs:
+      - targets: ["10.0.0.100:9187"]
+        labels:
+          instance: "ratatosk"
+          device_type: "cloud"
+
+  # =========================================================================
+  # Observer Server (self-monitoring)
+  # 모니터링 서버 자체의 node_exporter 메트릭
+  # =========================================================================
+  - job_name: "observer_node"
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    static_configs:
+      - targets: ["host.docker.internal:9100"]
+        labels:
+          instance: "observer"
+          device_type: "server"
+
+  # =========================================================================
+  # Phase 6: OCI Cloud Instance (ratatosk.io)
+  # Site-to-Site VPN을 통해 OCI VCN 10.0.0.0/16 접근
+  # ARM 4C/24G, Singapore Region, Ubuntu 24.04
+  # =========================================================================
+  - job_name: "oci_node"
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    static_configs:
+      - targets: ["10.0.0.100:9100"]
+        labels:
+          instance: "ratatosk"
+          device_type: "cloud"
+          cloud: "oci"
+          region: "ap-singapore-1"
+
+  - job_name: "oci_cadvisor"
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    static_configs:
+      - targets: ["10.0.0.100:8080"]
+        labels:
+          instance: "ratatosk"
+          device_type: "cloud"
+          cloud: "oci"
+    metric_relabel_configs:
+      - regex: "container_label_com_docker_compose_(config_hash|container_number|depends_on|image|oneoff|project_config_files|project_working_dir|replace|version)"
+        action: labeldrop
+      - regex: "container_label_org_opencontainers_image_.*"
+        action: labeldrop

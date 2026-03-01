@@ -1,0 +1,58 @@
+# =============================================================================
+# Alertmanager Configuration
+# Discord Webhook을 통한 알림 전송
+# =============================================================================
+
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: "discord"
+  group_by: ["alertname", "severity", "instance"]
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 4h
+
+  routes:
+    # Critical 알림: 즉시 전송, 반복 간격 짧게
+    - match:
+        severity: critical
+      receiver: "discord"
+      group_wait: 10s
+      repeat_interval: 1h
+
+    # Warning 알림: 기본 설정
+    - match:
+        severity: warning
+      receiver: "discord"
+      repeat_interval: 4h
+
+    # Info 알림: 반복 간격 길게
+    - match:
+        severity: info
+      receiver: "discord"
+      repeat_interval: 12h
+
+receivers:
+  - name: "discord"
+    webhook_configs:
+      - url: "http://discord-webhook-proxy:9094"
+        send_resolved: true
+
+# =============================================================================
+# 참고: Discord는 Alertmanager webhook 형식을 직접 지원하지 않으므로
+# alertmanager-discord 프록시를 사용하거나,
+# .env의 DISCORD_WEBHOOK_URL을 직접 사용하는 프록시 컨테이너가 필요합니다.
+# docker-compose.yml에 Phase 1 완료 후 discord-webhook-proxy 추가 예정.
+#
+# 대안: Grafana의 Contact Points에서 직접 Discord webhook 설정 가능
+# (Grafana Alerting 사용 시 Alertmanager 없이도 가능)
+# =============================================================================
+
+inhibit_rules:
+  # 같은 대상에서 critical이 firing이면 warning 억제
+  - source_match:
+      severity: "critical"
+    target_match:
+      severity: "warning"
+    equal: ["alertname", "instance"]
