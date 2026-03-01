@@ -15,7 +15,7 @@ groups:
           device_type: cloud
         annotations:
           summary: "OCI 인스턴스 다운 (ratatosk.io)"
-          description: "OCI 인스턴스 10.0.0.100이 2분 이상 응답하지 않습니다. VPN 연결 또는 인스턴스 상태를 확인하세요."
+          description: "OCI 인스턴스가 2분 이상 응답하지 않습니다. VPN 연결 또는 인스턴스 상태를 확인하세요."
 
       - alert: OCIDiskAlmostFull
         expr: (1 - node_filesystem_avail_bytes{job="oci_node", mountpoint="/"} / node_filesystem_size_bytes{job="oci_node", mountpoint="/"}) * 100 > 90
@@ -114,14 +114,14 @@ groups:
           description: "https://ratatosk.io이 3분 이상 응답하지 않습니다. Caddy/App 상태를 확인하세요."
 
       - alert: UmamiEndpointDown
-        expr: probe_success{job="blackbox_internal", instance="http://10.0.0.100:3001"} == 0
+        expr: probe_success{job="blackbox_internal", instance=~".*:3001"} == 0
         for: 3m
         labels:
           severity: warning
           device_type: cloud
         annotations:
           summary: "Umami 접속 불가"
-          description: "Umami(10.0.0.100:3001)이 3분 이상 응답하지 않습니다."
+          description: "Umami가 3분 이상 응답하지 않습니다."
 
       - alert: SSLCertExpiringSoon
         expr: (probe_ssl_earliest_cert_expiry{job="blackbox_http"} - time()) / 86400 < 14

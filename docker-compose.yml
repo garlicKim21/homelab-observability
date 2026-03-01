@@ -15,7 +15,7 @@ services:
     container_name: victoriametrics
     restart: unless-stopped
     dns:
-      - 192.168.2.1  # OPNsense BIND DNS (basphere.local 해석)
+      - ${DNS_SERVER}  # 내부 DNS (basphere.local 해석)
     ports:
       - "8428:8428"       # HTTP API + Prometheus remote_write
       - "8089:8089"       # InfluxDB line protocol (Telegraf push용)
@@ -155,14 +155,14 @@ services:
 
   # ---------------------------------------------------------------------------
   # snmp_exporter - SNMP 기반 장비 메트릭 수집 (Phase 4)
-  # TP-Link SG2218 (172.24.0.2), Synology NAS (172.24.0.100), ipTime AP
+  # TP-Link SG2218, Synology NAS, ipTime AP
   # ---------------------------------------------------------------------------
   snmp_exporter:
     image: prom/snmp-exporter:v0.26.0
     container_name: snmp_exporter
     restart: unless-stopped
     dns:
-      - 192.168.2.1
+      - ${DNS_SERVER}
     ports:
       - "9116:9116"
     volumes:
@@ -181,7 +181,7 @@ services:
     container_name: opnsense-exporter
     restart: unless-stopped
     dns:
-      - 192.168.2.1
+      - ${DNS_SERVER}
     command:
       - --opnsense.protocol=https
       - --opnsense.address=cerberus.basphere.local
@@ -251,7 +251,7 @@ services:
     container_name: blackbox_exporter
     restart: unless-stopped
     dns:
-      - 192.168.2.1
+      - ${DNS_SERVER}
     ports:
       - "9115:9115"
     volumes:

@@ -17,7 +17,7 @@ groups:
           severity: critical
         annotations:
           summary: "TP-Link SG2218 스위치 다운"
-          description: "SG2218(172.24.0.2)에서 2분 이상 SNMP 응답이 없습니다. 네트워크 인프라 점검 필요."
+          description: "SG2218에서 2분 이상 SNMP 응답이 없습니다. 네트워크 인프라 점검 필요."
 
       # -----------------------------------------------------------------------
       # Warning: 포트 상태 및 에러

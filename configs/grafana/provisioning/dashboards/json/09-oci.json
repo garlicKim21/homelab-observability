@@ -278,7 +278,7 @@
       "type": "stat",
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
       "gridPos": { "h": 4, "w": 4, "x": 4, "y": 61 },
-      "targets": [{ "expr": "probe_success{job=\"blackbox_internal\", instance=\"http://10.0.0.100:3001\"}", "legendFormat": "Umami" }],
+      "targets": [{ "expr": "probe_success{job=\"blackbox_internal\", instance=\"http://<OCI_INSTANCE_IP>:3001\"}", "legendFormat": "Umami" }],
       "fieldConfig": {
         "defaults": {
           "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],

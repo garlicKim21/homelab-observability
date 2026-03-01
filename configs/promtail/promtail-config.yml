@@ -48,7 +48,7 @@ scrape_configs:
     pipeline_stages:
       # IP 기반으로 device_type 레이블 추가
       - match:
-          selector: '{host_ip=~"192\\.168\\.2\\.1|192\\.168\\.0\\.1|172\\.24\\.0\\.1"}'
+          selector: '{host_ip=~"<FIREWALL_IP_1>|<FIREWALL_IP_2>|<FIREWALL_IP_3>"}'  # 방화벽 IP로 교체
           stages:
             - labels:
                 device_type: ""
@@ -58,7 +58,7 @@ scrape_configs:
             - labels:
                 device_type:
       - match:
-          selector: '{host_ip=~"172\\.24\\.0\\.1[0-9]+"}'
+          selector: '{host_ip=~"<ESXI_IP_PATTERN>"}'  # ESXi 호스트 IP 패턴으로 교체
           stages:
             - labels:
                 device_type: ""
@@ -68,7 +68,7 @@ scrape_configs:
             - labels:
                 device_type:
       - match:
-          selector: '{host_ip="172.24.0.100"}'
+          selector: '{host_ip="<NAS_IP>"}'  # NAS IP로 교체
           stages:
             - labels:
                 device_type: ""
@@ -101,7 +101,7 @@ scrape_configs:
         target_label: "app"
     pipeline_stages:
       - match:
-          selector: '{host_ip=~"192\\.168\\.2\\.1|192\\.168\\.0\\.1|172\\.24\\.0\\.1"}'
+          selector: '{host_ip=~"<FIREWALL_IP_1>|<FIREWALL_IP_2>|<FIREWALL_IP_3>"}'  # 방화벽 IP로 교체
           stages:
             - labels:
                 device_type: ""
@@ -111,7 +111,7 @@ scrape_configs:
             - labels:
                 device_type:
       - match:
-          selector: '{host_ip=~"172\\.24\\.0\\.1[0-9]+"}'
+          selector: '{host_ip=~"<ESXI_IP_PATTERN>"}'  # ESXi 호스트 IP 패턴으로 교체
           stages:
             - labels:
                 device_type: ""
@@ -121,7 +121,7 @@ scrape_configs:
             - labels:
                 device_type:
       - match:
-          selector: '{host_ip="172.24.0.100"}'
+          selector: '{host_ip="<NAS_IP>"}'  # NAS IP로 교체
           stages:
             - labels:
                 device_type: ""

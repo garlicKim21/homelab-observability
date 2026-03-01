@@ -17,7 +17,7 @@ groups:
           severity: critical
         annotations:
           summary: "Synology NAS 다운"
-          description: "Synology DS1515+(172.24.0.100)에서 3분 이상 SNMP 응답이 없습니다."
+          description: "Synology DS1515+에서 3분 이상 SNMP 응답이 없습니다."
 
       - alert: NASSystemFailure
         expr: synology_system_status != 1

@@ -80,7 +80,7 @@ scrape_configs:
     scrape_interval: 30s
     scrape_timeout: 15s
     static_configs:
-      - targets: ["sw.basphere.local"]  # SG2218 (172.24.0.2)
+      - targets: ["sw.basphere.local"]  # SG2218
         labels:
           device: "sg2218"
           device_type: "switch"
@@ -101,7 +101,7 @@ scrape_configs:
     scrape_interval: 60s
     scrape_timeout: 30s
     static_configs:
-      - targets: ["storage.basphere.local"]  # Synology DS1515+ (172.24.0.100)
+      - targets: ["storage.basphere.local"]  # Synology DS1515+
         labels:
           device: "ds1515"
           device_type: "nas"
@@ -122,7 +122,7 @@ scrape_configs:
     scrape_interval: 60s
     scrape_timeout: 15s
     static_configs:
-      - targets: ["192.168.0.2"]  # ipTime AX300BCM (ap.basphere.local)
+      - targets: ["<AP_IP>"]  # ipTime AX300BCM - .env의 AP_IP로 교체
         labels:
           device: "ax300bcm"
           device_type: "ap"
@@ -166,7 +166,7 @@ scrape_configs:
     params:
       module: ["http_2xx"]
     static_configs:
-      - targets: ["http://10.0.0.100:3001"]
+      - targets: ["http://<OCI_INSTANCE_IP>:3001"]  # .env의 OCI_INSTANCE_IP로 교체
         labels:
           service: "umami"
     relabel_configs:
@@ -184,7 +184,7 @@ scrape_configs:
     scrape_interval: 30s
     scrape_timeout: 10s
     static_configs:
-      - targets: ["10.0.0.100:9187"]
+      - targets: ["<OCI_INSTANCE_IP>:9187"]
         labels:
           instance: "ratatosk"
           device_type: "cloud"
@@ -204,14 +204,14 @@ scrape_configs:
 
   # =========================================================================
   # Phase 6: OCI Cloud Instance (ratatosk.io)
-  # Site-to-Site VPN을 통해 OCI VCN 10.0.0.0/16 접근
+  # Site-to-Site VPN을 통해 OCI VCN 접근
   # ARM 4C/24G, Singapore Region, Ubuntu 24.04
   # =========================================================================
   - job_name: "oci_node"
     scrape_interval: 30s
     scrape_timeout: 10s
     static_configs:
-      - targets: ["10.0.0.100:9100"]
+      - targets: ["<OCI_INSTANCE_IP>:9100"]
         labels:
           instance: "ratatosk"
           device_type: "cloud"
@@ -222,7 +222,7 @@ scrape_configs:
     scrape_interval: 30s
     scrape_timeout: 10s
     static_configs:
-      - targets: ["10.0.0.100:8080"]
+      - targets: ["<OCI_INSTANCE_IP>:8080"]
         labels:
           instance: "ratatosk"
           device_type: "cloud"

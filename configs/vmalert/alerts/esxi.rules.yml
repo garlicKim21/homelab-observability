@@ -26,7 +26,7 @@ groups:
           severity: critical
         annotations:
           summary: "vCenter 연결 불가"
-          description: "vmware_exporter가 vCenter(172.24.0.10)에 2분 이상 연결할 수 없습니다."
+          description: "vmware_exporter가 vCenter에 2분 이상 연결할 수 없습니다."
 
       # -----------------------------------------------------------------------
       # Critical: 스토리지
