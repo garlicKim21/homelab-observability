@@ -215,7 +215,7 @@
       "type": "gauge",
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
       "gridPos": { "h": 6, "w": 4, "x": 0, "y": 13 },
-      "targets": [{ "expr": "100 - synology_cpu_idle{job=\"snmp_nas\"}", "legendFormat": "synology_cpu_idle" }],
+      "targets": [{ "expr": "100 - synology_cpu_idle{job=\"snmp_nas\"}", "legendFormat": "CPU Usage" }],
       "fieldConfig": {
         "defaults": {
           "unit": "percent", "min": 0, "max": 100,
@@ -228,7 +228,7 @@
       "type": "gauge",
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
       "gridPos": { "h": 6, "w": 4, "x": 4, "y": 13 },
-      "targets": [{ "expr": "(1 - (synology_memory_available{job=\"snmp_nas\"} + synology_memory_buffer{job=\"snmp_nas\"} + synology_memory_cached{job=\"snmp_nas\"}) / synology_memory_total{job=\"snmp_nas\"}) * 100", "legendFormat": "synology_memory_available" }],
+      "targets": [{ "expr": "(1 - (synology_memory_available{job=\"snmp_nas\"} + synology_memory_buffer{job=\"snmp_nas\"} + synology_memory_cached{job=\"snmp_nas\"}) / synology_memory_total{job=\"snmp_nas\"}) * 100", "legendFormat": "Memory Usage" }],
       "fieldConfig": {
         "defaults": {
           "unit": "percent", "min": 0, "max": 100,
@@ -241,7 +241,7 @@
       "type": "gauge",
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
       "gridPos": { "h": 6, "w": 4, "x": 8, "y": 13 },
-      "targets": [{ "expr": "100 - (avg(rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"idle\"}[5m])) * 100)", "legendFormat": "node_cpu_seconds_total" }],
+      "targets": [{ "expr": "100 - (avg(rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"idle\"}[5m])) * 100)", "legendFormat": "CPU Usage" }],
       "fieldConfig": {
         "defaults": {
           "unit": "percent", "min": 0, "max": 100,
@@ -254,7 +254,7 @@
       "type": "gauge",
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
       "gridPos": { "h": 6, "w": 4, "x": 12, "y": 13 },
-      "targets": [{ "expr": "(1 - node_memory_MemAvailable_bytes{job=\"oci_node\"} / node_memory_MemTotal_bytes{job=\"oci_node\"}) * 100", "legendFormat": "node_memory_MemAvailable_bytes" }],
+      "targets": [{ "expr": "(1 - node_memory_MemAvailable_bytes{job=\"oci_node\"} / node_memory_MemTotal_bytes{job=\"oci_node\"}) * 100", "legendFormat": "Memory Usage" }],
       "fieldConfig": {
         "defaults": {
           "unit": "percent", "min": 0, "max": 100,
@@ -267,7 +267,7 @@
       "type": "gauge",
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
       "gridPos": { "h": 6, "w": 4, "x": 16, "y": 13 },
-      "targets": [{ "expr": "100 - (avg(rate(node_cpu_seconds_total{job=\"observer_node\", mode=\"idle\"}[5m])) * 100)", "legendFormat": "node_cpu_seconds_total" }],
+      "targets": [{ "expr": "100 - (avg(rate(node_cpu_seconds_total{job=\"observer_node\", mode=\"idle\"}[5m])) * 100)", "legendFormat": "CPU Usage" }],
       "fieldConfig": {
         "defaults": {
           "unit": "percent", "min": 0, "max": 100,
@@ -280,7 +280,7 @@
       "type": "gauge",
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
       "gridPos": { "h": 6, "w": 4, "x": 20, "y": 13 },
-      "targets": [{ "expr": "(1 - node_memory_MemAvailable_bytes{job=\"observer_node\"} / node_memory_MemTotal_bytes{job=\"observer_node\"}) * 100", "legendFormat": "node_memory_MemAvailable_bytes" }],
+      "targets": [{ "expr": "(1 - node_memory_MemAvailable_bytes{job=\"observer_node\"} / node_memory_MemTotal_bytes{job=\"observer_node\"}) * 100", "legendFormat": "Memory Usage" }],
       "fieldConfig": {
         "defaults": {
           "unit": "percent", "min": 0, "max": 100,
