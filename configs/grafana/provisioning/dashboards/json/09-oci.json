@@ -1191,7 +1191,7 @@
       },
       "targets": [
         {
-          "expr": "probe_http_duration_seconds{job=\"blackbox_http\", phase=\"processing\"}",
+          "expr": "probe_http_duration_seconds{job=\"blackbox_http\", instance=\"https://ratatosk.io\", phase=\"processing\"}",
           "legendFormat": "Server Processing (s)",
           "refId": "A"
         },
@@ -1201,7 +1201,7 @@
           "refId": "B"
         },
         {
-          "expr": "rate(container_cpu_usage_seconds_total{job=\"oci_cadvisor\", name=\"ratatosk-app\"}[5m]) * 100",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"oci_cadvisor\", name=\"ratatosk-app\"}[5m])) * 100",
           "legendFormat": "ratatosk-app CPU (%)",
           "refId": "C"
         }
