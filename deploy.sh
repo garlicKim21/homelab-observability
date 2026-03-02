@@ -24,12 +24,18 @@ for var in "${REQUIRED_VARS[@]}"; do
   export "$var=$val"
 done
 
-# ---- Git Pull ----
+# ---- Git Pull (deploy.sh 변경 시 자동 재실행) ----
 echo "=== Git Pull ==="
+CHECKSUM_BEFORE=$(md5sum deploy.sh 2>/dev/null | cut -d' ' -f1)
 git pull origin main
+CHECKSUM_AFTER=$(md5sum deploy.sh 2>/dev/null | cut -d' ' -f1)
+if [[ "$CHECKSUM_BEFORE" != "$CHECKSUM_AFTER" ]]; then
+  echo "[INFO] deploy.sh가 업데이트됨 → 새 버전으로 재실행"
+  exec "$0" "$@"
+fi
 echo ""
 
-# ---- IP 치환 (Python) ----
+# ---- 플레이스홀더 치환 (Python) ----
 echo "=== IP 치환 ==="
 python3 << 'PYEOF'
 import os, re, sys
