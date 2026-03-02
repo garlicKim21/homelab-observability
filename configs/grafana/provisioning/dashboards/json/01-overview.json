@@ -96,7 +96,7 @@
       "type": "stat",
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
       "gridPos": { "h": 4, "w": 3, "x": 15, "y": 1 },
-      "targets": [{ "expr": "up{job=\"snmp_ap\", instance=\"<AP_IP>\"}", "legendFormat": "AP" }],
+      "targets": [{ "expr": "up{job=\"snmp_ap\"}", "legendFormat": "AP" }],
       "fieldConfig": {
         "defaults": {
           "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
