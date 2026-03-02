@@ -898,7 +898,7 @@
       },
       "targets": [
         {
-          "expr": "probe_success{job=\"blackbox_internal\", instance=\"http://<OCI_INSTANCE_IP>:3001\"}",
+          "expr": "probe_success{job=\"blackbox_internal\"}",
           "legendFormat": "Umami"
         }
       ],
