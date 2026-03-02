@@ -38,7 +38,7 @@ import os, re, sys
 
 def escape_dots(ip):
     """LogQL regex selector용: . → \\."""
-    return ip.replace(".", "\\.")
+    return ip.replace(".", "\\\\.")
 
 env = os.environ
 

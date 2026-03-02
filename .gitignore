@@ -4,6 +4,9 @@ configs/snmp_exporter/snmp.yml
 homelab-infra-arch.txt
 docs/architecture.md
 
+# Images (may contain sensitive info)
+images/
+
 # Docker volumes data
 data/
 
