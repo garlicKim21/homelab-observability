@@ -632,56 +632,130 @@
       }
     },
     {
-      "title": "Docker Containers",
+      "title": "$container",
       "type": "row",
+      "repeat": "container",
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
         "y": 37
-      },
-      "collapsed": false
+      }
     },
     {
-      "title": "Container CPU: Usage vs Limit",
+      "title": "$container CPU",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_VICTORIAMETRICS}"
       },
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 0,
         "y": 38
       },
       "targets": [
         {
-          "expr": "rate(container_cpu_usage_seconds_total{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}[5m]) * 100",
-          "legendFormat": "{{ name }}",
+          "expr": "rate(container_cpu_usage_seconds_total{job=\"oci_cadvisor\", name=\"$container\"}[5m]) * 100",
+          "legendFormat": "Usage (%)",
           "refId": "A"
         },
         {
-          "expr": "(container_spec_cpu_quota{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"} > 0) / container_spec_cpu_period{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"} * 100",
-          "legendFormat": "{{ name }} limit",
+          "expr": "rate(container_cpu_usage_seconds_total{job=\"oci_cadvisor\", name=\"$container\"}[5m])",
+          "legendFormat": "Usage (cores)",
           "refId": "B"
+        },
+        {
+          "expr": "(container_spec_cpu_quota{job=\"oci_cadvisor\", name=\"$container\"} > 0) / container_spec_cpu_period{job=\"oci_cadvisor\", name=\"$container\"}",
+          "legendFormat": "Limit (cores)",
+          "refId": "C"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "percent",
-          "min": 0,
           "custom": {
-            "fillOpacity": 15
+            "fillOpacity": 10
           }
         },
         "overrides": [
           {
             "matcher": {
               "id": "byFrameRefID",
+              "options": "A"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "left"
+              },
+              {
+                "id": "custom.axisLabel",
+                "value": "CPU (%)"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
               "options": "B"
             },
             "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              },
+              {
+                "id": "custom.axisLabel",
+                "value": "Cores"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "C"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
               {
                 "id": "custom.lineStyle",
                 "value": {
@@ -699,6 +773,13 @@
               {
                 "id": "custom.lineWidth",
                 "value": 2
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
               }
             ]
           }
@@ -706,27 +787,27 @@
       }
     },
     {
-      "title": "Container Memory: Usage vs Limit",
+      "title": "$container Memory",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_VICTORIAMETRICS}"
       },
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 12,
         "y": 38
       },
       "targets": [
         {
-          "expr": "container_memory_usage_bytes{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}",
-          "legendFormat": "{{ name }}",
+          "expr": "container_memory_usage_bytes{job=\"oci_cadvisor\", name=\"$container\"}",
+          "legendFormat": "Usage",
           "refId": "A"
         },
         {
-          "expr": "container_spec_memory_limit_bytes{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"} > 0",
-          "legendFormat": "{{ name }} limit",
+          "expr": "container_spec_memory_limit_bytes{job=\"oci_cadvisor\", name=\"$container\"} > 0",
+          "legendFormat": "Limit",
           "refId": "B"
         }
       ],
@@ -734,7 +815,7 @@
         "defaults": {
           "unit": "bytes",
           "custom": {
-            "fillOpacity": 15
+            "fillOpacity": 10
           }
         },
         "overrides": [
@@ -761,6 +842,13 @@
               {
                 "id": "custom.lineWidth",
                 "value": 2
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
               }
             ]
           }
@@ -1546,6 +1634,26 @@
         "name": "DS_VICTORIAMETRICS",
         "type": "datasource",
         "query": "prometheus"
+      },
+      {
+        "name": "container",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_VICTORIAMETRICS}"
+        },
+        "query": "label_values(container_last_seen{job=\"oci_cadvisor\", name=~\"ratatosk-.+\", container_label_com_docker_compose_service=~\".+\"}, name)",
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "includeAll": true,
+        "multi": true,
+        "refresh": 2,
+        "sort": 1,
+        "label": "Container",
+        "hide": 0
       }
     ]
   },
