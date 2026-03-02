@@ -1,6 +1,5 @@
 # Environment & secrets
 .env
-configs/snmp_exporter/snmp.yml
 homelab-infra-arch.txt
 docs/architecture.md
 

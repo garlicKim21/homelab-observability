@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
-# deploy.sh - Git Pull + IP 치환 기반 배포 스크립트
-# 서버의 .env에서 IP를 읽어 config 플레이스홀더를 자동 치환 후 배포
+# deploy.sh - Git Pull + 플레이스홀더 치환 기반 배포 스크립트
+# 서버의 .env에서 IP/비밀번호를 읽어 config 플레이스홀더를 자동 치환 후 배포
 # =============================================================================
 set -euo pipefail
 
@@ -14,7 +14,7 @@ if [[ ! -f .env ]]; then
   exit 1
 fi
 
-REQUIRED_VARS=(OCI_INSTANCE_IP AP_IP FIREWALL_IP_1 FIREWALL_IP_2 FIREWALL_IP_3 ESXI_IP_PATTERN NAS_IP)
+REQUIRED_VARS=(OCI_INSTANCE_IP AP_IP FIREWALL_IP_1 FIREWALL_IP_2 FIREWALL_IP_3 ESXI_IP_PATTERN NAS_IP SNMP_AUTH_PASS SNMP_PRIV_PASS SNMP_AP_AUTH_PASS SNMP_AP_PRIV_PASS)
 for var in "${REQUIRED_VARS[@]}"; do
   val=$(grep "^${var}=" .env | head -1 | cut -d'=' -f2-)
   if [[ -z "$val" ]]; then
@@ -85,6 +85,25 @@ if remaining:
 else:
     print(f"  [OK] {promtail_path}")
 
+# --- snmp.yml: 비밀번호 치환 ---
+snmp_path = "configs/snmp_exporter/snmp.yml"
+with open(snmp_path, "r") as f:
+    content = f.read()
+
+content = content.replace("<SNMP_AUTH_PASS>", env["SNMP_AUTH_PASS"])
+content = content.replace("<SNMP_PRIV_PASS>", env["SNMP_PRIV_PASS"])
+content = content.replace("<SNMP_AP_AUTH_PASS>", env["SNMP_AP_AUTH_PASS"])
+content = content.replace("<SNMP_AP_PRIV_PASS>", env["SNMP_AP_PRIV_PASS"])
+
+with open(snmp_path, "w") as f:
+    f.write(content)
+
+remaining = re.findall(r"<[A-Z_]+>", content)
+if remaining:
+    print(f"[WARN] snmp.yml에 미치환 플레이스홀더: {remaining}", file=sys.stderr)
+else:
+    print(f"  [OK] {snmp_path}")
+
 print("")
 PYEOF
 
@@ -109,6 +128,11 @@ fi
 if grep -q '<[A-Z_]*>' configs/promtail/promtail-config.yml 2>/dev/null; then
   echo "[FAIL] promtail-config.yml에 플레이스홀더 잔존!"
   grep '<[A-Z_]*>' configs/promtail/promtail-config.yml
+  FAIL=1
+fi
+if grep -q '<[A-Z_]*>' configs/snmp_exporter/snmp.yml 2>/dev/null; then
+  echo "[FAIL] snmp.yml에 플레이스홀더 잔존!"
+  grep '<[A-Z_]*>' configs/snmp_exporter/snmp.yml
   FAIL=1
 fi
 if [[ $FAIL -eq 0 ]]; then
