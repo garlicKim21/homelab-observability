@@ -632,6 +632,61 @@
       }
     },
     {
+      "title": "Docker Containers",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 37 },
+      "collapsed": false
+    },
+    {
+      "title": "Total Container CPU",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 38 },
+      "targets": [
+        {
+          "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}[5m]))",
+          "legendFormat": "Usage",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(max by (name) (container_spec_cpu_quota{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"} > 0) / max by (name) (container_spec_cpu_period{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}))",
+          "legendFormat": "Limit",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "custom": { "fillOpacity": 10 }, "decimals": 2 },
+        "overrides": [
+          { "matcher": { "id": "byFrameRefID", "options": "A" }, "properties": [{ "id": "color", "value": { "fixedColor": "green", "mode": "fixed" } }] },
+          { "matcher": { "id": "byFrameRefID", "options": "B" }, "properties": [{ "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 10] } }, { "id": "custom.fillOpacity", "value": 0 }, { "id": "custom.lineWidth", "value": 2 }, { "id": "color", "value": { "fixedColor": "orange", "mode": "fixed" } }] }
+        ]
+      }
+    },
+    {
+      "title": "Total Container Memory",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 38 },
+      "targets": [
+        {
+          "expr": "sum(container_memory_usage_bytes{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"})",
+          "legendFormat": "Usage",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(max by (name) (container_spec_memory_limit_bytes{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"} > 0))",
+          "legendFormat": "Limit",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "bytes", "custom": { "fillOpacity": 10 } },
+        "overrides": [
+          { "matcher": { "id": "byFrameRefID", "options": "B" }, "properties": [{ "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 10] } }, { "id": "custom.fillOpacity", "value": 0 }, { "id": "custom.lineWidth", "value": 2 }, { "id": "color", "value": { "fixedColor": "red", "mode": "fixed" } }] }
+        ]
+      }
+    },
+    {
       "title": "$container",
       "type": "row",
       "repeat": "container",
@@ -640,7 +695,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 37
+        "y": 45
       }
     },
     {
@@ -654,7 +709,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 38
+        "y": 46
       },
       "targets": [
         {
@@ -739,7 +794,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 38
+        "y": 46
       },
       "targets": [
         {
