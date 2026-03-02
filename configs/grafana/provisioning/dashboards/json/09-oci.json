@@ -814,7 +814,33 @@
             "byField": "name"
           }
         }
-      ]
+      ],
+      "fieldConfig": {
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Value #cpulimit" },
+            "properties": [
+              { "id": "displayName", "value": "CPU Limit (cores)" },
+              { "id": "unit", "value": "short" },
+              { "id": "decimals", "value": 1 }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Value #memlimit" },
+            "properties": [
+              { "id": "displayName", "value": "Memory Limit" },
+              { "id": "unit", "value": "bytes" }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Value #memused" },
+            "properties": [
+              { "id": "displayName", "value": "Memory Used" },
+              { "id": "unit", "value": "bytes" }
+            ]
+          }
+        ]
+      }
     },
     {
       "title": "Services (Blackbox)",

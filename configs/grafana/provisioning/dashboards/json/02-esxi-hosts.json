@@ -454,7 +454,45 @@
       ],
       "transformations": [
         { "id": "seriesToColumns", "options": { "byField": "host_name" } }
-      ]
+      ],
+      "fieldConfig": {
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Value #power" },
+            "properties": [
+              { "id": "displayName", "value": "Power" },
+              { "id": "mappings", "value": [{ "options": { "0": { "text": "OFF", "color": "red" }, "1": { "text": "ON", "color": "green" } }, "type": "value" }] },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Value #cpu" },
+            "properties": [
+              { "id": "displayName", "value": "CPU %" },
+              { "id": "unit", "value": "percent" },
+              { "id": "decimals", "value": 1 },
+              { "id": "thresholds", "value": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] } },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Value #mem" },
+            "properties": [
+              { "id": "displayName", "value": "Memory %" },
+              { "id": "unit", "value": "percent" },
+              { "id": "decimals", "value": 1 },
+              { "id": "thresholds", "value": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 80 }, { "color": "red", "value": 90 }] } },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Value #cpucount" },
+            "properties": [
+              { "id": "displayName", "value": "CPU Cores" }
+            ]
+          }
+        ]
+      }
     }
   ],
   "refresh": "1m",
