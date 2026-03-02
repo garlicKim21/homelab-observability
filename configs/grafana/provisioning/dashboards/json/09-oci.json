@@ -1066,6 +1066,91 @@
       "description": "VPN 경유 내부 호출. TLS 없으므로 processing phase가 대부분을 차지해야 정상."
     },
     {
+      "title": "Response Time vs Container CPU (Correlation)",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 75
+      },
+      "targets": [
+        {
+          "expr": "probe_http_duration_seconds{job=\"blackbox_http\", phase=\"processing\"}",
+          "legendFormat": "Server Processing (s)",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}[5m])) * 100",
+          "legendFormat": "ratatosk Total CPU (%)",
+          "refId": "B"
+        },
+        {
+          "expr": "rate(container_cpu_usage_seconds_total{job=\"oci_cadvisor\", name=\"ratatosk-app\"}[5m]) * 100",
+          "legendFormat": "ratatosk-app CPU (%)",
+          "refId": "C"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 2
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "CPU"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 5
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Processing"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Server Processing 스파이크와 Container CPU 사용률 상관 분석. batch-poller(5분) 또는 daily-pipeline(03:00)과의 경합 패턴 확인용."
+    },
+    {
       "title": "SSL Certificate Expiry",
       "type": "stat",
       "datasource": {
@@ -1160,7 +1245,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 75
+        "y": 83
       },
       "collapsed": false
     },
@@ -1175,7 +1260,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 76
+        "y": 84
       },
       "targets": [
         {
@@ -1231,7 +1316,7 @@
         "h": 4,
         "w": 4,
         "x": 4,
-        "y": 76
+        "y": 84
       },
       "targets": [
         {
@@ -1273,7 +1358,7 @@
         "h": 4,
         "w": 4,
         "x": 8,
-        "y": 76
+        "y": 84
       },
       "targets": [
         {
@@ -1301,7 +1386,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 76
+        "y": 84
       },
       "targets": [
         {
@@ -1333,7 +1418,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 83
+        "y": 91
       },
       "targets": [
         {
@@ -1363,7 +1448,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 83
+        "y": 91
       },
       "targets": [
         {
