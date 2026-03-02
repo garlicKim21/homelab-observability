@@ -266,22 +266,25 @@ services:
   # Observer 서버 Docker 컨테이너 CPU/메모리/네트워크/I/O 메트릭 수집
   # ---------------------------------------------------------------------------
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor
     restart: unless-stopped
     privileged: true
+    environment:
+      - DOCKER_API_VERSION=1.44
     ports:
       - "8081:8080"  # 8080은 opnsense-exporter가 사용 중
     volumes:
       - /:/rootfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock:rw
       - /var/run:/var/run:ro
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
     command:
-      - "--docker_only=true"
       - "--disable_metrics=percpu,sched,tcp,udp,disk,diskIO,hugetlb,referenced_memory,resctrl,process"
       - "--housekeeping_interval=30s"
+      - "--store_container_labels=true"
     networks:
       - monitoring
 
