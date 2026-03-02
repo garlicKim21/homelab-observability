@@ -203,6 +203,23 @@ scrape_configs:
           device_type: "server"
 
   # =========================================================================
+  # Observer CAdvisor (컨테이너 메트릭)
+  # =========================================================================
+  - job_name: "observer_cadvisor"
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    static_configs:
+      - targets: ["cadvisor:8080"]
+        labels:
+          instance: "observer"
+          device_type: "server"
+    metric_relabel_configs:
+      - regex: "container_label_com_docker_compose_(config_hash|container_number|depends_on|image|oneoff|project_config_files|project_working_dir|replace|version)"
+        action: labeldrop
+      - regex: "container_label_org_opencontainers_image_.*"
+        action: labeldrop
+
+  # =========================================================================
   # Phase 6: OCI Cloud Instance (ratatosk.io)
   # Site-to-Site VPN을 통해 OCI VCN 접근
   # ARM 4C/24G, Singapore Region, Ubuntu 24.04

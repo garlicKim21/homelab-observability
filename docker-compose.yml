@@ -262,6 +262,30 @@ services:
       - monitoring
 
   # ---------------------------------------------------------------------------
+  # CAdvisor - 컨테이너 리소스 모니터링
+  # Observer 서버 Docker 컨테이너 CPU/메모리/네트워크/I/O 메트릭 수집
+  # ---------------------------------------------------------------------------
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    container_name: cadvisor
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - "8081:8080"  # 8080은 opnsense-exporter가 사용 중
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    command:
+      - "--docker_only=true"
+      - "--disable_metrics=percpu,sched,tcp,udp,disk,diskIO,hugetlb,referenced_memory,resctrl,process"
+      - "--housekeeping_interval=30s"
+    networks:
+      - monitoring
+
+  # ---------------------------------------------------------------------------
   # Discord Webhook Proxy
   # Alertmanager webhook → Discord webhook 형식 변환
   # ---------------------------------------------------------------------------

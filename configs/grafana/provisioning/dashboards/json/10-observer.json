@@ -235,6 +235,266 @@
         { "expr": "-rate(node_network_transmit_bytes_total{job=\"observer_node\", device!~\"lo|docker.*|br-.*|veth.*\"}[5m]) * 8", "legendFormat": "{{ device }} Tx" }
       ],
       "fieldConfig": { "defaults": { "unit": "bps", "custom": { "fillOpacity": 20 } } }
+    },
+    {
+      "title": "Disk I/O",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 39 },
+      "collapsed": false
+    },
+    {
+      "title": "Disk I/O Throughput",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 40 },
+      "targets": [
+        { "expr": "rate(node_disk_read_bytes_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m])", "legendFormat": "{{ device }} Read", "refId": "A" },
+        { "expr": "-rate(node_disk_written_bytes_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m])", "legendFormat": "{{ device }} Write", "refId": "B" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "Bps", "custom": { "fillOpacity": 15 } } }
+    },
+    {
+      "title": "Disk IOPS",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 40 },
+      "targets": [
+        { "expr": "rate(node_disk_reads_completed_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m])", "legendFormat": "{{ device }} Read", "refId": "A" },
+        { "expr": "-rate(node_disk_writes_completed_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m])", "legendFormat": "{{ device }} Write", "refId": "B" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "iops", "custom": { "fillOpacity": 15 } } }
+    },
+    {
+      "title": "Disk I/O Utilization",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 47 },
+      "targets": [
+        { "expr": "rate(node_disk_io_time_seconds_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m]) * 100", "legendFormat": "{{ device }}" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "custom": { "fillOpacity": 15 },
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 60 }, { "color": "red", "value": 80 }] }
+        }
+      }
+    },
+    {
+      "title": "Disk Latency",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 47 },
+      "targets": [
+        { "expr": "rate(node_disk_read_time_seconds_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m]) / rate(node_disk_reads_completed_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m])", "legendFormat": "{{ device }} Read", "refId": "A" },
+        { "expr": "rate(node_disk_write_time_seconds_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m]) / rate(node_disk_writes_completed_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m])", "legendFormat": "{{ device }} Write", "refId": "B" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": { "fillOpacity": 10 },
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 0.02 }, { "color": "red", "value": 0.05 }] }
+        }
+      }
+    },
+    {
+      "title": "VictoriaMetrics Performance",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 54 },
+      "collapsed": false
+    },
+    {
+      "title": "Slow Inserts Rate",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 8, "x": 0, "y": 55 },
+      "targets": [
+        { "expr": "rate(vm_slow_row_inserts_total{job=\"victoriametrics\"}[5m])", "legendFormat": "Slow Inserts" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": { "fillOpacity": 15 },
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 0.1 }, { "color": "red", "value": 1 }] },
+          "color": { "mode": "palette-classic" }
+        }
+      }
+    },
+    {
+      "title": "Query Duration (p99)",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 8, "x": 8, "y": 55 },
+      "targets": [
+        { "expr": "histogram_quantile(0.99, sum(rate(vm_request_duration_seconds_bucket{job=\"victoriametrics\"}[5m])) by (le))", "legendFormat": "p99" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "s", "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "Merge Operations",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 8, "x": 16, "y": 55 },
+      "targets": [
+        { "expr": "rate(vm_merges_total{job=\"victoriametrics\"}[5m])", "legendFormat": "{{ type }}" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 15 } } }
+    },
+    {
+      "title": "Pending Rows",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 8, "x": 0, "y": 62 },
+      "targets": [
+        { "expr": "vm_pending_rows{job=\"victoriametrics\", type=\"storage\"}", "legendFormat": "Pending Rows" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 15 } } }
+    },
+    {
+      "title": "Cache Hit Ratio",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 8, "x": 8, "y": 62 },
+      "targets": [
+        { "expr": "rate(vm_cache_requests_total{job=\"victoriametrics\"}[5m])", "legendFormat": "{{ type }} Requests", "refId": "A" },
+        { "expr": "rate(vm_cache_misses_total{job=\"victoriametrics\"}[5m])", "legendFormat": "{{ type }} Misses", "refId": "B" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "title": "Active Merges",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 8, "x": 16, "y": 62 },
+      "targets": [
+        { "expr": "vm_active_merges{job=\"victoriametrics\"}", "legendFormat": "{{ type }}" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 15 } } }
+    },
+    {
+      "title": "Docker Containers",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 69 },
+      "collapsed": false
+    },
+    {
+      "title": "Total Container CPU",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 70 },
+      "targets": [
+        { "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"observer_cadvisor\", name=~\".+\"}[5m]))", "legendFormat": "Usage", "refId": "A" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short", "decimals": 2,
+          "custom": { "fillOpacity": 10 }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byFrameRefID", "options": "A" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "green", "mode": "fixed" } }]
+          }
+        ]
+      }
+    },
+    {
+      "title": "Total Container Memory",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 70 },
+      "targets": [
+        { "expr": "sum(container_memory_usage_bytes{job=\"observer_cadvisor\", name=~\".+\"})", "legendFormat": "Usage", "refId": "A" },
+        { "expr": "node_memory_MemTotal_bytes{job=\"observer_node\"}", "legendFormat": "Host Total", "refId": "B" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "custom": { "fillOpacity": 10 }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byFrameRefID", "options": "B" },
+            "properties": [
+              { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 10] } },
+              { "id": "custom.fillOpacity", "value": 0 },
+              { "id": "custom.lineWidth", "value": 2 },
+              { "id": "color", "value": { "fixedColor": "red", "mode": "fixed" } }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "$container",
+      "type": "row",
+      "repeat": "container",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 77 }
+    },
+    {
+      "title": "$container CPU",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 78 },
+      "targets": [
+        { "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"observer_cadvisor\", name=\"$container\"}[5m]))", "legendFormat": "Usage", "refId": "A" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short", "decimals": 2,
+          "custom": { "fillOpacity": 10 }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byFrameRefID", "options": "A" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "green", "mode": "fixed" } }]
+          }
+        ]
+      }
+    },
+    {
+      "title": "$container Memory",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 78 },
+      "targets": [
+        { "expr": "sum(container_memory_usage_bytes{job=\"observer_cadvisor\", name=\"$container\"})", "legendFormat": "Usage", "refId": "A" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "custom": { "fillOpacity": 10 }
+        }
+      }
+    },
+    {
+      "title": "Container Network & I/O",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 85 },
+      "collapsed": false
+    },
+    {
+      "title": "Container Network Rx/Tx",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 86 },
+      "targets": [
+        { "expr": "rate(container_network_receive_bytes_total{job=\"observer_cadvisor\", name=~\".+\"}[5m]) * 8", "legendFormat": "{{ name }} Rx" },
+        { "expr": "-rate(container_network_transmit_bytes_total{job=\"observer_cadvisor\", name=~\".+\"}[5m]) * 8", "legendFormat": "{{ name }} Tx" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "bps", "custom": { "fillOpacity": 15 } } }
+    },
+    {
+      "title": "Container Block I/O",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 86 },
+      "targets": [
+        { "expr": "rate(container_fs_reads_bytes_total{job=\"observer_cadvisor\", name=~\".+\"}[5m])", "legendFormat": "{{ name }} Read" },
+        { "expr": "-rate(container_fs_writes_bytes_total{job=\"observer_cadvisor\", name=~\".+\"}[5m])", "legendFormat": "{{ name }} Write" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "Bps", "custom": { "fillOpacity": 15 } } }
     }
   ],
   "refresh": "30s",
@@ -248,6 +508,19 @@
         "name": "DS_VICTORIAMETRICS",
         "type": "datasource",
         "query": "prometheus"
+      },
+      {
+        "name": "container",
+        "type": "query",
+        "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+        "query": "label_values(container_last_seen{job=\"observer_cadvisor\", container_label_com_docker_compose_service=~\".+\"}, name)",
+        "current": { "selected": true, "text": "All", "value": "$__all" },
+        "includeAll": true,
+        "multi": true,
+        "refresh": 2,
+        "sort": 1,
+        "label": "Container",
+        "hide": 0
       }
     ]
   },

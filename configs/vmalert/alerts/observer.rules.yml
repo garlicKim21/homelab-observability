@@ -48,3 +48,54 @@ groups:
         annotations:
           summary: "Observer 서버 CPU 과부하"
           description: "Observer 서버 CPU 사용률 {{ $value | printf \"%.1f\" }}%가 10분 이상 80%를 초과합니다."
+
+      # -----------------------------------------------------------------------
+      # Warning: 디스크 I/O
+      # -----------------------------------------------------------------------
+      - alert: ObserverHighDiskIOUtilization
+        expr: rate(node_disk_io_time_seconds_total{job="observer_node", device!~"loop.*|dm-.*"}[5m]) * 100 > 80
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Observer 디스크 I/O 사용률 과다"
+          description: "Observer 서버 디스크 {{ $labels.device }} I/O 사용률 {{ $value | printf \"%.1f\" }}%가 10분 이상 80%를 초과합니다."
+
+      - alert: ObserverHighDiskLatency
+        expr: rate(node_disk_write_time_seconds_total{job="observer_node", device!~"loop.*|dm-.*"}[5m]) / rate(node_disk_writes_completed_total{job="observer_node", device!~"loop.*|dm-.*"}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Observer 디스크 쓰기 지연시간 과다"
+          description: "Observer 서버 디스크 {{ $labels.device }} 쓰기 지연시간 {{ $value | printf \"%.3f\" }}초가 5분 이상 50ms를 초과합니다."
+
+      # -----------------------------------------------------------------------
+      # Info/Warning: 컨테이너 모니터링
+      # -----------------------------------------------------------------------
+      - alert: ObserverCAdvisorDown
+        expr: up{job="observer_cadvisor"} == 0
+        for: 5m
+        labels:
+          severity: info
+        annotations:
+          summary: "Observer CAdvisor 다운"
+          description: "Observer 서버 CAdvisor가 5분 이상 응답하지 않습니다. 컨테이너 메트릭 수집 불가."
+
+      - alert: ObserverContainerDown
+        expr: count(container_last_seen{job="observer_cadvisor", container_label_com_docker_compose_service=~".+"}) < 11
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Observer 컨테이너 수 감소"
+          description: "Observer 서버 실행 중 컨테이너 수가 {{ $value }}개로, 예상(11개)보다 적습니다."
+
+      - alert: ObserverContainerHighMemory
+        expr: container_memory_usage_bytes{job="observer_cadvisor", container_label_com_docker_compose_service=~".+"} > 2147483648
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Observer 컨테이너 메모리 과다 사용"
+          description: "Observer 서버 컨테이너 {{ $labels.name }} 메모리 사용량이 10분 이상 2GB를 초과합니다."
