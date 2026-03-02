@@ -14,7 +14,7 @@ if [[ ! -f .env ]]; then
   exit 1
 fi
 
-REQUIRED_VARS=(OCI_INSTANCE_IP AP_IP FIREWALL_IP_1 FIREWALL_IP_2 FIREWALL_IP_3 ESXI_IP_PATTERN NAS_IP SNMP_AUTH_PASS SNMP_PRIV_PASS SNMP_AP_AUTH_PASS SNMP_AP_PRIV_PASS)
+REQUIRED_VARS=(OCI_INSTANCE_IP AP_IP FIREWALL_IP_1 FIREWALL_IP_2 FIREWALL_IP_3 ESXI_IP_PATTERN NAS_IP SNMP_AUTH_PASS SNMP_PRIV_PASS SNMP_AP_AUTH_PASS SNMP_AP_PRIV_PASS SNMP_USERNAME SNMP_AP_USERNAME OPNSENSE_HOST SWITCH_HOST NAS_HOST)
 for var in "${REQUIRED_VARS[@]}"; do
   val=$(grep "^${var}=" .env | head -1 | cut -d'=' -f2-)
   if [[ -z "$val" ]]; then
@@ -53,6 +53,9 @@ with open(scrape_path, "r") as f:
 
 content = content.replace("<OCI_INSTANCE_IP>", env["OCI_INSTANCE_IP"])
 content = content.replace("<AP_IP>", env["AP_IP"])
+content = content.replace("<OPNSENSE_HOST>", env["OPNSENSE_HOST"])
+content = content.replace("<SWITCH_HOST>", env["SWITCH_HOST"])
+content = content.replace("<NAS_HOST>", env["NAS_HOST"])
 
 with open(scrape_path, "w") as f:
     f.write(content)
@@ -100,6 +103,8 @@ content = content.replace("<SNMP_AUTH_PASS>", env["SNMP_AUTH_PASS"])
 content = content.replace("<SNMP_PRIV_PASS>", env["SNMP_PRIV_PASS"])
 content = content.replace("<SNMP_AP_AUTH_PASS>", env["SNMP_AP_AUTH_PASS"])
 content = content.replace("<SNMP_AP_PRIV_PASS>", env["SNMP_AP_PRIV_PASS"])
+content = content.replace("<SNMP_USERNAME>", env["SNMP_USERNAME"])
+content = content.replace("<SNMP_AP_USERNAME>", env["SNMP_AP_USERNAME"])
 
 with open(snmp_path, "w") as f:
     f.write(content)

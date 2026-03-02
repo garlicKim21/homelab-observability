@@ -15,7 +15,7 @@ auths:
   basphere_v3_des:
     version: 3
     security_level: authPriv
-    username: "basphere-obs"
+    username: "<SNMP_USERNAME>"
     password: "<SNMP_AUTH_PASS>"
     auth_protocol: SHA
     priv_protocol: DES
@@ -25,7 +25,7 @@ auths:
   basphere_v3_nas:
     version: 3
     security_level: authPriv
-    username: "basphere-obs"
+    username: "<SNMP_USERNAME>"
     password: "<SNMP_AUTH_PASS>"
     auth_protocol: SHA
     priv_protocol: AES
@@ -35,7 +35,7 @@ auths:
   basphere_v3_ap:
     version: 3
     security_level: authPriv
-    username: "basphereobs"
+    username: "<SNMP_AP_USERNAME>"
     password: "<SNMP_AP_AUTH_PASS>"
     auth_protocol: SHA
     priv_protocol: AES

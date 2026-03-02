@@ -66,7 +66,7 @@ scrape_configs:
     scrape_interval: 30s
     scrape_timeout: 10s
     static_configs:
-      - targets: ["cerberus.basphere.local:9100"]
+      - targets: ["<OPNSENSE_HOST>:9100"]
         labels:
           instance: "cerberus"
           device_type: "firewall"
@@ -80,7 +80,7 @@ scrape_configs:
     scrape_interval: 30s
     scrape_timeout: 15s
     static_configs:
-      - targets: ["sw.basphere.local"]  # SG2218
+      - targets: ["<SWITCH_HOST>"]  # SG2218
         labels:
           device: "sg2218"
           device_type: "switch"
@@ -101,7 +101,7 @@ scrape_configs:
     scrape_interval: 60s
     scrape_timeout: 30s
     static_configs:
-      - targets: ["storage.basphere.local"]  # Synology DS1515+
+      - targets: ["<NAS_HOST>"]  # Synology DS1515+
         labels:
           device: "ds1515"
           device_type: "nas"
