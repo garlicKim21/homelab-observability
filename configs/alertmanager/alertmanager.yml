@@ -38,6 +38,7 @@ receivers:
     webhook_configs:
       - url: "http://discord-webhook-proxy:9094"
         send_resolved: true
+        max_alerts: 5
 
 # =============================================================================
 # 참고: Discord는 Alertmanager webhook 형식을 직접 지원하지 않으므로

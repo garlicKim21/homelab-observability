@@ -266,13 +266,13 @@ services:
   # Alertmanager webhook → Discord webhook 형식 변환
   # ---------------------------------------------------------------------------
   discord-webhook-proxy:
-    image: rogerrum/alertmanager-discord:1.0.5
+    build: ./configs/discord-proxy
     container_name: discord-webhook-proxy
     restart: unless-stopped
     environment:
       - DISCORD_WEBHOOK=${DISCORD_WEBHOOK_URL:-https://discord.com/api/webhooks/PLACEHOLDER}
       - DISCORD_USERNAME=Basphere Monitoring
-      - LISTEN_ADDRESS=0.0.0.0:9094
+      - LISTEN_PORT=9094
     ports:
       - "9094:9094"
     networks:
