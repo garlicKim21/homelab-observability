@@ -643,7 +643,7 @@
       "collapsed": false
     },
     {
-      "title": "Container CPU Usage",
+      "title": "Container CPU: Usage vs Limit",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -658,7 +658,13 @@
       "targets": [
         {
           "expr": "rate(container_cpu_usage_seconds_total{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}[5m]) * 100",
-          "legendFormat": "{{ name }}"
+          "legendFormat": "{{ name }}",
+          "refId": "A"
+        },
+        {
+          "expr": "(container_spec_cpu_quota{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"} > 0) / container_spec_cpu_period{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"} * 100",
+          "legendFormat": "{{ name }} limit",
+          "refId": "B"
         }
       ],
       "fieldConfig": {
@@ -668,11 +674,39 @@
           "custom": {
             "fillOpacity": 15
           }
-        }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "B"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    10
+                  ]
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 2
+              }
+            ]
+          }
+        ]
       }
     },
     {
-      "title": "Container Memory Usage",
+      "title": "Container Memory: Usage vs Limit",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -687,7 +721,13 @@
       "targets": [
         {
           "expr": "container_memory_usage_bytes{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}",
-          "legendFormat": "{{ name }}"
+          "legendFormat": "{{ name }}",
+          "refId": "A"
+        },
+        {
+          "expr": "container_spec_memory_limit_bytes{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"} > 0",
+          "legendFormat": "{{ name }} limit",
+          "refId": "B"
         }
       ],
       "fieldConfig": {
@@ -696,7 +736,35 @@
           "custom": {
             "fillOpacity": 15
           }
-        }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "B"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    10
+                  ]
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 2
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -775,81 +843,13 @@
       }
     },
     {
-      "title": "Container Resource Limits",
-      "type": "table",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 24,
-        "x": 0,
-        "y": 54
-      },
-      "targets": [
-        {
-          "expr": "container_spec_cpu_quota{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"} / container_spec_cpu_period{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}",
-          "format": "table",
-          "instant": true,
-          "refId": "cpulimit"
-        },
-        {
-          "expr": "container_spec_memory_limit_bytes{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}",
-          "format": "table",
-          "instant": true,
-          "refId": "memlimit"
-        },
-        {
-          "expr": "container_memory_usage_bytes{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}",
-          "format": "table",
-          "instant": true,
-          "refId": "memused"
-        }
-      ],
-      "transformations": [
-        {
-          "id": "seriesToColumns",
-          "options": {
-            "byField": "name"
-          }
-        }
-      ],
-      "fieldConfig": {
-        "overrides": [
-          {
-            "matcher": { "id": "byName", "options": "Value #cpulimit" },
-            "properties": [
-              { "id": "displayName", "value": "CPU Limit (cores)" },
-              { "id": "unit", "value": "short" },
-              { "id": "decimals", "value": 1 }
-            ]
-          },
-          {
-            "matcher": { "id": "byName", "options": "Value #memlimit" },
-            "properties": [
-              { "id": "displayName", "value": "Memory Limit" },
-              { "id": "unit", "value": "bytes" }
-            ]
-          },
-          {
-            "matcher": { "id": "byName", "options": "Value #memused" },
-            "properties": [
-              { "id": "displayName", "value": "Memory Used" },
-              { "id": "unit", "value": "bytes" }
-            ]
-          }
-        ]
-      }
-    },
-    {
       "title": "Services (Blackbox)",
       "type": "row",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 60
+        "y": 54
       },
       "collapsed": false
     },
@@ -864,7 +864,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 61
+        "y": 55
       },
       "targets": [
         {
@@ -920,7 +920,7 @@
         "h": 4,
         "w": 4,
         "x": 4,
-        "y": 61
+        "y": 55
       },
       "targets": [
         {
@@ -976,7 +976,7 @@
         "h": 6,
         "w": 8,
         "x": 8,
-        "y": 61
+        "y": 55
       },
       "targets": [
         {
@@ -1008,7 +1008,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 67
+        "y": 61
       },
       "targets": [
         {
@@ -1057,7 +1057,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 67
+        "y": 61
       },
       "targets": [
         {
@@ -1102,7 +1102,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 75
+        "y": 69
       },
       "targets": [
         {
@@ -1219,7 +1219,7 @@
         "h": 4,
         "w": 4,
         "x": 16,
-        "y": 61
+        "y": 55
       },
       "targets": [
         {
@@ -1264,7 +1264,7 @@
         "h": 4,
         "w": 4,
         "x": 20,
-        "y": 61
+        "y": 55
       },
       "targets": [
         {
@@ -1303,7 +1303,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 83
+        "y": 77
       },
       "collapsed": false
     },
@@ -1318,7 +1318,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 84
+        "y": 78
       },
       "targets": [
         {
@@ -1374,7 +1374,7 @@
         "h": 4,
         "w": 4,
         "x": 4,
-        "y": 84
+        "y": 78
       },
       "targets": [
         {
@@ -1416,7 +1416,7 @@
         "h": 4,
         "w": 4,
         "x": 8,
-        "y": 84
+        "y": 78
       },
       "targets": [
         {
@@ -1444,7 +1444,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 84
+        "y": 78
       },
       "targets": [
         {
@@ -1476,7 +1476,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 91
+        "y": 85
       },
       "targets": [
         {
@@ -1506,7 +1506,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 91
+        "y": 85
       },
       "targets": [
         {
