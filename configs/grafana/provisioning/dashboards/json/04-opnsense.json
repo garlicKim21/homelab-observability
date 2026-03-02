@@ -78,10 +78,10 @@
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
       "gridPos": { "h": 7, "w": 12, "x": 0, "y": 7 },
       "targets": [
-        { "expr": "opnsense_firewall_in_ipv4_block_packets", "legendFormat": "{{ interface }} In Block" },
-        { "expr": "opnsense_firewall_out_ipv4_block_packets", "legendFormat": "{{ interface }} Out Block" }
+        { "expr": "rate(opnsense_firewall_in_ipv4_block_packets[5m])", "legendFormat": "{{ interface }} In Block" },
+        { "expr": "rate(opnsense_firewall_out_ipv4_block_packets[5m])", "legendFormat": "{{ interface }} Out Block" }
       ],
-      "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 10 } } }
+      "fieldConfig": { "defaults": { "unit": "pps", "custom": { "fillOpacity": 10 } } }
     },
     {
       "title": "Firewall Passed Packets (by interface)",
@@ -89,10 +89,10 @@
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
       "gridPos": { "h": 7, "w": 12, "x": 12, "y": 7 },
       "targets": [
-        { "expr": "opnsense_firewall_in_ipv4_pass_packets", "legendFormat": "{{ interface }} In Pass" },
-        { "expr": "opnsense_firewall_out_ipv4_pass_packets", "legendFormat": "{{ interface }} Out Pass" }
+        { "expr": "rate(opnsense_firewall_in_ipv4_pass_packets[5m])", "legendFormat": "{{ interface }} In Pass" },
+        { "expr": "rate(opnsense_firewall_out_ipv4_pass_packets[5m])", "legendFormat": "{{ interface }} Out Pass" }
       ],
-      "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 10 } } }
+      "fieldConfig": { "defaults": { "unit": "pps", "custom": { "fillOpacity": 10 } } }
     },
     {
       "title": "Services Status",

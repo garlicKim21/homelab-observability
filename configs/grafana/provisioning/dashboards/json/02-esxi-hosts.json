@@ -350,7 +350,7 @@
         { "expr": "vmware_host_mem_swapin_average", "legendFormat": "{{ host_name }} SwapIn" },
         { "expr": "vmware_host_mem_swapout_average", "legendFormat": "{{ host_name }} SwapOut" }
       ],
-      "fieldConfig": { "defaults": { "unit": "deckbytes", "custom": { "fillOpacity": 10 } } }
+      "fieldConfig": { "defaults": { "unit": "KBs", "custom": { "fillOpacity": 10 } } }
     },
     {
       "title": "Network",

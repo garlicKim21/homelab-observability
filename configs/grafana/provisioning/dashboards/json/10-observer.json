@@ -209,7 +209,7 @@
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
       "gridPos": { "h": 7, "w": 8, "x": 0, "y": 24 },
       "targets": [{ "expr": "rate(vm_rows_inserted_total[5m])", "legendFormat": "{{ type }}" }],
-      "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 20 } } }
+      "fieldConfig": { "defaults": { "unit": "ops", "custom": { "fillOpacity": 20 } } }
     },
     {
       "title": "Storage Size",
@@ -321,7 +321,7 @@
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "short",
+          "unit": "ops",
           "custom": { "fillOpacity": 15 },
           "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 0.1 }, { "color": "red", "value": 1 }] },
           "color": { "mode": "palette-classic" }
@@ -346,7 +346,7 @@
       "targets": [
         { "expr": "rate(vm_merges_total{job=\"victoriametrics\"}[5m])", "legendFormat": "{{ type }}" }
       ],
-      "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 15 } } }
+      "fieldConfig": { "defaults": { "unit": "ops", "custom": { "fillOpacity": 15 } } }
     },
     {
       "title": "Pending Rows",
@@ -359,7 +359,7 @@
       "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 15 } } }
     },
     {
-      "title": "Cache Hit Ratio",
+      "title": "Cache Requests & Misses",
       "type": "timeseries",
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
       "gridPos": { "h": 7, "w": 8, "x": 8, "y": 62 },
@@ -367,7 +367,7 @@
         { "expr": "rate(vm_cache_requests_total{job=\"victoriametrics\"}[5m])", "legendFormat": "{{ type }} Requests", "refId": "A" },
         { "expr": "rate(vm_cache_misses_total{job=\"victoriametrics\"}[5m])", "legendFormat": "{{ type }} Misses", "refId": "B" }
       ],
-      "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 10 } } }
+      "fieldConfig": { "defaults": { "unit": "ops", "custom": { "fillOpacity": 10 } } }
     },
     {
       "title": "Active Merges",

@@ -47,7 +47,7 @@
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 6 },
       "targets": [{ "expr": "topk(10, vmware_vm_cpu_ready_summation)", "legendFormat": "{{ vm_name }}" }],
-      "fieldConfig": { "defaults": { "unit": "short", "min": 0, "custom": { "fillOpacity": 10 } } }
+      "fieldConfig": { "defaults": { "unit": "ms", "min": 0, "custom": { "fillOpacity": 10 } } }
     },
     {
       "title": "Memory",
