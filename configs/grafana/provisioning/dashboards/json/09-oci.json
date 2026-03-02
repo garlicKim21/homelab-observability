@@ -1,412 +1,1415 @@
 {
-  "annotations": { "list": [] },
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 1,
   "panels": [
     {
       "title": "Instance Status",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
       "collapsed": false
     },
     {
       "title": "Instance Status",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 1 },
-      "targets": [{ "expr": "up{job=\"oci_node\"}", "legendFormat": "ratatosk" }],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "up{job=\"oci_node\"}",
+          "legendFormat": "ratatosk"
+        }
+      ],
       "fieldConfig": {
         "defaults": {
-          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
-          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "red"
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
         }
       },
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value"
+      }
     },
     {
       "title": "Uptime",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 1 },
-      "targets": [{ "expr": "node_time_seconds{job=\"oci_node\"} - node_boot_time_seconds{job=\"oci_node\"}", "legendFormat": "Uptime" }],
-      "fieldConfig": { "defaults": { "unit": "s" } },
-      "options": { "colorMode": "none" }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "node_time_seconds{job=\"oci_node\"} - node_boot_time_seconds{job=\"oci_node\"}",
+          "legendFormat": "Uptime"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        }
+      },
+      "options": {
+        "colorMode": "none"
+      }
     },
     {
       "title": "Running Containers",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 1 },
-      "targets": [{ "expr": "count(container_last_seen{job=\"oci_cadvisor\", name=~\".+\", container_label_com_docker_compose_service=~\".+\"}) or vector(0)", "legendFormat": "Containers" }],
-      "options": { "colorMode": "value" }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "count(container_last_seen{job=\"oci_cadvisor\", name=~\".+\", container_label_com_docker_compose_service=~\".+\"}) or vector(0)",
+          "legendFormat": "Containers"
+        }
+      ],
+      "options": {
+        "colorMode": "value"
+      }
     },
     {
       "title": "Load Average",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 4, "w": 3, "x": 12, "y": 1 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 12,
+        "y": 1
+      },
       "targets": [
-        { "expr": "node_load1{job=\"oci_node\"}", "legendFormat": "1m" },
-        { "expr": "node_load5{job=\"oci_node\"}", "legendFormat": "5m" },
-        { "expr": "node_load15{job=\"oci_node\"}", "legendFormat": "15m" }
+        {
+          "expr": "node_load1{job=\"oci_node\"}",
+          "legendFormat": "1m"
+        },
+        {
+          "expr": "node_load5{job=\"oci_node\"}",
+          "legendFormat": "5m"
+        },
+        {
+          "expr": "node_load15{job=\"oci_node\"}",
+          "legendFormat": "15m"
+        }
       ],
-      "options": { "colorMode": "none" }
+      "options": {
+        "colorMode": "none"
+      }
     },
     {
       "title": "Disk / (44GB)",
       "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 4, "w": 3, "x": 15, "y": 1 },
-      "targets": [{ "expr": "(1 - node_filesystem_avail_bytes{job=\"oci_node\", mountpoint=\"/\"} / node_filesystem_size_bytes{job=\"oci_node\", mountpoint=\"/\"}) * 100", "legendFormat": "Root" }],
-      "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] } } }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 15,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "(1 - node_filesystem_avail_bytes{job=\"oci_node\", mountpoint=\"/\"} / node_filesystem_size_bytes{job=\"oci_node\", mountpoint=\"/\"}) * 100",
+          "legendFormat": "Root"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        }
+      }
     },
     {
       "title": "Disk /data (147GB)",
       "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 4, "w": 3, "x": 18, "y": 1 },
-      "targets": [{ "expr": "(1 - node_filesystem_avail_bytes{job=\"oci_node\", mountpoint=\"/data\"} / node_filesystem_size_bytes{job=\"oci_node\", mountpoint=\"/data\"}) * 100", "legendFormat": "Data" }],
-      "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] } } }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 18,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "(1 - node_filesystem_avail_bytes{job=\"oci_node\", mountpoint=\"/data\"} / node_filesystem_size_bytes{job=\"oci_node\", mountpoint=\"/data\"}) * 100",
+          "legendFormat": "Data"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        }
+      }
     },
     {
       "title": "Instance Info",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 4, "w": 3, "x": 21, "y": 1 },
-      "targets": [{ "expr": "node_uname_info{job=\"oci_node\"}", "legendFormat": "{{ nodename }}" }],
-      "fieldConfig": { "defaults": { "mappings": [{ "options": { "1": { "text": "ARM64 4C/24G" } }, "type": "value" }] } },
-      "options": { "colorMode": "none", "textMode": "name" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 21,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "node_uname_info{job=\"oci_node\"}",
+          "legendFormat": "{{ nodename }}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "options": {
+                "1": {
+                  "text": "ARM64 4C/24G"
+                }
+              },
+              "type": "value"
+            }
+          ]
+        }
+      },
+      "options": {
+        "colorMode": "none",
+        "textMode": "name"
+      },
       "description": "OCI Singapore | ratatosk.io | ARM 4C/24G"
     },
     {
       "title": "System Resources",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
       "collapsed": false
     },
     {
       "title": "CPU Usage",
       "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 6 },
-      "targets": [{ "expr": "100 - (avg(rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"idle\"}[5m])) * 100)", "legendFormat": "CPU" }],
-      "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] } } }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 6
+      },
+      "targets": [
+        {
+          "expr": "100 - (avg(rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"idle\"}[5m])) * 100)",
+          "legendFormat": "CPU"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        }
+      }
     },
     {
       "title": "Memory Usage",
       "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 6 },
-      "targets": [{ "expr": "(1 - node_memory_MemAvailable_bytes{job=\"oci_node\"} / node_memory_MemTotal_bytes{job=\"oci_node\"}) * 100", "legendFormat": "Memory" }],
-      "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 80 }, { "color": "red", "value": 90 }] } } }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 6,
+        "y": 6
+      },
+      "targets": [
+        {
+          "expr": "(1 - node_memory_MemAvailable_bytes{job=\"oci_node\"} / node_memory_MemTotal_bytes{job=\"oci_node\"}) * 100",
+          "legendFormat": "Memory"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 80
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          }
+        }
+      }
     },
     {
       "title": "Memory Breakdown",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 6 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
       "targets": [
-        { "expr": "node_memory_MemTotal_bytes{job=\"oci_node\"} - node_memory_MemAvailable_bytes{job=\"oci_node\"}", "legendFormat": "Used" },
-        { "expr": "node_memory_Cached_bytes{job=\"oci_node\"}", "legendFormat": "Cached" },
-        { "expr": "node_memory_Buffers_bytes{job=\"oci_node\"}", "legendFormat": "Buffers" },
-        { "expr": "node_memory_MemAvailable_bytes{job=\"oci_node\"}", "legendFormat": "Available" }
+        {
+          "expr": "node_memory_MemTotal_bytes{job=\"oci_node\"} - node_memory_MemAvailable_bytes{job=\"oci_node\"}",
+          "legendFormat": "Used"
+        },
+        {
+          "expr": "node_memory_Cached_bytes{job=\"oci_node\"}",
+          "legendFormat": "Cached"
+        },
+        {
+          "expr": "node_memory_Buffers_bytes{job=\"oci_node\"}",
+          "legendFormat": "Buffers"
+        },
+        {
+          "expr": "node_memory_MemAvailable_bytes{job=\"oci_node\"}",
+          "legendFormat": "Available"
+        }
       ],
-      "fieldConfig": { "defaults": { "unit": "bytes", "custom": { "fillOpacity": 20, "stacking": { "mode": "normal" } } } }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "custom": {
+            "fillOpacity": 20,
+            "stacking": {
+              "mode": "normal"
+            }
+          }
+        }
+      }
     },
     {
       "title": "CPU & Load Over Time",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 12 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
       "collapsed": false
     },
     {
       "title": "CPU Usage Over Time",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 13 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 13
+      },
       "targets": [
-        { "expr": "sum by (mode) (rate(node_cpu_seconds_total{job=\"oci_node\", mode!=\"idle\"}[5m])) / count(count by (cpu) (node_cpu_seconds_total{job=\"oci_node\"})) * 100", "legendFormat": "{{ mode }}" }
+        {
+          "expr": "sum by (mode) (rate(node_cpu_seconds_total{job=\"oci_node\", mode!=\"idle\"}[5m])) / count(count by (cpu) (node_cpu_seconds_total{job=\"oci_node\"})) * 100",
+          "legendFormat": "{{ mode }}"
+        }
       ],
-      "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "fillOpacity": 30, "stacking": { "mode": "normal" } } } }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "custom": {
+            "fillOpacity": 30,
+            "stacking": {
+              "mode": "normal"
+            }
+          }
+        }
+      }
     },
     {
       "title": "Load Average",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 13 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 13
+      },
       "targets": [
-        { "expr": "node_load1{job=\"oci_node\"}", "legendFormat": "1m" },
-        { "expr": "node_load5{job=\"oci_node\"}", "legendFormat": "5m" },
-        { "expr": "node_load15{job=\"oci_node\"}", "legendFormat": "15m" }
+        {
+          "expr": "node_load1{job=\"oci_node\"}",
+          "legendFormat": "1m"
+        },
+        {
+          "expr": "node_load5{job=\"oci_node\"}",
+          "legendFormat": "5m"
+        },
+        {
+          "expr": "node_load15{job=\"oci_node\"}",
+          "legendFormat": "15m"
+        }
       ],
-      "fieldConfig": { "defaults": { "custom": { "fillOpacity": 10 } } }
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "fillOpacity": 10
+          }
+        }
+      }
     },
     {
       "title": "Disk",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 21 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
       "collapsed": false
     },
     {
       "title": "Disk I/O",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 22 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 22
+      },
       "targets": [
-        { "expr": "rate(node_disk_read_bytes_total{job=\"oci_node\"}[5m])", "legendFormat": "{{ device }} Read" },
-        { "expr": "-rate(node_disk_written_bytes_total{job=\"oci_node\"}[5m])", "legendFormat": "{{ device }} Write" }
+        {
+          "expr": "rate(node_disk_read_bytes_total{job=\"oci_node\"}[5m])",
+          "legendFormat": "{{ device }} Read"
+        },
+        {
+          "expr": "-rate(node_disk_written_bytes_total{job=\"oci_node\"}[5m])",
+          "legendFormat": "{{ device }} Write"
+        }
       ],
-      "fieldConfig": { "defaults": { "unit": "Bps", "custom": { "fillOpacity": 15 } } }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps",
+          "custom": {
+            "fillOpacity": 15
+          }
+        }
+      }
     },
     {
       "title": "Filesystem Usage",
       "type": "bargauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 22 },
-      "targets": [{ "expr": "(1 - node_filesystem_avail_bytes{job=\"oci_node\", fstype!~\"tmpfs|devtmpfs|overlay\"} / node_filesystem_size_bytes{job=\"oci_node\", fstype!~\"tmpfs|devtmpfs|overlay\"}) * 100", "legendFormat": "{{ mountpoint }}" }],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 22
+      },
+      "targets": [
+        {
+          "expr": "(1 - node_filesystem_avail_bytes{job=\"oci_node\", fstype!~\"tmpfs|devtmpfs|overlay\"} / node_filesystem_size_bytes{job=\"oci_node\", fstype!~\"tmpfs|devtmpfs|overlay\"}) * 100",
+          "legendFormat": "{{ mountpoint }}"
+        }
+      ],
       "fieldConfig": {
         "defaults": {
-          "unit": "percent", "min": 0, "max": 100,
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] }
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
         }
       },
-      "options": { "orientation": "horizontal", "displayMode": "gradient" }
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient"
+      }
     },
     {
       "title": "Network",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 29 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 29
+      },
       "collapsed": false
     },
     {
       "title": "Network Traffic",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 30 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 30
+      },
       "targets": [
-        { "expr": "rate(node_network_receive_bytes_total{job=\"oci_node\", device!~\"lo|veth.*|docker.*|br-.*\"}[5m]) * 8", "legendFormat": "{{ device }} In" },
-        { "expr": "-rate(node_network_transmit_bytes_total{job=\"oci_node\", device!~\"lo|veth.*|docker.*|br-.*\"}[5m]) * 8", "legendFormat": "{{ device }} Out" }
+        {
+          "expr": "rate(node_network_receive_bytes_total{job=\"oci_node\", device!~\"lo|veth.*|docker.*|br-.*\"}[5m]) * 8",
+          "legendFormat": "{{ device }} In"
+        },
+        {
+          "expr": "-rate(node_network_transmit_bytes_total{job=\"oci_node\", device!~\"lo|veth.*|docker.*|br-.*\"}[5m]) * 8",
+          "legendFormat": "{{ device }} Out"
+        }
       ],
-      "fieldConfig": { "defaults": { "unit": "bps", "custom": { "fillOpacity": 20 } } }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps",
+          "custom": {
+            "fillOpacity": 20
+          }
+        }
+      }
     },
     {
       "title": "Docker Containers",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 37 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 37
+      },
       "collapsed": false
     },
     {
       "title": "Container CPU Usage",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 38 },
-      "targets": [{ "expr": "rate(container_cpu_usage_seconds_total{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}[5m]) * 100", "legendFormat": "{{ name }}" }],
-      "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "custom": { "fillOpacity": 15 } } }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 38
+      },
+      "targets": [
+        {
+          "expr": "rate(container_cpu_usage_seconds_total{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}[5m]) * 100",
+          "legendFormat": "{{ name }}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "custom": {
+            "fillOpacity": 15
+          }
+        }
+      }
     },
     {
       "title": "Container Memory Usage",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 38 },
-      "targets": [{ "expr": "container_memory_usage_bytes{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}", "legendFormat": "{{ name }}" }],
-      "fieldConfig": { "defaults": { "unit": "bytes", "custom": { "fillOpacity": 15 } } }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 38
+      },
+      "targets": [
+        {
+          "expr": "container_memory_usage_bytes{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}",
+          "legendFormat": "{{ name }}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "custom": {
+            "fillOpacity": 15
+          }
+        }
+      }
     },
     {
       "title": "Container Network & I/O",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 46 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 46
+      },
       "collapsed": false
     },
     {
       "title": "Container Network Rx/Tx",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 47 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 47
+      },
       "targets": [
-        { "expr": "rate(container_network_receive_bytes_total{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}[5m]) * 8", "legendFormat": "{{ name }} Rx" },
-        { "expr": "-rate(container_network_transmit_bytes_total{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}[5m]) * 8", "legendFormat": "{{ name }} Tx" }
+        {
+          "expr": "rate(container_network_receive_bytes_total{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}[5m]) * 8",
+          "legendFormat": "{{ name }} Rx"
+        },
+        {
+          "expr": "-rate(container_network_transmit_bytes_total{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}[5m]) * 8",
+          "legendFormat": "{{ name }} Tx"
+        }
       ],
-      "fieldConfig": { "defaults": { "unit": "bps", "custom": { "fillOpacity": 15 } } }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps",
+          "custom": {
+            "fillOpacity": 15
+          }
+        }
+      }
     },
     {
       "title": "Container Block I/O",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 47 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 47
+      },
       "targets": [
-        { "expr": "rate(container_fs_reads_bytes_total{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}[5m])", "legendFormat": "{{ name }} Read" },
-        { "expr": "-rate(container_fs_writes_bytes_total{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}[5m])", "legendFormat": "{{ name }} Write" }
+        {
+          "expr": "rate(container_fs_reads_bytes_total{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}[5m])",
+          "legendFormat": "{{ name }} Read"
+        },
+        {
+          "expr": "-rate(container_fs_writes_bytes_total{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}[5m])",
+          "legendFormat": "{{ name }} Write"
+        }
       ],
-      "fieldConfig": { "defaults": { "unit": "Bps", "custom": { "fillOpacity": 15 } } }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps",
+          "custom": {
+            "fillOpacity": 15
+          }
+        }
+      }
     },
     {
       "title": "Container Resource Limits",
       "type": "table",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 6, "w": 24, "x": 0, "y": 54 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 54
+      },
       "targets": [
-        { "expr": "container_spec_cpu_quota{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"} / container_spec_cpu_period{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}", "format": "table", "instant": true, "refId": "cpulimit" },
-        { "expr": "container_spec_memory_limit_bytes{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}", "format": "table", "instant": true, "refId": "memlimit" },
-        { "expr": "container_memory_usage_bytes{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}", "format": "table", "instant": true, "refId": "memused" }
+        {
+          "expr": "container_spec_cpu_quota{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"} / container_spec_cpu_period{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}",
+          "format": "table",
+          "instant": true,
+          "refId": "cpulimit"
+        },
+        {
+          "expr": "container_spec_memory_limit_bytes{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}",
+          "format": "table",
+          "instant": true,
+          "refId": "memlimit"
+        },
+        {
+          "expr": "container_memory_usage_bytes{job=\"oci_cadvisor\", name=~\"ratatosk-.+\"}",
+          "format": "table",
+          "instant": true,
+          "refId": "memused"
+        }
       ],
       "transformations": [
-        { "id": "seriesToColumns", "options": { "byField": "name" } }
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "name"
+          }
+        }
       ]
     },
     {
       "title": "Services (Blackbox)",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 60 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 60
+      },
       "collapsed": false
     },
     {
       "title": "ratatosk.io",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 61 },
-      "targets": [{ "expr": "probe_success{job=\"blackbox_http\", instance=\"https://ratatosk.io\"}", "legendFormat": "ratatosk.io" }],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 61
+      },
+      "targets": [
+        {
+          "expr": "probe_success{job=\"blackbox_http\", instance=\"https://ratatosk.io\"}",
+          "legendFormat": "ratatosk.io"
+        }
+      ],
       "fieldConfig": {
         "defaults": {
-          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
-          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "red"
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
         }
       },
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value"
+      }
     },
     {
       "title": "Umami",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 61 },
-      "targets": [{ "expr": "probe_success{job=\"blackbox_internal\", instance=\"http://<OCI_INSTANCE_IP>:3001\"}", "legendFormat": "Umami" }],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 61
+      },
+      "targets": [
+        {
+          "expr": "probe_success{job=\"blackbox_internal\", instance=\"http://<OCI_INSTANCE_IP>:3001\"}",
+          "legendFormat": "Umami"
+        }
+      ],
       "fieldConfig": {
         "defaults": {
-          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
-          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "red"
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
         }
       },
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value"
+      }
     },
     {
       "title": "Response Time",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 6, "w": 8, "x": 8, "y": 61 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 8,
+        "y": 61
+      },
       "targets": [
-        { "expr": "probe_duration_seconds{job=\"blackbox_http\"}", "legendFormat": "ratatosk.io" },
-        { "expr": "probe_duration_seconds{job=\"blackbox_internal\"}", "legendFormat": "umami" }
+        {
+          "expr": "probe_duration_seconds{job=\"blackbox_http\"}",
+          "legendFormat": "ratatosk.io"
+        },
+        {
+          "expr": "probe_duration_seconds{job=\"blackbox_internal\"}",
+          "legendFormat": "umami"
+        }
       ],
-      "fieldConfig": { "defaults": { "unit": "s", "custom": { "fillOpacity": 10 } } }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": {
+            "fillOpacity": 10
+          }
+        }
+      }
+    },
+    {
+      "title": "Response Time Phases (ratatosk.io)",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 67
+      },
+      "targets": [
+        {
+          "expr": "probe_http_duration_seconds{job=\"blackbox_http\", phase=\"resolve\"}",
+          "legendFormat": "DNS Resolve"
+        },
+        {
+          "expr": "probe_http_duration_seconds{job=\"blackbox_http\", phase=\"connect\"}",
+          "legendFormat": "TCP Connect"
+        },
+        {
+          "expr": "probe_http_duration_seconds{job=\"blackbox_http\", phase=\"tls\"}",
+          "legendFormat": "TLS Handshake"
+        },
+        {
+          "expr": "probe_http_duration_seconds{job=\"blackbox_http\", phase=\"processing\"}",
+          "legendFormat": "Server Processing"
+        },
+        {
+          "expr": "probe_http_duration_seconds{job=\"blackbox_http\", phase=\"transfer\"}",
+          "legendFormat": "Content Transfer"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": {
+            "fillOpacity": 30,
+            "stacking": {
+              "mode": "normal"
+            },
+            "lineWidth": 1
+          }
+        }
+      },
+      "description": "HTTP 응답시간을 phase별로 분해. 800ms 스파이크가 TLS인지 서버 처리인지 구분 가능."
+    },
+    {
+      "title": "Response Time Phases (umami)",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 67
+      },
+      "targets": [
+        {
+          "expr": "probe_http_duration_seconds{job=\"blackbox_internal\", phase=\"resolve\"}",
+          "legendFormat": "DNS Resolve"
+        },
+        {
+          "expr": "probe_http_duration_seconds{job=\"blackbox_internal\", phase=\"connect\"}",
+          "legendFormat": "TCP Connect"
+        },
+        {
+          "expr": "probe_http_duration_seconds{job=\"blackbox_internal\", phase=\"processing\"}",
+          "legendFormat": "Server Processing"
+        },
+        {
+          "expr": "probe_http_duration_seconds{job=\"blackbox_internal\", phase=\"transfer\"}",
+          "legendFormat": "Content Transfer"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": {
+            "fillOpacity": 30,
+            "stacking": {
+              "mode": "normal"
+            },
+            "lineWidth": 1
+          }
+        }
+      },
+      "description": "VPN 경유 내부 호출. TLS 없으므로 processing phase가 대부분을 차지해야 정상."
     },
     {
       "title": "SSL Certificate Expiry",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 61 },
-      "targets": [{ "expr": "(probe_ssl_earliest_cert_expiry{job=\"blackbox_http\"} - time()) / 86400", "legendFormat": "Days Left" }],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 61
+      },
+      "targets": [
+        {
+          "expr": "(probe_ssl_earliest_cert_expiry{job=\"blackbox_http\"} - time()) / 86400",
+          "legendFormat": "Days Left"
+        }
+      ],
       "fieldConfig": {
         "defaults": {
-          "unit": "short", "decimals": 0,
-          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "yellow", "value": 14 }, { "color": "green", "value": 30 }] }
+          "unit": "short",
+          "decimals": 0,
+          "thresholds": {
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 14
+              },
+              {
+                "color": "green",
+                "value": 30
+              }
+            ]
+          }
         }
       },
-      "options": { "colorMode": "value" }
+      "options": {
+        "colorMode": "value"
+      }
     },
     {
       "title": "HTTP Status Code",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 61 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 61
+      },
       "targets": [
-        { "expr": "probe_http_status_code{job=\"blackbox_http\"}", "legendFormat": "ratatosk.io" },
-        { "expr": "probe_http_status_code{job=\"blackbox_internal\"}", "legendFormat": "umami" }
+        {
+          "expr": "probe_http_status_code{job=\"blackbox_http\"}",
+          "legendFormat": "ratatosk.io"
+        },
+        {
+          "expr": "probe_http_status_code{job=\"blackbox_internal\"}",
+          "legendFormat": "umami"
+        }
       ],
       "fieldConfig": {
         "defaults": {
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 400 }] }
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 400
+              }
+            ]
+          }
         }
       },
-      "options": { "colorMode": "value" }
+      "options": {
+        "colorMode": "value"
+      }
     },
     {
       "title": "PostgreSQL",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 67 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 75
+      },
       "collapsed": false
     },
     {
       "title": "PostgreSQL Status",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 68 },
-      "targets": [{ "expr": "up{job=\"oci_postgres\"}", "legendFormat": "PostgreSQL" }],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 76
+      },
+      "targets": [
+        {
+          "expr": "up{job=\"oci_postgres\"}",
+          "legendFormat": "PostgreSQL"
+        }
+      ],
       "fieldConfig": {
         "defaults": {
-          "mappings": [{ "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } }, "type": "value" }],
-          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "red"
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
         }
       },
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value"
+      }
     },
     {
       "title": "Active Connections",
       "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 68 },
-      "targets": [{ "expr": "pg_stat_activity_count{job=\"oci_postgres\", state=\"active\"}", "legendFormat": "Active" }],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 76
+      },
+      "targets": [
+        {
+          "expr": "pg_stat_activity_count{job=\"oci_postgres\", state=\"active\"}",
+          "legendFormat": "Active"
+        }
+      ],
       "fieldConfig": {
         "defaults": {
-          "min": 0, "max": 100,
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 50 }, { "color": "red", "value": 80 }] }
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
         }
       }
     },
     {
       "title": "DB Size",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 68 },
-      "targets": [{ "expr": "pg_database_size_bytes{job=\"oci_postgres\"}", "legendFormat": "{{ datname }}" }],
-      "fieldConfig": { "defaults": { "unit": "bytes" } },
-      "options": { "colorMode": "value" }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 76
+      },
+      "targets": [
+        {
+          "expr": "pg_database_size_bytes{job=\"oci_postgres\"}",
+          "legendFormat": "{{ datname }}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        }
+      },
+      "options": {
+        "colorMode": "value"
+      }
     },
     {
       "title": "Transactions",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 68 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 76
+      },
       "targets": [
-        { "expr": "rate(pg_stat_database_xact_commit{job=\"oci_postgres\"}[5m])", "legendFormat": "{{ datname }} commit" },
-        { "expr": "rate(pg_stat_database_xact_rollback{job=\"oci_postgres\"}[5m])", "legendFormat": "{{ datname }} rollback" }
+        {
+          "expr": "rate(pg_stat_database_xact_commit{job=\"oci_postgres\"}[5m])",
+          "legendFormat": "{{ datname }} commit"
+        },
+        {
+          "expr": "rate(pg_stat_database_xact_rollback{job=\"oci_postgres\"}[5m])",
+          "legendFormat": "{{ datname }} rollback"
+        }
       ],
-      "fieldConfig": { "defaults": { "unit": "ops", "custom": { "fillOpacity": 15 } } }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ops",
+          "custom": {
+            "fillOpacity": 15
+          }
+        }
+      }
     },
     {
       "title": "Connections by State",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 75 },
-      "targets": [{ "expr": "pg_stat_activity_count{job=\"oci_postgres\"}", "legendFormat": "{{ state }}" }],
-      "fieldConfig": { "defaults": { "custom": { "fillOpacity": 20, "stacking": { "mode": "normal" } } } }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 83
+      },
+      "targets": [
+        {
+          "expr": "pg_stat_activity_count{job=\"oci_postgres\"}",
+          "legendFormat": "{{ state }}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "fillOpacity": 20,
+            "stacking": {
+              "mode": "normal"
+            }
+          }
+        }
+      }
     },
     {
       "title": "Cache Hit Ratio",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 75 },
-      "targets": [{ "expr": "pg_stat_database_blks_hit{job=\"oci_postgres\"} / (pg_stat_database_blks_hit{job=\"oci_postgres\"} + pg_stat_database_blks_read{job=\"oci_postgres\"}) * 100", "legendFormat": "{{ datname }}" }],
-      "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "fillOpacity": 10 } } }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 83
+      },
+      "targets": [
+        {
+          "expr": "pg_stat_database_blks_hit{job=\"oci_postgres\"} / (pg_stat_database_blks_hit{job=\"oci_postgres\"} + pg_stat_database_blks_read{job=\"oci_postgres\"}) * 100",
+          "legendFormat": "{{ datname }}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "custom": {
+            "fillOpacity": 10
+          }
+        }
+      }
     }
   ],
   "refresh": "30s",
   "schemaVersion": 39,
-  "tags": ["homelab", "oci", "cloud", "ratatosk"],
+  "tags": [
+    "homelab",
+    "oci",
+    "cloud",
+    "ratatosk"
+  ],
   "templating": {
     "list": [
-      { "current": { "selected": false, "text": "VictoriaMetrics", "value": "VictoriaMetrics" }, "hide": 2, "name": "DS_VICTORIAMETRICS", "type": "datasource", "query": "prometheus" }
+      {
+        "current": {
+          "selected": false,
+          "text": "VictoriaMetrics",
+          "value": "VictoriaMetrics"
+        },
+        "hide": 2,
+        "name": "DS_VICTORIAMETRICS",
+        "type": "datasource",
+        "query": "prometheus"
+      }
     ]
   },
-  "time": { "from": "now-6h", "to": "now" },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
   "title": "OCI Cloud (ratatosk.io)",
   "uid": "oci-cloud"
 }
