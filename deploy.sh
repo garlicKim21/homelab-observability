@@ -8,22 +8,20 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"
 
-# ---- .env 로드 ----
+# ---- .env에서 IP 변수만 로드 (source 대신 grep으로 읽어 $$, ! 등 셸 해석 방지) ----
 if [[ ! -f .env ]]; then
   echo "[ERROR] .env 파일이 없습니다. 서버에 .env를 먼저 설정하세요."
   exit 1
 fi
-set -a
-source .env
-set +a
 
-# ---- 필수 변수 확인 ----
 REQUIRED_VARS=(OCI_INSTANCE_IP AP_IP FIREWALL_IP_1 FIREWALL_IP_2 FIREWALL_IP_3 ESXI_IP_PATTERN NAS_IP)
 for var in "${REQUIRED_VARS[@]}"; do
-  if [[ -z "${!var:-}" ]]; then
+  val=$(grep "^${var}=" .env | head -1 | cut -d'=' -f2-)
+  if [[ -z "$val" ]]; then
     echo "[ERROR] .env에 ${var}가 설정되지 않았습니다."
     exit 1
   fi
+  export "$var=$val"
 done
 
 # ---- Git Pull ----
