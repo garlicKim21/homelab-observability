@@ -1119,7 +1119,7 @@
       },
       "targets": [
         {
-          "expr": "probe_success{job=\"blackbox_internal\"}",
+          "expr": "probe_success{job=\"blackbox_internal\", service=\"umami\"}",
           "legendFormat": "Umami"
         }
       ],
@@ -1179,7 +1179,7 @@
           "legendFormat": "ratatosk.io"
         },
         {
-          "expr": "probe_duration_seconds{job=\"blackbox_internal\"}",
+          "expr": "probe_duration_seconds{job=\"blackbox_internal\", service=\"umami\"}",
           "legendFormat": "umami"
         }
       ],
@@ -1256,19 +1256,19 @@
       },
       "targets": [
         {
-          "expr": "probe_http_duration_seconds{job=\"blackbox_internal\", phase=\"resolve\"}",
+          "expr": "probe_http_duration_seconds{job=\"blackbox_internal\", service=\"umami\", phase=\"resolve\"}",
           "legendFormat": "DNS Resolve"
         },
         {
-          "expr": "probe_http_duration_seconds{job=\"blackbox_internal\", phase=\"connect\"}",
+          "expr": "probe_http_duration_seconds{job=\"blackbox_internal\", service=\"umami\", phase=\"connect\"}",
           "legendFormat": "TCP Connect"
         },
         {
-          "expr": "probe_http_duration_seconds{job=\"blackbox_internal\", phase=\"processing\"}",
+          "expr": "probe_http_duration_seconds{job=\"blackbox_internal\", service=\"umami\", phase=\"processing\"}",
           "legendFormat": "Server Processing"
         },
         {
-          "expr": "probe_http_duration_seconds{job=\"blackbox_internal\", phase=\"transfer\"}",
+          "expr": "probe_http_duration_seconds{job=\"blackbox_internal\", service=\"umami\", phase=\"transfer\"}",
           "legendFormat": "Content Transfer"
         }
       ],
@@ -1467,7 +1467,7 @@
           "legendFormat": "ratatosk.io"
         },
         {
-          "expr": "probe_http_status_code{job=\"blackbox_internal\"}",
+          "expr": "probe_http_status_code{job=\"blackbox_internal\", service=\"umami\"}",
           "legendFormat": "umami"
         }
       ],

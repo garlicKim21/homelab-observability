@@ -326,7 +326,7 @@
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
       "gridPos": { "h": 7, "w": 8, "x": 8, "y": 55 },
       "targets": [
-        { "expr": "histogram_quantile(0.99, sum(rate(vm_request_duration_seconds_bucket{job=\"victoriametrics\"}[5m])) by (le))", "legendFormat": "p99" }
+        { "expr": "vm_request_duration_seconds{job=\"victoriametrics\", quantile=\"0.99\"}", "legendFormat": "p99 {{ path }}" }
       ],
       "fieldConfig": { "defaults": { "unit": "s", "custom": { "fillOpacity": 10 } } }
     },
