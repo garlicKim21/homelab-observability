@@ -14,6 +14,8 @@ services:
     image: victoriametrics/victoria-metrics:v1.106.1
     container_name: victoriametrics
     restart: unless-stopped
+    mem_limit: 1536m
+    cpus: 1.5
     dns:
       - ${DNS_SERVER}  # 내부 DNS (basphere.local 해석)
     ports:
@@ -49,6 +51,8 @@ services:
     image: victoriametrics/vmalert:v1.106.1
     container_name: vmalert
     restart: unless-stopped
+    mem_limit: 256m
+    cpus: 0.25
     depends_on:
       victoriametrics:
         condition: service_healthy
@@ -74,6 +78,8 @@ services:
     image: prom/alertmanager:v0.27.0
     container_name: alertmanager
     restart: unless-stopped
+    mem_limit: 128m
+    cpus: 0.25
     ports:
       - "9093:9093"
     volumes:
@@ -98,6 +104,8 @@ services:
     image: grafana/grafana:11.4.0
     container_name: grafana
     restart: unless-stopped
+    mem_limit: 512m
+    cpus: 0.5
     depends_on:
       victoriametrics:
         condition: service_healthy
@@ -136,6 +144,8 @@ services:
     image: pryorda/vmware_exporter:v0.18.4
     container_name: vmware_exporter
     restart: unless-stopped
+    mem_limit: 512m
+    cpus: 0.5
     ports:
       - "9272:9272"
     environment:
@@ -161,6 +171,8 @@ services:
     image: prom/snmp-exporter:v0.26.0
     container_name: snmp_exporter
     restart: unless-stopped
+    mem_limit: 128m
+    cpus: 0.25
     dns:
       - ${DNS_SERVER}
     ports:
@@ -180,6 +192,8 @@ services:
     image: ghcr.io/athennamind/opnsense-exporter:latest
     container_name: opnsense-exporter
     restart: unless-stopped
+    mem_limit: 128m
+    cpus: 0.25
     dns:
       - ${DNS_SERVER}
     command:
@@ -205,6 +219,8 @@ services:
     image: grafana/loki:3.3.2
     container_name: loki
     restart: unless-stopped
+    mem_limit: 1024m
+    cpus: 1.0
     ports:
       - "3100:3100"
     volumes:
@@ -229,6 +245,8 @@ services:
     image: grafana/promtail:3.3.2
     container_name: promtail
     restart: unless-stopped
+    mem_limit: 256m
+    cpus: 0.25
     depends_on:
       loki:
         condition: service_healthy
@@ -250,6 +268,8 @@ services:
     image: prom/blackbox-exporter:v0.25.0
     container_name: blackbox_exporter
     restart: unless-stopped
+    mem_limit: 128m
+    cpus: 0.25
     dns:
       - ${DNS_SERVER}
     ports:
@@ -269,6 +289,8 @@ services:
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor
     restart: unless-stopped
+    mem_limit: 256m
+    cpus: 0.25
     privileged: true
     environment:
       - DOCKER_API_VERSION=1.44
@@ -296,6 +318,8 @@ services:
     build: ./configs/discord-proxy
     container_name: discord-webhook-proxy
     restart: unless-stopped
+    mem_limit: 128m
+    cpus: 0.25
     environment:
       - DISCORD_WEBHOOK=${DISCORD_WEBHOOK_URL:-https://discord.com/api/webhooks/PLACEHOLDER}
       - DISCORD_USERNAME=Basphere Monitoring

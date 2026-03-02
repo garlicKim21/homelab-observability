@@ -37,6 +37,14 @@
       "options": { "colorMode": "none", "graphMode": "none", "textMode": "value" }
     },
     {
+      "title": "Running Containers",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 1 },
+      "targets": [{ "expr": "count(container_last_seen{job=\"observer_cadvisor\", name=~\".+\", container_label_com_docker_compose_service=~\".+\"}) or vector(0)", "legendFormat": "Containers" }],
+      "options": { "colorMode": "value" }
+    },
+    {
       "title": "System",
       "type": "row",
       "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
@@ -383,7 +391,8 @@
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
       "gridPos": { "h": 7, "w": 12, "x": 0, "y": 70 },
       "targets": [
-        { "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"observer_cadvisor\", name=~\".+\"}[5m]))", "legendFormat": "Usage", "refId": "A" }
+        { "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"observer_cadvisor\", name=~\".+\"}[5m]))", "legendFormat": "Usage", "refId": "A" },
+        { "expr": "sum(max by (name) (container_spec_cpu_quota{job=\"observer_cadvisor\", name=~\".+\"} > 0) / max by (name) (container_spec_cpu_period{job=\"observer_cadvisor\", name=~\".+\"}))", "legendFormat": "Limit", "refId": "B" }
       ],
       "fieldConfig": {
         "defaults": {
@@ -394,6 +403,15 @@
           {
             "matcher": { "id": "byFrameRefID", "options": "A" },
             "properties": [{ "id": "color", "value": { "fixedColor": "green", "mode": "fixed" } }]
+          },
+          {
+            "matcher": { "id": "byFrameRefID", "options": "B" },
+            "properties": [
+              { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 10] } },
+              { "id": "custom.fillOpacity", "value": 0 },
+              { "id": "custom.lineWidth", "value": 2 },
+              { "id": "color", "value": { "fixedColor": "orange", "mode": "fixed" } }
+            ]
           }
         ]
       }
@@ -405,7 +423,8 @@
       "gridPos": { "h": 7, "w": 12, "x": 12, "y": 70 },
       "targets": [
         { "expr": "sum(container_memory_usage_bytes{job=\"observer_cadvisor\", name=~\".+\"})", "legendFormat": "Usage", "refId": "A" },
-        { "expr": "node_memory_MemTotal_bytes{job=\"observer_node\"}", "legendFormat": "Host Total", "refId": "B" }
+        { "expr": "node_memory_MemTotal_bytes{job=\"observer_node\"}", "legendFormat": "Host Total", "refId": "B" },
+        { "expr": "sum(max by (name) (container_spec_memory_limit_bytes{job=\"observer_cadvisor\", name=~\".+\"} > 0))", "legendFormat": "Limit", "refId": "C" }
       ],
       "fieldConfig": {
         "defaults": {
@@ -420,6 +439,15 @@
               { "id": "custom.fillOpacity", "value": 0 },
               { "id": "custom.lineWidth", "value": 2 },
               { "id": "color", "value": { "fixedColor": "red", "mode": "fixed" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byFrameRefID", "options": "C" },
+            "properties": [
+              { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 10] } },
+              { "id": "custom.fillOpacity", "value": 0 },
+              { "id": "custom.lineWidth", "value": 2 },
+              { "id": "color", "value": { "fixedColor": "orange", "mode": "fixed" } }
             ]
           }
         ]
@@ -438,7 +466,8 @@
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
       "gridPos": { "h": 7, "w": 12, "x": 0, "y": 78 },
       "targets": [
-        { "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"observer_cadvisor\", name=\"$container\"}[5m]))", "legendFormat": "Usage", "refId": "A" }
+        { "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"observer_cadvisor\", name=\"$container\"}[5m]))", "legendFormat": "Usage", "refId": "A" },
+        { "expr": "max(container_spec_cpu_quota{job=\"observer_cadvisor\", name=\"$container\"} > 0) / max(container_spec_cpu_period{job=\"observer_cadvisor\", name=\"$container\"})", "legendFormat": "Limit", "refId": "B" }
       ],
       "fieldConfig": {
         "defaults": {
@@ -449,6 +478,15 @@
           {
             "matcher": { "id": "byFrameRefID", "options": "A" },
             "properties": [{ "id": "color", "value": { "fixedColor": "green", "mode": "fixed" } }]
+          },
+          {
+            "matcher": { "id": "byFrameRefID", "options": "B" },
+            "properties": [
+              { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 10] } },
+              { "id": "custom.fillOpacity", "value": 0 },
+              { "id": "custom.lineWidth", "value": 2 },
+              { "id": "color", "value": { "fixedColor": "orange", "mode": "fixed" } }
+            ]
           }
         ]
       }
@@ -459,13 +497,25 @@
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
       "gridPos": { "h": 7, "w": 12, "x": 12, "y": 78 },
       "targets": [
-        { "expr": "sum(container_memory_usage_bytes{job=\"observer_cadvisor\", name=\"$container\"})", "legendFormat": "Usage", "refId": "A" }
+        { "expr": "sum(container_memory_usage_bytes{job=\"observer_cadvisor\", name=\"$container\"})", "legendFormat": "Usage", "refId": "A" },
+        { "expr": "max(container_spec_memory_limit_bytes{job=\"observer_cadvisor\", name=\"$container\"} > 0)", "legendFormat": "Limit", "refId": "B" }
       ],
       "fieldConfig": {
         "defaults": {
           "unit": "bytes",
           "custom": { "fillOpacity": 10 }
-        }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byFrameRefID", "options": "B" },
+            "properties": [
+              { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 10] } },
+              { "id": "custom.fillOpacity", "value": 0 },
+              { "id": "custom.lineWidth", "value": 2 },
+              { "id": "color", "value": { "fixedColor": "red", "mode": "fixed" } }
+            ]
+          }
+        ]
       }
     },
     {
