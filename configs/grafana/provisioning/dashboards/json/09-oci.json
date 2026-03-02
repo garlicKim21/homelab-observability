@@ -658,12 +658,12 @@
       },
       "targets": [
         {
-          "expr": "rate(container_cpu_usage_seconds_total{job=\"oci_cadvisor\", name=\"$container\"}[5m])",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"oci_cadvisor\", name=\"$container\"}[5m]))",
           "legendFormat": "Usage",
           "refId": "A"
         },
         {
-          "expr": "(container_spec_cpu_quota{job=\"oci_cadvisor\", name=\"$container\"} > 0) / container_spec_cpu_period{job=\"oci_cadvisor\", name=\"$container\"}",
+          "expr": "max(container_spec_cpu_quota{job=\"oci_cadvisor\", name=\"$container\"} > 0) / max(container_spec_cpu_period{job=\"oci_cadvisor\", name=\"$container\"})",
           "legendFormat": "Limit",
           "refId": "B"
         }
@@ -743,12 +743,12 @@
       },
       "targets": [
         {
-          "expr": "container_memory_usage_bytes{job=\"oci_cadvisor\", name=\"$container\"}",
+          "expr": "sum(container_memory_usage_bytes{job=\"oci_cadvisor\", name=\"$container\"})",
           "legendFormat": "Usage",
           "refId": "A"
         },
         {
-          "expr": "container_spec_memory_limit_bytes{job=\"oci_cadvisor\", name=\"$container\"} > 0",
+          "expr": "max(container_spec_memory_limit_bytes{job=\"oci_cadvisor\", name=\"$container\"} > 0)",
           "legendFormat": "Limit",
           "refId": "B"
         }
