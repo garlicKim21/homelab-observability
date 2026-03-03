@@ -118,6 +118,18 @@ else:
 print("")
 PYEOF
 
+# ---- /data 마운트 검사 ----
+echo "=== 데이터 디스크 마운트 검사 ==="
+if ! mountpoint -q /data 2>/dev/null; then
+  echo "[ERROR] /data가 마운트되지 않았습니다!"
+  echo "  → 별도 디스크(sdb1)가 마운트되지 않으면 메트릭/로그 데이터가 유실됩니다."
+  echo "  → 수동 마운트: sudo mount /data"
+  echo "  → 배포를 중단합니다."
+  exit 1
+fi
+echo "  [OK] /data 마운트 확인 ($(df -h /data | awk 'NR==2{print $2, "total,", $4, "free"}'))"
+echo ""
+
 # ---- Docker Compose ----
 echo "=== Docker Compose Up ==="
 docker compose up -d
