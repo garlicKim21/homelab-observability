@@ -150,6 +150,11 @@
           "legendFormat": "15m"
         }
       ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        }
+      },
       "options": {
         "colorMode": "none"
       }
@@ -492,6 +497,7 @@
       ],
       "fieldConfig": {
         "defaults": {
+          "unit": "short",
           "custom": {
             "fillOpacity": 10
           }
@@ -1579,6 +1585,7 @@
       ],
       "fieldConfig": {
         "defaults": {
+          "unit": "short",
           "min": 0,
           "max": 100,
           "thresholds": {
@@ -1681,6 +1688,7 @@
       ],
       "fieldConfig": {
         "defaults": {
+          "unit": "short",
           "custom": {
             "fillOpacity": 20,
             "stacking": {

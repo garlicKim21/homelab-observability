@@ -15,7 +15,7 @@
       "datasource": { "type": "loki", "uid": "Loki" },
       "gridPos": { "h": 6, "w": 24, "x": 0, "y": 1 },
       "targets": [{ "expr": "sum by (device_type) (count_over_time({job=\"syslog\"} [$__interval]))", "legendFormat": "{{ device_type }}" }],
-      "fieldConfig": { "defaults": { "custom": { "fillOpacity": 30, "stacking": { "mode": "normal" } } } },
+      "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 30, "stacking": { "mode": "normal" } } } },
       "options": { "tooltip": { "mode": "multi" } }
     },
     {
@@ -25,7 +25,7 @@
       "gridPos": { "h": 6, "w": 24, "x": 0, "y": 7 },
       "targets": [{ "expr": "sum by (severity) (count_over_time({job=\"syslog\"} [$__interval]))", "legendFormat": "{{ severity }}" }],
       "fieldConfig": {
-        "defaults": { "custom": { "fillOpacity": 30, "stacking": { "mode": "normal" } } },
+        "defaults": { "unit": "short", "custom": { "fillOpacity": 30, "stacking": { "mode": "normal" } } },
         "overrides": [
           { "matcher": { "id": "byName", "options": "emerg" }, "properties": [{ "id": "color", "value": { "fixedColor": "dark-red", "mode": "fixed" } }] },
           { "matcher": { "id": "byName", "options": "crit" }, "properties": [{ "id": "color", "value": { "fixedColor": "red", "mode": "fixed" } }] },

@@ -112,7 +112,7 @@
         { "expr": "node_load5{job=\"observer_node\"}", "legendFormat": "5m" },
         { "expr": "node_load15{job=\"observer_node\"}", "legendFormat": "15m" }
       ],
-      "fieldConfig": { "defaults": { "custom": { "fillOpacity": 10 } } }
+      "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 10 } } }
     },
     {
       "title": "Memory Breakdown",
