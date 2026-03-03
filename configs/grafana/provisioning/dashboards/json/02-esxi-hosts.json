@@ -1,509 +1,4335 @@
 {
-  "annotations": { "list": [] },
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 1,
   "panels": [
     {
-      "title": "Host Status",
+      "title": "Overview",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
       "collapsed": false
     },
     {
-      "title": "esxi01",
+      "title": "vCenter",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 3, "w": 4, "x": 0, "y": 1 },
-      "targets": [{ "expr": "vmware_host_power_state{host_name=\"esxi01.basphere.local\"}", "legendFormat": "Power", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [{ "options": { "0": { "text": "OFF", "color": "red" }, "1": { "text": "ON", "color": "green" } }, "type": "value" }],
-          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
-        }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
       },
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
-    },
-    {
-      "title": "esxi02",
-      "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 3, "w": 4, "x": 4, "y": 1 },
-      "targets": [{ "expr": "vmware_host_power_state{host_name=\"esxi02.basphere.local\"}", "legendFormat": "Power", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [{ "options": { "0": { "text": "OFF", "color": "red" }, "1": { "text": "ON", "color": "green" } }, "type": "value" }],
-          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
-        }
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 1
       },
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
-    },
-    {
-      "title": "esxi03",
-      "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 3, "w": 4, "x": 8, "y": 1 },
-      "targets": [{ "expr": "vmware_host_power_state{host_name=\"esxi03.basphere.local\"}", "legendFormat": "Power", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [{ "options": { "0": { "text": "OFF", "color": "red" }, "1": { "text": "ON", "color": "green" } }, "type": "value" }],
-          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
-        }
-      },
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
-    },
-    {
-      "title": "esxi04",
-      "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 3, "w": 4, "x": 12, "y": 1 },
-      "targets": [{ "expr": "vmware_host_power_state{host_name=\"esxi04.basphere.local\"}", "legendFormat": "Power", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [{ "options": { "0": { "text": "OFF", "color": "red" }, "1": { "text": "ON", "color": "green" } }, "type": "value" }],
-          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
-        }
-      },
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
-    },
-    {
-      "title": "esxi05",
-      "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 3, "w": 4, "x": 16, "y": 1 },
-      "targets": [{ "expr": "vmware_host_power_state{host_name=\"esxi05.basphere.local\"}", "legendFormat": "Power", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [{ "options": { "0": { "text": "OFF", "color": "red" }, "1": { "text": "ON", "color": "green" } }, "type": "value" }],
-          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
-        }
-      },
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
-    },
-    {
-      "title": "esxi06",
-      "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 3, "w": 4, "x": 20, "y": 1 },
-      "targets": [{ "expr": "vmware_host_power_state{host_name=\"esxi06.basphere.local\"}", "legendFormat": "Power", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [{ "options": { "0": { "text": "OFF", "color": "red" }, "1": { "text": "ON", "color": "green" } }, "type": "value" }],
-          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
-        }
-      },
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value" }
-    },
-    {
-      "title": "CPU Usage",
-      "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 4 },
-      "collapsed": false
-    },
-    {
-      "title": "esxi01 CPU",
-      "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 5, "w": 4, "x": 0, "y": 5 },
-      "targets": [{ "expr": "vmware_host_cpu_usage{host_name=\"esxi01.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi01.basphere.local\"} * 100", "legendFormat": "CPU", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] }
-        }
-      }
-    },
-    {
-      "title": "esxi02 CPU",
-      "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 5, "w": 4, "x": 4, "y": 5 },
-      "targets": [{ "expr": "vmware_host_cpu_usage{host_name=\"esxi02.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi02.basphere.local\"} * 100", "legendFormat": "CPU", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] }
-        }
-      }
-    },
-    {
-      "title": "esxi03 CPU",
-      "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 5, "w": 4, "x": 8, "y": 5 },
-      "targets": [{ "expr": "vmware_host_cpu_usage{host_name=\"esxi03.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi03.basphere.local\"} * 100", "legendFormat": "CPU", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] }
-        }
-      }
-    },
-    {
-      "title": "esxi04 CPU",
-      "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 5, "w": 4, "x": 12, "y": 5 },
-      "targets": [{ "expr": "vmware_host_cpu_usage{host_name=\"esxi04.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi04.basphere.local\"} * 100", "legendFormat": "CPU", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] }
-        }
-      }
-    },
-    {
-      "title": "esxi05 CPU",
-      "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 5, "w": 4, "x": 16, "y": 5 },
-      "targets": [{ "expr": "vmware_host_cpu_usage{host_name=\"esxi05.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi05.basphere.local\"} * 100", "legendFormat": "CPU", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] }
-        }
-      }
-    },
-    {
-      "title": "esxi06 CPU",
-      "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 5, "w": 4, "x": 20, "y": 5 },
-      "targets": [{ "expr": "vmware_host_cpu_usage{host_name=\"esxi06.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi06.basphere.local\"} * 100", "legendFormat": "CPU", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] }
-        }
-      }
-    },
-    {
-      "title": "Memory Usage",
-      "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 10 },
-      "collapsed": false
-    },
-    {
-      "title": "esxi01 Memory",
-      "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 5, "w": 4, "x": 0, "y": 11 },
-      "targets": [{ "expr": "vmware_host_memory_usage{host_name=\"esxi01.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi01.basphere.local\"} * 100", "legendFormat": "Memory", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 80 }, { "color": "red", "value": 90 }] }
-        }
-      }
-    },
-    {
-      "title": "esxi02 Memory",
-      "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 5, "w": 4, "x": 4, "y": 11 },
-      "targets": [{ "expr": "vmware_host_memory_usage{host_name=\"esxi02.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi02.basphere.local\"} * 100", "legendFormat": "Memory", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 80 }, { "color": "red", "value": 90 }] }
-        }
-      }
-    },
-    {
-      "title": "esxi03 Memory",
-      "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 5, "w": 4, "x": 8, "y": 11 },
-      "targets": [{ "expr": "vmware_host_memory_usage{host_name=\"esxi03.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi03.basphere.local\"} * 100", "legendFormat": "Memory", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 80 }, { "color": "red", "value": 90 }] }
-        }
-      }
-    },
-    {
-      "title": "esxi04 Memory",
-      "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 5, "w": 4, "x": 12, "y": 11 },
-      "targets": [{ "expr": "vmware_host_memory_usage{host_name=\"esxi04.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi04.basphere.local\"} * 100", "legendFormat": "Memory", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 80 }, { "color": "red", "value": 90 }] }
-        }
-      }
-    },
-    {
-      "title": "esxi05 Memory",
-      "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 5, "w": 4, "x": 16, "y": 11 },
-      "targets": [{ "expr": "vmware_host_memory_usage{host_name=\"esxi05.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi05.basphere.local\"} * 100", "legendFormat": "Memory", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 80 }, { "color": "red", "value": 90 }] }
-        }
-      }
-    },
-    {
-      "title": "esxi06 Memory",
-      "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 5, "w": 4, "x": 20, "y": 11 },
-      "targets": [{ "expr": "vmware_host_memory_usage{host_name=\"esxi06.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi06.basphere.local\"} * 100", "legendFormat": "Memory", "refId": "A" }],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 80 }, { "color": "red", "value": 90 }] }
-        }
-      }
-    },
-    {
-      "title": "CPU & Memory",
-      "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 25 },
-      "collapsed": false
-    },
-    {
-      "title": "Host CPU Usage (%)",
-      "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 26 },
-      "targets": [{ "expr": "vmware_host_cpu_usage / vmware_host_cpu_max * 100", "legendFormat": "{{ host_name }}" }],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent", "min": 0, "max": 100,
-          "custom": { "fillOpacity": 10 },
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] }
-        }
-      }
-    },
-    {
-      "title": "Host Memory Usage (%)",
-      "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 26 },
-      "targets": [{ "expr": "vmware_host_memory_usage / vmware_host_memory_max * 100", "legendFormat": "{{ host_name }}" }],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent", "min": 0, "max": 100,
-          "custom": { "fillOpacity": 10 },
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 80 }, { "color": "red", "value": 90 }] }
-        }
-      }
-    },
-    {
-      "title": "Advanced Metrics",
-      "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 34 },
-      "collapsed": false
-    },
-    {
-      "title": "Host CPU Demand",
-      "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 35 },
-      "targets": [{ "expr": "vmware_host_cpu_demand_average", "legendFormat": "{{ host_name }}" }],
-      "fieldConfig": { "defaults": { "unit": "rotmhz", "min": 0, "custom": { "fillOpacity": 10 } } }
-    },
-    {
-      "title": "Host Memory Active",
-      "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 35 },
-      "targets": [{ "expr": "vmware_host_mem_active_average", "legendFormat": "{{ host_name }}" }],
-      "fieldConfig": { "defaults": { "unit": "deckbytes", "min": 0, "custom": { "fillOpacity": 10 } } }
-    },
-    {
-      "title": "Host Memory Swap",
-      "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 42 },
       "targets": [
-        { "expr": "vmware_host_mem_swapin_average", "legendFormat": "{{ host_name }} SwapIn" },
-        { "expr": "vmware_host_mem_swapout_average", "legendFormat": "{{ host_name }} SwapOut" }
+        {
+          "expr": "up{job=\"vmware\"}",
+          "legendFormat": "vCenter",
+          "refId": "A"
+        }
       ],
-      "fieldConfig": { "defaults": { "unit": "KBs", "custom": { "fillOpacity": 10 } } }
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "text": "OFF",
+                  "color": "red"
+                },
+                "1": {
+                  "text": "ON",
+                  "color": "green"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value"
+      }
     },
     {
-      "title": "Network",
+      "title": "UP Hosts",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "count(vmware_host_power_state == 1)",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 5
+              },
+              {
+                "color": "green",
+                "value": 6
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value"
+      }
+    },
+    {
+      "title": "VMs ON",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "count(vmware_vm_power_state == 1)",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value"
+      }
+    },
+    {
+      "title": "VMs OFF",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "count(vmware_vm_power_state == 0)",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "steps": [
+              {
+                "color": "semi-dark-blue",
+                "value": null
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value"
+      }
+    },
+    {
+      "title": "Cluster CPU",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "sum(vmware_host_cpu_usage) / 1000",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "GHz (used)",
+          "decimals": 1,
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "textMode": "value"
+      }
+    },
+    {
+      "title": "Cluster Memory",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "sum(vmware_host_memory_usage) / 1024",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "GB (used)",
+          "decimals": 1,
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "textMode": "value"
+      }
+    },
+    {
+      "title": "Cluster Trends",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 49 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
       "collapsed": false
     },
     {
-      "title": "Host Network Rx/Tx",
+      "title": "All Hosts — CPU %",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 50 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 6
+      },
       "targets": [
-        { "expr": "vmware_host_net_bytesRx_average{job=\"vmware\"} * 1024", "legendFormat": "{{ host_name }} Rx" },
-        { "expr": "-vmware_host_net_bytesTx_average{job=\"vmware\"} * 1024", "legendFormat": "{{ host_name }} Tx" }
+        {
+          "expr": "vmware_host_cpu_usage / vmware_host_cpu_max * 100",
+          "legendFormat": "{{ host_name }}",
+          "refId": "A"
+        }
       ],
-      "fieldConfig": { "defaults": { "unit": "Bps", "custom": { "fillOpacity": 15 } } }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "custom": {
+            "fillOpacity": 10
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        }
+      }
     },
     {
-      "title": "Host Network Errors",
+      "title": "All Hosts — Memory %",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 50 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
       "targets": [
-        { "expr": "vmware_host_net_errorsRx_summation", "legendFormat": "{{ host_name }} ErrRx" },
-        { "expr": "vmware_host_net_errorsTx_summation", "legendFormat": "{{ host_name }} ErrTx" }
+        {
+          "expr": "vmware_host_memory_usage / vmware_host_memory_max * 100",
+          "legendFormat": "{{ host_name }}",
+          "refId": "A"
+        }
       ],
-      "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 10 } } }
-    },
-    {
-      "title": "Disk & Storage",
-      "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 57 },
-      "collapsed": false
-    },
-    {
-      "title": "Host Disk I/O",
-      "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 58 },
-      "targets": [
-        { "expr": "vmware_host_disk_read_average", "legendFormat": "{{ host_name }} Read" },
-        { "expr": "vmware_host_disk_write_average", "legendFormat": "{{ host_name }} Write" }
-      ],
-      "fieldConfig": { "defaults": { "unit": "KBs", "custom": { "fillOpacity": 10 } } }
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "custom": {
+            "fillOpacity": 10
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 80
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          }
+        }
+      }
     },
     {
       "title": "Datastores",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 65 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 13
+      },
       "collapsed": false
     },
     {
       "title": "Datastore Capacity",
       "type": "bargauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 6, "w": 8, "x": 0, "y": 66 },
-      "targets": [{ "expr": "vmware_datastore_capacity_size", "legendFormat": "{{ ds_name }}" }],
-      "fieldConfig": { "defaults": { "unit": "bytes" } },
-      "options": { "orientation": "horizontal", "displayMode": "gradient" }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 0,
+        "y": 14
+      },
+      "targets": [
+        {
+          "expr": "vmware_datastore_capacity_size",
+          "legendFormat": "{{ ds_name }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        }
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient"
+      }
     },
     {
       "title": "Datastore Free Space",
       "type": "bargauge",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 6, "w": 8, "x": 8, "y": 66 },
-      "targets": [{ "expr": "vmware_datastore_freespace_size", "legendFormat": "{{ ds_name }}" }],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 8,
+        "y": 14
+      },
+      "targets": [
+        {
+          "expr": "vmware_datastore_freespace_size",
+          "legendFormat": "{{ ds_name }}",
+          "refId": "A"
+        }
+      ],
       "fieldConfig": {
         "defaults": {
           "unit": "bytes",
-          "thresholds": { "steps": [{ "color": "red", "value": null }, { "color": "yellow", "value": 10737418240 }, { "color": "green", "value": 53687091200 }] }
+          "thresholds": {
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 10737418240
+              },
+              {
+                "color": "green",
+                "value": 53687091200
+              }
+            ]
+          }
         }
       },
-      "options": { "orientation": "horizontal", "displayMode": "gradient" }
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient"
+      }
     },
     {
       "title": "Datastore Provisioned",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 6, "w": 8, "x": 16, "y": 66 },
-      "targets": [{ "expr": "vmware_datastore_provisoned_size", "legendFormat": "{{ ds_name }}" }],
-      "fieldConfig": { "defaults": { "unit": "bytes" } },
-      "options": { "colorMode": "value" }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 16,
+        "y": 14
+      },
+      "targets": [
+        {
+          "expr": "vmware_datastore_provisoned_size",
+          "legendFormat": "{{ ds_name }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        }
+      },
+      "options": {
+        "colorMode": "value"
+      }
     },
     {
-      "title": "Host Details",
+      "title": "Host Summary",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 72 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
       "collapsed": false
     },
     {
       "title": "ESXi Hosts",
       "type": "table",
-      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 73 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_VICTORIAMETRICS}"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
       "targets": [
-        { "expr": "vmware_host_power_state", "format": "table", "instant": true, "refId": "power" },
-        { "expr": "vmware_host_cpu_usage / vmware_host_cpu_max * 100", "format": "table", "instant": true, "refId": "cpu" },
-        { "expr": "vmware_host_memory_usage / vmware_host_memory_max * 100", "format": "table", "instant": true, "refId": "mem" },
-        { "expr": "vmware_host_num_cpu", "format": "table", "instant": true, "refId": "cpucount" }
+        {
+          "expr": "vmware_host_power_state",
+          "format": "table",
+          "instant": true,
+          "refId": "power"
+        },
+        {
+          "expr": "vmware_host_cpu_usage / vmware_host_cpu_max * 100",
+          "format": "table",
+          "instant": true,
+          "refId": "cpu"
+        },
+        {
+          "expr": "vmware_host_memory_usage / vmware_host_memory_max * 100",
+          "format": "table",
+          "instant": true,
+          "refId": "mem"
+        },
+        {
+          "expr": "vmware_host_num_cpu",
+          "format": "table",
+          "instant": true,
+          "refId": "cpucount"
+        }
       ],
       "transformations": [
-        { "id": "seriesToColumns", "options": { "byField": "host_name" } }
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "host_name"
+          }
+        }
       ],
       "fieldConfig": {
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "Value #power" },
+            "matcher": {
+              "id": "byName",
+              "options": "Value #power"
+            },
             "properties": [
-              { "id": "displayName", "value": "Power" },
-              { "id": "mappings", "value": [{ "options": { "0": { "text": "OFF", "color": "red" }, "1": { "text": "ON", "color": "green" } }, "type": "value" }] },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "displayName",
+                "value": "Power"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "text": "OFF",
+                        "color": "red"
+                      },
+                      "1": {
+                        "text": "ON",
+                        "color": "green"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "Value #cpu" },
+            "matcher": {
+              "id": "byName",
+              "options": "Value #cpu"
+            },
             "properties": [
-              { "id": "displayName", "value": "CPU %" },
-              { "id": "unit", "value": "percent" },
-              { "id": "decimals", "value": 1 },
-              { "id": "thresholds", "value": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] } },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "displayName",
+                "value": "CPU %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 70
+                    },
+                    {
+                      "color": "red",
+                      "value": 85
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "Value #mem" },
+            "matcher": {
+              "id": "byName",
+              "options": "Value #mem"
+            },
             "properties": [
-              { "id": "displayName", "value": "Memory %" },
-              { "id": "unit", "value": "percent" },
-              { "id": "decimals", "value": 1 },
-              { "id": "thresholds", "value": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 80 }, { "color": "red", "value": 90 }] } },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "displayName",
+                "value": "Memory %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 80
+                    },
+                    {
+                      "color": "red",
+                      "value": 90
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "Value #cpucount" },
+            "matcher": {
+              "id": "byName",
+              "options": "Value #cpucount"
+            },
             "properties": [
-              { "id": "displayName", "value": "CPU Cores" }
+              {
+                "id": "displayName",
+                "value": "CPU Cores"
+              }
             ]
           }
         ]
       }
+    },
+    {
+      "title": "ESXI01 — esxi01.basphere.local",
+      "type": "row",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 29
+      },
+      "collapsed": true,
+      "panels": [
+        {
+          "title": "Status",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 0,
+            "y": 30
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_power_state{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "Power",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {
+                  "options": {
+                    "0": {
+                      "text": "OFF",
+                      "color": "red"
+                    },
+                    "1": {
+                      "text": "ON",
+                      "color": "green"
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              }
+            }
+          },
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "Uptime",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 3,
+            "y": 30
+          },
+          "targets": [
+            {
+              "expr": "time() - vmware_host_boot_timestamp_seconds{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "s"
+            }
+          },
+          "options": {
+            "colorMode": "none",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "VMs ON",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 8,
+            "y": 30
+          },
+          "targets": [
+            {
+              "expr": "count(vmware_vm_power_state{host_name=\"esxi01.basphere.local\"} == 1)",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "VMs OFF",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 11,
+            "y": 30
+          },
+          "targets": [
+            {
+              "expr": "count(vmware_vm_power_state{host_name=\"esxi01.basphere.local\"} == 0)",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "semi-dark-blue",
+                    "value": null
+                  }
+                ]
+              }
+            }
+          },
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "CPU",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 14,
+            "y": 30
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=\"esxi01.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi01.basphere.local\"} * 100",
+              "legendFormat": "CPU",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 70
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "title": "Memory",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 19,
+            "y": 30
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=\"esxi01.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi01.basphere.local\"} * 100",
+              "legendFormat": "Memory",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 80
+                  },
+                  {
+                    "color": "red",
+                    "value": 90
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "title": "CPU Usage & Demand",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 34
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=\"esxi01.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi01.basphere.local\"} * 100",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_cpu_demand_average{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "Demand (MHz)",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 70
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Demand (MHz)"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "rotmhz"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "CPU Ready & CoStop",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 34
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_ready_summation{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "Ready",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_cpu_costop_summation{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "CoStop",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "ms",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        },
+        {
+          "title": "Memory Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 41
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=\"esxi01.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi01.basphere.local\"} * 100",
+              "legendFormat": "Memory %",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_mem_active_average{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "Active (KB)",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "fillOpacity": 10
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 80
+                  },
+                  {
+                    "color": "red",
+                    "value": 90
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Active (KB)"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "deckbytes"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "Memory Balloon & Swap & Latency",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 41
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_mem_vmmemctl_average{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "Balloon (KB)",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_mem_swapinRate_average{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "Swap In",
+              "refId": "B"
+            },
+            {
+              "expr": "vmware_host_mem_swapoutRate_average{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "Swap Out",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_mem_latency_average{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "Latency",
+              "refId": "D"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Latency"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "Network Rx/Tx",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 48
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_net_bytesRx_average{job=\"vmware\",host_name=\"esxi01.basphere.local\"} * 1024",
+              "legendFormat": "Rx",
+              "refId": "A"
+            },
+            {
+              "expr": "-vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi01.basphere.local\"} * 1024",
+              "legendFormat": "Tx",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "Bps",
+              "custom": {
+                "fillOpacity": 15
+              }
+            }
+          }
+        },
+        {
+          "title": "Network Errors & Drops",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 48
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_net_errorsRx_summation{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "Errors Rx",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_net_errorsTx_summation{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "Errors Tx",
+              "refId": "B"
+            },
+            {
+              "expr": "vmware_host_net_droppedRx_summation{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "Drops Rx",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_net_droppedTx_summation{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "Drops Tx",
+              "refId": "D"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "short",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        },
+        {
+          "title": "Disk Read / Write",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 55
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_disk_read_average{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vmware_host_disk_write_average{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "ESXI02 — esxi02.basphere.local",
+      "type": "row",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 30
+      },
+      "collapsed": true,
+      "panels": [
+        {
+          "title": "Status",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 0,
+            "y": 31
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_power_state{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "Power",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {
+                  "options": {
+                    "0": {
+                      "text": "OFF",
+                      "color": "red"
+                    },
+                    "1": {
+                      "text": "ON",
+                      "color": "green"
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              }
+            }
+          },
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "Uptime",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 3,
+            "y": 31
+          },
+          "targets": [
+            {
+              "expr": "time() - vmware_host_boot_timestamp_seconds{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "s"
+            }
+          },
+          "options": {
+            "colorMode": "none",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "VMs ON",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 8,
+            "y": 31
+          },
+          "targets": [
+            {
+              "expr": "count(vmware_vm_power_state{host_name=\"esxi02.basphere.local\"} == 1)",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "VMs OFF",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 11,
+            "y": 31
+          },
+          "targets": [
+            {
+              "expr": "count(vmware_vm_power_state{host_name=\"esxi02.basphere.local\"} == 0)",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "semi-dark-blue",
+                    "value": null
+                  }
+                ]
+              }
+            }
+          },
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "CPU",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 14,
+            "y": 31
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=\"esxi02.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi02.basphere.local\"} * 100",
+              "legendFormat": "CPU",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 70
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "title": "Memory",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 19,
+            "y": 31
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=\"esxi02.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi02.basphere.local\"} * 100",
+              "legendFormat": "Memory",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 80
+                  },
+                  {
+                    "color": "red",
+                    "value": 90
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "title": "CPU Usage & Demand",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 35
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=\"esxi02.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi02.basphere.local\"} * 100",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_cpu_demand_average{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "Demand (MHz)",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 70
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Demand (MHz)"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "rotmhz"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "CPU Ready & CoStop",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 35
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_ready_summation{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "Ready",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_cpu_costop_summation{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "CoStop",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "ms",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        },
+        {
+          "title": "Memory Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 42
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=\"esxi02.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi02.basphere.local\"} * 100",
+              "legendFormat": "Memory %",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_mem_active_average{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "Active (KB)",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "fillOpacity": 10
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 80
+                  },
+                  {
+                    "color": "red",
+                    "value": 90
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Active (KB)"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "deckbytes"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "Memory Balloon & Swap & Latency",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 42
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_mem_vmmemctl_average{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "Balloon (KB)",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_mem_swapinRate_average{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "Swap In",
+              "refId": "B"
+            },
+            {
+              "expr": "vmware_host_mem_swapoutRate_average{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "Swap Out",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_mem_latency_average{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "Latency",
+              "refId": "D"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Latency"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "Network Rx/Tx",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 49
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_net_bytesRx_average{job=\"vmware\",host_name=\"esxi02.basphere.local\"} * 1024",
+              "legendFormat": "Rx",
+              "refId": "A"
+            },
+            {
+              "expr": "-vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi02.basphere.local\"} * 1024",
+              "legendFormat": "Tx",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "Bps",
+              "custom": {
+                "fillOpacity": 15
+              }
+            }
+          }
+        },
+        {
+          "title": "Network Errors & Drops",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 49
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_net_errorsRx_summation{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "Errors Rx",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_net_errorsTx_summation{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "Errors Tx",
+              "refId": "B"
+            },
+            {
+              "expr": "vmware_host_net_droppedRx_summation{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "Drops Rx",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_net_droppedTx_summation{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "Drops Tx",
+              "refId": "D"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "short",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        },
+        {
+          "title": "Disk Read / Write",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 56
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_disk_read_average{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vmware_host_disk_write_average{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "ESXI03 — esxi03.basphere.local",
+      "type": "row",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 31
+      },
+      "collapsed": true,
+      "panels": [
+        {
+          "title": "Status",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 0,
+            "y": 32
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_power_state{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "Power",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {
+                  "options": {
+                    "0": {
+                      "text": "OFF",
+                      "color": "red"
+                    },
+                    "1": {
+                      "text": "ON",
+                      "color": "green"
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              }
+            }
+          },
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "Uptime",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 3,
+            "y": 32
+          },
+          "targets": [
+            {
+              "expr": "time() - vmware_host_boot_timestamp_seconds{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "s"
+            }
+          },
+          "options": {
+            "colorMode": "none",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "VMs ON",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 8,
+            "y": 32
+          },
+          "targets": [
+            {
+              "expr": "count(vmware_vm_power_state{host_name=\"esxi03.basphere.local\"} == 1)",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "VMs OFF",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 11,
+            "y": 32
+          },
+          "targets": [
+            {
+              "expr": "count(vmware_vm_power_state{host_name=\"esxi03.basphere.local\"} == 0)",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "semi-dark-blue",
+                    "value": null
+                  }
+                ]
+              }
+            }
+          },
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "CPU",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 14,
+            "y": 32
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=\"esxi03.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi03.basphere.local\"} * 100",
+              "legendFormat": "CPU",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 70
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "title": "Memory",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 19,
+            "y": 32
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=\"esxi03.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi03.basphere.local\"} * 100",
+              "legendFormat": "Memory",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 80
+                  },
+                  {
+                    "color": "red",
+                    "value": 90
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "title": "CPU Usage & Demand",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 36
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=\"esxi03.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi03.basphere.local\"} * 100",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_cpu_demand_average{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "Demand (MHz)",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 70
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Demand (MHz)"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "rotmhz"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "CPU Ready & CoStop",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 36
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_ready_summation{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "Ready",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_cpu_costop_summation{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "CoStop",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "ms",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        },
+        {
+          "title": "Memory Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 43
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=\"esxi03.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi03.basphere.local\"} * 100",
+              "legendFormat": "Memory %",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_mem_active_average{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "Active (KB)",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "fillOpacity": 10
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 80
+                  },
+                  {
+                    "color": "red",
+                    "value": 90
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Active (KB)"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "deckbytes"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "Memory Balloon & Swap & Latency",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 43
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_mem_vmmemctl_average{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "Balloon (KB)",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_mem_swapinRate_average{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "Swap In",
+              "refId": "B"
+            },
+            {
+              "expr": "vmware_host_mem_swapoutRate_average{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "Swap Out",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_mem_latency_average{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "Latency",
+              "refId": "D"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Latency"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "Network Rx/Tx",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 50
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_net_bytesRx_average{job=\"vmware\",host_name=\"esxi03.basphere.local\"} * 1024",
+              "legendFormat": "Rx",
+              "refId": "A"
+            },
+            {
+              "expr": "-vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi03.basphere.local\"} * 1024",
+              "legendFormat": "Tx",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "Bps",
+              "custom": {
+                "fillOpacity": 15
+              }
+            }
+          }
+        },
+        {
+          "title": "Network Errors & Drops",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 50
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_net_errorsRx_summation{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "Errors Rx",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_net_errorsTx_summation{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "Errors Tx",
+              "refId": "B"
+            },
+            {
+              "expr": "vmware_host_net_droppedRx_summation{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "Drops Rx",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_net_droppedTx_summation{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "Drops Tx",
+              "refId": "D"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "short",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        },
+        {
+          "title": "Disk Read / Write",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 57
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_disk_read_average{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vmware_host_disk_write_average{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "ESXI04 — esxi04.basphere.local",
+      "type": "row",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 32
+      },
+      "collapsed": true,
+      "panels": [
+        {
+          "title": "Status",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 0,
+            "y": 33
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_power_state{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "Power",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {
+                  "options": {
+                    "0": {
+                      "text": "OFF",
+                      "color": "red"
+                    },
+                    "1": {
+                      "text": "ON",
+                      "color": "green"
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              }
+            }
+          },
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "Uptime",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 3,
+            "y": 33
+          },
+          "targets": [
+            {
+              "expr": "time() - vmware_host_boot_timestamp_seconds{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "s"
+            }
+          },
+          "options": {
+            "colorMode": "none",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "VMs ON",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 8,
+            "y": 33
+          },
+          "targets": [
+            {
+              "expr": "count(vmware_vm_power_state{host_name=\"esxi04.basphere.local\"} == 1)",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "VMs OFF",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 11,
+            "y": 33
+          },
+          "targets": [
+            {
+              "expr": "count(vmware_vm_power_state{host_name=\"esxi04.basphere.local\"} == 0)",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "semi-dark-blue",
+                    "value": null
+                  }
+                ]
+              }
+            }
+          },
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "CPU",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 14,
+            "y": 33
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=\"esxi04.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi04.basphere.local\"} * 100",
+              "legendFormat": "CPU",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 70
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "title": "Memory",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 19,
+            "y": 33
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=\"esxi04.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi04.basphere.local\"} * 100",
+              "legendFormat": "Memory",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 80
+                  },
+                  {
+                    "color": "red",
+                    "value": 90
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "title": "CPU Usage & Demand",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 37
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=\"esxi04.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi04.basphere.local\"} * 100",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_cpu_demand_average{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "Demand (MHz)",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 70
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Demand (MHz)"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "rotmhz"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "CPU Ready & CoStop",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 37
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_ready_summation{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "Ready",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_cpu_costop_summation{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "CoStop",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "ms",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        },
+        {
+          "title": "Memory Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 44
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=\"esxi04.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi04.basphere.local\"} * 100",
+              "legendFormat": "Memory %",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_mem_active_average{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "Active (KB)",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "fillOpacity": 10
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 80
+                  },
+                  {
+                    "color": "red",
+                    "value": 90
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Active (KB)"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "deckbytes"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "Memory Balloon & Swap & Latency",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 44
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_mem_vmmemctl_average{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "Balloon (KB)",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_mem_swapinRate_average{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "Swap In",
+              "refId": "B"
+            },
+            {
+              "expr": "vmware_host_mem_swapoutRate_average{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "Swap Out",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_mem_latency_average{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "Latency",
+              "refId": "D"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Latency"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "Network Rx/Tx",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 51
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_net_bytesRx_average{job=\"vmware\",host_name=\"esxi04.basphere.local\"} * 1024",
+              "legendFormat": "Rx",
+              "refId": "A"
+            },
+            {
+              "expr": "-vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi04.basphere.local\"} * 1024",
+              "legendFormat": "Tx",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "Bps",
+              "custom": {
+                "fillOpacity": 15
+              }
+            }
+          }
+        },
+        {
+          "title": "Network Errors & Drops",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 51
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_net_errorsRx_summation{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "Errors Rx",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_net_errorsTx_summation{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "Errors Tx",
+              "refId": "B"
+            },
+            {
+              "expr": "vmware_host_net_droppedRx_summation{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "Drops Rx",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_net_droppedTx_summation{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "Drops Tx",
+              "refId": "D"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "short",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        },
+        {
+          "title": "Disk Read / Write",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 58
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_disk_read_average{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vmware_host_disk_write_average{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "ESXI05 — esxi05.basphere.local",
+      "type": "row",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 33
+      },
+      "collapsed": true,
+      "panels": [
+        {
+          "title": "Status",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 0,
+            "y": 34
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_power_state{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "Power",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {
+                  "options": {
+                    "0": {
+                      "text": "OFF",
+                      "color": "red"
+                    },
+                    "1": {
+                      "text": "ON",
+                      "color": "green"
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              }
+            }
+          },
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "Uptime",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 3,
+            "y": 34
+          },
+          "targets": [
+            {
+              "expr": "time() - vmware_host_boot_timestamp_seconds{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "s"
+            }
+          },
+          "options": {
+            "colorMode": "none",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "VMs ON",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 8,
+            "y": 34
+          },
+          "targets": [
+            {
+              "expr": "count(vmware_vm_power_state{host_name=\"esxi05.basphere.local\"} == 1)",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "VMs OFF",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 11,
+            "y": 34
+          },
+          "targets": [
+            {
+              "expr": "count(vmware_vm_power_state{host_name=\"esxi05.basphere.local\"} == 0)",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "semi-dark-blue",
+                    "value": null
+                  }
+                ]
+              }
+            }
+          },
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "CPU",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 14,
+            "y": 34
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=\"esxi05.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi05.basphere.local\"} * 100",
+              "legendFormat": "CPU",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 70
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "title": "Memory",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 19,
+            "y": 34
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=\"esxi05.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi05.basphere.local\"} * 100",
+              "legendFormat": "Memory",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 80
+                  },
+                  {
+                    "color": "red",
+                    "value": 90
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "title": "CPU Usage & Demand",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 38
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=\"esxi05.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi05.basphere.local\"} * 100",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_cpu_demand_average{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "Demand (MHz)",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 70
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Demand (MHz)"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "rotmhz"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "CPU Ready & CoStop",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 38
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_ready_summation{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "Ready",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_cpu_costop_summation{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "CoStop",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "ms",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        },
+        {
+          "title": "Memory Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 45
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=\"esxi05.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi05.basphere.local\"} * 100",
+              "legendFormat": "Memory %",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_mem_active_average{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "Active (KB)",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "fillOpacity": 10
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 80
+                  },
+                  {
+                    "color": "red",
+                    "value": 90
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Active (KB)"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "deckbytes"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "Memory Balloon & Swap & Latency",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 45
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_mem_vmmemctl_average{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "Balloon (KB)",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_mem_swapinRate_average{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "Swap In",
+              "refId": "B"
+            },
+            {
+              "expr": "vmware_host_mem_swapoutRate_average{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "Swap Out",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_mem_latency_average{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "Latency",
+              "refId": "D"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Latency"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "Network Rx/Tx",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 52
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_net_bytesRx_average{job=\"vmware\",host_name=\"esxi05.basphere.local\"} * 1024",
+              "legendFormat": "Rx",
+              "refId": "A"
+            },
+            {
+              "expr": "-vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi05.basphere.local\"} * 1024",
+              "legendFormat": "Tx",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "Bps",
+              "custom": {
+                "fillOpacity": 15
+              }
+            }
+          }
+        },
+        {
+          "title": "Network Errors & Drops",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 52
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_net_errorsRx_summation{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "Errors Rx",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_net_errorsTx_summation{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "Errors Tx",
+              "refId": "B"
+            },
+            {
+              "expr": "vmware_host_net_droppedRx_summation{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "Drops Rx",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_net_droppedTx_summation{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "Drops Tx",
+              "refId": "D"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "short",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        },
+        {
+          "title": "Disk Read / Write",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 59
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_disk_read_average{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vmware_host_disk_write_average{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "ESXI06 — esxi06.basphere.local",
+      "type": "row",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 34
+      },
+      "collapsed": true,
+      "panels": [
+        {
+          "title": "Status",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 0,
+            "y": 35
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_power_state{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "Power",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {
+                  "options": {
+                    "0": {
+                      "text": "OFF",
+                      "color": "red"
+                    },
+                    "1": {
+                      "text": "ON",
+                      "color": "green"
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              }
+            }
+          },
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "Uptime",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 3,
+            "y": 35
+          },
+          "targets": [
+            {
+              "expr": "time() - vmware_host_boot_timestamp_seconds{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "s"
+            }
+          },
+          "options": {
+            "colorMode": "none",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "VMs ON",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 8,
+            "y": 35
+          },
+          "targets": [
+            {
+              "expr": "count(vmware_vm_power_state{host_name=\"esxi06.basphere.local\"} == 1)",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "VMs OFF",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 11,
+            "y": 35
+          },
+          "targets": [
+            {
+              "expr": "count(vmware_vm_power_state{host_name=\"esxi06.basphere.local\"} == 0)",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "semi-dark-blue",
+                    "value": null
+                  }
+                ]
+              }
+            }
+          },
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "textMode": "value"
+          }
+        },
+        {
+          "title": "CPU",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 14,
+            "y": 35
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=\"esxi06.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi06.basphere.local\"} * 100",
+              "legendFormat": "CPU",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 70
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "title": "Memory",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 19,
+            "y": 35
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=\"esxi06.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi06.basphere.local\"} * 100",
+              "legendFormat": "Memory",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 80
+                  },
+                  {
+                    "color": "red",
+                    "value": 90
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "title": "CPU Usage & Demand",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 39
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=\"esxi06.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi06.basphere.local\"} * 100",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_cpu_demand_average{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "Demand (MHz)",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 70
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Demand (MHz)"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "rotmhz"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "CPU Ready & CoStop",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 39
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_ready_summation{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "Ready",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_cpu_costop_summation{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "CoStop",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "ms",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        },
+        {
+          "title": "Memory Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 46
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=\"esxi06.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi06.basphere.local\"} * 100",
+              "legendFormat": "Memory %",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_mem_active_average{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "Active (KB)",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "fillOpacity": 10
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 80
+                  },
+                  {
+                    "color": "red",
+                    "value": 90
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Active (KB)"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "deckbytes"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "Memory Balloon & Swap & Latency",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 46
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_mem_vmmemctl_average{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "Balloon (KB)",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_mem_swapinRate_average{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "Swap In",
+              "refId": "B"
+            },
+            {
+              "expr": "vmware_host_mem_swapoutRate_average{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "Swap Out",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_mem_latency_average{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "Latency",
+              "refId": "D"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Latency"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "Network Rx/Tx",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 53
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_net_bytesRx_average{job=\"vmware\",host_name=\"esxi06.basphere.local\"} * 1024",
+              "legendFormat": "Rx",
+              "refId": "A"
+            },
+            {
+              "expr": "-vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi06.basphere.local\"} * 1024",
+              "legendFormat": "Tx",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "Bps",
+              "custom": {
+                "fillOpacity": 15
+              }
+            }
+          }
+        },
+        {
+          "title": "Network Errors & Drops",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 53
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_net_errorsRx_summation{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "Errors Rx",
+              "refId": "A"
+            },
+            {
+              "expr": "vmware_host_net_errorsTx_summation{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "Errors Tx",
+              "refId": "B"
+            },
+            {
+              "expr": "vmware_host_net_droppedRx_summation{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "Drops Rx",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_net_droppedTx_summation{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "Drops Tx",
+              "refId": "D"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "short",
+              "min": 0,
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        },
+        {
+          "title": "Disk Read / Write",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_VICTORIAMETRICS}"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 60
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_disk_read_average{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vmware_host_disk_write_average{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "fillOpacity": 10
+              }
+            }
+          }
+        }
+      ]
     }
   ],
   "refresh": "1m",
   "schemaVersion": 39,
-  "tags": ["homelab", "esxi", "vmware"],
+  "tags": [
+    "homelab",
+    "esxi",
+    "vmware"
+  ],
   "templating": {
     "list": [
-      { "current": { "selected": false, "text": "VictoriaMetrics", "value": "VictoriaMetrics" }, "hide": 2, "name": "DS_VICTORIAMETRICS", "type": "datasource", "query": "prometheus" }
+      {
+        "current": {
+          "selected": false,
+          "text": "VictoriaMetrics",
+          "value": "VictoriaMetrics"
+        },
+        "hide": 2,
+        "name": "DS_VICTORIAMETRICS",
+        "type": "datasource",
+        "query": "prometheus"
+      }
     ]
   },
-  "time": { "from": "now-6h", "to": "now" },
-  "title": "ESXi Hosts",
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "title": "VMware vSphere",
   "uid": "esxi-hosts"
 }
