@@ -1099,7 +1099,7 @@
                 "properties": [
                   {
                     "id": "unit",
-                    "value": "deckbytes"
+                    "value": "kbytes"
                   },
                   {
                     "id": "custom.axisPlacement",
@@ -1147,7 +1147,7 @@
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "KBs",
+              "unit": "kbytes",
               "min": 0,
               "custom": {
                 "fillOpacity": 10
@@ -1162,11 +1162,35 @@
                 "properties": [
                   {
                     "id": "unit",
-                    "value": "ms"
+                    "value": "percent"
                   },
                   {
                     "id": "custom.axisPlacement",
                     "value": "right"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Swap In"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "KBs"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Swap Out"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "KBs"
                   }
                 ]
               }
@@ -1702,7 +1726,7 @@
                 "properties": [
                   {
                     "id": "unit",
-                    "value": "deckbytes"
+                    "value": "kbytes"
                   },
                   {
                     "id": "custom.axisPlacement",
@@ -1750,7 +1774,7 @@
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "KBs",
+              "unit": "kbytes",
               "min": 0,
               "custom": {
                 "fillOpacity": 10
@@ -1765,11 +1789,35 @@
                 "properties": [
                   {
                     "id": "unit",
-                    "value": "ms"
+                    "value": "percent"
                   },
                   {
                     "id": "custom.axisPlacement",
                     "value": "right"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Swap In"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "KBs"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Swap Out"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "KBs"
                   }
                 ]
               }
@@ -2305,7 +2353,7 @@
                 "properties": [
                   {
                     "id": "unit",
-                    "value": "deckbytes"
+                    "value": "kbytes"
                   },
                   {
                     "id": "custom.axisPlacement",
@@ -2353,7 +2401,7 @@
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "KBs",
+              "unit": "kbytes",
               "min": 0,
               "custom": {
                 "fillOpacity": 10
@@ -2368,11 +2416,35 @@
                 "properties": [
                   {
                     "id": "unit",
-                    "value": "ms"
+                    "value": "percent"
                   },
                   {
                     "id": "custom.axisPlacement",
                     "value": "right"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Swap In"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "KBs"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Swap Out"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "KBs"
                   }
                 ]
               }
@@ -2908,7 +2980,7 @@
                 "properties": [
                   {
                     "id": "unit",
-                    "value": "deckbytes"
+                    "value": "kbytes"
                   },
                   {
                     "id": "custom.axisPlacement",
@@ -2956,7 +3028,7 @@
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "KBs",
+              "unit": "kbytes",
               "min": 0,
               "custom": {
                 "fillOpacity": 10
@@ -2971,11 +3043,35 @@
                 "properties": [
                   {
                     "id": "unit",
-                    "value": "ms"
+                    "value": "percent"
                   },
                   {
                     "id": "custom.axisPlacement",
                     "value": "right"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Swap In"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "KBs"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Swap Out"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "KBs"
                   }
                 ]
               }
@@ -3511,7 +3607,7 @@
                 "properties": [
                   {
                     "id": "unit",
-                    "value": "deckbytes"
+                    "value": "kbytes"
                   },
                   {
                     "id": "custom.axisPlacement",
@@ -3559,7 +3655,7 @@
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "KBs",
+              "unit": "kbytes",
               "min": 0,
               "custom": {
                 "fillOpacity": 10
@@ -3574,11 +3670,35 @@
                 "properties": [
                   {
                     "id": "unit",
-                    "value": "ms"
+                    "value": "percent"
                   },
                   {
                     "id": "custom.axisPlacement",
                     "value": "right"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Swap In"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "KBs"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Swap Out"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "KBs"
                   }
                 ]
               }
@@ -4114,7 +4234,7 @@
                 "properties": [
                   {
                     "id": "unit",
-                    "value": "deckbytes"
+                    "value": "kbytes"
                   },
                   {
                     "id": "custom.axisPlacement",
@@ -4162,7 +4282,7 @@
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "KBs",
+              "unit": "kbytes",
               "min": 0,
               "custom": {
                 "fillOpacity": 10
@@ -4177,11 +4297,35 @@
                 "properties": [
                   {
                     "id": "unit",
-                    "value": "ms"
+                    "value": "percent"
                   },
                   {
                     "id": "custom.axisPlacement",
                     "value": "right"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Swap In"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "KBs"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Swap Out"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "KBs"
                   }
                 ]
               }
