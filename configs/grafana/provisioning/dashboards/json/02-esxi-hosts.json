@@ -1310,7 +1310,7 @@
               "refId": "A"
             },
             {
-              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi01.basphere.local\"} * 1024",
+              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi01.basphere.local\"} * -1024",
               "legendFormat": "Tx",
               "refId": "B"
             }
@@ -1322,20 +1322,7 @@
                 "fillOpacity": 15
               }
             },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Tx"
-                },
-                "properties": [
-                  {
-                    "id": "custom.transform",
-                    "value": "negative-Y"
-                  }
-                ]
-              }
-            ]
+            "overrides": []
           }
         },
         {
@@ -2044,7 +2031,7 @@
               "refId": "A"
             },
             {
-              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi02.basphere.local\"} * 1024",
+              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi02.basphere.local\"} * -1024",
               "legendFormat": "Tx",
               "refId": "B"
             }
@@ -2056,20 +2043,7 @@
                 "fillOpacity": 15
               }
             },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Tx"
-                },
-                "properties": [
-                  {
-                    "id": "custom.transform",
-                    "value": "negative-Y"
-                  }
-                ]
-              }
-            ]
+            "overrides": []
           }
         },
         {
@@ -2778,7 +2752,7 @@
               "refId": "A"
             },
             {
-              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi03.basphere.local\"} * 1024",
+              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi03.basphere.local\"} * -1024",
               "legendFormat": "Tx",
               "refId": "B"
             }
@@ -2790,20 +2764,7 @@
                 "fillOpacity": 15
               }
             },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Tx"
-                },
-                "properties": [
-                  {
-                    "id": "custom.transform",
-                    "value": "negative-Y"
-                  }
-                ]
-              }
-            ]
+            "overrides": []
           }
         },
         {
@@ -3512,7 +3473,7 @@
               "refId": "A"
             },
             {
-              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi04.basphere.local\"} * 1024",
+              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi04.basphere.local\"} * -1024",
               "legendFormat": "Tx",
               "refId": "B"
             }
@@ -3524,20 +3485,7 @@
                 "fillOpacity": 15
               }
             },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Tx"
-                },
-                "properties": [
-                  {
-                    "id": "custom.transform",
-                    "value": "negative-Y"
-                  }
-                ]
-              }
-            ]
+            "overrides": []
           }
         },
         {
@@ -4246,7 +4194,7 @@
               "refId": "A"
             },
             {
-              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi05.basphere.local\"} * 1024",
+              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi05.basphere.local\"} * -1024",
               "legendFormat": "Tx",
               "refId": "B"
             }
@@ -4258,20 +4206,7 @@
                 "fillOpacity": 15
               }
             },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Tx"
-                },
-                "properties": [
-                  {
-                    "id": "custom.transform",
-                    "value": "negative-Y"
-                  }
-                ]
-              }
-            ]
+            "overrides": []
           }
         },
         {
@@ -4980,7 +4915,7 @@
               "refId": "A"
             },
             {
-              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi06.basphere.local\"} * 1024",
+              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi06.basphere.local\"} * -1024",
               "legendFormat": "Tx",
               "refId": "B"
             }
@@ -4992,20 +4927,7 @@
                 "fillOpacity": 15
               }
             },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Tx"
-                },
-                "properties": [
-                  {
-                    "id": "custom.transform",
-                    "value": "negative-Y"
-                  }
-                ]
-              }
-            ]
+            "overrides": []
           }
         },
         {
