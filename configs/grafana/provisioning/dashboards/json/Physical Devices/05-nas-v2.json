@@ -1,0 +1,1002 @@
+{
+  "uid": "synology-nas-v2",
+  "title": "Synology NAS V2",
+  "tags": ["homelab", "nas", "synology", "v2"],
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "1m",
+  "time": { "from": "now-6h", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "graphTooltip": 1,
+  "editable": true,
+  "annotations": { "list": [] },
+  "links": [],
+  "fiscalYearStartMonth": 0,
+  "templating": {
+    "list": [
+      {
+        "name": "DS_VICTORIAMETRICS",
+        "type": "datasource",
+        "query": "prometheus",
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "refresh": 1,
+        "label": "VictoriaMetrics"
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "System Status",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 2,
+      "title": "NAS Status",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 1 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "up{job=\"snmp_nas\"}",
+          "legendFormat": "NAS",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": { "text": "DOWN", "color": "red", "index": 0 },
+                "1": { "text": "UP", "color": "green", "index": 1 }
+              }
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 1 }
+            ]
+          },
+          "color": { "mode": "thresholds" }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 3,
+      "title": "System Status",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 1 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "synology_system_status{job=\"snmp_nas\"}",
+          "legendFormat": "System",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "1": { "text": "Normal", "color": "green", "index": 0 },
+                "2": { "text": "FAILED", "color": "red", "index": 1 }
+              }
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 1 }
+            ]
+          },
+          "color": { "mode": "thresholds" }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 4,
+      "title": "System Temp",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 1 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "synology_system_temperature{job=\"snmp_nas\"}",
+          "legendFormat": "Temperature",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius",
+          "min": 0,
+          "max": 80,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 45 },
+              { "color": "red", "value": 60 }
+            ]
+          },
+          "color": { "mode": "thresholds" }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      }
+    },
+    {
+      "id": 5,
+      "title": "Power",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 1 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "synology_power_status{job=\"snmp_nas\"}",
+          "legendFormat": "Power",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "1": { "text": "OK", "color": "green", "index": 0 },
+                "2": { "text": "FAIL", "color": "red", "index": 1 }
+              }
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 1 }
+            ]
+          },
+          "color": { "mode": "thresholds" }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 6,
+      "title": "System Fan",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 1 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "synology_system_fan_status{job=\"snmp_nas\"}",
+          "legendFormat": "System Fan",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "1": { "text": "OK", "color": "green", "index": 0 },
+                "2": { "text": "FAIL", "color": "red", "index": 1 }
+              }
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 1 }
+            ]
+          },
+          "color": { "mode": "thresholds" }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 7,
+      "title": "CPU Fan",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 1 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "synology_cpu_fan_status{job=\"snmp_nas\"}",
+          "legendFormat": "CPU Fan",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "1": { "text": "OK", "color": "green", "index": 0 },
+                "2": { "text": "FAIL", "color": "red", "index": 1 }
+              }
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 1 }
+            ]
+          },
+          "color": { "mode": "thresholds" }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 8,
+      "title": "CPU & Memory",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 9,
+      "title": "CPU Usage",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 3, "x": 0, "y": 6 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "100 - synology_cpu_idle{job=\"snmp_nas\"}",
+          "legendFormat": "CPU",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 60 },
+              { "color": "red", "value": 80 }
+            ]
+          },
+          "color": { "mode": "thresholds" }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      }
+    },
+    {
+      "id": 10,
+      "title": "CPU by Mode",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 9, "x": 3, "y": 6 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "synology_cpu_user{job=\"snmp_nas\"}",
+          "legendFormat": "User",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "synology_cpu_system{job=\"snmp_nas\"}",
+          "legendFormat": "System",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "custom": {
+            "fillOpacity": 50,
+            "stacking": { "mode": "normal", "group": "A" },
+            "lineWidth": 1,
+            "drawStyle": "line",
+            "gradientMode": "none",
+            "showPoints": "never",
+            "spanNulls": false
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "User" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "System" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "none" },
+        "legend": { "displayMode": "list", "placement": "bottom" }
+      }
+    },
+    {
+      "id": 11,
+      "title": "Memory Usage",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 3, "x": 12, "y": 6 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "(1 - (synology_memory_available{job=\"snmp_nas\"} + synology_memory_buffer{job=\"snmp_nas\"} + synology_memory_cached{job=\"snmp_nas\"}) / synology_memory_total{job=\"snmp_nas\"}) * 100",
+          "legendFormat": "Memory",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 70 },
+              { "color": "red", "value": 85 }
+            ]
+          },
+          "color": { "mode": "thresholds" }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      }
+    },
+    {
+      "id": 12,
+      "title": "Memory Breakdown",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 9, "x": 15, "y": 6 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "(synology_memory_total{job=\"snmp_nas\"} - synology_memory_available{job=\"snmp_nas\"} - synology_memory_buffer{job=\"snmp_nas\"} - synology_memory_cached{job=\"snmp_nas\"}) * 1024",
+          "legendFormat": "Used",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "synology_memory_cached{job=\"snmp_nas\"} * 1024",
+          "legendFormat": "Cached",
+          "refId": "B"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "synology_memory_buffer{job=\"snmp_nas\"} * 1024",
+          "legendFormat": "Buffer",
+          "refId": "C"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "synology_memory_available{job=\"snmp_nas\"} * 1024",
+          "legendFormat": "Available",
+          "refId": "D"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "custom": {
+            "fillOpacity": 50,
+            "stacking": { "mode": "normal", "group": "A" },
+            "lineWidth": 1,
+            "drawStyle": "line",
+            "gradientMode": "none",
+            "showPoints": "never",
+            "spanNulls": false
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Used" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Cached" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Buffer" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "cyan" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Available" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "none" },
+        "legend": { "displayMode": "list", "placement": "bottom" }
+      }
+    },
+    {
+      "id": 13,
+      "title": "RAID",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 12 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 14,
+      "title": "RAID Status",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 5, "w": 4, "x": 0, "y": 13 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "synology_raid_status{job=\"snmp_nas\"}",
+          "legendFormat": "{{ raidName }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "1": { "text": "Normal", "color": "green", "index": 0 },
+                "2": { "text": "Repairing", "color": "yellow", "index": 1 },
+                "11": { "text": "DEGRADED", "color": "orange", "index": 2 },
+                "12": { "text": "CRASHED", "color": "red", "index": 3 }
+              }
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          },
+          "color": { "mode": "thresholds" }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 15,
+      "title": "RAID Usage",
+      "type": "bargauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 5, "w": 8, "x": 4, "y": 13 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "(synology_raid_total_size{job=\"snmp_nas\"} - synology_raid_free_size{job=\"snmp_nas\"}) / synology_raid_total_size{job=\"snmp_nas\"} * 100",
+          "legendFormat": "{{ raidName }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 75 },
+              { "color": "red", "value": 90 }
+            ]
+          },
+          "color": { "mode": "thresholds" }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true
+      }
+    },
+    {
+      "id": 16,
+      "title": "RAID Free Space",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 5, "w": 4, "x": 12, "y": 13 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "synology_raid_free_size{job=\"snmp_nas\"}",
+          "legendFormat": "{{ raidName }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          },
+          "color": { "mode": "value" }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      }
+    },
+    {
+      "id": 17,
+      "title": "RAID Usage Over Time",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 5, "w": 8, "x": 16, "y": 13 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "(synology_raid_total_size{job=\"snmp_nas\"} - synology_raid_free_size{job=\"snmp_nas\"}) / synology_raid_total_size{job=\"snmp_nas\"} * 100",
+          "legendFormat": "{{ raidName }} Used %",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "custom": {
+            "fillOpacity": 15,
+            "lineWidth": 1,
+            "drawStyle": "line",
+            "gradientMode": "none",
+            "showPoints": "never",
+            "spanNulls": false
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 75 },
+              { "color": "red", "value": 90 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "none" },
+        "legend": { "displayMode": "list", "placement": "bottom" }
+      }
+    },
+    {
+      "id": 18,
+      "title": "Disk Health",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 18 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 19,
+      "title": "Disk Status",
+      "type": "table",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 19 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "synology_disk_status{job=\"snmp_nas\"}",
+          "legendFormat": "",
+          "format": "table",
+          "instant": true,
+          "refId": "status"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "synology_disk_temperature{job=\"snmp_nas\"}",
+          "legendFormat": "",
+          "format": "table",
+          "instant": true,
+          "refId": "temp"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Value #status" },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "1": { "text": "Normal", "color": "green", "index": 0 },
+                      "2": { "text": "Initialized", "color": "blue", "index": 1 },
+                      "4": { "text": "SysPartFail", "color": "red", "index": 2 },
+                      "5": { "text": "Crashed", "color": "red", "index": 3 }
+                    }
+                  }
+                ]
+              },
+              { "id": "displayName", "value": "Status" },
+              { "id": "custom.displayMode", "value": "color-background" }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Value #temp" },
+            "properties": [
+              { "id": "unit", "value": "celsius" },
+              { "id": "displayName", "value": "Temperature" }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "diskID" },
+            "properties": [
+              { "id": "displayName", "value": "Disk" }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "diskModel" },
+            "properties": [
+              { "id": "displayName", "value": "Model" }
+            ]
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "job": true,
+              "instance": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "diskID": "Disk",
+              "diskModel": "Model"
+            }
+          }
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "footer": { "show": false, "reducer": ["sum"], "fields": "" },
+        "sortBy": []
+      }
+    },
+    {
+      "id": 20,
+      "title": "Disk Temperature",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 19 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "synology_disk_temperature{job=\"snmp_nas\"}",
+          "legendFormat": "{{ diskID }} ({{ diskModel }})",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius",
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 1,
+            "drawStyle": "line",
+            "gradientMode": "none",
+            "showPoints": "never",
+            "spanNulls": false
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 40 },
+              { "color": "red", "value": 50 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "none" },
+        "legend": { "displayMode": "list", "placement": "bottom" }
+      }
+    },
+    {
+      "id": 21,
+      "title": "Storage I/O",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 25 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 22,
+      "title": "IOPS",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 8, "x": 0, "y": 26 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "rate(synology_storageio_reads{job=\"snmp_nas\"}[5m])",
+          "legendFormat": "{{ storageioDevice }} Reads",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "rate(synology_storageio_writes{job=\"snmp_nas\"}[5m])",
+          "legendFormat": "{{ storageioDevice }} Writes",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "iops",
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 1,
+            "drawStyle": "line",
+            "gradientMode": "none",
+            "showPoints": "never",
+            "spanNulls": false
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "none" },
+        "legend": { "displayMode": "list", "placement": "bottom" }
+      }
+    },
+    {
+      "id": 23,
+      "title": "Throughput",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 8, "x": 8, "y": 26 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "rate(synology_storageio_nread{job=\"snmp_nas\"}[5m])",
+          "legendFormat": "{{ storageioDevice }} Read",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "-rate(synology_storageio_nwritten{job=\"snmp_nas\"}[5m])",
+          "legendFormat": "{{ storageioDevice }} Write",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps",
+          "custom": {
+            "fillOpacity": 15,
+            "lineWidth": 1,
+            "drawStyle": "line",
+            "gradientMode": "none",
+            "showPoints": "never",
+            "spanNulls": false
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "none" },
+        "legend": { "displayMode": "list", "placement": "bottom" }
+      }
+    },
+    {
+      "id": 24,
+      "title": "I/O Load",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 8, "x": 16, "y": 26 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "synology_storageio_load{job=\"snmp_nas\"}",
+          "legendFormat": "{{ storageioDevice }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 1,
+            "drawStyle": "line",
+            "gradientMode": "none",
+            "showPoints": "never",
+            "spanNulls": false
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "none" },
+        "legend": { "displayMode": "list", "placement": "bottom" }
+      }
+    },
+    {
+      "id": 25,
+      "title": "Network",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 33 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 26,
+      "title": "NAS Network Traffic",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 34 },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "rate(ifHCInOctets{job=\"snmp_nas\"}[5m]) * 8",
+          "legendFormat": "{{ ifDescr }} In",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+          "expr": "-rate(ifHCOutOctets{job=\"snmp_nas\"}[5m]) * 8",
+          "legendFormat": "{{ ifDescr }} Out",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps",
+          "custom": {
+            "fillOpacity": 15,
+            "lineWidth": 1,
+            "drawStyle": "line",
+            "gradientMode": "none",
+            "showPoints": "never",
+            "spanNulls": false
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "none" },
+        "legend": { "displayMode": "list", "placement": "bottom" }
+      }
+    }
+  ]
+}
