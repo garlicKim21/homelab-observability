@@ -1041,7 +1041,7 @@
           }
         },
         {
-          "title": "Memory Usage",
+          "title": "Memory Usage (GB)",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -1055,55 +1055,148 @@
           },
           "targets": [
             {
-              "expr": "vmware_host_memory_usage{host_name=\"esxi01.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi01.basphere.local\"} * 100",
-              "legendFormat": "Memory %",
+              "expr": "vmware_host_memory_usage{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "Usage",
               "refId": "A"
             },
             {
-              "expr": "vmware_host_mem_active_average{host_name=\"esxi01.basphere.local\"}",
-              "legendFormat": "Active (KB)",
+              "expr": "vmware_host_mem_active_average{host_name=\"esxi01.basphere.local\"} / 1024",
+              "legendFormat": "Active",
               "refId": "B"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi01.basphere.local\"}",
+              "legendFormat": "Max",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi01.basphere.local\"} * 0.8",
+              "legendFormat": "80%",
+              "refId": "D"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi01.basphere.local\"} * 0.9",
+              "legendFormat": "90%",
+              "refId": "E"
             }
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "percent",
+              "unit": "mbytes",
               "min": 0,
-              "max": 100,
               "custom": {
                 "fillOpacity": 10
-              },
-              "thresholds": {
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "yellow",
-                    "value": 80
-                  },
-                  {
-                    "color": "red",
-                    "value": 90
-                  }
-                ]
               }
             },
             "overrides": [
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "Active (KB)"
+                  "options": "Max"
                 },
                 "properties": [
                   {
-                    "id": "unit",
-                    "value": "kbytes"
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        10,
+                        10
+                      ]
+                    }
                   },
                   {
-                    "id": "custom.axisPlacement",
-                    "value": "right"
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "white"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "80%"
+                },
+                "properties": [
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        5,
+                        5
+                      ]
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "yellow"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "90%"
+                },
+                "properties": [
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        5,
+                        5
+                      ]
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "red"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Active"
+                },
+                "properties": [
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 5
                   }
                 ]
               }
@@ -1217,7 +1310,7 @@
               "refId": "A"
             },
             {
-              "expr": "-vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi01.basphere.local\"} * 1024",
+              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi01.basphere.local\"} * 1024",
               "legendFormat": "Tx",
               "refId": "B"
             }
@@ -1228,7 +1321,21 @@
               "custom": {
                 "fillOpacity": 15
               }
-            }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Tx"
+                },
+                "properties": [
+                  {
+                    "id": "custom.transform",
+                    "value": "negative-Y"
+                  }
+                ]
+              }
+            ]
           }
         },
         {
@@ -1668,7 +1775,7 @@
           }
         },
         {
-          "title": "Memory Usage",
+          "title": "Memory Usage (GB)",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -1682,55 +1789,148 @@
           },
           "targets": [
             {
-              "expr": "vmware_host_memory_usage{host_name=\"esxi02.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi02.basphere.local\"} * 100",
-              "legendFormat": "Memory %",
+              "expr": "vmware_host_memory_usage{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "Usage",
               "refId": "A"
             },
             {
-              "expr": "vmware_host_mem_active_average{host_name=\"esxi02.basphere.local\"}",
-              "legendFormat": "Active (KB)",
+              "expr": "vmware_host_mem_active_average{host_name=\"esxi02.basphere.local\"} / 1024",
+              "legendFormat": "Active",
               "refId": "B"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi02.basphere.local\"}",
+              "legendFormat": "Max",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi02.basphere.local\"} * 0.8",
+              "legendFormat": "80%",
+              "refId": "D"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi02.basphere.local\"} * 0.9",
+              "legendFormat": "90%",
+              "refId": "E"
             }
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "percent",
+              "unit": "mbytes",
               "min": 0,
-              "max": 100,
               "custom": {
                 "fillOpacity": 10
-              },
-              "thresholds": {
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "yellow",
-                    "value": 80
-                  },
-                  {
-                    "color": "red",
-                    "value": 90
-                  }
-                ]
               }
             },
             "overrides": [
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "Active (KB)"
+                  "options": "Max"
                 },
                 "properties": [
                   {
-                    "id": "unit",
-                    "value": "kbytes"
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        10,
+                        10
+                      ]
+                    }
                   },
                   {
-                    "id": "custom.axisPlacement",
-                    "value": "right"
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "white"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "80%"
+                },
+                "properties": [
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        5,
+                        5
+                      ]
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "yellow"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "90%"
+                },
+                "properties": [
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        5,
+                        5
+                      ]
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "red"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Active"
+                },
+                "properties": [
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 5
                   }
                 ]
               }
@@ -1844,7 +2044,7 @@
               "refId": "A"
             },
             {
-              "expr": "-vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi02.basphere.local\"} * 1024",
+              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi02.basphere.local\"} * 1024",
               "legendFormat": "Tx",
               "refId": "B"
             }
@@ -1855,7 +2055,21 @@
               "custom": {
                 "fillOpacity": 15
               }
-            }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Tx"
+                },
+                "properties": [
+                  {
+                    "id": "custom.transform",
+                    "value": "negative-Y"
+                  }
+                ]
+              }
+            ]
           }
         },
         {
@@ -2295,7 +2509,7 @@
           }
         },
         {
-          "title": "Memory Usage",
+          "title": "Memory Usage (GB)",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -2309,55 +2523,148 @@
           },
           "targets": [
             {
-              "expr": "vmware_host_memory_usage{host_name=\"esxi03.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi03.basphere.local\"} * 100",
-              "legendFormat": "Memory %",
+              "expr": "vmware_host_memory_usage{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "Usage",
               "refId": "A"
             },
             {
-              "expr": "vmware_host_mem_active_average{host_name=\"esxi03.basphere.local\"}",
-              "legendFormat": "Active (KB)",
+              "expr": "vmware_host_mem_active_average{host_name=\"esxi03.basphere.local\"} / 1024",
+              "legendFormat": "Active",
               "refId": "B"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi03.basphere.local\"}",
+              "legendFormat": "Max",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi03.basphere.local\"} * 0.8",
+              "legendFormat": "80%",
+              "refId": "D"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi03.basphere.local\"} * 0.9",
+              "legendFormat": "90%",
+              "refId": "E"
             }
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "percent",
+              "unit": "mbytes",
               "min": 0,
-              "max": 100,
               "custom": {
                 "fillOpacity": 10
-              },
-              "thresholds": {
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "yellow",
-                    "value": 80
-                  },
-                  {
-                    "color": "red",
-                    "value": 90
-                  }
-                ]
               }
             },
             "overrides": [
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "Active (KB)"
+                  "options": "Max"
                 },
                 "properties": [
                   {
-                    "id": "unit",
-                    "value": "kbytes"
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        10,
+                        10
+                      ]
+                    }
                   },
                   {
-                    "id": "custom.axisPlacement",
-                    "value": "right"
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "white"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "80%"
+                },
+                "properties": [
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        5,
+                        5
+                      ]
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "yellow"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "90%"
+                },
+                "properties": [
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        5,
+                        5
+                      ]
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "red"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Active"
+                },
+                "properties": [
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 5
                   }
                 ]
               }
@@ -2471,7 +2778,7 @@
               "refId": "A"
             },
             {
-              "expr": "-vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi03.basphere.local\"} * 1024",
+              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi03.basphere.local\"} * 1024",
               "legendFormat": "Tx",
               "refId": "B"
             }
@@ -2482,7 +2789,21 @@
               "custom": {
                 "fillOpacity": 15
               }
-            }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Tx"
+                },
+                "properties": [
+                  {
+                    "id": "custom.transform",
+                    "value": "negative-Y"
+                  }
+                ]
+              }
+            ]
           }
         },
         {
@@ -2922,7 +3243,7 @@
           }
         },
         {
-          "title": "Memory Usage",
+          "title": "Memory Usage (GB)",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -2936,55 +3257,148 @@
           },
           "targets": [
             {
-              "expr": "vmware_host_memory_usage{host_name=\"esxi04.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi04.basphere.local\"} * 100",
-              "legendFormat": "Memory %",
+              "expr": "vmware_host_memory_usage{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "Usage",
               "refId": "A"
             },
             {
-              "expr": "vmware_host_mem_active_average{host_name=\"esxi04.basphere.local\"}",
-              "legendFormat": "Active (KB)",
+              "expr": "vmware_host_mem_active_average{host_name=\"esxi04.basphere.local\"} / 1024",
+              "legendFormat": "Active",
               "refId": "B"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi04.basphere.local\"}",
+              "legendFormat": "Max",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi04.basphere.local\"} * 0.8",
+              "legendFormat": "80%",
+              "refId": "D"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi04.basphere.local\"} * 0.9",
+              "legendFormat": "90%",
+              "refId": "E"
             }
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "percent",
+              "unit": "mbytes",
               "min": 0,
-              "max": 100,
               "custom": {
                 "fillOpacity": 10
-              },
-              "thresholds": {
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "yellow",
-                    "value": 80
-                  },
-                  {
-                    "color": "red",
-                    "value": 90
-                  }
-                ]
               }
             },
             "overrides": [
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "Active (KB)"
+                  "options": "Max"
                 },
                 "properties": [
                   {
-                    "id": "unit",
-                    "value": "kbytes"
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        10,
+                        10
+                      ]
+                    }
                   },
                   {
-                    "id": "custom.axisPlacement",
-                    "value": "right"
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "white"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "80%"
+                },
+                "properties": [
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        5,
+                        5
+                      ]
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "yellow"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "90%"
+                },
+                "properties": [
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        5,
+                        5
+                      ]
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "red"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Active"
+                },
+                "properties": [
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 5
                   }
                 ]
               }
@@ -3098,7 +3512,7 @@
               "refId": "A"
             },
             {
-              "expr": "-vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi04.basphere.local\"} * 1024",
+              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi04.basphere.local\"} * 1024",
               "legendFormat": "Tx",
               "refId": "B"
             }
@@ -3109,7 +3523,21 @@
               "custom": {
                 "fillOpacity": 15
               }
-            }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Tx"
+                },
+                "properties": [
+                  {
+                    "id": "custom.transform",
+                    "value": "negative-Y"
+                  }
+                ]
+              }
+            ]
           }
         },
         {
@@ -3549,7 +3977,7 @@
           }
         },
         {
-          "title": "Memory Usage",
+          "title": "Memory Usage (GB)",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -3563,55 +3991,148 @@
           },
           "targets": [
             {
-              "expr": "vmware_host_memory_usage{host_name=\"esxi05.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi05.basphere.local\"} * 100",
-              "legendFormat": "Memory %",
+              "expr": "vmware_host_memory_usage{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "Usage",
               "refId": "A"
             },
             {
-              "expr": "vmware_host_mem_active_average{host_name=\"esxi05.basphere.local\"}",
-              "legendFormat": "Active (KB)",
+              "expr": "vmware_host_mem_active_average{host_name=\"esxi05.basphere.local\"} / 1024",
+              "legendFormat": "Active",
               "refId": "B"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi05.basphere.local\"}",
+              "legendFormat": "Max",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi05.basphere.local\"} * 0.8",
+              "legendFormat": "80%",
+              "refId": "D"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi05.basphere.local\"} * 0.9",
+              "legendFormat": "90%",
+              "refId": "E"
             }
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "percent",
+              "unit": "mbytes",
               "min": 0,
-              "max": 100,
               "custom": {
                 "fillOpacity": 10
-              },
-              "thresholds": {
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "yellow",
-                    "value": 80
-                  },
-                  {
-                    "color": "red",
-                    "value": 90
-                  }
-                ]
               }
             },
             "overrides": [
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "Active (KB)"
+                  "options": "Max"
                 },
                 "properties": [
                   {
-                    "id": "unit",
-                    "value": "kbytes"
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        10,
+                        10
+                      ]
+                    }
                   },
                   {
-                    "id": "custom.axisPlacement",
-                    "value": "right"
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "white"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "80%"
+                },
+                "properties": [
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        5,
+                        5
+                      ]
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "yellow"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "90%"
+                },
+                "properties": [
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        5,
+                        5
+                      ]
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "red"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Active"
+                },
+                "properties": [
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 5
                   }
                 ]
               }
@@ -3725,7 +4246,7 @@
               "refId": "A"
             },
             {
-              "expr": "-vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi05.basphere.local\"} * 1024",
+              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi05.basphere.local\"} * 1024",
               "legendFormat": "Tx",
               "refId": "B"
             }
@@ -3736,7 +4257,21 @@
               "custom": {
                 "fillOpacity": 15
               }
-            }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Tx"
+                },
+                "properties": [
+                  {
+                    "id": "custom.transform",
+                    "value": "negative-Y"
+                  }
+                ]
+              }
+            ]
           }
         },
         {
@@ -4176,7 +4711,7 @@
           }
         },
         {
-          "title": "Memory Usage",
+          "title": "Memory Usage (GB)",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -4190,55 +4725,148 @@
           },
           "targets": [
             {
-              "expr": "vmware_host_memory_usage{host_name=\"esxi06.basphere.local\"} / vmware_host_memory_max{host_name=\"esxi06.basphere.local\"} * 100",
-              "legendFormat": "Memory %",
+              "expr": "vmware_host_memory_usage{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "Usage",
               "refId": "A"
             },
             {
-              "expr": "vmware_host_mem_active_average{host_name=\"esxi06.basphere.local\"}",
-              "legendFormat": "Active (KB)",
+              "expr": "vmware_host_mem_active_average{host_name=\"esxi06.basphere.local\"} / 1024",
+              "legendFormat": "Active",
               "refId": "B"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi06.basphere.local\"}",
+              "legendFormat": "Max",
+              "refId": "C"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi06.basphere.local\"} * 0.8",
+              "legendFormat": "80%",
+              "refId": "D"
+            },
+            {
+              "expr": "vmware_host_memory_max{host_name=\"esxi06.basphere.local\"} * 0.9",
+              "legendFormat": "90%",
+              "refId": "E"
             }
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "percent",
+              "unit": "mbytes",
               "min": 0,
-              "max": 100,
               "custom": {
                 "fillOpacity": 10
-              },
-              "thresholds": {
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "yellow",
-                    "value": 80
-                  },
-                  {
-                    "color": "red",
-                    "value": 90
-                  }
-                ]
               }
             },
             "overrides": [
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "Active (KB)"
+                  "options": "Max"
                 },
                 "properties": [
                   {
-                    "id": "unit",
-                    "value": "kbytes"
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        10,
+                        10
+                      ]
+                    }
                   },
                   {
-                    "id": "custom.axisPlacement",
-                    "value": "right"
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "white"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "80%"
+                },
+                "properties": [
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        5,
+                        5
+                      ]
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "yellow"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "90%"
+                },
+                "properties": [
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        5,
+                        5
+                      ]
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "red"
+                    }
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Active"
+                },
+                "properties": [
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 5
                   }
                 ]
               }
@@ -4352,7 +4980,7 @@
               "refId": "A"
             },
             {
-              "expr": "-vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi06.basphere.local\"} * 1024",
+              "expr": "vmware_host_net_bytesTx_average{job=\"vmware\",host_name=\"esxi06.basphere.local\"} * 1024",
               "legendFormat": "Tx",
               "refId": "B"
             }
@@ -4363,7 +4991,21 @@
               "custom": {
                 "fillOpacity": 15
               }
-            }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Tx"
+                },
+                "properties": [
+                  {
+                    "id": "custom.transform",
+                    "value": "negative-Y"
+                  }
+                ]
+              }
+            ]
           }
         },
         {
