@@ -628,7 +628,7 @@
               { "color": "green", "value": null }
             ]
           },
-          "color": { "mode": "value" }
+          "color": { "mode": "fixed" }
         },
         "overrides": []
       },
