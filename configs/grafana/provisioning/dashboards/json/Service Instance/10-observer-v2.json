@@ -653,67 +653,60 @@
 
     {
       "id": 60,
-      "title": "Per-Container Detail",
+      "title": "$container",
       "type": "row",
-      "collapsed": true,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 76 },
-      "panels": [
-        {
-          "id": 61,
-          "title": "$container",
-          "type": "row",
-          "repeat": "container",
-          "collapsed": false,
-          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 77 }
-        },
-        {
-          "id": 62,
-          "title": "$container CPU",
-          "type": "timeseries",
-          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 78 },
-          "targets": [
-            { "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"observer_cadvisor\", name=\"$container\"}[5m]))", "legendFormat": "Usage", "refId": "A" },
-            { "expr": "max(container_spec_cpu_quota{job=\"observer_cadvisor\", name=\"$container\"} > 0) / max(container_spec_cpu_period{job=\"observer_cadvisor\", name=\"$container\"})", "legendFormat": "Limit", "refId": "B" }
-          ],
-          "fieldConfig": {
-            "defaults": { "unit": "short", "decimals": 2, "custom": { "fillOpacity": 10 } },
-            "overrides": [
-              { "matcher": { "id": "byFrameRefID", "options": "A" }, "properties": [{ "id": "color", "value": { "fixedColor": "green", "mode": "fixed" } }] },
-              { "matcher": { "id": "byFrameRefID", "options": "B" }, "properties": [
-                { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 10] } },
-                { "id": "custom.fillOpacity", "value": 0 },
-                { "id": "custom.lineWidth", "value": 2 },
-                { "id": "color", "value": { "fixedColor": "orange", "mode": "fixed" } }
-              ]}
-            ]
-          },
-          "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
-        },
-        {
-          "id": 63,
-          "title": "$container Memory",
-          "type": "timeseries",
-          "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 78 },
-          "targets": [
-            { "expr": "sum(container_memory_usage_bytes{job=\"observer_cadvisor\", name=\"$container\"})", "legendFormat": "Usage", "refId": "A" },
-            { "expr": "max(container_spec_memory_limit_bytes{job=\"observer_cadvisor\", name=\"$container\"} > 0)", "legendFormat": "Limit", "refId": "B" }
-          ],
-          "fieldConfig": {
-            "defaults": { "unit": "bytes", "custom": { "fillOpacity": 10 } },
-            "overrides": [
-              { "matcher": { "id": "byFrameRefID", "options": "B" }, "properties": [
-                { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 10] } },
-                { "id": "custom.fillOpacity", "value": 0 },
-                { "id": "custom.lineWidth", "value": 2 },
-                { "id": "color", "value": { "fixedColor": "red", "mode": "fixed" } }
-              ]}
-            ]
-          },
-          "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
-        }
-      ]
+      "repeat": "container",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 76 }
+    },
+
+    {
+      "id": 61,
+      "title": "$container CPU",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 77 },
+      "targets": [
+        { "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"observer_cadvisor\", name=\"$container\"}[5m]))", "legendFormat": "Usage", "refId": "A" },
+        { "expr": "max(container_spec_cpu_quota{job=\"observer_cadvisor\", name=\"$container\"} > 0) / max(container_spec_cpu_period{job=\"observer_cadvisor\", name=\"$container\"})", "legendFormat": "Limit", "refId": "B" }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "decimals": 2, "custom": { "fillOpacity": 10 } },
+        "overrides": [
+          { "matcher": { "id": "byFrameRefID", "options": "A" }, "properties": [{ "id": "color", "value": { "fixedColor": "green", "mode": "fixed" } }] },
+          { "matcher": { "id": "byFrameRefID", "options": "B" }, "properties": [
+            { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 10] } },
+            { "id": "custom.fillOpacity", "value": 0 },
+            { "id": "custom.lineWidth", "value": 2 },
+            { "id": "color", "value": { "fixedColor": "orange", "mode": "fixed" } }
+          ]}
+        ]
+      },
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+    },
+
+    {
+      "id": 62,
+      "title": "$container Memory",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 77 },
+      "targets": [
+        { "expr": "sum(container_memory_usage_bytes{job=\"observer_cadvisor\", name=\"$container\"})", "legendFormat": "Usage", "refId": "A" },
+        { "expr": "max(container_spec_memory_limit_bytes{job=\"observer_cadvisor\", name=\"$container\"} > 0)", "legendFormat": "Limit", "refId": "B" }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "bytes", "custom": { "fillOpacity": 10 } },
+        "overrides": [
+          { "matcher": { "id": "byFrameRefID", "options": "B" }, "properties": [
+            { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 10] } },
+            { "id": "custom.fillOpacity", "value": 0 },
+            { "id": "custom.lineWidth", "value": 2 },
+            { "id": "color", "value": { "fixedColor": "red", "mode": "fixed" } }
+          ]}
+        ]
+      },
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
     }
 
   ]
