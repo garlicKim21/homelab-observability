@@ -85,27 +85,29 @@ groups:
             Synology NAS 디스크 {{ $labels.diskID }}({{ $labels.diskModel }})에
             장애가 발생했습니다 (status: {{ $value }}). 교체 필요.
 
-      - alert: NASStorageAlmostFull
+      # Storage Pool 1/2는 iSCSI (VMware) 전용으로 100% 정상.
+      # Volume 2만 모니터링 대상.
+      - alert: NASVolume2Critical
         expr: >
-          (synology_raid_total_size - synology_raid_free_size)
-          / synology_raid_total_size > 0.9
+          (synology_raid_total_size{raidName="Volume 2"} - synology_raid_free_size{raidName="Volume 2"})
+          / synology_raid_total_size{raidName="Volume 2"} > 0.95
         for: 10m
         labels:
           severity: critical
         annotations:
-          summary: "NAS 스토리지 90% 초과: {{ $labels.raidName }}"
-          description: "Synology NAS RAID {{ $labels.raidName }} 사용률이 {{ $value | humanizePercentage }}입니다."
+          summary: "NAS Volume 2 사용률 95% 초과"
+          description: "Synology NAS Volume 2 사용률이 {{ $value | humanizePercentage }}입니다. 용량 확보 필요."
 
-      - alert: NASStorageHighUsage
+      - alert: NASVolume2Warning
         expr: >
-          (synology_raid_total_size - synology_raid_free_size)
-          / synology_raid_total_size > 0.75
+          (synology_raid_total_size{raidName="Volume 2"} - synology_raid_free_size{raidName="Volume 2"})
+          / synology_raid_total_size{raidName="Volume 2"} > 0.9
         for: 30m
         labels:
           severity: warning
         annotations:
-          summary: "NAS 스토리지 75% 초과: {{ $labels.raidName }}"
-          description: "Synology NAS RAID {{ $labels.raidName }} 사용률이 {{ $value | humanizePercentage }}입니다."
+          summary: "NAS Volume 2 사용률 90% 초과"
+          description: "Synology NAS Volume 2 사용률이 {{ $value | humanizePercentage }}입니다."
 
   - name: nas-resources
     interval: 60s
