@@ -41,16 +41,67 @@
       "options": { "colorMode": "value" }
     },
     {
-      "title": "Traffic",
+      "title": "CPU",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 1 },
+      "targets": [{ "expr": "tplink_cpu_1m{job=\"snmp_switch_system\"}", "legendFormat": "CPU (1m avg)" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 60 }, { "color": "red", "value": 80 }] }
+        }
+      }
+    },
+    {
+      "title": "Memory",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 1 },
+      "targets": [{ "expr": "tplink_memory_usage{job=\"snmp_switch_system\"}", "legendFormat": "Memory" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] }
+        }
+      }
+    },
+    {
+      "title": "Resources",
       "type": "row",
       "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
+      "collapsed": false
+    },
+    {
+      "title": "CPU & Memory History",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 6 },
+      "targets": [
+        { "expr": "tplink_cpu_5s{job=\"snmp_switch_system\"}", "legendFormat": "CPU (5s)" },
+        { "expr": "tplink_cpu_1m{job=\"snmp_switch_system\"}", "legendFormat": "CPU (1m)" },
+        { "expr": "tplink_cpu_5m{job=\"snmp_switch_system\"}", "legendFormat": "CPU (5m)" },
+        { "expr": "tplink_memory_usage{job=\"snmp_switch_system\"}", "legendFormat": "Memory" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100,
+          "custom": { "fillOpacity": 15 },
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] }
+        }
+      }
+    },
+    {
+      "title": "Traffic",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 13 },
       "collapsed": false
     },
     {
       "title": "Port Traffic (Top 10)",
       "type": "timeseries",
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 6 },
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 14 },
       "targets": [
         { "expr": "topk(10, rate(ifHCInOctets{job=\"snmp_switch\"}[5m]) * 8)", "legendFormat": "{{ ifDescr }} In" },
         { "expr": "topk(10, -rate(ifHCOutOctets{job=\"snmp_switch\"}[5m]) * 8)", "legendFormat": "{{ ifDescr }} Out" }
@@ -60,14 +111,14 @@
     {
       "title": "Errors & Discards",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 14 },
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 22 },
       "collapsed": false
     },
     {
       "title": "Port Errors",
       "type": "timeseries",
       "datasource": { "type": "prometheus", "uid": "${DS_VICTORIAMETRICS}" },
-      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 15 },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 23 },
       "targets": [
         { "expr": "rate(ifInErrors{job=\"snmp_switch\"}[5m])", "legendFormat": "{{ ifDescr }} InErr" },
         { "expr": "rate(ifOutErrors{job=\"snmp_switch\"}[5m])", "legendFormat": "{{ ifDescr }} OutErr" }

@@ -96,6 +96,27 @@ scrape_configs:
       - target_label: __address__
         replacement: snmp_exporter:9116
 
+  # --- TP-Link SG2218 시스템 (CPU/Memory) ---
+  - job_name: "snmp_switch_system"
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    static_configs:
+      - targets: ["<SWITCH_HOST>"]
+        labels:
+          device: "sg2218"
+          device_type: "switch"
+    metrics_path: /snmp
+    params:
+      module: ["tp_system"]
+      auth: ["basphere_v3_des"]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: snmp_exporter:9116
+
   # --- Synology NAS ---
   - job_name: "snmp_nas"
     scrape_interval: 60s
