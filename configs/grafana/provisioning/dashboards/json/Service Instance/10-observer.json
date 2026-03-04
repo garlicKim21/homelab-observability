@@ -54,9 +54,8 @@
   },
   "panels": [
     {
-      "id": 1,
-      "title": "Status",
       "type": "row",
+      "title": "Status",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -64,11 +63,11 @@
         "y": 0
       },
       "collapsed": false,
-      "panels": []
+      "panels": [],
+      "id": 1
     },
     {
-      "id": 2,
-      "title": "Server Status",
+      "title": "Observer",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -78,72 +77,6 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 1
-      },
-      "targets": [
-        {
-          "expr": "up{job=\"observer_node\"}",
-          "legendFormat": "Server",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [
-            {
-              "type": "value",
-              "options": {
-                "0": {
-                  "text": "DOWN",
-                  "color": "red",
-                  "index": 0
-                },
-                "1": {
-                  "text": "UP",
-                  "color": "green",
-                  "index": 1
-                }
-              }
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-          }
-        }
-      },
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
-      }
-    },
-    {
-      "id": 3,
-      "title": "Uptime",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 4,
         "y": 1
       },
       "targets": [
@@ -155,7 +88,7 @@
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "dtdurations",
+          "unit": "s",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -176,10 +109,11 @@
             "lastNotNull"
           ]
         }
-      }
+      },
+      "id": 2
     },
     {
-      "id": 4,
+      "id": 3,
       "title": "Containers",
       "type": "stat",
       "datasource": {
@@ -189,7 +123,7 @@
       "gridPos": {
         "h": 4,
         "w": 4,
-        "x": 8,
+        "x": 4,
         "y": 1
       },
       "targets": [
@@ -224,7 +158,7 @@
       }
     },
     {
-      "id": 5,
+      "id": 4,
       "title": "VictoriaMetrics",
       "type": "stat",
       "datasource": {
@@ -234,7 +168,7 @@
       "gridPos": {
         "h": 4,
         "w": 4,
-        "x": 12,
+        "x": 8,
         "y": 1
       },
       "targets": [
@@ -290,73 +224,7 @@
       }
     },
     {
-      "id": 6,
-      "title": "Alertmanager",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 16,
-        "y": 1
-      },
-      "targets": [
-        {
-          "expr": "up{job=\"alertmanager\"}",
-          "legendFormat": "Alertmanager",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [
-            {
-              "type": "value",
-              "options": {
-                "0": {
-                  "text": "DOWN",
-                  "color": "red",
-                  "index": 0
-                },
-                "1": {
-                  "text": "UP",
-                  "color": "green",
-                  "index": 1
-                }
-              }
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-          }
-        }
-      },
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
-      }
-    },
-    {
-      "id": 7,
+      "id": 5,
       "title": "Grafana",
       "type": "stat",
       "datasource": {
@@ -366,7 +234,7 @@
       "gridPos": {
         "h": 4,
         "w": 4,
-        "x": 20,
+        "x": 12,
         "y": 1
       },
       "targets": [
@@ -422,9 +290,114 @@
       }
     },
     {
-      "id": 8,
-      "title": "CPU & Memory",
+      "title": "CPU",
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "(1 - avg(rate(node_cpu_seconds_total{job=\"observer_node\",mode=\"idle\"}[5m]))) * 100",
+          "legendFormat": "CPU",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      },
+      "id": 6
+    },
+    {
+      "title": "Memory",
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "(1 - node_memory_MemAvailable_bytes{job=\"observer_node\"} / node_memory_MemTotal_bytes{job=\"observer_node\"}) * 100",
+          "legendFormat": "Memory",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      },
+      "id": 7
+    },
+    {
       "type": "row",
+      "title": "CPU & Memory",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -432,7 +405,8 @@
         "y": 5
       },
       "collapsed": false,
-      "panels": []
+      "panels": [],
+      "id": 8
     },
     {
       "id": 9,
@@ -490,7 +464,7 @@
     },
     {
       "id": 10,
-      "title": "CPU by Mode",
+      "title": "CPU",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -681,7 +655,7 @@
     },
     {
       "id": 12,
-      "title": "Memory Breakdown",
+      "title": "Memory",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -801,9 +775,8 @@
       }
     },
     {
-      "id": 13,
-      "title": "Load & Filesystem",
       "type": "row",
+      "title": "Load & Filesystem",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -811,7 +784,8 @@
         "y": 13
       },
       "collapsed": false,
-      "panels": []
+      "panels": [],
+      "id": 13
     },
     {
       "id": 14,
@@ -823,7 +797,7 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 8,
+        "w": 12,
         "x": 0,
         "y": 14
       },
@@ -866,7 +840,7 @@
     },
     {
       "id": 15,
-      "title": "Disk Usage",
+      "title": "Filesystem",
       "type": "bargauge",
       "datasource": {
         "type": "prometheus",
@@ -874,8 +848,8 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 8,
-        "x": 8,
+        "w": 12,
+        "x": 12,
         "y": 14
       },
       "targets": [
@@ -983,8 +957,21 @@
       }
     },
     {
-      "id": 16,
-      "title": "Network Traffic",
+      "type": "row",
+      "title": "Disk I/O",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
+      "collapsed": false,
+      "panels": [],
+      "id": 16
+    },
+    {
+      "id": 17,
+      "title": "Disk I/O",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -992,9 +979,146 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 8,
-        "x": 16,
-        "y": 14
+        "w": 12,
+        "x": 0,
+        "y": 22
+      },
+      "targets": [
+        {
+          "expr": "rate(node_disk_read_bytes_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m])",
+          "legendFormat": "{{ device }} Read",
+          "refId": "A"
+        },
+        {
+          "expr": "-rate(node_disk_written_bytes_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m])",
+          "legendFormat": "{{ device }} Write",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps",
+          "custom": {
+            "fillOpacity": 15,
+            "showPoints": "never"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*Read$"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#73BF69"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*Write$"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#F2495C"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 18,
+      "title": "Disk IOPS",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 22
+      },
+      "targets": [
+        {
+          "expr": "rate(node_disk_reads_completed_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m])",
+          "legendFormat": "{{ device }} Read",
+          "refId": "A"
+        },
+        {
+          "expr": "-rate(node_disk_writes_completed_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m])",
+          "legendFormat": "{{ device }} Write",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "iops",
+          "custom": {
+            "fillOpacity": 15,
+            "showPoints": "never"
+          }
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "type": "row",
+      "title": "Network",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 29
+      },
+      "collapsed": false,
+      "panels": [],
+      "id": 19
+    },
+    {
+      "id": 20,
+      "title": "Network",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 30
       },
       "targets": [
         {
@@ -1061,20 +1185,86 @@
       }
     },
     {
-      "id": 17,
+      "id": 21,
       "title": "Monitoring Stack",
       "type": "row",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 21
+        "y": 37
       },
       "collapsed": false,
       "panels": []
     },
     {
-      "id": 18,
+      "id": 22,
+      "title": "Alertmanager",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 4,
+        "x": 0,
+        "y": 38
+      },
+      "targets": [
+        {
+          "expr": "up{job=\"alertmanager\"}",
+          "legendFormat": "Alertmanager",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "red",
+                  "index": 0
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green",
+                  "index": 1
+                }
+              }
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 23,
       "title": "Container CPU by Service",
       "type": "timeseries",
       "datasource": {
@@ -1083,9 +1273,9 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 12,
-        "x": 0,
-        "y": 22
+        "w": 10,
+        "x": 4,
+        "y": 38
       },
       "targets": [
         {
@@ -1118,7 +1308,7 @@
       }
     },
     {
-      "id": 19,
+      "id": 24,
       "title": "Container Memory by Service",
       "type": "timeseries",
       "datasource": {
@@ -1127,9 +1317,9 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 22
+        "w": 10,
+        "x": 14,
+        "y": 38
       },
       "targets": [
         {
@@ -1162,20 +1352,20 @@
       }
     },
     {
-      "id": 20,
+      "id": 25,
       "title": "VictoriaMetrics Performance",
       "type": "row",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 45
       },
       "collapsed": false,
       "panels": []
     },
     {
-      "id": 21,
+      "id": 26,
       "title": "Active Time Series",
       "type": "stat",
       "datasource": {
@@ -1186,7 +1376,7 @@
         "h": 7,
         "w": 4,
         "x": 0,
-        "y": 30
+        "y": 46
       },
       "targets": [
         {
@@ -1221,7 +1411,7 @@
       }
     },
     {
-      "id": 22,
+      "id": 27,
       "title": "Ingestion Rate",
       "type": "timeseries",
       "datasource": {
@@ -1232,7 +1422,7 @@
         "h": 7,
         "w": 10,
         "x": 4,
-        "y": 30
+        "y": 46
       },
       "targets": [
         {
@@ -1262,7 +1452,7 @@
       }
     },
     {
-      "id": 23,
+      "id": 28,
       "title": "Query Duration",
       "type": "timeseries",
       "datasource": {
@@ -1273,7 +1463,7 @@
         "h": 7,
         "w": 10,
         "x": 14,
-        "y": 30
+        "y": 46
       },
       "targets": [
         {
@@ -1303,19 +1493,19 @@
       }
     },
     {
-      "id": 24,
+      "id": 29,
       "title": "VictoriaMetrics Health",
       "type": "row",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 37
+        "y": 53
       },
       "collapsed": true,
       "panels": [
         {
-          "id": 25,
+          "id": 30,
           "title": "Memory Usage",
           "type": "timeseries",
           "datasource": {
@@ -1326,7 +1516,7 @@
             "h": 7,
             "w": 8,
             "x": 0,
-            "y": 38
+            "y": 54
           },
           "targets": [
             {
@@ -1356,7 +1546,7 @@
           }
         },
         {
-          "id": 26,
+          "id": 31,
           "title": "Disk Usage",
           "type": "timeseries",
           "datasource": {
@@ -1367,11 +1557,11 @@
             "h": 7,
             "w": 8,
             "x": 8,
-            "y": 38
+            "y": 54
           },
           "targets": [
             {
-              "expr": "vm_data_size_bytes",
+              "expr": "vm_data_size_bytes{job=\"victoriametrics\"}",
               "legendFormat": "{{ type }}",
               "refId": "A"
             }
@@ -1397,7 +1587,7 @@
           }
         },
         {
-          "id": 27,
+          "id": 32,
           "title": "Slow Inserts",
           "type": "timeseries",
           "datasource": {
@@ -1408,7 +1598,7 @@
             "h": 7,
             "w": 8,
             "x": 16,
-            "y": 38
+            "y": 54
           },
           "targets": [
             {
@@ -1457,157 +1647,19 @@
       ]
     },
     {
-      "id": 28,
-      "title": "Disk & Network I/O",
-      "type": "row",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 38
-      },
-      "collapsed": true,
-      "panels": [
-        {
-          "id": 29,
-          "title": "Disk I/O",
-          "type": "timeseries",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "VictoriaMetrics"
-          },
-          "gridPos": {
-            "h": 7,
-            "w": 12,
-            "x": 0,
-            "y": 39
-          },
-          "targets": [
-            {
-              "expr": "rate(node_disk_read_bytes_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m])",
-              "legendFormat": "{{ device }} Read",
-              "refId": "A"
-            },
-            {
-              "expr": "-rate(node_disk_written_bytes_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m])",
-              "legendFormat": "{{ device }} Write",
-              "refId": "B"
-            }
-          ],
-          "fieldConfig": {
-            "defaults": {
-              "unit": "Bps",
-              "custom": {
-                "fillOpacity": 15,
-                "showPoints": "never"
-              }
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": ".*Read$"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "mode": "fixed",
-                      "fixedColor": "#73BF69"
-                    }
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": ".*Write$"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "mode": "fixed",
-                      "fixedColor": "#F2495C"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "options": {
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            },
-            "legend": {
-              "displayMode": "list",
-              "placement": "bottom"
-            }
-          }
-        },
-        {
-          "id": 30,
-          "title": "Disk IOPS",
-          "type": "timeseries",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "VictoriaMetrics"
-          },
-          "gridPos": {
-            "h": 7,
-            "w": 12,
-            "x": 12,
-            "y": 39
-          },
-          "targets": [
-            {
-              "expr": "rate(node_disk_reads_completed_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m])",
-              "legendFormat": "{{ device }} Read",
-              "refId": "A"
-            },
-            {
-              "expr": "-rate(node_disk_writes_completed_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m])",
-              "legendFormat": "{{ device }} Write",
-              "refId": "B"
-            }
-          ],
-          "fieldConfig": {
-            "defaults": {
-              "unit": "iops",
-              "custom": {
-                "fillOpacity": 15,
-                "showPoints": "never"
-              }
-            }
-          },
-          "options": {
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            },
-            "legend": {
-              "displayMode": "list",
-              "placement": "bottom"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "id": 31,
+      "id": 33,
       "title": "Docker Containers",
       "type": "row",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 39
+        "y": 54
       },
       "collapsed": true,
       "panels": [
         {
-          "id": 32,
+          "id": 34,
           "title": "Container Status",
           "type": "table",
           "datasource": {
@@ -1618,7 +1670,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 40
+            "y": 55
           },
           "targets": [
             {
@@ -1756,20 +1808,20 @@
       ]
     },
     {
-      "id": 33,
+      "id": 35,
       "title": "Per-Container ($container)",
       "type": "row",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 40
+        "y": 55
       },
       "collapsed": true,
       "repeat": "container",
       "panels": [
         {
-          "id": 34,
+          "id": 36,
           "title": "$container CPU",
           "type": "timeseries",
           "datasource": {
@@ -1780,7 +1832,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 41
+            "y": 56
           },
           "targets": [
             {
@@ -1866,7 +1918,7 @@
           }
         },
         {
-          "id": 35,
+          "id": 37,
           "title": "$container Memory",
           "type": "timeseries",
           "datasource": {
@@ -1877,7 +1929,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 41
+            "y": 56
           },
           "targets": [
             {

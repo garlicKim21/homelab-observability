@@ -26,7 +26,7 @@
   "panels": [
     {
       "id": 1,
-      "title": "System Status",
+      "title": "Status",
       "type": "row",
       "collapsed": false,
       "gridPos": {
@@ -39,7 +39,7 @@
     },
     {
       "id": 2,
-      "title": "Firewall Status",
+      "title": "OPNsense",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -49,138 +49,6 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 1
-      },
-      "targets": [
-        {
-          "expr": "up{job=\"opnsense\"}",
-          "legendFormat": "Status",
-          "refId": "A"
-        }
-      ],
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [
-            {
-              "type": "value",
-              "options": {
-                "0": {
-                  "text": "DOWN",
-                  "color": "red",
-                  "index": 0
-                },
-                "1": {
-                  "text": "UP",
-                  "color": "green",
-                  "index": 1
-                }
-              }
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "id": 3,
-      "title": "Node Status",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 1
-      },
-      "targets": [
-        {
-          "expr": "up{job=\"opnsense_node\"}",
-          "legendFormat": "Status",
-          "refId": "A"
-        }
-      ],
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [
-            {
-              "type": "value",
-              "options": {
-                "0": {
-                  "text": "DOWN",
-                  "color": "red",
-                  "index": 0
-                },
-                "1": {
-                  "text": "UP",
-                  "color": "green",
-                  "index": 1
-                }
-              }
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "id": 4,
-      "title": "Uptime",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 8,
         "y": 1
       },
       "targets": [
@@ -202,7 +70,8 @@
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "dtdurations",
+          "unit": "s",
+          "noValue": "DOWN",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -226,12 +95,12 @@
       "gridPos": {
         "h": 4,
         "w": 4,
-        "x": 12,
+        "x": 4,
         "y": 1
       },
       "targets": [
         {
-          "expr": "opnsense_firewall_states_count",
+          "expr": "sum(opnsense_protocol_tcp_connection_count_by_state{job=\"opnsense\"})",
           "legendFormat": "States",
           "refId": "A"
         }
@@ -262,7 +131,7 @@
     },
     {
       "id": 6,
-      "title": "Gateway Status",
+      "title": "Gateway",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -271,12 +140,12 @@
       "gridPos": {
         "h": 4,
         "w": 4,
-        "x": 16,
+        "x": 8,
         "y": 1
       },
       "targets": [
         {
-          "expr": "opnsense_gateways_status",
+          "expr": "opnsense_gateways_status{job=\"opnsense\"}",
           "legendFormat": "{{ name }}",
           "refId": "A"
         }
@@ -328,7 +197,7 @@
     },
     {
       "id": 7,
-      "title": "Services Running",
+      "title": "Services",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -337,12 +206,12 @@
       "gridPos": {
         "h": 4,
         "w": 4,
-        "x": 20,
+        "x": 12,
         "y": 1
       },
       "targets": [
         {
-          "expr": "count(opnsense_services_status == 1)",
+          "expr": "opnsense_services_running_total{job=\"opnsense\"}",
           "legendFormat": "Running",
           "refId": "A"
         }
@@ -372,36 +241,77 @@
       }
     },
     {
-      "id": 8,
-      "title": "CPU & Memory",
-      "type": "row",
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 5
-      },
-      "panels": []
-    },
-    {
-      "id": 9,
-      "title": "CPU Usage",
+      "id": 40,
+      "title": "CPU",
       "type": "gauge",
       "datasource": {
         "type": "prometheus",
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 7,
-        "w": 3,
-        "x": 0,
-        "y": 6
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 1
       },
       "targets": [
         {
-          "expr": "100 - (avg(rate(node_cpu_seconds_total{job=\"opnsense_node\",mode=\"idle\"}[5m])) * 100)",
+          "expr": "(1 - avg(rate(node_cpu_seconds_total{job=\"opnsense_node\",mode=\"idle\"}[5m]))) * 100",
           "legendFormat": "CPU",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "showThresholdMarkers": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 41,
+      "title": "Memory",
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "(1 - (node_memory_free_bytes{job=\"opnsense_node\"} + node_memory_inactive_bytes{job=\"opnsense_node\"} + node_memory_cache_bytes{job=\"opnsense_node\"}) / node_memory_size_bytes{job=\"opnsense_node\"}) * 100",
+          "legendFormat": "Memory",
           "refId": "A"
         }
       ],
@@ -431,7 +341,74 @@
               },
               {
                 "color": "red",
-                "value": 80
+                "value": 90
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 8,
+      "title": "CPU & Memory",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "panels": []
+    },
+    {
+      "id": 9,
+      "title": "CPU",
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 0,
+        "y": 6
+      },
+      "targets": [
+        {
+          "expr": "(1 - avg(rate(node_cpu_seconds_total{job=\"opnsense_node\",mode=\"idle\"}[5m]))) * 100",
+          "legendFormat": "CPU",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "showThresholdMarkers": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
               }
             ]
           }
@@ -440,7 +417,7 @@
     },
     {
       "id": 10,
-      "title": "CPU by Mode",
+      "title": "CPU",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -462,11 +439,6 @@
           "expr": "avg by (mode)(rate(node_cpu_seconds_total{job=\"opnsense_node\",mode=\"system\"}[5m])) * 100",
           "legendFormat": "System",
           "refId": "B"
-        },
-        {
-          "expr": "avg by (mode)(rate(node_cpu_seconds_total{job=\"opnsense_node\",mode=\"iowait\"}[5m])) * 100",
-          "legendFormat": "IOWait",
-          "refId": "C"
         },
         {
           "expr": "avg by (mode)(rate(node_cpu_seconds_total{job=\"opnsense_node\",mode=\"irq\"}[5m])) * 100",
@@ -532,21 +504,6 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "IOWait"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#F2495C"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
               "options": "IRQ"
             },
             "properties": [
@@ -604,7 +561,7 @@
     },
     {
       "id": 11,
-      "title": "Memory Usage",
+      "title": "Memory",
       "type": "gauge",
       "datasource": {
         "type": "prometheus",
@@ -618,7 +575,7 @@
       },
       "targets": [
         {
-          "expr": "(1 - node_memory_MemAvailable_bytes{job=\"opnsense_node\"} / node_memory_MemTotal_bytes{job=\"opnsense_node\"}) * 100",
+          "expr": "(1 - (node_memory_free_bytes{job=\"opnsense_node\"} + node_memory_inactive_bytes{job=\"opnsense_node\"} + node_memory_cache_bytes{job=\"opnsense_node\"}) / node_memory_size_bytes{job=\"opnsense_node\"}) * 100",
           "legendFormat": "Memory",
           "refId": "A"
         }
@@ -645,11 +602,11 @@
               },
               {
                 "color": "yellow",
-                "value": 80
+                "value": 75
               },
               {
                 "color": "red",
-                "value": 85
+                "value": 90
               }
             ]
           }
@@ -658,7 +615,7 @@
     },
     {
       "id": 12,
-      "title": "Memory Breakdown",
+      "title": "Memory",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -678,7 +635,7 @@
         },
         {
           "expr": "node_memory_cache_bytes{job=\"opnsense_node\"}",
-          "legendFormat": "Cached",
+          "legendFormat": "Cache",
           "refId": "B"
         },
         {
@@ -688,7 +645,7 @@
         },
         {
           "expr": "node_memory_free_bytes{job=\"opnsense_node\"} + node_memory_inactive_bytes{job=\"opnsense_node\"}",
-          "legendFormat": "Available",
+          "legendFormat": "Free",
           "refId": "D"
         }
       ],
@@ -725,7 +682,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Cached"
+              "options": "Cache"
             },
             "properties": [
               {
@@ -755,7 +712,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Available"
+              "options": "Free"
             },
             "properties": [
               {
@@ -803,7 +760,7 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 8,
+        "w": 12,
         "x": 0,
         "y": 14
       },
@@ -894,7 +851,7 @@
     },
     {
       "id": 15,
-      "title": "Filesystem Usage",
+      "title": "Filesystem",
       "type": "bargauge",
       "datasource": {
         "type": "prometheus",
@@ -902,8 +859,8 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 8,
-        "x": 8,
+        "w": 12,
+        "x": 12,
         "y": 14
       },
       "targets": [
@@ -949,7 +906,20 @@
       }
     },
     {
-      "id": 16,
+      "id": 42,
+      "title": "Disk I/O",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
+      "panels": []
+    },
+    {
+      "id": 43,
       "title": "Disk I/O",
       "type": "timeseries",
       "datasource": {
@@ -958,20 +928,15 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 8,
-        "x": 16,
-        "y": 14
+        "w": 12,
+        "x": 0,
+        "y": 22
       },
       "targets": [
         {
-          "expr": "rate(node_disk_read_bytes_total{job=\"opnsense_node\",device=\"ada0\"}[5m])",
-          "legendFormat": "Read",
+          "expr": "rate(node_devstat_bytes_total{job=\"opnsense_node\",device=\"ada0\"}[5m])",
+          "legendFormat": "Total I/O",
           "refId": "A"
-        },
-        {
-          "expr": "-rate(node_disk_write_bytes_total{job=\"opnsense_node\",device=\"ada0\"}[5m])",
-          "legendFormat": "Write",
-          "refId": "B"
         }
       ],
       "fieldConfig": {
@@ -987,7 +952,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Read"
+              "options": "Total I/O"
             },
             "properties": [
               {
@@ -998,18 +963,62 @@
                 }
               }
             ]
-          },
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 44,
+      "title": "Disk IOPS",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 22
+      },
+      "targets": [
+        {
+          "expr": "rate(node_devstat_transfers_total{job=\"opnsense_node\",device=\"ada0\"}[5m])",
+          "legendFormat": "IOPS",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ops",
+          "custom": {
+            "fillOpacity": 20,
+            "lineWidth": 2,
+            "showPoints": "never"
+          }
+        },
+        "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "Write"
+              "options": "IOPS"
             },
             "properties": [
               {
                 "id": "color",
                 "value": {
                   "mode": "fixed",
-                  "fixedColor": "#F2495C"
+                  "fixedColor": "#5794F2"
                 }
               }
             ]
@@ -1036,7 +1045,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 21
+        "y": 29
       },
       "panels": []
     },
@@ -1052,11 +1061,11 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 22
+        "y": 30
       },
       "targets": [
         {
-          "expr": "opnsense_firewall_states_count",
+          "expr": "sum(opnsense_protocol_tcp_connection_count_by_state{job=\"opnsense\"})",
           "legendFormat": "Active States",
           "refId": "A"
         }
@@ -1094,7 +1103,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 22
+        "y": 30
       },
       "targets": [
         {
@@ -1141,20 +1150,20 @@
     },
     {
       "id": 20,
-      "title": "Interface Traffic",
+      "title": "Network",
       "type": "row",
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 37
       },
       "panels": []
     },
     {
       "id": 21,
-      "title": "WAN (igc5) Traffic",
+      "title": "WAN (igc5)",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -1164,7 +1173,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 30
+        "y": 38
       },
       "targets": [
         {
@@ -1233,7 +1242,7 @@
     },
     {
       "id": 22,
-      "title": "InfraNET (lagg0) Traffic",
+      "title": "InfraNET (lagg0)",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -1243,7 +1252,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 30
+        "y": 38
       },
       "targets": [
         {
@@ -1312,7 +1321,7 @@
     },
     {
       "id": 23,
-      "title": "HomeNET (igc3) Traffic",
+      "title": "HomeNET (igc3)",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -1322,7 +1331,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 30
+        "y": 38
       },
       "targets": [
         {
@@ -1398,7 +1407,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 37
+        "y": 45
       },
       "panels": [
         {
@@ -1506,7 +1515,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 38
+        "y": 46
       },
       "panels": []
     },
@@ -1522,7 +1531,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 39
+        "y": 47
       },
       "targets": [
         {
@@ -1581,7 +1590,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 39
+        "y": 47
       },
       "targets": [
         {
@@ -1638,7 +1647,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 46
+        "y": 54
       },
       "panels": [
         {
@@ -1813,7 +1822,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 47
+        "y": 55
       },
       "panels": [
         {
@@ -1916,7 +1925,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 48
+        "y": 56
       },
       "panels": [
         {

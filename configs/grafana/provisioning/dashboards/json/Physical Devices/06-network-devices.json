@@ -12,6 +12,18 @@
   "templating": {
     "list": [
       {
+        "current": {"selected": true, "text": "All", "value": "$__all"},
+        "datasource": {"type": "prometheus", "uid": "VictoriaMetrics"},
+        "definition": "label_values(ifOperStatus{job=\"snmp_switch\"}, ifIndex)",
+        "includeAll": true,
+        "multi": true,
+        "name": "port",
+        "query": {"query": "label_values(ifOperStatus{job=\"snmp_switch\"}, ifIndex)", "refId": "StandardVariableQuery"},
+        "refresh": 2,
+        "sort": 3,
+        "type": "query"
+      },
+      {
         "current": { "selected": false, "text": "switch", "value": "switch" },
         "hide": 0,
         "includeAll": false,
@@ -380,23 +392,30 @@
 
     {
       "id": 10,
-      "title": "Port Traffic In",
+      "title": "Port Traffic",
       "type": "timeseries",
       "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 13 },
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 13 },
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-          "expr": "rate(ifHCInOctets{job=\"snmp_switch\"}[5m]) * 8",
-          "legendFormat": "{{ ifDescr }}",
+          "expr": "rate(ifHCInOctets{job=\"snmp_switch\",ifIndex=~\"$port\"}[5m]) * 8",
+          "legendFormat": "{{ifDescr}} In",
           "refId": "A"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+          "expr": "-rate(ifHCOutOctets{job=\"snmp_switch\",ifIndex=~\"$port\"}[5m]) * 8",
+          "legendFormat": "{{ifDescr}} Out",
+          "refId": "B"
         }
       ],
       "fieldConfig": {
         "defaults": {
           "unit": "bps",
           "custom": {
-            "fillOpacity": 10,
+            "axisCenteredZero": true,
+            "fillOpacity": 20,
             "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false
@@ -407,44 +426,20 @@
           },
           "color": { "mode": "palette-classic" }
         },
-        "overrides": []
-      },
-      "options": {
-        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": true },
-        "tooltip": { "mode": "multi", "sort": "desc" }
-      }
-    },
-
-    {
-      "id": 11,
-      "title": "Port Traffic Out",
-      "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 13 },
-      "targets": [
-        {
-          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-          "expr": "rate(ifHCOutOctets{job=\"snmp_switch\"}[5m]) * 8",
-          "legendFormat": "{{ ifDescr }}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "bps",
-          "custom": {
-            "fillOpacity": 10,
-            "lineWidth": 1,
-            "showPoints": "never",
-            "spanNulls": false
+        "overrides": [
+          {
+            "matcher": { "id": "byFrameRefID", "options": "A" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } }
+            ]
           },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [{ "color": "green", "value": null }]
-          },
-          "color": { "mode": "palette-classic" }
-        },
-        "overrides": []
+          {
+            "matcher": { "id": "byFrameRefID", "options": "B" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FF9830" } }
+            ]
+          }
+        ]
       },
       "options": {
         "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": true },

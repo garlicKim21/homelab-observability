@@ -10,7 +10,7 @@
   "panels": [
     {
       "id": 1,
-      "title": "Infrastructure Status",
+      "title": "Status",
       "type": "row",
       "collapsed": false,
       "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
@@ -550,7 +550,7 @@
           "refId": "A"
         },
         {
-          "expr": "(synology_memory_TotalRealMemory{job=\"snmp_nas\"} - synology_memory_RealMemoryAvailable{job=\"snmp_nas\"}) / synology_memory_TotalRealMemory{job=\"snmp_nas\"} * 100",
+          "expr": "(1 - synology_memory_available{job=\"snmp_nas\"} / synology_memory_total{job=\"snmp_nas\"}) * 100",
           "legendFormat": "NAS",
           "refId": "B"
         },
@@ -869,12 +869,12 @@
       "gridPos": { "h": 7, "w": 8, "x": 16, "y": 25 },
       "targets": [
         {
-          "expr": "probe_success{instance=~\".*ratatosk.*\"}",
+          "expr": "probe_success{job=\"blackbox_http\"}",
           "legendFormat": "ratatosk.io",
           "refId": "A"
         },
         {
-          "expr": "probe_success{instance=~\".*umami.*\"}",
+          "expr": "probe_success{job=\"blackbox_internal\"}",
           "legendFormat": "Umami",
           "refId": "B"
         }

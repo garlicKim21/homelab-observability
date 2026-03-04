@@ -23,7 +23,7 @@
   "panels": [
     {
       "id": 1,
-      "title": "System Status",
+      "title": "Status",
       "type": "row",
       "gridPos": {
         "h": 1,
@@ -35,7 +35,7 @@
     },
     {
       "id": 2,
-      "title": "NAS Status",
+      "title": "NAS",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -427,7 +427,7 @@
     },
     {
       "id": 9,
-      "title": "CPU Usage",
+      "title": "CPU",
       "type": "gauge",
       "datasource": {
         "type": "prometheus",
@@ -481,7 +481,7 @@
     },
     {
       "id": 10,
-      "title": "CPU by Mode",
+      "title": "CPU",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -562,7 +562,7 @@
     },
     {
       "id": 11,
-      "title": "Memory Usage",
+      "title": "Memory",
       "type": "gauge",
       "datasource": {
         "type": "prometheus",
@@ -616,7 +616,7 @@
     },
     {
       "id": 12,
-      "title": "Memory Breakdown",
+      "title": "Memory",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",

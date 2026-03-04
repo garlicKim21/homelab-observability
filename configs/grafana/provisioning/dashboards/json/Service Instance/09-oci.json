@@ -60,7 +60,7 @@
     },
     {
       "id": 2,
-      "title": "Instance Status",
+      "title": "OCI",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -74,40 +74,20 @@
       },
       "targets": [
         {
-          "expr": "up{job=\"oci_node\"}",
-          "legendFormat": "OCI Node",
+          "expr": "time() - node_boot_time_seconds{job=\"oci_node\"}",
+          "legendFormat": "Uptime",
           "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "mappings": [
-            {
-              "type": "value",
-              "options": {
-                "0": {
-                  "text": "DOWN",
-                  "color": "red",
-                  "index": 0
-                },
-                "1": {
-                  "text": "UP",
-                  "color": "green",
-                  "index": 1
-                }
-              }
-            }
-          ],
+          "unit": "s",
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
-                "value": null
-              },
-              {
                 "color": "green",
-                "value": 1
+                "value": null
               }
             ]
           }
@@ -126,52 +106,6 @@
     },
     {
       "id": 3,
-      "title": "Uptime",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 1
-      },
-      "targets": [
-        {
-          "expr": "time() - node_boot_time_seconds{job=\"oci_node\"}",
-          "legendFormat": "Uptime",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "dtdurations",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        }
-      },
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
-      }
-    },
-    {
-      "id": 4,
       "title": "Containers",
       "type": "stat",
       "datasource": {
@@ -181,7 +115,7 @@
       "gridPos": {
         "h": 4,
         "w": 4,
-        "x": 8,
+        "x": 4,
         "y": 1
       },
       "targets": [
@@ -216,7 +150,7 @@
       }
     },
     {
-      "id": 5,
+      "id": 4,
       "title": "ratatosk.io",
       "type": "stat",
       "datasource": {
@@ -226,7 +160,7 @@
       "gridPos": {
         "h": 4,
         "w": 4,
-        "x": 12,
+        "x": 8,
         "y": 1
       },
       "targets": [
@@ -282,7 +216,7 @@
       }
     },
     {
-      "id": 6,
+      "id": 5,
       "title": "PostgreSQL",
       "type": "stat",
       "datasource": {
@@ -292,7 +226,7 @@
       "gridPos": {
         "h": 4,
         "w": 4,
-        "x": 16,
+        "x": 12,
         "y": 1
       },
       "targets": [
@@ -348,9 +282,63 @@
       }
     },
     {
+      "id": 6,
+      "title": "CPU",
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "(1 - avg(rate(node_cpu_seconds_total{job=\"oci_node\",mode=\"idle\"}[5m]))) * 100",
+          "legendFormat": "CPU",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "showThresholdMarkers": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
       "id": 7,
-      "title": "SSL Expiry",
-      "type": "stat",
+      "title": "Memory",
+      "type": "gauge",
       "datasource": {
         "type": "prometheus",
         "uid": "VictoriaMetrics"
@@ -363,37 +351,37 @@
       },
       "targets": [
         {
-          "expr": "probe_ssl_earliest_cert_expiry{instance=~\".*ratatosk.*\"} - time()",
-          "legendFormat": "SSL Expiry",
+          "expr": "(1 - node_memory_MemAvailable_bytes{job=\"oci_node\"} / node_memory_MemTotal_bytes{job=\"oci_node\"}) * 100",
+          "legendFormat": "Memory",
           "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "s",
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
+                "color": "green",
                 "value": null
               },
               {
                 "color": "yellow",
-                "value": 604800
+                "value": 75
               },
               {
-                "color": "green",
-                "value": 1209600
+                "color": "red",
+                "value": 90
               }
             ]
           }
         }
       },
       "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value",
+        "showThresholdMarkers": true,
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -470,7 +458,7 @@
     },
     {
       "id": 10,
-      "title": "CPU by Mode",
+      "title": "CPU",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -661,7 +649,7 @@
     },
     {
       "id": 12,
-      "title": "Memory Breakdown",
+      "title": "Memory",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -804,7 +792,7 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 8,
+        "w": 12,
         "x": 0,
         "y": 14
       },
@@ -848,7 +836,7 @@
     },
     {
       "id": 15,
-      "title": "Filesystem Usage",
+      "title": "Filesystem",
       "type": "bargauge",
       "datasource": {
         "type": "prometheus",
@@ -856,8 +844,8 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 8,
-        "x": 8,
+        "w": 12,
+        "x": 12,
         "y": 14
       },
       "targets": [
@@ -908,54 +896,7 @@
     },
     {
       "id": 16,
-      "title": "Instance Info",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 16,
-        "y": 14
-      },
-      "targets": [
-        {
-          "expr": "node_uname_info{job=\"oci_node\"}",
-          "legendFormat": "{{nodename}}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [
-            {
-              "type": "value",
-              "options": {
-                "1": {
-                  "text": "ARM64 4C/24G"
-                }
-              }
-            }
-          ]
-        }
-      },
-      "options": {
-        "colorMode": "none",
-        "graphMode": "none",
-        "textMode": "name",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
-      },
-      "description": "OCI Singapore | ratatosk.io | ARM 4C/24G"
-    },
-    {
-      "id": 17,
-      "title": "Disk & Network I/O",
+      "title": "Disk I/O",
       "type": "row",
       "gridPos": {
         "h": 1,
@@ -967,7 +908,7 @@
       "panels": []
     },
     {
-      "id": 18,
+      "id": 17,
       "title": "Disk I/O",
       "type": "timeseries",
       "datasource": {
@@ -1046,8 +987,8 @@
       }
     },
     {
-      "id": 19,
-      "title": "Network Traffic",
+      "id": 18,
+      "title": "Disk IOPS",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -1058,6 +999,99 @@
         "w": 12,
         "x": 12,
         "y": 22
+      },
+      "targets": [
+        {
+          "expr": "rate(node_disk_reads_completed_total{job=\"oci_node\",device!~\"loop.*|dm-.*\"}[5m])",
+          "legendFormat": "Read",
+          "refId": "A"
+        },
+        {
+          "expr": "-rate(node_disk_writes_completed_total{job=\"oci_node\",device!~\"loop.*|dm-.*\"}[5m])",
+          "legendFormat": "Write",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "iops",
+          "custom": {
+            "fillOpacity": 20,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "axisCenteredZero": true
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Read"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#73BF69"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Write"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#F2495C"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 19,
+      "title": "Network",
+      "type": "row",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 29
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 20,
+      "title": "Network",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 30
       },
       "targets": [
         {
@@ -1125,20 +1159,74 @@
       }
     },
     {
-      "id": 20,
+      "id": 21,
       "title": "Application Services",
       "type": "row",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 37
       },
       "collapsed": false,
       "panels": []
     },
     {
-      "id": 21,
+      "id": 22,
+      "title": "SSL Expiry",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 0,
+        "y": 38
+      },
+      "targets": [
+        {
+          "expr": "probe_ssl_earliest_cert_expiry{instance=~\".*ratatosk.*\"} - time()",
+          "legendFormat": "SSL Expiry",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 604800
+              },
+              {
+                "color": "green",
+                "value": 1209600
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 23,
       "title": "HTTP Response Time",
       "type": "timeseries",
       "datasource": {
@@ -1147,9 +1235,9 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 12,
-        "x": 0,
-        "y": 30
+        "w": 8,
+        "x": 8,
+        "y": 38
       },
       "targets": [
         {
@@ -1180,7 +1268,7 @@
       }
     },
     {
-      "id": 22,
+      "id": 24,
       "title": "Container CPU",
       "type": "timeseries",
       "datasource": {
@@ -1189,9 +1277,9 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 30
+        "w": 8,
+        "x": 16,
+        "y": 38
       },
       "targets": [
         {
@@ -1222,19 +1310,19 @@
       }
     },
     {
-      "id": 23,
+      "id": 25,
       "title": "PostgreSQL",
       "type": "row",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 37
+        "y": 45
       },
       "collapsed": true,
       "panels": [
         {
-          "id": 24,
+          "id": 26,
           "title": "Active Connections",
           "type": "timeseries",
           "datasource": {
@@ -1279,7 +1367,7 @@
           }
         },
         {
-          "id": 25,
+          "id": 27,
           "title": "Transaction Rate",
           "type": "timeseries",
           "datasource": {
@@ -1326,7 +1414,7 @@
           }
         },
         {
-          "id": 26,
+          "id": 28,
           "title": "Database Size",
           "type": "timeseries",
           "datasource": {
@@ -1370,19 +1458,19 @@
       ]
     },
     {
-      "id": 27,
+      "id": 29,
       "title": "Docker Containers",
       "type": "row",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 38
+        "y": 46
       },
       "collapsed": true,
       "panels": [
         {
-          "id": 28,
+          "id": 30,
           "title": "Container Memory",
           "type": "timeseries",
           "datasource": {
@@ -1424,7 +1512,7 @@
           }
         },
         {
-          "id": 29,
+          "id": 31,
           "title": "Container Network",
           "type": "timeseries",
           "datasource": {
@@ -1440,8 +1528,13 @@
           "targets": [
             {
               "expr": "rate(container_network_receive_bytes_total{job=\"oci_cadvisor\",name=~\"ratatosk-.*\"}[5m]) * 8",
-              "legendFormat": "{{name}}",
+              "legendFormat": "{{name}} Rx",
               "refId": "A"
+            },
+            {
+              "expr": "-rate(container_network_transmit_bytes_total{job=\"oci_cadvisor\",name=~\"ratatosk-.*\"}[5m]) * 8",
+              "legendFormat": "{{name}} Tx",
+              "refId": "B"
             }
           ],
           "fieldConfig": {
@@ -1450,9 +1543,42 @@
               "custom": {
                 "fillOpacity": 10,
                 "lineWidth": 1,
-                "showPoints": "never"
+                "showPoints": "never",
+                "axisCenteredZero": true
               }
-            }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": ".* Rx$"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "#5794F2"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": ".* Tx$"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "#FF9830"
+                    }
+                  }
+                ]
+              }
+            ]
           },
           "options": {
             "tooltip": {
@@ -1468,7 +1594,7 @@
       ]
     },
     {
-      "id": 30,
+      "id": 32,
       "title": "Per-Container Detail",
       "type": "row",
       "repeat": "container",
@@ -1476,12 +1602,12 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 39
+        "y": 47
       },
       "collapsed": true,
       "panels": [
         {
-          "id": 31,
+          "id": 33,
           "title": "$container CPU",
           "type": "timeseries",
           "datasource": {
@@ -1523,7 +1649,7 @@
           }
         },
         {
-          "id": 32,
+          "id": 34,
           "title": "$container Memory",
           "type": "timeseries",
           "datasource": {
