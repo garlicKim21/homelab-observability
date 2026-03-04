@@ -8,7 +8,11 @@
   "liveNow": false,
   "refresh": "30s",
   "schemaVersion": 39,
-  "tags": ["homelab", "vmware", "vms"],
+  "tags": [
+    "homelab",
+    "vmware",
+    "vm"
+  ],
   "time": {
     "from": "now-6h",
     "to": "now"
@@ -21,27 +25,15 @@
   "templating": {
     "list": [
       {
-        "current": {},
-        "datasource": {
-          "type": "prometheus",
-          "uid": "VictoriaMetrics"
+        "current": {
+          "selected": false,
+          "text": "VictoriaMetrics",
+          "value": "VictoriaMetrics"
         },
-        "definition": "label_values(vmware_vm_power_state, vm_name)",
-        "hide": 0,
-        "includeAll": true,
-        "allValue": ".*",
-        "multi": true,
-        "name": "vm",
-        "label": "VM",
-        "options": [],
-        "query": {
-          "query": "label_values(vmware_vm_power_state, vm_name)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 2,
-        "regex": "",
-        "sort": 1,
-        "type": "query"
+        "hide": 2,
+        "name": "DS_VICTORIAMETRICS",
+        "type": "datasource",
+        "query": "prometheus"
       }
     ]
   },
@@ -51,15 +43,27 @@
       "title": "VM Status",
       "type": "row",
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
-      "panels": []
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "id": 2,
       "title": "VMs Running",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 1 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
       "targets": [
         {
           "expr": "count(vmware_vm_power_state == 1)",
@@ -69,210 +73,281 @@
       ],
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null }
+              {
+                "color": "green",
+                "value": null
+              }
             ]
           },
           "mappings": []
-        },
-        "overrides": []
+        }
       },
       "options": {
         "colorMode": "background",
         "graphMode": "none",
         "textMode": "value",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 3,
-      "title": "VMs Total",
+      "title": "VMs Stopped",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 1 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 6,
+        "y": 1
+      },
       "targets": [
         {
-          "expr": "count(vmware_vm_power_state)",
-          "legendFormat": "Total",
+          "expr": "count(vmware_vm_power_state == 0) or vector(0)",
+          "legendFormat": "Stopped",
           "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "blue", "value": null }
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#F2495C",
+                "value": 1
+              }
             ]
           },
           "mappings": []
-        },
-        "overrides": []
+        }
       },
       "options": {
         "colorMode": "background",
         "graphMode": "none",
         "textMode": "value",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 4,
-      "title": "Total vCPU",
+      "title": "VMs with Snapshots",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 1 },
-      "targets": [
-        {
-          "expr": "sum(vmware_vm_num_cpu{vm_name=~\"$vm\"})",
-          "legendFormat": "vCPU",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "color": { "mode": "thresholds" },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              { "color": "blue", "value": null }
-            ]
-          },
-          "mappings": []
-        },
-        "overrides": []
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
       },
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
-      }
-    },
-    {
-      "id": 5,
-      "title": "Total Memory",
-      "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 1 },
-      "targets": [
-        {
-          "expr": "sum(vmware_vm_memory_max{vm_name=~\"$vm\"})",
-          "legendFormat": "Memory",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "bytes",
-          "color": { "mode": "thresholds" },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              { "color": "blue", "value": null }
-            ]
-          },
-          "mappings": []
-        },
-        "overrides": []
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 12,
+        "y": 1
       },
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
-      }
-    },
-    {
-      "id": 6,
-      "title": "Snapshots",
-      "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 1 },
       "targets": [
         {
-          "expr": "count(vmware_vm_snapshots > 0) or vector(0)",
+          "expr": "count(vmware_vm_snapshot_present == 1) or vector(0)",
           "legendFormat": "Snapshots",
           "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 1 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 5
+              }
             ]
           },
           "mappings": []
-        },
-        "overrides": []
+        }
       },
       "options": {
         "colorMode": "background",
         "graphMode": "none",
         "textMode": "value",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
-      "id": 7,
+      "id": 5,
+      "title": "Avg CPU Ready",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "avg(vmware_vm_cpu_ready_summation)",
+          "legendFormat": "CPU Ready",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 1000
+              },
+              {
+                "color": "red",
+                "value": 5000
+              }
+            ]
+          },
+          "mappings": []
+        }
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 10,
       "title": "CPU",
       "type": "row",
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
-      "panels": []
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      }
     },
     {
-      "id": 8,
-      "title": "CPU Usage",
+      "id": 11,
+      "title": "Top 10 CPU Usage",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 6 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 5
+      },
       "targets": [
         {
-          "expr": "vmware_vm_cpu_usage_average{vm_name=~\"$vm\"} / vmware_vm_num_cpu{vm_name=~\"$vm\"} * 100",
+          "expr": "topk(10, vmware_vm_cpu_usage_average)",
           "legendFormat": "{{vm_name}}",
           "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "percent",
+          "unit": "rotmhz",
           "min": 0,
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "fillOpacity": 10,
             "lineWidth": 1,
             "showPoints": "never",
             "drawStyle": "line"
           }
-        },
-        "overrides": []
+        }
       },
       "options": {
-        "tooltip": { "mode": "multi", "sort": "desc" },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
         "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
         }
       }
     },
     {
-      "id": 9,
-      "title": "CPU Ready",
+      "id": 12,
+      "title": "Top 10 CPU Ready",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 6 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 5
+      },
       "targets": [
         {
-          "expr": "vmware_vm_cpu_ready_summation{vm_name=~\"$vm\"}",
+          "expr": "topk(10, vmware_vm_cpu_ready_summation)",
           "legendFormat": "{{vm_name}}",
           "refId": "A"
         }
@@ -281,442 +356,912 @@
         "defaults": {
           "unit": "ms",
           "min": 0,
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "fillOpacity": 10,
             "lineWidth": 1,
             "showPoints": "never",
             "drawStyle": "line"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 1000
+              },
+              {
+                "color": "red",
+                "value": 5000
+              }
+            ]
           }
-        },
-        "overrides": []
+        }
       },
       "options": {
-        "tooltip": { "mode": "multi", "sort": "desc" },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
         "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
         }
       }
     },
     {
-      "id": 10,
+      "id": 20,
       "title": "Memory",
       "type": "row",
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 13 },
-      "panels": []
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 13
+      }
     },
     {
-      "id": 11,
-      "title": "Memory Usage",
+      "id": 21,
+      "title": "Top 10 Memory Usage",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 14 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 14
+      },
       "targets": [
         {
-          "expr": "vmware_vm_mem_usage_average{vm_name=~\"$vm\"}",
+          "expr": "topk(10, vmware_vm_mem_usage_average)",
           "legendFormat": "{{vm_name}}",
           "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "percent",
+          "unit": "decmbytes",
           "min": 0,
-          "color": { "mode": "palette-classic" },
-          "custom": {
-            "fillOpacity": 10,
-            "lineWidth": 1,
-            "showPoints": "never",
-            "drawStyle": "line"
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": { "mode": "multi", "sort": "desc" },
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        }
-      }
-    },
-    {
-      "id": 12,
-      "title": "Memory Active vs Granted",
-      "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 14 },
-      "targets": [
-        {
-          "expr": "vmware_vm_mem_active_average{vm_name=~\"$vm\"}",
-          "legendFormat": "{{vm_name}} active",
-          "refId": "A"
-        },
-        {
-          "expr": "vmware_vm_mem_granted_average{vm_name=~\"$vm\"}",
-          "legendFormat": "{{vm_name}} granted",
-          "refId": "B"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "bytes",
-          "min": 0,
-          "color": { "mode": "palette-classic" },
-          "custom": {
-            "fillOpacity": 10,
-            "lineWidth": 1,
-            "showPoints": "never",
-            "drawStyle": "line"
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": { "mode": "multi", "sort": "desc" },
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        }
-      }
-    },
-    {
-      "id": 13,
-      "title": "Disk I/O",
-      "type": "row",
-      "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 21 },
-      "panels": []
-    },
-    {
-      "id": 14,
-      "title": "Disk Throughput",
-      "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 22 },
-      "targets": [
-        {
-          "expr": "vmware_vm_disk_read_average{vm_name=~\"$vm\"}",
-          "legendFormat": "{{vm_name}} read",
-          "refId": "A"
-        },
-        {
-          "expr": "vmware_vm_disk_write_average{vm_name=~\"$vm\"}",
-          "legendFormat": "{{vm_name}} write",
-          "refId": "B"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "KBs",
-          "min": 0,
-          "color": { "mode": "palette-classic" },
-          "custom": {
-            "fillOpacity": 10,
-            "lineWidth": 1,
-            "showPoints": "never",
-            "drawStyle": "line"
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": { "mode": "multi", "sort": "desc" },
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        }
-      }
-    },
-    {
-      "id": 15,
-      "title": "Disk IOPS",
-      "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 22 },
-      "targets": [
-        {
-          "expr": "vmware_vm_disk_numberRead_summation{vm_name=~\"$vm\"}",
-          "legendFormat": "{{vm_name}} read",
-          "refId": "A"
-        },
-        {
-          "expr": "vmware_vm_disk_numberWrite_summation{vm_name=~\"$vm\"}",
-          "legendFormat": "{{vm_name}} write",
-          "refId": "B"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "iops",
-          "min": 0,
-          "color": { "mode": "palette-classic" },
-          "custom": {
-            "fillOpacity": 10,
-            "lineWidth": 1,
-            "showPoints": "never",
-            "drawStyle": "line"
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": { "mode": "multi", "sort": "desc" },
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        }
-      }
-    },
-    {
-      "id": 16,
-      "title": "Disk Latency",
-      "type": "row",
-      "collapsed": true,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 29 },
-      "panels": [
-        {
-          "id": 17,
-          "title": "Read Latency",
-          "type": "timeseries",
-          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 30 },
-          "targets": [
-            {
-              "expr": "vmware_vm_disk_totalReadLatency_average{vm_name=~\"$vm\"}",
-              "legendFormat": "{{vm_name}}",
-              "refId": "A"
-            }
-          ],
-          "fieldConfig": {
-            "defaults": {
-              "unit": "ms",
-              "min": 0,
-              "color": { "mode": "palette-classic" },
-              "custom": {
-                "fillOpacity": 10,
-                "lineWidth": 1,
-                "showPoints": "never",
-                "drawStyle": "line"
-              }
-            },
-            "overrides": []
+          "color": {
+            "mode": "palette-classic"
           },
-          "options": {
-            "tooltip": { "mode": "multi", "sort": "desc" },
-            "legend": {
-              "displayMode": "list",
-              "placement": "bottom"
-            }
-          }
-        },
-        {
-          "id": 18,
-          "title": "Write Latency",
-          "type": "timeseries",
-          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 30 },
-          "targets": [
-            {
-              "expr": "vmware_vm_disk_totalWriteLatency_average{vm_name=~\"$vm\"}",
-              "legendFormat": "{{vm_name}}",
-              "refId": "A"
-            }
-          ],
-          "fieldConfig": {
-            "defaults": {
-              "unit": "ms",
-              "min": 0,
-              "color": { "mode": "palette-classic" },
-              "custom": {
-                "fillOpacity": 10,
-                "lineWidth": 1,
-                "showPoints": "never",
-                "drawStyle": "line"
-              }
-            },
-            "overrides": []
-          },
-          "options": {
-            "tooltip": { "mode": "multi", "sort": "desc" },
-            "legend": {
-              "displayMode": "list",
-              "placement": "bottom"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "id": 19,
-      "title": "Network",
-      "type": "row",
-      "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 30 },
-      "panels": []
-    },
-    {
-      "id": 20,
-      "title": "Network Traffic",
-      "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 31 },
-      "targets": [
-        {
-          "expr": "vmware_vm_net_received_average{vm_name=~\"$vm\"}",
-          "legendFormat": "{{vm_name}} rx",
-          "refId": "A"
-        },
-        {
-          "expr": "vmware_vm_net_transmitted_average{vm_name=~\"$vm\"}",
-          "legendFormat": "{{vm_name}} tx",
-          "refId": "B"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "KBs",
-          "min": 0,
-          "color": { "mode": "palette-classic" },
           "custom": {
             "fillOpacity": 10,
             "lineWidth": 1,
             "showPoints": "never",
             "drawStyle": "line"
           }
-        },
-        "overrides": []
+        }
       },
       "options": {
-        "tooltip": { "mode": "multi", "sort": "desc" },
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        }
-      }
-    },
-    {
-      "id": 21,
-      "title": "Network Packets",
-      "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 31 },
-      "targets": [
-        {
-          "expr": "vmware_vm_net_packetsRx_summation{vm_name=~\"$vm\"}",
-          "legendFormat": "{{vm_name}} pkts in",
-          "refId": "A"
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
         },
-        {
-          "expr": "vmware_vm_net_packetsTx_summation{vm_name=~\"$vm\"}",
-          "legendFormat": "{{vm_name}} pkts out",
-          "refId": "B"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "pps",
-          "min": 0,
-          "color": { "mode": "palette-classic" },
-          "custom": {
-            "fillOpacity": 10,
-            "lineWidth": 1,
-            "showPoints": "never",
-            "drawStyle": "line"
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "tooltip": { "mode": "multi", "sort": "desc" },
         "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
         }
       }
     },
     {
       "id": 22,
+      "title": "Top 10 Memory Active",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 14
+      },
+      "targets": [
+        {
+          "expr": "topk(10, vmware_vm_mem_active_average)",
+          "legendFormat": "{{vm_name}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "decmbytes",
+          "min": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "drawStyle": "line"
+          }
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 23,
+      "title": "Top 10 Memory Swapped",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "targets": [
+        {
+          "expr": "topk(10, vmware_vm_mem_swapped_average)",
+          "legendFormat": "{{vm_name}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "deckbytes",
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 10,
+            "showPoints": "never",
+            "spanNulls": true,
+            "lineWidth": 1
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      }
+    },
+    {
+      "id": 30,
+      "title": "Disk I/O",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 31
+      }
+    },
+    {
+      "id": 31,
+      "title": "Top 10 Disk Read",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 32
+      },
+      "targets": [
+        {
+          "expr": "topk(10, vmware_vm_disk_read_average)",
+          "legendFormat": "{{vm_name}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "KBs",
+          "min": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "drawStyle": "line"
+          }
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 32,
+      "title": "Top 10 Disk Write",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 32
+      },
+      "targets": [
+        {
+          "expr": "topk(10, vmware_vm_disk_write_average)",
+          "legendFormat": "{{vm_name}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "KBs",
+          "min": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "drawStyle": "line"
+          }
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 40,
+      "title": "Disk Latency",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 40
+      }
+    },
+    {
+      "id": 41,
+      "title": "Top 10 Disk Latency",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 41
+      },
+      "targets": [
+        {
+          "expr": "topk(10, vmware_vm_disk_maxTotalLatency_latest)",
+          "legendFormat": "{{vm_name}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "min": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "drawStyle": "line"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 50
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 50,
+      "title": "Network",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 49
+      }
+    },
+    {
+      "id": 51,
+      "title": "Top 10 Network Received",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 50
+      },
+      "targets": [
+        {
+          "expr": "topk(10, vmware_vm_net_received_average)",
+          "legendFormat": "{{vm_name}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "KBs",
+          "min": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "drawStyle": "line"
+          }
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 52,
+      "title": "Top 10 Network Transmitted",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 50
+      },
+      "targets": [
+        {
+          "expr": "topk(10, vmware_vm_net_transmitted_average)",
+          "legendFormat": "{{vm_name}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "KBs",
+          "min": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "drawStyle": "line"
+          }
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 60,
       "title": "Guest Storage",
       "type": "row",
-      "collapsed": true,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 38 },
-      "panels": [
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 58
+      }
+    },
+    {
+      "id": 61,
+      "title": "Guest Disk Usage",
+      "type": "bargauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 59
+      },
+      "targets": [
         {
-          "id": 23,
-          "title": "Guest Disk Usage",
-          "type": "bargauge",
-          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-          "gridPos": { "h": 7, "w": 24, "x": 0, "y": 39 },
-          "targets": [
-            {
-              "expr": "(vmware_vm_guest_disk_capacity - vmware_vm_guest_disk_free) / vmware_vm_guest_disk_capacity * 100",
-              "legendFormat": "{{vm_name}} {{disk_path}}",
-              "refId": "A",
-              "instant": true
-            }
-          ],
-          "fieldConfig": {
-            "defaults": {
-              "unit": "percent",
-              "min": 0,
-              "max": 100,
-              "color": { "mode": "thresholds" },
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  { "color": "green", "value": null },
-                  { "color": "yellow", "value": 75 },
-                  { "color": "red", "value": 90 }
-                ]
-              },
-              "mappings": []
-            },
-            "overrides": []
+          "expr": "(vmware_vm_guest_disk_capacity - vmware_vm_guest_disk_free) / vmware_vm_guest_disk_capacity * 100",
+          "legendFormat": "{{vm_name}} {{disk_path}}",
+          "refId": "A",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "color": {
+            "mode": "thresholds"
           },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "mappings": []
+        }
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 62,
+      "title": "Guest Disk Free",
+      "type": "table",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 59
+      },
+      "targets": [
+        {
+          "expr": "vmware_vm_guest_disk_capacity",
+          "legendFormat": "",
+          "refId": "capacity",
+          "format": "table",
+          "instant": true
+        },
+        {
+          "expr": "vmware_vm_guest_disk_free",
+          "legendFormat": "",
+          "refId": "free",
+          "format": "table",
+          "instant": true
+        },
+        {
+          "expr": "(vmware_vm_guest_disk_capacity - vmware_vm_guest_disk_free) / vmware_vm_guest_disk_capacity * 100",
+          "legendFormat": "",
+          "refId": "usedpct",
+          "format": "table",
+          "instant": true
+        }
+      ],
+      "description": "Guest OS disk capacity, free space, and used percentage per VM per mount point.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            }
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value #capacity"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Capacity"
+              },
+              {
+                "id": "unit",
+                "value": "decbytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value #free"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Free"
+              },
+              {
+                "id": "unit",
+                "value": "decbytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value #usedpct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Used %"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 75
+                    },
+                    {
+                      "color": "red",
+                      "value": 90
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "sortBy": [
+          {
+            "displayName": "Used %",
+            "desc": true
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "filterFieldsByName",
           "options": {
-            "orientation": "horizontal",
-            "displayMode": "gradient",
-            "showUnfilled": true,
-            "reduceOptions": { "calcs": ["lastNotNull"] }
+            "include": {
+              "names": [
+                "vm_name",
+                "disk_path",
+                "Value #capacity",
+                "Value #free",
+                "Value #usedpct"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "renameByName": {
+              "vm_name": "VM",
+              "disk_path": "Mount"
+            }
           }
         }
       ]
     },
     {
-      "id": 24,
+      "id": 70,
       "title": "Inventory",
       "type": "row",
       "collapsed": true,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 39 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 67
+      },
       "panels": [
         {
-          "id": 25,
-          "title": "VM Inventory",
+          "id": 71,
+          "title": "VM Snapshots",
           "type": "table",
-          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-          "gridPos": { "h": 8, "w": 24, "x": 0, "y": 40 },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 12,
+            "x": 0,
+            "y": 68
+          },
           "targets": [
             {
-              "expr": "vmware_vm_power_state",
+              "expr": "vmware_vm_snapshot_present == 1",
               "legendFormat": "",
-              "refId": "power",
+              "refId": "A",
               "format": "table",
               "instant": true
             },
             {
-              "expr": "vmware_vm_num_cpu",
+              "expr": "vmware_vm_snapshot_timestamp_seconds > 0",
               "legendFormat": "",
-              "refId": "cpu",
+              "refId": "B",
+              "format": "table",
+              "instant": true
+            }
+          ],
+          "description": "VMs with active snapshots. Old snapshots consume disk space and should be cleaned regularly. Yellow: >24h, Red: >7d.",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "displayMode": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                }
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Value #A"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Snapshots"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Value #B"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Snapshot Age (s)"
+                  },
+                  {
+                    "id": "unit",
+                    "value": "s"
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background"
+                  },
+                  {
+                    "id": "thresholds",
+                    "value": {
+                      "mode": "absolute",
+                      "steps": [
+                        {
+                          "color": "green",
+                          "value": null
+                        },
+                        {
+                          "color": "yellow",
+                          "value": 86400
+                        },
+                        {
+                          "color": "red",
+                          "value": 604800
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "options": {
+            "showHeader": true,
+            "cellHeight": "sm",
+            "sortBy": [
+              {
+                "displayName": "VM",
+                "desc": false
+              }
+            ]
+          }
+        },
+        {
+          "id": 72,
+          "title": "Guest Tools Status",
+          "type": "table",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 12,
+            "x": 12,
+            "y": 68
+          },
+          "targets": [
+            {
+              "expr": "vmware_vm_guest_tools_running_status",
+              "legendFormat": "",
+              "refId": "A",
               "format": "table",
               "instant": true
             },
             {
-              "expr": "vmware_vm_memory_max",
+              "expr": "vmware_vm_guest_tools_version_status",
               "legendFormat": "",
-              "refId": "memory",
+              "refId": "B",
               "format": "table",
               "instant": true
             }
@@ -725,40 +1270,56 @@
             "defaults": {
               "custom": {
                 "displayMode": "auto",
-                "cellOptions": { "type": "auto" }
+                "cellOptions": {
+                  "type": "auto"
+                }
               }
             },
             "overrides": [
               {
-                "matcher": { "id": "byName", "options": "Value #power" },
+                "matcher": {
+                  "id": "byName",
+                  "options": "Value #A"
+                },
                 "properties": [
-                  { "id": "displayName", "value": "Power State" },
+                  {
+                    "id": "displayName",
+                    "value": "Running"
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background"
+                  },
                   {
                     "id": "mappings",
                     "value": [
                       {
                         "type": "value",
                         "options": {
-                          "0": { "text": "Off", "color": "red" },
-                          "1": { "text": "On", "color": "green" }
+                          "0": {
+                            "text": "Not Running",
+                            "color": "red"
+                          },
+                          "1": {
+                            "text": "Running",
+                            "color": "green"
+                          }
                         }
                       }
                     ]
-                  },
-                  { "id": "custom.displayMode", "value": "color-background" }
+                  }
                 ]
               },
               {
-                "matcher": { "id": "byName", "options": "Value #cpu" },
+                "matcher": {
+                  "id": "byName",
+                  "options": "Value #B"
+                },
                 "properties": [
-                  { "id": "displayName", "value": "vCPU" }
-                ]
-              },
-              {
-                "matcher": { "id": "byName", "options": "Value #memory" },
-                "properties": [
-                  { "id": "displayName", "value": "Memory" },
-                  { "id": "unit", "value": "bytes" }
+                  {
+                    "id": "displayName",
+                    "value": "Version Status"
+                  }
                 ]
               }
             ]
@@ -766,34 +1327,13 @@
           "options": {
             "showHeader": true,
             "cellHeight": "sm",
-            "sortBy": [{ "displayName": "vm_name", "desc": false }]
-          },
-          "transformations": [
-            { "id": "merge", "options": {} },
-            {
-              "id": "filterFieldsByName",
-              "options": {
-                "include": {
-                  "names": [
-                    "vm_name",
-                    "host_name",
-                    "Value #power",
-                    "Value #cpu",
-                    "Value #memory"
-                  ]
-                }
+            "sortBy": [
+              {
+                "displayName": "VM",
+                "desc": false
               }
-            },
-            {
-              "id": "organize",
-              "options": {
-                "renameByName": {
-                  "vm_name": "VM",
-                  "host_name": "Host"
-                }
-              }
-            }
-          ]
+            ]
+          }
         }
       ]
     }

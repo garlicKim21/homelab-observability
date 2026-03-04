@@ -1,29 +1,44 @@
 {
-  "uid": "synology-nas",
-  "title": "Synology NAS",
+  "uid": "synology-nas-v3",
+  "title": "Synology NAS DS1515+",
   "tags": [
     "homelab",
     "nas",
-    "synology"
+    "synology",
+    "v3"
   ],
   "schemaVersion": 39,
+  "version": 1,
   "refresh": "30s",
   "time": {
     "from": "now-6h",
     "to": "now"
   },
+  "timezone": "browser",
   "graphTooltip": 1,
   "editable": true,
   "annotations": {
     "list": []
   },
+  "links": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "name": "datasource",
+        "type": "datasource",
+        "query": "prometheus",
+        "hide": 0,
+        "label": "Datasource",
+        "current": {},
+        "options": [],
+        "refresh": 1
+      }
+    ]
   },
   "panels": [
     {
       "id": 1,
-      "title": "Status",
+      "title": "System Status",
       "type": "row",
       "gridPos": {
         "h": 1,
@@ -31,11 +46,12 @@
         "x": 0,
         "y": 0
       },
-      "collapsed": false
+      "collapsed": false,
+      "panels": []
     },
     {
       "id": 2,
-      "title": "NAS",
+      "title": "NAS Status",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -43,7 +59,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
+        "w": 5,
         "x": 0,
         "y": 1
       },
@@ -109,8 +125,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 4,
+        "w": 5,
+        "x": 5,
         "y": 1
       },
       "targets": [
@@ -157,6 +173,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -174,8 +191,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 8,
+        "w": 5,
+        "x": 10,
         "y": 1
       },
       "targets": [
@@ -206,7 +223,8 @@
                 "value": 60
               }
             ]
-          }
+          },
+          "decimals": 1
         }
       },
       "options": {
@@ -220,7 +238,7 @@
     },
     {
       "id": 5,
-      "title": "Power",
+      "title": "Power Status",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -228,8 +246,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 12,
+        "w": 5,
+        "x": 15,
         "y": 1
       },
       "targets": [
@@ -276,6 +294,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -293,14 +312,14 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 16,
+        "w": 2,
+        "x": 20,
         "y": 1
       },
       "targets": [
         {
           "expr": "synology_system_fan_status{job=\"snmp_nas\"}",
-          "legendFormat": "System Fan",
+          "legendFormat": "Fan",
           "refId": "A"
         }
       ],
@@ -341,6 +360,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -358,14 +378,14 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 20,
+        "w": 2,
+        "x": 22,
         "y": 1
       },
       "targets": [
         {
           "expr": "synology_cpu_fan_status{job=\"snmp_nas\"}",
-          "legendFormat": "CPU Fan",
+          "legendFormat": "Fan",
           "refId": "A"
         }
       ],
@@ -406,6 +426,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -423,25 +444,26 @@
         "x": 0,
         "y": 5
       },
-      "collapsed": false
+      "collapsed": false,
+      "panels": []
     },
     {
       "id": 9,
-      "title": "CPU",
+      "title": "CPU Usage",
       "type": "gauge",
       "datasource": {
         "type": "prometheus",
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 6,
+        "h": 8,
         "w": 3,
         "x": 0,
         "y": 6
       },
       "targets": [
         {
-          "expr": "100 - synology_cpu_idle{job=\"snmp_nas\"}",
+          "expr": "synology_cpu_user{job=\"snmp_nas\"} + synology_cpu_system{job=\"snmp_nas\"}",
           "legendFormat": "CPU",
           "refId": "A"
         }
@@ -451,141 +473,7 @@
           "unit": "percent",
           "min": 0,
           "max": 100,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 60
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        }
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        },
-        "showThresholdMarkers": true
-      }
-    },
-    {
-      "id": 10,
-      "title": "CPU",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 9,
-        "x": 3,
-        "y": 6
-      },
-      "targets": [
-        {
-          "expr": "synology_cpu_user{job=\"snmp_nas\"}",
-          "legendFormat": "User",
-          "refId": "A"
-        },
-        {
-          "expr": "synology_cpu_system{job=\"snmp_nas\"}",
-          "legendFormat": "System",
-          "refId": "B"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "custom": {
-            "fillOpacity": 50,
-            "stacking": {
-              "mode": "normal",
-              "group": "A"
-            },
-            "showPoints": "never"
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "User"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "blue"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "System"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "red"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi"
-        },
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        }
-      }
-    },
-    {
-      "id": 11,
-      "title": "Memory",
-      "type": "gauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 3,
-        "x": 12,
-        "y": 6
-      },
-      "targets": [
-        {
-          "expr": "(1 - (synology_memory_available{job=\"snmp_nas\"} + synology_memory_buffer{job=\"snmp_nas\"} + synology_memory_cached{job=\"snmp_nas\"}) / synology_memory_total{job=\"snmp_nas\"}) * 100",
-          "legendFormat": "Memory",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
+          "decimals": 1,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -615,15 +503,179 @@
       }
     },
     {
-      "id": 12,
-      "title": "Memory",
+      "id": 10,
+      "title": "CPU by Mode",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 6,
+        "h": 8,
+        "w": 9,
+        "x": 3,
+        "y": 6
+      },
+      "targets": [
+        {
+          "expr": "synology_cpu_user{job=\"snmp_nas\"}",
+          "legendFormat": "User",
+          "refId": "A"
+        },
+        {
+          "expr": "synology_cpu_system{job=\"snmp_nas\"}",
+          "legendFormat": "System",
+          "refId": "B"
+        },
+        {
+          "expr": "synology_cpu_iowait{job=\"snmp_nas\"}",
+          "legendFormat": "IOWait",
+          "refId": "C"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "custom": {
+            "fillOpacity": 50,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            }
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "User"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#5794F2"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "System"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#F2495C"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "IOWait"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#FADE2A"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 11,
+      "title": "Memory Usage",
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 12,
+        "y": 6
+      },
+      "targets": [
+        {
+          "expr": "(synology_memory_total{job=\"snmp_nas\"} - synology_memory_available{job=\"snmp_nas\"}) / synology_memory_total{job=\"snmp_nas\"} * 100",
+          "legendFormat": "Memory",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "showThresholdMarkers": true
+      }
+    },
+    {
+      "id": 12,
+      "title": "Memory Breakdown",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
         "w": 9,
         "x": 15,
         "y": 6
@@ -635,18 +687,18 @@
           "refId": "A"
         },
         {
-          "expr": "synology_memory_cached{job=\"snmp_nas\"} * 1024",
-          "legendFormat": "Cached",
+          "expr": "synology_memory_buffer{job=\"snmp_nas\"} * 1024",
+          "legendFormat": "Buffer",
           "refId": "B"
         },
         {
-          "expr": "synology_memory_buffer{job=\"snmp_nas\"} * 1024",
-          "legendFormat": "Buffer",
+          "expr": "synology_memory_cached{job=\"snmp_nas\"} * 1024",
+          "legendFormat": "Cached",
           "refId": "C"
         },
         {
           "expr": "synology_memory_available{job=\"snmp_nas\"} * 1024",
-          "legendFormat": "Available",
+          "legendFormat": "Free",
           "refId": "D"
         }
       ],
@@ -655,11 +707,12 @@
           "unit": "bytes",
           "custom": {
             "fillOpacity": 50,
+            "lineWidth": 1,
+            "showPoints": "never",
             "stacking": {
               "mode": "normal",
               "group": "A"
-            },
-            "showPoints": "never"
+            }
           }
         },
         "overrides": [
@@ -673,22 +726,7 @@
                 "id": "color",
                 "value": {
                   "mode": "fixed",
-                  "fixedColor": "red"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Cached"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "blue"
+                  "fixedColor": "#F2495C"
                 }
               }
             ]
@@ -703,7 +741,7 @@
                 "id": "color",
                 "value": {
                   "mode": "fixed",
-                  "fixedColor": "cyan"
+                  "fixedColor": "#73BF69"
                 }
               }
             ]
@@ -711,14 +749,29 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Available"
+              "options": "Cached"
             },
             "properties": [
               {
                 "id": "color",
                 "value": {
                   "mode": "fixed",
-                  "fixedColor": "green"
+                  "fixedColor": "#5794F2"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Free"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#C8F2C2"
                 }
               }
             ]
@@ -727,11 +780,17 @@
       },
       "options": {
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         },
         "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
         }
       }
     },
@@ -743,9 +802,10 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 12
+        "y": 14
       },
-      "collapsed": false
+      "collapsed": false,
+      "panels": []
     },
     {
       "id": 14,
@@ -756,10 +816,10 @@
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 5,
-        "w": 4,
+        "h": 8,
+        "w": 3,
         "x": 0,
-        "y": 13
+        "y": 15
       },
       "targets": [
         {
@@ -811,6 +871,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -820,37 +881,37 @@
     },
     {
       "id": 15,
-      "title": "RAID Usage",
-      "description": "Volume 1/2: usable volumes, Storage Pool 1: HDD (personal), Storage Pool 2: SSD (vSphere iSCSI)",
+      "title": "Volume Usage",
+      "description": "Volume 1/2: usable volumes. Storage Pool 1: HDD (personal). Storage Pool 2: SSD (vSphere iSCSI).",
       "type": "bargauge",
       "datasource": {
         "type": "prometheus",
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 5,
-        "w": 10,
-        "x": 4,
-        "y": 13
+        "h": 8,
+        "w": 15,
+        "x": 3,
+        "y": 15
       },
       "targets": [
         {
-          "expr": "(synology_raid_total_size{raidName=\"Volume 1\"} - synology_raid_free_size{raidName=\"Volume 1\"}) / synology_raid_total_size{raidName=\"Volume 1\"} * 100",
+          "expr": "(synology_raid_total_size{job=\"snmp_nas\", raidName=\"Volume 1\"} - synology_raid_free_size{job=\"snmp_nas\", raidName=\"Volume 1\"}) / synology_raid_total_size{job=\"snmp_nas\", raidName=\"Volume 1\"} * 100",
           "legendFormat": "Volume 1 (Personal HDD)",
           "refId": "A"
         },
         {
-          "expr": "(synology_raid_total_size{raidName=\"Volume 2\"} - synology_raid_free_size{raidName=\"Volume 2\"}) / synology_raid_total_size{raidName=\"Volume 2\"} * 100",
+          "expr": "(synology_raid_total_size{job=\"snmp_nas\", raidName=\"Volume 2\"} - synology_raid_free_size{job=\"snmp_nas\", raidName=\"Volume 2\"}) / synology_raid_total_size{job=\"snmp_nas\", raidName=\"Volume 2\"} * 100",
           "legendFormat": "Volume 2 (vSphere SSD)",
           "refId": "B"
         },
         {
-          "expr": "(synology_raid_total_size{raidName=\"Storage Pool 1\"} - synology_raid_free_size{raidName=\"Storage Pool 1\"}) / synology_raid_total_size{raidName=\"Storage Pool 1\"} * 100",
+          "expr": "(synology_raid_total_size{job=\"snmp_nas\", raidName=\"Storage Pool 1\"} - synology_raid_free_size{job=\"snmp_nas\", raidName=\"Storage Pool 1\"}) / synology_raid_total_size{job=\"snmp_nas\", raidName=\"Storage Pool 1\"} * 100",
           "legendFormat": "Storage Pool 1 (HDD)",
           "refId": "C"
         },
         {
-          "expr": "(synology_raid_total_size{raidName=\"Storage Pool 2\"} - synology_raid_free_size{raidName=\"Storage Pool 2\"}) / synology_raid_total_size{raidName=\"Storage Pool 2\"} * 100",
+          "expr": "(synology_raid_total_size{job=\"snmp_nas\", raidName=\"Storage Pool 2\"} - synology_raid_free_size{job=\"snmp_nas\", raidName=\"Storage Pool 2\"}) / synology_raid_total_size{job=\"snmp_nas\", raidName=\"Storage Pool 2\"} * 100",
           "legendFormat": "Storage Pool 2 (SSD)",
           "refId": "D"
         }
@@ -899,31 +960,33 @@
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 5,
-        "w": 4,
-        "x": 14,
-        "y": 13
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 15
       },
       "targets": [
         {
-          "expr": "synology_raid_free_size{raidName=\"Volume 1\"}",
+          "expr": "synology_raid_free_size{job=\"snmp_nas\", raidName=\"Volume 1\"}",
           "legendFormat": "Volume 1",
           "refId": "A"
         },
         {
-          "expr": "synology_raid_free_size{raidName=\"Volume 2\"}",
+          "expr": "synology_raid_free_size{job=\"snmp_nas\", raidName=\"Volume 2\"}",
           "legendFormat": "Volume 2",
           "refId": "B"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "bytes"
+          "unit": "bytes",
+          "decimals": 1
         }
       },
       "options": {
         "colorMode": "none",
         "graphMode": "none",
+        "textMode": "value_and_name",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -933,37 +996,49 @@
     },
     {
       "id": 17,
-      "title": "RAID Usage Over Time",
+      "title": "Storage Usage Trend",
+      "type": "row",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 23
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 18,
+      "title": "Volume 1 Usage (Personal HDD)",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 5,
-        "w": 6,
-        "x": 18,
-        "y": 13
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 24
       },
       "targets": [
         {
-          "expr": "(synology_raid_total_size{raidName=\"Volume 1\"} - synology_raid_free_size{raidName=\"Volume 1\"}) / synology_raid_total_size{raidName=\"Volume 1\"} * 100",
-          "legendFormat": "Volume 1",
+          "expr": "synology_raid_total_size{job=\"snmp_nas\", raidName=\"Volume 1\"} - synology_raid_free_size{job=\"snmp_nas\", raidName=\"Volume 1\"}",
+          "legendFormat": "Used",
           "refId": "A"
         },
         {
-          "expr": "(synology_raid_total_size{raidName=\"Volume 2\"} - synology_raid_free_size{raidName=\"Volume 2\"}) / synology_raid_total_size{raidName=\"Volume 2\"} * 100",
-          "legendFormat": "Volume 2",
+          "expr": "synology_raid_total_size{job=\"snmp_nas\", raidName=\"Volume 1\"}",
+          "legendFormat": "Total",
           "refId": "B"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
+          "unit": "bytes",
           "custom": {
             "fillOpacity": 15,
+            "lineWidth": 2,
             "showPoints": "never"
           },
           "thresholds": {
@@ -983,44 +1058,182 @@
               }
             ]
           }
-        }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "gray"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    10
+                  ]
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         },
         "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
         }
       }
     },
     {
-      "id": 18,
+      "id": 19,
+      "title": "Volume 2 Usage (vSphere SSD)",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "targets": [
+        {
+          "expr": "synology_raid_total_size{job=\"snmp_nas\", raidName=\"Volume 2\"} - synology_raid_free_size{job=\"snmp_nas\", raidName=\"Volume 2\"}",
+          "legendFormat": "Used",
+          "refId": "A"
+        },
+        {
+          "expr": "synology_raid_total_size{job=\"snmp_nas\", raidName=\"Volume 2\"}",
+          "legendFormat": "Total",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "custom": {
+            "fillOpacity": 15,
+            "lineWidth": 2,
+            "showPoints": "never"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "gray"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    10
+                  ]
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 20,
       "title": "Disk Health",
       "type": "row",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 32
       },
-      "collapsed": false
+      "collapsed": false,
+      "panels": []
     },
     {
-      "id": 19,
+      "id": 21,
       "title": "Disk Status",
-      "description": "Disk 1-2: HDD (Pool 1, Personal), Disk 3-5: SSD (Pool 2, vSphere)",
+      "description": "Disk 1-2: HDD (Pool 1, Personal). Disk 3-5: SSD (Pool 2, vSphere).",
       "type": "table",
       "datasource": {
         "type": "prometheus",
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 6,
+        "h": 8,
         "w": 12,
         "x": 0,
-        "y": 19
+        "y": 33
       },
       "targets": [
         {
@@ -1057,6 +1270,11 @@
         }
       ],
       "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "cellHeight": "sm"
+          }
+        },
         "overrides": [
           {
             "matcher": {
@@ -1113,7 +1331,7 @@
       }
     },
     {
-      "id": 20,
+      "id": 22,
       "title": "Disk Temperature",
       "type": "timeseries",
       "datasource": {
@@ -1121,10 +1339,10 @@
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 6,
+        "h": 8,
         "w": 12,
         "x": 12,
-        "y": 19
+        "y": 33
       },
       "targets": [
         {
@@ -1138,6 +1356,7 @@
           "unit": "celsius",
           "custom": {
             "fillOpacity": 10,
+            "lineWidth": 2,
             "showPoints": "never"
           },
           "thresholds": {
@@ -1149,11 +1368,11 @@
               },
               {
                 "color": "yellow",
-                "value": 40
+                "value": 50
               },
               {
                 "color": "red",
-                "value": 50
+                "value": 55
               }
             ]
           }
@@ -1161,28 +1380,35 @@
       },
       "options": {
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         },
         "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
         }
       }
     },
     {
-      "id": 21,
+      "id": 23,
       "title": "Storage I/O",
       "type": "row",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 41
       },
-      "collapsed": false
+      "collapsed": false,
+      "panels": []
     },
     {
-      "id": 22,
+      "id": 24,
       "title": "IOPS - Pool 1 HDD (sda, sdb)",
       "description": "Personal storage (Disk 1-2, HDD RAID1)",
       "type": "timeseries",
@@ -1191,10 +1417,10 @@
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 7,
+        "h": 8,
         "w": 6,
         "x": 0,
-        "y": 26
+        "y": 42
       },
       "targets": [
         {
@@ -1203,7 +1429,7 @@
           "refId": "A"
         },
         {
-          "expr": "rate(synology_storageio_writes{job=\"snmp_nas\", storageioDevice=~\"sd[ab]\"}[5m])",
+          "expr": "-rate(synology_storageio_writes{job=\"snmp_nas\", storageioDevice=~\"sd[ab]\"}[5m])",
           "legendFormat": "{{ storageioDevice }} Writes",
           "refId": "B"
         }
@@ -1213,22 +1439,61 @@
           "unit": "iops",
           "custom": {
             "fillOpacity": 10,
+            "lineWidth": 1,
             "showPoints": "never"
           }
-        }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".* Reads"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#73BF69"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".* Writes"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#FF9830"
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         },
         "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
         }
       }
     },
     {
-      "id": 23,
+      "id": 25,
       "title": "IOPS - Pool 2 SSD (sdc, sdd, sde)",
       "description": "vSphere shared storage (Disk 3-5, SSD RAID5)",
       "type": "timeseries",
@@ -1237,10 +1502,10 @@
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 7,
+        "h": 8,
         "w": 6,
         "x": 6,
-        "y": 26
+        "y": 42
       },
       "targets": [
         {
@@ -1249,7 +1514,7 @@
           "refId": "A"
         },
         {
-          "expr": "rate(synology_storageio_writes{job=\"snmp_nas\", storageioDevice=~\"sd[cde]\"}[5m])",
+          "expr": "-rate(synology_storageio_writes{job=\"snmp_nas\", storageioDevice=~\"sd[cde]\"}[5m])",
           "legendFormat": "{{ storageioDevice }} Writes",
           "refId": "B"
         }
@@ -1259,22 +1524,61 @@
           "unit": "iops",
           "custom": {
             "fillOpacity": 10,
+            "lineWidth": 1,
             "showPoints": "never"
           }
-        }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".* Reads"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#73BF69"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".* Writes"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#FF9830"
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         },
         "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
         }
       }
     },
     {
-      "id": 24,
+      "id": 26,
       "title": "I/O Load - Pool 1 HDD",
       "type": "timeseries",
       "datasource": {
@@ -1282,10 +1586,10 @@
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 7,
+        "h": 8,
         "w": 6,
         "x": 12,
-        "y": 26
+        "y": 42
       },
       "targets": [
         {
@@ -1301,22 +1605,29 @@
           "max": 100,
           "custom": {
             "fillOpacity": 10,
+            "lineWidth": 1,
             "showPoints": "never"
           }
         }
       },
       "options": {
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         },
         "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
         }
       }
     },
     {
-      "id": 25,
+      "id": 27,
       "title": "I/O Load - Pool 2 SSD",
       "type": "timeseries",
       "datasource": {
@@ -1324,10 +1635,10 @@
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 7,
+        "h": 8,
         "w": 6,
         "x": 18,
-        "y": 26
+        "y": 42
       },
       "targets": [
         {
@@ -1343,113 +1654,63 @@
           "max": 100,
           "custom": {
             "fillOpacity": 10,
+            "lineWidth": 1,
             "showPoints": "never"
           }
         }
       },
       "options": {
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         },
         "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        }
-      }
-    },
-    {
-      "id": 26,
-      "title": "Network - Management (eth0)",
-      "type": "row",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 33
-      },
-      "collapsed": false
-    },
-    {
-      "id": 27,
-      "title": "Management / External Traffic (eth0)",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 24,
-        "x": 0,
-        "y": 34
-      },
-      "targets": [
-        {
-          "expr": "rate(ifHCInOctets{job=\"snmp_nas\", ifDescr=\"eth0\"}[5m]) * 8",
-          "legendFormat": "eth0 In",
-          "refId": "A"
-        },
-        {
-          "expr": "-rate(ifHCOutOctets{job=\"snmp_nas\", ifDescr=\"eth0\"}[5m]) * 8",
-          "legendFormat": "eth0 Out",
-          "refId": "B"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "bps",
-          "custom": {
-            "fillOpacity": 20,
-            "showPoints": "never"
-          }
-        }
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi"
-        },
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
         }
       }
     },
     {
       "id": 28,
-      "title": "Network - iSCSI / vSphere (eth1-3)",
+      "title": "Network - Management",
       "type": "row",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 41
+        "y": 50
       },
-      "collapsed": false
+      "collapsed": false,
+      "panels": []
     },
     {
       "id": 29,
-      "title": "iSCSI MPIO Traffic (eth1, eth2, eth3)",
-      "description": "Physical interfaces for vSphere iSCSI multipath",
+      "title": "Management Traffic (eth0)",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 7,
-        "w": 12,
+        "h": 8,
+        "w": 24,
         "x": 0,
-        "y": 42
+        "y": 51
       },
       "targets": [
         {
-          "expr": "rate(ifHCInOctets{job=\"snmp_nas\", ifDescr=~\"eth[1-3]\"}[5m]) * 8",
-          "legendFormat": "{{ ifDescr }} In",
+          "expr": "rate(ifHCInOctets{job=\"snmp_nas\", ifDescr=\"eth0\"}[5m]) * 8",
+          "legendFormat": "In",
           "refId": "A"
         },
         {
-          "expr": "-rate(ifHCOutOctets{job=\"snmp_nas\", ifDescr=~\"eth[1-3]\"}[5m]) * 8",
-          "legendFormat": "{{ ifDescr }} Out",
+          "expr": "-rate(ifHCOutOctets{job=\"snmp_nas\", ifDescr=\"eth0\"}[5m]) * 8",
+          "legendFormat": "Out",
           "refId": "B"
         }
       ],
@@ -1458,44 +1719,95 @@
           "unit": "bps",
           "custom": {
             "fillOpacity": 20,
+            "lineWidth": 2,
             "showPoints": "never"
           }
-        }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "In"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#73BF69"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Out"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#5794F2"
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         },
         "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
         }
       }
     },
     {
       "id": 30,
-      "title": "VLAN Traffic (eth1-3.2420)",
-      "description": "VLAN 2420 tagged interfaces for vSphere iSCSI",
+      "title": "Network - iSCSI MPIO",
+      "type": "row",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 59
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 31,
+      "title": "iSCSI MPIO Traffic (eth1)",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 42
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 60
       },
       "targets": [
         {
-          "expr": "rate(ifHCInOctets{job=\"snmp_nas\", ifDescr=~\"eth[1-3]\\\\..*\"}[5m]) * 8",
-          "legendFormat": "{{ ifDescr }} In",
+          "expr": "rate(ifHCInOctets{job=\"snmp_nas\", ifDescr=\"eth1\"}[5m]) * 8",
+          "legendFormat": "In",
           "refId": "A"
         },
         {
-          "expr": "-rate(ifHCOutOctets{job=\"snmp_nas\", ifDescr=~\"eth[1-3]\\\\..*\"}[5m]) * 8",
-          "legendFormat": "{{ ifDescr }} Out",
+          "expr": "-rate(ifHCOutOctets{job=\"snmp_nas\", ifDescr=\"eth1\"}[5m]) * 8",
+          "legendFormat": "Out",
           "refId": "B"
         }
       ],
@@ -1504,20 +1816,492 @@
           "unit": "bps",
           "custom": {
             "fillOpacity": 20,
+            "lineWidth": 2,
             "showPoints": "never"
           }
-        }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "In"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#73BF69"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Out"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#5794F2"
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         },
         "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
         }
       }
+    },
+    {
+      "id": 32,
+      "title": "iSCSI MPIO Traffic (eth2)",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 60
+      },
+      "targets": [
+        {
+          "expr": "rate(ifHCInOctets{job=\"snmp_nas\", ifDescr=\"eth2\"}[5m]) * 8",
+          "legendFormat": "In",
+          "refId": "A"
+        },
+        {
+          "expr": "-rate(ifHCOutOctets{job=\"snmp_nas\", ifDescr=\"eth2\"}[5m]) * 8",
+          "legendFormat": "Out",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps",
+          "custom": {
+            "fillOpacity": 20,
+            "lineWidth": 2,
+            "showPoints": "never"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "In"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#73BF69"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Out"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#5794F2"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 33,
+      "title": "iSCSI MPIO Traffic (eth3)",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 60
+      },
+      "targets": [
+        {
+          "expr": "rate(ifHCInOctets{job=\"snmp_nas\", ifDescr=\"eth3\"}[5m]) * 8",
+          "legendFormat": "In",
+          "refId": "A"
+        },
+        {
+          "expr": "-rate(ifHCOutOctets{job=\"snmp_nas\", ifDescr=\"eth3\"}[5m]) * 8",
+          "legendFormat": "Out",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps",
+          "custom": {
+            "fillOpacity": 20,
+            "lineWidth": 2,
+            "showPoints": "never"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "In"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#73BF69"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Out"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#5794F2"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 34,
+      "title": "Network - VLAN",
+      "type": "row",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 68
+      },
+      "collapsed": true,
+      "panels": [
+        {
+          "id": 35,
+          "title": "VLAN Traffic (eth1.2420)",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 69
+          },
+          "targets": [
+            {
+              "expr": "rate(ifHCInOctets{job=\"snmp_nas\", ifDescr=\"eth1.2420\"}[5m]) * 8",
+              "legendFormat": "In",
+              "refId": "A"
+            },
+            {
+              "expr": "-rate(ifHCOutOctets{job=\"snmp_nas\", ifDescr=\"eth1.2420\"}[5m]) * 8",
+              "legendFormat": "Out",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "bps",
+              "custom": {
+                "fillOpacity": 20,
+                "lineWidth": 2,
+                "showPoints": "never"
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "In"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "#73BF69"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Out"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "#5794F2"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 36,
+          "title": "VLAN Traffic (eth2.2420)",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 69
+          },
+          "targets": [
+            {
+              "expr": "rate(ifHCInOctets{job=\"snmp_nas\", ifDescr=\"eth2.2420\"}[5m]) * 8",
+              "legendFormat": "In",
+              "refId": "A"
+            },
+            {
+              "expr": "-rate(ifHCOutOctets{job=\"snmp_nas\", ifDescr=\"eth2.2420\"}[5m]) * 8",
+              "legendFormat": "Out",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "bps",
+              "custom": {
+                "fillOpacity": 20,
+                "lineWidth": 2,
+                "showPoints": "never"
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "In"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "#73BF69"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Out"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "#5794F2"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 37,
+          "title": "VLAN Traffic (eth3.2420)",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 69
+          },
+          "targets": [
+            {
+              "expr": "rate(ifHCInOctets{job=\"snmp_nas\", ifDescr=\"eth3.2420\"}[5m]) * 8",
+              "legendFormat": "In",
+              "refId": "A"
+            },
+            {
+              "expr": "-rate(ifHCOutOctets{job=\"snmp_nas\", ifDescr=\"eth3.2420\"}[5m]) * 8",
+              "legendFormat": "Out",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "bps",
+              "custom": {
+                "fillOpacity": 20,
+                "lineWidth": 2,
+                "showPoints": "never"
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "In"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "#73BF69"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Out"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "#5794F2"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        }
+      ]
     }
-  ],
-  "timezone": "browser"
+  ]
 }
