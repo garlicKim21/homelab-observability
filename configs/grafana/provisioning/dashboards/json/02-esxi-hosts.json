@@ -315,7 +315,7 @@
       "targets": [
         {
           "expr": "sum(vmware_host_cpu_usage) / sum(vmware_host_cpu_max) * 100",
-          "legendFormat": "CPU %",
+          "legendFormat": "Usage %",
           "refId": "A",
           "datasource": {
             "type": "prometheus",
@@ -1224,7 +1224,7 @@
           "targets": [
             {
               "expr": "vmware_host_cpu_usage{host_name=\"esxi01.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi01.basphere.local\"} * 100",
-              "legendFormat": "CPU %",
+              "legendFormat": "Usage %",
               "refId": "A",
               "datasource": {
                 "type": "prometheus",
@@ -2067,7 +2067,7 @@
           "targets": [
             {
               "expr": "vmware_host_cpu_usage{host_name=\"esxi02.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi02.basphere.local\"} * 100",
-              "legendFormat": "CPU %",
+              "legendFormat": "Usage %",
               "refId": "A",
               "datasource": {
                 "type": "prometheus",
@@ -2910,7 +2910,7 @@
           "targets": [
             {
               "expr": "vmware_host_cpu_usage{host_name=\"esxi03.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi03.basphere.local\"} * 100",
-              "legendFormat": "CPU %",
+              "legendFormat": "Usage %",
               "refId": "A",
               "datasource": {
                 "type": "prometheus",
@@ -3753,7 +3753,7 @@
           "targets": [
             {
               "expr": "vmware_host_cpu_usage{host_name=\"esxi04.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi04.basphere.local\"} * 100",
-              "legendFormat": "CPU %",
+              "legendFormat": "Usage %",
               "refId": "A",
               "datasource": {
                 "type": "prometheus",
@@ -4596,7 +4596,7 @@
           "targets": [
             {
               "expr": "vmware_host_cpu_usage{host_name=\"esxi05.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi05.basphere.local\"} * 100",
-              "legendFormat": "CPU %",
+              "legendFormat": "Usage %",
               "refId": "A",
               "datasource": {
                 "type": "prometheus",
@@ -5439,7 +5439,7 @@
           "targets": [
             {
               "expr": "vmware_host_cpu_usage{host_name=\"esxi06.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi06.basphere.local\"} * 100",
-              "legendFormat": "CPU %",
+              "legendFormat": "Usage %",
               "refId": "A",
               "datasource": {
                 "type": "prometheus",
