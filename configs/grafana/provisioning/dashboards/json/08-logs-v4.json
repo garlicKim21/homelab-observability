@@ -1,0 +1,377 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "id": 1,
+      "title": "Log Volume",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "panels": []
+    },
+    {
+      "id": 2,
+      "title": "Log Volume by Source",
+      "type": "timeseries",
+      "datasource": {
+        "type": "loki",
+        "uid": "Loki"
+      },
+      "description": "Log event count per device source over time. Stacked bars show relative contribution of each device.",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 1
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "Loki"
+          },
+          "expr": "sum by (device_type)(count_over_time({device_type=~\"$device_type\"}[$__interval]))",
+          "legendFormat": "{{ device_type }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "fillOpacity": 50,
+            "lineWidth": 0,
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            },
+            "showPoints": "never",
+            "spanNulls": false
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "sum",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Log Volume by Level",
+      "type": "timeseries",
+      "datasource": {
+        "type": "loki",
+        "uid": "Loki"
+      },
+      "description": "Log event count per severity level over time. Stacked bars show relative contribution of each severity.",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "Loki"
+          },
+          "expr": "sum by (level)(count_over_time({device_type=~\"$device_type\", level=~\"$level\"}[$__interval]))",
+          "legendFormat": "{{ level }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "fillOpacity": 50,
+            "lineWidth": 0,
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            },
+            "showPoints": "never",
+            "spanNulls": false
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "noValue": "N/A"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "emerg"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#C4162A",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "crit"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#F2495C",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "err"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#FF9830",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "warning"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#FADE2A",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "notice"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5794F2",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "info"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#73BF69",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "debug"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#A9A9A9",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "sum",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 10,
+      "title": "Log Explorer",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "panels": []
+    },
+    {
+      "id": 11,
+      "title": "Raw Logs",
+      "type": "logs",
+      "datasource": {
+        "type": "loki",
+        "uid": "Loki"
+      },
+      "description": "Raw log entries filtered by device type and log level.",
+      "gridPos": {
+        "h": 20,
+        "w": 24,
+        "x": 0,
+        "y": 10
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "Loki"
+          },
+          "expr": "{device_type=~\"$device_type\", level=~\"$level\"}",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "noValue": "N/A"
+        },
+        "overrides": []
+      },
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      }
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": [
+    "homelab",
+    "logs",
+    "v4"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "loki",
+          "uid": "Loki"
+        },
+        "definition": "label_values(device_type)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "device_type",
+        "query": "label_values(device_type)",
+        "refresh": 2,
+        "regex": "",
+        "sort": 1,
+        "type": "query",
+        "label": "Device Type"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "loki",
+          "uid": "Loki"
+        },
+        "definition": "label_values(level)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "level",
+        "query": "label_values(level)",
+        "refresh": 2,
+        "regex": "",
+        "sort": 1,
+        "type": "query",
+        "label": "Log Level"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Huginn - Log Explorer",
+  "uid": "logs-v4",
+  "version": 1
+}

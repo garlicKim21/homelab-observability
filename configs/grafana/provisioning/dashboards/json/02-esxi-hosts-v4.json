@@ -1,0 +1,1296 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "id": 1,
+      "title": "Cluster Overview",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "panels": []
+    },
+    {
+      "id": 2,
+      "title": "vCenter Status",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "up{job=\"vmware\"}",
+          "legendFormat": "vCenter",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "#F2495C",
+                  "index": 0
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "#73BF69",
+                  "index": 1
+                }
+              }
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#F2495C",
+                "value": null
+              },
+              {
+                "color": "#73BF69",
+                "value": 1
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Hosts Online",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 6,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "count(vmware_host_power_state == 1)",
+          "legendFormat": "Hosts Online",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#F2495C",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 1
+              },
+              {
+                "color": "#73BF69",
+                "value": 3
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "short",
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "VMs Running",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 12,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "count(vmware_vm_power_state == 1)",
+          "legendFormat": "VMs Running",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#FF9830",
+                "value": null
+              },
+              {
+                "color": "#73BF69",
+                "value": 1
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "short",
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 5,
+      "title": "Cluster CPU Usage",
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 18,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "sum(vmware_host_cpu_usage) / sum(vmware_host_cpu_max) * 100",
+          "legendFormat": "CPU %",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 70
+              },
+              {
+                "color": "#F2495C",
+                "value": 85
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "showThresholdMarkers": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 6,
+      "title": "Cluster Memory Usage",
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 21,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "sum(vmware_host_memory_usage) / sum(vmware_host_memory_max) * 100",
+          "legendFormat": "Memory %",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 75
+              },
+              {
+                "color": "#F2495C",
+                "value": 90
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "showThresholdMarkers": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 10,
+      "title": "CPU & Memory Trends",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "panels": []
+    },
+    {
+      "id": 11,
+      "title": "CPU Usage by Host",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 5
+      },
+      "targets": [
+        {
+          "expr": "vmware_host_cpu_usage / vmware_host_cpu_max * 100",
+          "legendFormat": "{{ host_name }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 70
+              },
+              {
+                "color": "#F2495C",
+                "value": 85
+              }
+            ]
+          },
+          "custom": {
+            "showPoints": "never",
+            "spanNulls": false,
+            "lineWidth": 2,
+            "fillOpacity": 15
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 12,
+      "title": "Memory Usage by Host",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 5
+      },
+      "targets": [
+        {
+          "expr": "vmware_host_memory_usage / vmware_host_memory_max * 100",
+          "legendFormat": "{{ host_name }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 75
+              },
+              {
+                "color": "#F2495C",
+                "value": 90
+              }
+            ]
+          },
+          "custom": {
+            "showPoints": "never",
+            "spanNulls": false,
+            "lineWidth": 2,
+            "fillOpacity": 15
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 20,
+      "title": "Datastore Health",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
+      "panels": []
+    },
+    {
+      "id": 21,
+      "title": "Datastore Usage",
+      "type": "bargauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 13
+      },
+      "targets": [
+        {
+          "expr": "(vmware_datastore_capacity_size - vmware_datastore_freespace_size) / vmware_datastore_capacity_size * 100",
+          "legendFormat": "{{ datastore }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 75
+              },
+              {
+                "color": "#F2495C",
+                "value": 90
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 22,
+      "title": "Datastore Free Space",
+      "type": "bargauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 13
+      },
+      "targets": [
+        {
+          "expr": "vmware_datastore_freespace_size",
+          "legendFormat": "{{ datastore }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#F2495C",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 107374182400
+              },
+              {
+                "color": "#73BF69",
+                "value": 536870912000
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 30,
+      "title": "Host: esxi-01 (collapsed)",
+      "type": "row",
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
+      "panels": [
+        {
+          "id": 31,
+          "title": "esxi-01 CPU Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 21
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=~\".*esxi01.*\"} / vmware_host_cpu_max{host_name=~\".*esxi01.*\"} * 100",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 32,
+          "title": "esxi-01 Memory Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 21
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=~\".*esxi01.*\"} / vmware_host_memory_max{host_name=~\".*esxi01.*\"} * 100",
+              "legendFormat": "Memory %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "title": "Host: esxi-02 (collapsed)",
+      "type": "row",
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 28
+      },
+      "panels": [
+        {
+          "id": 41,
+          "title": "esxi-02 CPU Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 29
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=~\".*esxi02.*\"} / vmware_host_cpu_max{host_name=~\".*esxi02.*\"} * 100",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 42,
+          "title": "esxi-02 Memory Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 29
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=~\".*esxi02.*\"} / vmware_host_memory_max{host_name=~\".*esxi02.*\"} * 100",
+              "legendFormat": "Memory %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "title": "Host: esxi-03 (collapsed)",
+      "type": "row",
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 36
+      },
+      "panels": [
+        {
+          "id": 51,
+          "title": "esxi-03 CPU Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 37
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=~\".*esxi03.*\"} / vmware_host_cpu_max{host_name=~\".*esxi03.*\"} * 100",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 52,
+          "title": "esxi-03 Memory Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 37
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=~\".*esxi03.*\"} / vmware_host_memory_max{host_name=~\".*esxi03.*\"} * 100",
+              "legendFormat": "Memory %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "title": "Host: esxi-04 (collapsed)",
+      "type": "row",
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 44
+      },
+      "panels": [
+        {
+          "id": 61,
+          "title": "esxi-04 CPU Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 45
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=~\".*esxi04.*\"} / vmware_host_cpu_max{host_name=~\".*esxi04.*\"} * 100",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 62,
+          "title": "esxi-04 Memory Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 45
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=~\".*esxi04.*\"} / vmware_host_memory_max{host_name=~\".*esxi04.*\"} * 100",
+              "legendFormat": "Memory %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "title": "Host: esxi-05 (collapsed)",
+      "type": "row",
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 52
+      },
+      "panels": [
+        {
+          "id": 71,
+          "title": "esxi-05 CPU Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 53
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=~\".*esxi05.*\"} / vmware_host_cpu_max{host_name=~\".*esxi05.*\"} * 100",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 72,
+          "title": "esxi-05 Memory Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 53
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=~\".*esxi05.*\"} / vmware_host_memory_max{host_name=~\".*esxi05.*\"} * 100",
+              "legendFormat": "Memory %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 80,
+      "title": "Host: esxi-06 (collapsed)",
+      "type": "row",
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 60
+      },
+      "panels": [
+        {
+          "id": 81,
+          "title": "esxi-06 CPU Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 61
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_cpu_usage{host_name=~\".*esxi06.*\"} / vmware_host_cpu_max{host_name=~\".*esxi06.*\"} * 100",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 82,
+          "title": "esxi-06 Memory Usage",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 61
+          },
+          "targets": [
+            {
+              "expr": "vmware_host_memory_usage{host_name=~\".*esxi06.*\"} / vmware_host_memory_max{host_name=~\".*esxi06.*\"} * 100",
+              "legendFormat": "Memory %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": [
+    "homelab",
+    "esxi",
+    "vmware",
+    "v4"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Yggdrasil - ESXi Cluster & Hosts",
+  "uid": "esxi-hosts-v4",
+  "version": 1
+}
