@@ -176,9 +176,13 @@
           "sort": "desc"
         },
         "legend": {
-          "displayMode": "list",
+          "displayMode": "table",
           "placement": "bottom",
-          "calcs": []
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
         }
       }
     },

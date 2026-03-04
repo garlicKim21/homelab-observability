@@ -517,6 +517,60 @@
       }
     },
     {
+      "id": 23,
+      "title": "Top 10 Memory Swapped",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "targets": [
+        {
+          "expr": "topk(10, vmware_vm_mem_swapped_average)",
+          "legendFormat": "{{vm_name}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "deckbytes",
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 10,
+            "showPoints": "never",
+            "spanNulls": true,
+            "lineWidth": 1
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      }
+    },
+    {
       "id": 30,
       "title": "Disk I/O",
       "type": "row",
@@ -525,7 +579,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 22
+        "y": 31
       }
     },
     {
@@ -540,7 +594,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 23
+        "y": 32
       },
       "targets": [
         {
@@ -592,7 +646,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 23
+        "y": 32
       },
       "targets": [
         {
@@ -641,7 +695,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 31
+        "y": 40
       }
     },
     {
@@ -656,7 +710,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 32
+        "y": 41
       },
       "targets": [
         {
@@ -722,7 +776,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 40
+        "y": 49
       }
     },
     {
@@ -737,7 +791,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 41
+        "y": 50
       },
       "targets": [
         {
@@ -789,7 +843,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 41
+        "y": 50
       },
       "targets": [
         {
@@ -838,7 +892,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 49
+        "y": 58
       }
     },
     {
@@ -853,7 +907,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 50
+        "y": 59
       },
       "targets": [
         {
@@ -914,7 +968,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 50
+        "y": 59
       },
       "targets": [
         {
@@ -1073,7 +1127,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 58
+        "y": 67
       },
       "panels": [
         {
@@ -1088,7 +1142,7 @@
             "h": 10,
             "w": 12,
             "x": 0,
-            "y": 59
+            "y": 68
           },
           "targets": [
             {
@@ -1194,7 +1248,7 @@
             "h": 10,
             "w": 12,
             "x": 12,
-            "y": 59
+            "y": 68
           },
           "targets": [
             {
