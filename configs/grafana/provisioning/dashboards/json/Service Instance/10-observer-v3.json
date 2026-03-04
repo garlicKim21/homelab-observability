@@ -1,0 +1,1255 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "graphTooltip": 1,
+  "links": [
+    {
+      "title": "Overview",
+      "url": "/d/homelab-overview",
+      "type": "link",
+      "targetBlank": false,
+      "keepTime": true
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": ["homelab", "observer", "monitoring", "v3"],
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timezone": "browser",
+  "title": "Observer Monitoring Stack",
+  "uid": "observer-v3",
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "VictoriaMetrics",
+          "value": "VictoriaMetrics"
+        },
+        "hide": 2,
+        "name": "DS_VICTORIAMETRICS",
+        "type": "datasource",
+        "query": "prometheus"
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Status",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }
+    },
+    {
+      "id": 2,
+      "title": "Server Status",
+      "type": "stat",
+      "gridPos": { "h": 3, "w": 6, "x": 0, "y": 1 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "value_and_name",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "DOWN", "color": "#F2495C" }, "1": { "text": "UP", "color": "#73BF69" } } }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "#F2495C", "value": null },
+              { "color": "#73BF69", "value": 1 }
+            ]
+          },
+          "color": { "mode": "thresholds" }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Uptime" },
+            "properties": [
+              { "id": "unit", "value": "s" },
+              { "id": "mappings", "value": [] },
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "transparent" } },
+              { "id": "custom.displayMode", "value": "none" }
+            ]
+          }
+        ]
+      },
+      "targets": [
+        {
+          "expr": "up{job=\"observer_node\"}",
+          "legendFormat": "Status",
+          "refId": "A"
+        },
+        {
+          "expr": "time() - node_boot_time_seconds{job=\"observer_node\"}",
+          "legendFormat": "Uptime",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Running Containers",
+      "description": "Number of running containers managed by Docker Compose on the observer node. Expected: 12.",
+      "type": "stat",
+      "gridPos": { "h": 3, "w": 6, "x": 6, "y": 1 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "value_and_name",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "#F2495C", "value": null },
+              { "color": "#FADE2A", "value": 10 },
+              { "color": "#73BF69", "value": 12 }
+            ]
+          },
+          "color": { "mode": "thresholds" },
+          "mappings": []
+        }
+      },
+      "targets": [
+        {
+          "expr": "count(container_last_seen{job=\"observer_cadvisor\", container_label_com_docker_compose_service=~\".+\"}) or vector(0)",
+          "legendFormat": "Containers",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Active Time Series",
+      "description": "Total number of active time series stored in VictoriaMetrics small storage.",
+      "type": "stat",
+      "gridPos": { "h": 3, "w": 6, "x": 12, "y": 1 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "value_and_name",
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": { "mode": "fixed", "fixedColor": "#5794F2" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "#5794F2", "value": null }]
+          },
+          "mappings": []
+        }
+      },
+      "targets": [
+        {
+          "expr": "vm_rows{type=\"storage/small\"}",
+          "legendFormat": "Time Series",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Active Alerts",
+      "description": "Number of currently firing alerts across all alert rules.",
+      "type": "stat",
+      "gridPos": { "h": 3, "w": 6, "x": 18, "y": 1 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "value_and_name",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "#73BF69", "value": null },
+              { "color": "#FADE2A", "value": 1 },
+              { "color": "#F2495C", "value": 5 }
+            ]
+          },
+          "color": { "mode": "thresholds" },
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "0", "color": "#73BF69" } } }
+          ]
+        }
+      },
+      "targets": [
+        {
+          "expr": "count(ALERTS{alertstate=\"firing\"}) or vector(0)",
+          "legendFormat": "Firing Alerts",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "CPU & Memory",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 4 }
+    },
+    {
+      "id": 11,
+      "title": "CPU Usage",
+      "type": "gauge",
+      "gridPos": { "h": 8, "w": 3, "x": 0, "y": 5 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "#73BF69", "value": null },
+              { "color": "#FADE2A", "value": 70 },
+              { "color": "#F2495C", "value": 85 }
+            ]
+          },
+          "color": { "mode": "thresholds" },
+          "mappings": []
+        }
+      },
+      "targets": [
+        {
+          "expr": "100 - (avg(rate(node_cpu_seconds_total{mode=\"idle\",job=\"observer_node\"}[5m])) * 100)",
+          "legendFormat": "CPU",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "CPU by Mode",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 9, "x": 3, "y": 5 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 50,
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "stacking": { "mode": "normal", "group": "A" },
+            "showPoints": "never"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": null }]
+          }
+        },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "User" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } }] },
+          { "matcher": { "id": "byName", "options": "System" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#F2495C" } }] },
+          { "matcher": { "id": "byName", "options": "IOWait" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#FADE2A" } }] },
+          { "matcher": { "id": "byName", "options": "IRQ" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#FF9830" } }] },
+          { "matcher": { "id": "byName", "options": "SoftIRQ" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#B877D9" } }] },
+          { "matcher": { "id": "byName", "options": "Nice" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }] },
+          { "matcher": { "id": "byName", "options": "Steal" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#FF6EB4" } }] },
+          { "matcher": { "id": "byName", "options": "Idle" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#FFFFFF10" } }] }
+        ]
+      },
+      "targets": [
+        {
+          "expr": "sum by (mode) (rate(node_cpu_seconds_total{job=\"observer_node\", mode=\"user\"}[5m])) / count(count by (cpu) (node_cpu_seconds_total{job=\"observer_node\"})) * 100",
+          "legendFormat": "User",
+          "refId": "A"
+        },
+        {
+          "expr": "sum by (mode) (rate(node_cpu_seconds_total{job=\"observer_node\", mode=\"system\"}[5m])) / count(count by (cpu) (node_cpu_seconds_total{job=\"observer_node\"})) * 100",
+          "legendFormat": "System",
+          "refId": "B"
+        },
+        {
+          "expr": "sum by (mode) (rate(node_cpu_seconds_total{job=\"observer_node\", mode=\"iowait\"}[5m])) / count(count by (cpu) (node_cpu_seconds_total{job=\"observer_node\"})) * 100",
+          "legendFormat": "IOWait",
+          "refId": "C"
+        },
+        {
+          "expr": "sum by (mode) (rate(node_cpu_seconds_total{job=\"observer_node\", mode=\"irq\"}[5m])) / count(count by (cpu) (node_cpu_seconds_total{job=\"observer_node\"})) * 100",
+          "legendFormat": "IRQ",
+          "refId": "D"
+        },
+        {
+          "expr": "sum by (mode) (rate(node_cpu_seconds_total{job=\"observer_node\", mode=\"softirq\"}[5m])) / count(count by (cpu) (node_cpu_seconds_total{job=\"observer_node\"})) * 100",
+          "legendFormat": "SoftIRQ",
+          "refId": "E"
+        },
+        {
+          "expr": "sum by (mode) (rate(node_cpu_seconds_total{job=\"observer_node\", mode=\"nice\"}[5m])) / count(count by (cpu) (node_cpu_seconds_total{job=\"observer_node\"})) * 100",
+          "legendFormat": "Nice",
+          "refId": "F"
+        },
+        {
+          "expr": "sum by (mode) (rate(node_cpu_seconds_total{job=\"observer_node\", mode=\"steal\"}[5m])) / count(count by (cpu) (node_cpu_seconds_total{job=\"observer_node\"})) * 100",
+          "legendFormat": "Steal",
+          "refId": "G"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Memory Usage",
+      "type": "gauge",
+      "gridPos": { "h": 8, "w": 3, "x": 12, "y": 5 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "#73BF69", "value": null },
+              { "color": "#FADE2A", "value": 75 },
+              { "color": "#F2495C", "value": 90 }
+            ]
+          },
+          "color": { "mode": "thresholds" },
+          "mappings": []
+        }
+      },
+      "targets": [
+        {
+          "expr": "(1 - node_memory_MemAvailable_bytes{job=\"observer_node\"} / node_memory_MemTotal_bytes{job=\"observer_node\"}) * 100",
+          "legendFormat": "Memory",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "title": "Memory Breakdown",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 9, "x": 15, "y": 5 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "min": 0,
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 50,
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "stacking": { "mode": "normal", "group": "A" },
+            "showPoints": "never"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": null }]
+          }
+        },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Used" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#F2495C" } }] },
+          { "matcher": { "id": "byName", "options": "Cached" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } }] },
+          { "matcher": { "id": "byName", "options": "Buffers" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }] },
+          { "matcher": { "id": "byName", "options": "Free" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#C8F2C2" } }] }
+        ]
+      },
+      "targets": [
+        {
+          "expr": "node_memory_MemTotal_bytes{job=\"observer_node\"} - node_memory_MemAvailable_bytes{job=\"observer_node\"}",
+          "legendFormat": "Used",
+          "refId": "A"
+        },
+        {
+          "expr": "node_memory_Cached_bytes{job=\"observer_node\"}",
+          "legendFormat": "Cached",
+          "refId": "B"
+        },
+        {
+          "expr": "node_memory_Buffers_bytes{job=\"observer_node\"}",
+          "legendFormat": "Buffers",
+          "refId": "C"
+        },
+        {
+          "expr": "node_memory_MemFree_bytes{job=\"observer_node\"}",
+          "legendFormat": "Free",
+          "refId": "D"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "title": "Load & Filesystem",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 13 }
+    },
+    {
+      "id": 21,
+      "title": "Load Average",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 4, "x": 0, "y": 14 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "min": 0,
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10,
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "showPoints": "never"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": null }]
+          }
+        },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "1m" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#F2495C" } }] },
+          { "matcher": { "id": "byName", "options": "5m" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#FADE2A" } }] },
+          { "matcher": { "id": "byName", "options": "15m" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }] }
+        ]
+      },
+      "targets": [
+        {
+          "expr": "node_load1{job=\"observer_node\"}",
+          "legendFormat": "1m",
+          "refId": "A"
+        },
+        {
+          "expr": "node_load5{job=\"observer_node\"}",
+          "legendFormat": "5m",
+          "refId": "B"
+        },
+        {
+          "expr": "node_load15{job=\"observer_node\"}",
+          "legendFormat": "15m",
+          "refId": "C"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "title": "Filesystem Usage",
+      "description": "Disk usage for root (/) and VictoriaMetrics data partition (/data). The /data partition is critical for time series storage capacity.",
+      "type": "bargauge",
+      "gridPos": { "h": 8, "w": 20, "x": 4, "y": 14 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "minVizWidth": 0,
+        "minVizHeight": 10,
+        "namePlacement": "auto",
+        "valueMode": "color",
+        "text": {}
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "#73BF69", "value": null },
+              { "color": "#FADE2A", "value": 70 },
+              { "color": "#F2495C", "value": 85 }
+            ]
+          },
+          "color": { "mode": "thresholds" },
+          "mappings": []
+        }
+      },
+      "targets": [
+        {
+          "expr": "(1 - node_filesystem_avail_bytes{job=\"observer_node\", mountpoint=\"/\"} / node_filesystem_size_bytes{job=\"observer_node\", mountpoint=\"/\"}) * 100",
+          "legendFormat": "/ (root)",
+          "refId": "A"
+        },
+        {
+          "expr": "(1 - node_filesystem_avail_bytes{job=\"observer_node\", mountpoint=\"/data\"} / node_filesystem_size_bytes{job=\"observer_node\", mountpoint=\"/data\"}) * 100",
+          "legendFormat": "/data (VictoriaMetrics)",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "title": "Monitoring Stack Services",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 22 }
+    },
+    {
+      "id": 31,
+      "title": "VictoriaMetrics",
+      "type": "stat",
+      "gridPos": { "h": 3, "w": 4, "x": 0, "y": 23 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "DOWN", "color": "#F2495C" }, "1": { "text": "UP", "color": "#73BF69" } } }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "#F2495C", "value": null }, { "color": "#73BF69", "value": 1 }]
+          },
+          "color": { "mode": "thresholds" }
+        }
+      },
+      "targets": [
+        { "expr": "up{job=\"victoriametrics\"}", "legendFormat": "VictoriaMetrics", "refId": "A" }
+      ]
+    },
+    {
+      "id": 32,
+      "title": "Grafana",
+      "type": "stat",
+      "gridPos": { "h": 3, "w": 4, "x": 4, "y": 23 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "DOWN", "color": "#F2495C" }, "1": { "text": "UP", "color": "#73BF69" } } }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "#F2495C", "value": null }, { "color": "#73BF69", "value": 1 }]
+          },
+          "color": { "mode": "thresholds" }
+        }
+      },
+      "targets": [
+        { "expr": "up{job=\"grafana\"}", "legendFormat": "Grafana", "refId": "A" }
+      ]
+    },
+    {
+      "id": 33,
+      "title": "vmalert",
+      "type": "stat",
+      "gridPos": { "h": 3, "w": 4, "x": 8, "y": 23 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "DOWN", "color": "#F2495C" }, "1": { "text": "UP", "color": "#73BF69" } } }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "#F2495C", "value": null }, { "color": "#73BF69", "value": 1 }]
+          },
+          "color": { "mode": "thresholds" }
+        }
+      },
+      "targets": [
+        { "expr": "up{job=\"vmalert\"}", "legendFormat": "vmalert", "refId": "A" }
+      ]
+    },
+    {
+      "id": 34,
+      "title": "Alertmanager",
+      "type": "stat",
+      "gridPos": { "h": 3, "w": 4, "x": 12, "y": 23 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "DOWN", "color": "#F2495C" }, "1": { "text": "UP", "color": "#73BF69" } } }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "#F2495C", "value": null }, { "color": "#73BF69", "value": 1 }]
+          },
+          "color": { "mode": "thresholds" }
+        }
+      },
+      "targets": [
+        { "expr": "up{job=\"alertmanager\"}", "legendFormat": "Alertmanager", "refId": "A" }
+      ]
+    },
+    {
+      "id": 35,
+      "title": "Loki",
+      "type": "stat",
+      "gridPos": { "h": 3, "w": 4, "x": 16, "y": 23 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "DOWN", "color": "#F2495C" }, "1": { "text": "UP", "color": "#73BF69" } } }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "#F2495C", "value": null }, { "color": "#73BF69", "value": 1 }]
+          },
+          "color": { "mode": "thresholds" }
+        }
+      },
+      "targets": [
+        { "expr": "up{job=\"loki\"}", "legendFormat": "Loki", "refId": "A" }
+      ]
+    },
+    {
+      "id": 36,
+      "title": "Promtail",
+      "type": "stat",
+      "gridPos": { "h": 3, "w": 4, "x": 20, "y": 23 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "DOWN", "color": "#F2495C" }, "1": { "text": "UP", "color": "#73BF69" } } }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "#F2495C", "value": null }, { "color": "#73BF69", "value": 1 }]
+          },
+          "color": { "mode": "thresholds" }
+        }
+      },
+      "targets": [
+        { "expr": "up{job=\"promtail\"}", "legendFormat": "Promtail", "refId": "A" }
+      ]
+    },
+    {
+      "id": 40,
+      "title": "VictoriaMetrics Performance",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 26 }
+    },
+    {
+      "id": 41,
+      "title": "Ingestion Rate",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 27 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "min": 0,
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10,
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "showPoints": "never"
+          },
+          "color": { "mode": "fixed", "fixedColor": "#FF9830" },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": null }]
+          }
+        }
+      },
+      "targets": [
+        {
+          "expr": "rate(vm_rows_inserted_total[5m])",
+          "legendFormat": "Rows/s",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "title": "Active Time Series",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 27 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "min": 0,
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10,
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "showPoints": "never"
+          },
+          "color": { "mode": "fixed", "fixedColor": "#5794F2" },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": null }]
+          }
+        }
+      },
+      "targets": [
+        {
+          "expr": "vm_rows{type=\"storage/small\"}",
+          "legendFormat": "Active Series",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "title": "Storage Size",
+      "description": "Total VictoriaMetrics on-disk storage size (indexdb + small storage).",
+      "type": "stat",
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 27 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "orientation": "auto",
+        "textMode": "value_and_name",
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "color": { "mode": "fixed", "fixedColor": "#FF9830" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "#FF9830", "value": null }]
+          },
+          "mappings": []
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum(vm_data_size_bytes{job=\"victoriametrics\"})",
+          "legendFormat": "Total Storage",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "title": "VictoriaMetrics Health",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 35 }
+    },
+    {
+      "id": 51,
+      "title": "Slow Inserts",
+      "description": "Rate of slow row inserts. Should be 0 under normal operation. Spikes indicate ingestion backpressure.",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 6, "x": 0, "y": 36 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "min": 0,
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10,
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "showPoints": "never"
+          },
+          "color": { "mode": "fixed", "fixedColor": "#F2495C" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "#73BF69", "value": null },
+              { "color": "#F2495C", "value": 1 }
+            ]
+          },
+          "mappings": []
+        }
+      },
+      "targets": [
+        {
+          "expr": "rate(vm_slow_row_inserts_total{job=\"victoriametrics\"}[5m])",
+          "legendFormat": "Slow Inserts/s",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "title": "Query Duration p99",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 6, "x": 6, "y": 36 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "min": 0,
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10,
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "showPoints": "never"
+          },
+          "color": { "mode": "fixed", "fixedColor": "#FADE2A" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": null }]
+          },
+          "mappings": []
+        }
+      },
+      "targets": [
+        {
+          "expr": "vm_request_duration_seconds{job=\"victoriametrics\", quantile=\"0.99\"}",
+          "legendFormat": "p99 Duration",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "title": "Cache Hit Ratio",
+      "description": "VictoriaMetrics cache hit ratio. Higher is better. Values below 80% indicate cache pressure.",
+      "type": "gauge",
+      "gridPos": { "h": 8, "w": 6, "x": 12, "y": 36 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "min": 0,
+          "max": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "#F2495C", "value": null },
+              { "color": "#FADE2A", "value": 0.80 },
+              { "color": "#73BF69", "value": 0.95 }
+            ]
+          },
+          "color": { "mode": "thresholds" },
+          "mappings": []
+        }
+      },
+      "targets": [
+        {
+          "expr": "1 - (rate(vm_cache_misses_total{job=\"victoriametrics\"}[5m]) / rate(vm_cache_requests_total{job=\"victoriametrics\"}[5m]))",
+          "legendFormat": "Cache Hit Ratio",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "title": "Pending Rows",
+      "description": "Number of rows pending insertion into storage. Should trend near 0.",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 6, "x": 18, "y": 36 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "min": 0,
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10,
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "showPoints": "never"
+          },
+          "color": { "mode": "fixed", "fixedColor": "#B877D9" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": null }]
+          },
+          "mappings": []
+        }
+      },
+      "targets": [
+        {
+          "expr": "vm_pending_rows{job=\"victoriametrics\", type=\"storage/small\"}",
+          "legendFormat": "Pending Rows",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "title": "Container Resources",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 44 }
+    },
+    {
+      "id": 61,
+      "title": "Container CPU by Service",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 45 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 50,
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "stacking": { "mode": "normal", "group": "A" },
+            "showPoints": "never"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": null }]
+          },
+          "color": { "mode": "palette-classic" }
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum by (name) (rate(container_cpu_usage_seconds_total{job=\"observer_cadvisor\", name=~\".+\", container_label_com_docker_compose_service=~\".+\"}[5m])) * 100",
+          "legendFormat": "{{name}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "title": "Container Memory by Service",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 45 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "min": 0,
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 50,
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "stacking": { "mode": "normal", "group": "A" },
+            "showPoints": "never"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": null }]
+          },
+          "color": { "mode": "palette-classic" }
+        }
+      },
+      "targets": [
+        {
+          "expr": "container_memory_usage_bytes{job=\"observer_cadvisor\", name=~\".+\", container_label_com_docker_compose_service=~\".+\"}",
+          "legendFormat": "{{name}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "title": "Network & Disk I/O",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 53 }
+    },
+    {
+      "id": 71,
+      "title": "Network Traffic",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 54 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 20,
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "showPoints": "never"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": null }]
+          }
+        },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "In" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }] },
+          { "matcher": { "id": "byName", "options": "Out" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } }] }
+        ]
+      },
+      "targets": [
+        {
+          "expr": "sum(rate(node_network_receive_bytes_total{job=\"observer_node\", device!~\"lo|docker.*|br.*|veth.*\"}[5m])) * 8",
+          "legendFormat": "In",
+          "refId": "A"
+        },
+        {
+          "expr": "-sum(rate(node_network_transmit_bytes_total{job=\"observer_node\", device!~\"lo|docker.*|br.*|veth.*\"}[5m])) * 8",
+          "legendFormat": "Out",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "id": 72,
+      "title": "Disk I/O",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 54 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 20,
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "showPoints": "never"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": null }]
+          }
+        },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Read" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }] },
+          { "matcher": { "id": "byName", "options": "Write" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "#FF9830" } }] }
+        ]
+      },
+      "targets": [
+        {
+          "expr": "sum(rate(node_disk_read_bytes_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m]))",
+          "legendFormat": "Read",
+          "refId": "A"
+        },
+        {
+          "expr": "-sum(rate(node_disk_written_bytes_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m]))",
+          "legendFormat": "Write",
+          "refId": "B"
+        }
+      ]
+    }
+  ]
+}

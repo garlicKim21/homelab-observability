@@ -1,52 +1,224 @@
 {
-  "annotations": { "list": [] },
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "graphTooltip": 1,
   "panels": [
     {
+      "id": 1,
       "title": "Log Volume",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
-      "collapsed": false
-    },
-    {
-      "title": "Log Volume by Device Type",
-      "type": "timeseries",
-      "datasource": { "type": "loki", "uid": "Loki" },
-      "gridPos": { "h": 6, "w": 24, "x": 0, "y": 1 },
-      "targets": [{ "expr": "sum by (device_type) (count_over_time({job=\"syslog\"} [$__interval]))", "legendFormat": "{{ device_type }}" }],
-      "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 30, "stacking": { "mode": "normal" } } } },
-      "options": { "tooltip": { "mode": "multi" } }
-    },
-    {
-      "title": "Log Volume by Severity",
-      "type": "timeseries",
-      "datasource": { "type": "loki", "uid": "Loki" },
-      "gridPos": { "h": 6, "w": 24, "x": 0, "y": 7 },
-      "targets": [{ "expr": "sum by (severity) (count_over_time({job=\"syslog\"} [$__interval]))", "legendFormat": "{{ severity }}" }],
-      "fieldConfig": {
-        "defaults": { "unit": "short", "custom": { "fillOpacity": 30, "stacking": { "mode": "normal" } } },
-        "overrides": [
-          { "matcher": { "id": "byName", "options": "emerg" }, "properties": [{ "id": "color", "value": { "fixedColor": "dark-red", "mode": "fixed" } }] },
-          { "matcher": { "id": "byName", "options": "crit" }, "properties": [{ "id": "color", "value": { "fixedColor": "red", "mode": "fixed" } }] },
-          { "matcher": { "id": "byName", "options": "err" }, "properties": [{ "id": "color", "value": { "fixedColor": "orange", "mode": "fixed" } }] },
-          { "matcher": { "id": "byName", "options": "warning" }, "properties": [{ "id": "color", "value": { "fixedColor": "yellow", "mode": "fixed" } }] },
-          { "matcher": { "id": "byName", "options": "info" }, "properties": [{ "id": "color", "value": { "fixedColor": "green", "mode": "fixed" } }] }
-        ]
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
       }
     },
     {
-      "title": "Logs",
-      "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 13 },
-      "collapsed": false
+      "id": 2,
+      "title": "Log Volume by Severity",
+      "type": "timeseries",
+      "datasource": {
+        "type": "loki",
+        "uid": "Loki"
+      },
+      "description": "Log event count per severity level over the selected time range. Stacked bars show relative contribution of each severity.",
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "Loki"
+          },
+          "expr": "sum by (severity)(count_over_time({device_type=~\"$device_type\"}[$__interval]))",
+          "legendFormat": "{{ severity }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "fillOpacity": 80,
+            "lineWidth": 0,
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            },
+            "showPoints": "never",
+            "spanNulls": false
+          },
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "emerg"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#C4162A",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "crit"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#F2495C",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "err"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#FF9830",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "warning"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#FADE2A",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "notice"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#8AB8FF",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "info"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#73BF69",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "debug"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#8F8F8F",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        }
+      }
     },
     {
-      "title": "All Logs",
+      "id": 3,
+      "title": "Logs",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      }
+    },
+    {
+      "id": 4,
+      "title": "Log Stream",
       "type": "logs",
-      "datasource": { "type": "loki", "uid": "Loki" },
-      "gridPos": { "h": 18, "w": 24, "x": 0, "y": 14 },
-      "targets": [{ "expr": "{job=\"syslog\", device_type=~\"$device_type\", severity=~\"$severity\", host=~\"$host\"} |~ \"$search\"", "legendFormat": "" }],
+      "datasource": {
+        "type": "loki",
+        "uid": "Loki"
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "Loki"
+          },
+          "expr": "{device_type=~\"$device_type\", host=~\"$host\"} |~ \"$search\" | severity=~\"$severity\"",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "options": {
         "showTime": true,
         "showLabels": true,
@@ -59,77 +231,214 @@
       }
     },
     {
+      "id": 5,
       "title": "Error & Critical Logs",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 32 },
       "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
       "panels": [
         {
-          "title": "Error & Critical Logs",
+          "id": 6,
+          "title": "Error & Critical Stream",
           "type": "logs",
-          "datasource": { "type": "loki", "uid": "Loki" },
-          "gridPos": { "h": 12, "w": 24, "x": 0, "y": 33 },
-          "targets": [{ "expr": "{job=\"syslog\", severity=~\"emerg|crit|err\"}", "legendFormat": "" }],
-          "options": { "showTime": true, "showLabels": true, "wrapLogMessage": true, "enableLogDetails": true, "sortOrder": "Descending" }
+          "datasource": {
+            "type": "loki",
+            "uid": "Loki"
+          },
+          "description": "Filtered view showing only emergency, critical, and error severity logs across all selected device types.",
+          "gridPos": {
+            "h": 12,
+            "w": 24,
+            "x": 0,
+            "y": 21
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "Loki"
+              },
+              "expr": "{device_type=~\"$device_type\"} | severity=~\"err|crit|emerg\"",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "options": {
+            "showTime": true,
+            "showLabels": true,
+            "showCommonLabels": false,
+            "wrapLogMessage": true,
+            "prettifyLogMessage": false,
+            "enableLogDetails": true,
+            "sortOrder": "Descending",
+            "dedupStrategy": "none"
+          }
         }
       ]
     }
   ],
   "refresh": "30s",
   "schemaVersion": 39,
-  "tags": ["homelab", "logs", "loki"],
+  "tags": [
+    "homelab",
+    "logs",
+    "loki"
+  ],
   "templating": {
     "list": [
       {
         "name": "device_type",
+        "label": "Device Type",
         "type": "custom",
-        "current": { "selected": true, "text": "All", "value": ".*" },
+        "multi": true,
+        "includeAll": true,
+        "allValue": ".*",
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
         "options": [
-          { "selected": true, "text": "All", "value": ".*" },
-          { "text": "Firewall", "value": "firewall" },
-          { "text": "ESXi", "value": "esxi" },
-          { "text": "NAS", "value": "nas" }
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "Firewall",
+            "value": "firewall"
+          },
+          {
+            "selected": false,
+            "text": "ESXi",
+            "value": "esxi"
+          },
+          {
+            "selected": false,
+            "text": "NAS",
+            "value": "nas"
+          }
         ],
-        "query": ".*,firewall,esxi,nas",
-        "label": "Device Type"
+        "query": "firewall,esxi,nas",
+        "hide": 0,
+        "refresh": 0
       },
       {
         "name": "severity",
+        "label": "Severity",
         "type": "custom",
-        "current": { "selected": true, "text": "All", "value": ".*" },
+        "multi": true,
+        "includeAll": true,
+        "allValue": ".*",
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
         "options": [
-          { "selected": true, "text": "All", "value": ".*" },
-          { "text": "Emergency", "value": "emerg" },
-          { "text": "Critical", "value": "crit" },
-          { "text": "Error", "value": "err" },
-          { "text": "Warning", "value": "warning" },
-          { "text": "Notice", "value": "notice" },
-          { "text": "Info", "value": "info" },
-          { "text": "Debug", "value": "debug" }
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "Emergency",
+            "value": "emerg"
+          },
+          {
+            "selected": false,
+            "text": "Critical",
+            "value": "crit"
+          },
+          {
+            "selected": false,
+            "text": "Error",
+            "value": "err"
+          },
+          {
+            "selected": false,
+            "text": "Warning",
+            "value": "warning"
+          },
+          {
+            "selected": false,
+            "text": "Notice",
+            "value": "notice"
+          },
+          {
+            "selected": false,
+            "text": "Info",
+            "value": "info"
+          },
+          {
+            "selected": false,
+            "text": "Debug",
+            "value": "debug"
+          }
         ],
-        "query": ".*,emerg,crit,err,warning,notice,info,debug",
-        "label": "Severity"
+        "query": "emerg,crit,err,warning,notice,info,debug",
+        "hide": 0,
+        "refresh": 0
       },
       {
         "name": "host",
+        "label": "Host",
         "type": "query",
-        "datasource": { "type": "loki", "uid": "Loki" },
-        "query": "label_values({job=\"syslog\"}, host)",
-        "current": { "selected": true, "text": "All", "value": "$__all" },
+        "datasource": {
+          "type": "loki",
+          "uid": "Loki"
+        },
+        "query": "label_values({device_type=~\"$device_type\"}, host)",
+        "multi": true,
         "includeAll": true,
         "allValue": ".*",
-        "label": "Host",
-        "refresh": 2
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "hide": 0,
+        "refresh": 2,
+        "sort": 1
       },
       {
         "name": "search",
+        "label": "Search",
         "type": "textbox",
-        "current": { "selected": false, "text": "", "value": "" },
-        "label": "Search"
+        "current": {
+          "selected": false,
+          "text": "",
+          "value": ""
+        },
+        "hide": 0,
+        "query": ""
       }
     ]
   },
-  "time": { "from": "now-1h", "to": "now" },
-  "title": "Logs Explorer",
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timezone": "browser",
+  "title": "Log Explorer",
   "uid": "logs-explorer"
 }

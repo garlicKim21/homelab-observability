@@ -1,0 +1,1508 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "graphTooltip": 1,
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": [
+    "homelab",
+    "opnsense",
+    "firewall",
+    "v3"
+  ],
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timezone": "browser",
+  "title": "OPNsense Firewall & Router",
+  "uid": "opnsense-firewall-v3",
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "VictoriaMetrics",
+          "value": "VictoriaMetrics"
+        },
+        "hide": 0,
+        "name": "datasource",
+        "type": "datasource",
+        "query": "prometheus",
+        "label": "Datasource"
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "System Status",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": 2,
+      "title": "OPNsense Status",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "up{job=\"opnsense_node\"}",
+          "legendFormat": "Status"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "red",
+                  "index": 0
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green",
+                  "index": 1
+                }
+              }
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 1 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Uptime",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "node_time_seconds{job=\"opnsense_node\"} - node_boot_time_seconds{job=\"opnsense_node\"}",
+          "legendFormat": "Uptime"
+        }
+      ],
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "Services Running",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "opnsense_services_running_total",
+          "legendFormat": "Running"
+        },
+        {
+          "expr": "opnsense_services_running_total + opnsense_services_stopped_total",
+          "legendFormat": "Total"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "title": "Active Gateways",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "count(opnsense_gateways_status == 1)",
+          "legendFormat": "Up"
+        },
+        {
+          "expr": "count(opnsense_gateways_status)",
+          "legendFormat": "Total"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 10,
+      "title": "CPU & Memory",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      }
+    },
+    {
+      "id": 11,
+      "title": "CPU Usage",
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 0,
+        "y": 6
+      },
+      "targets": [
+        {
+          "expr": "100 - (avg(rate(node_cpu_seconds_total{mode=\"idle\",job=\"opnsense_node\"}[5m])) * 100)",
+          "legendFormat": "CPU"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        },
+        "showThresholdMarkers": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 70 },
+              { "color": "red", "value": 85 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 12,
+      "title": "CPU by Mode",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 9,
+        "x": 3,
+        "y": 6
+      },
+      "targets": [
+        {
+          "expr": "avg(rate(node_cpu_seconds_total{job=\"opnsense_node\", mode=\"user\"}[5m])) * 100",
+          "legendFormat": "User"
+        },
+        {
+          "expr": "avg(rate(node_cpu_seconds_total{job=\"opnsense_node\", mode=\"system\"}[5m])) * 100",
+          "legendFormat": "System"
+        },
+        {
+          "expr": "avg(rate(node_cpu_seconds_total{job=\"opnsense_node\", mode=\"interrupt\"}[5m])) * 100",
+          "legendFormat": "Interrupt"
+        },
+        {
+          "expr": "avg(rate(node_cpu_seconds_total{job=\"opnsense_node\", mode=\"nice\"}[5m])) * 100",
+          "legendFormat": "Nice"
+        },
+        {
+          "expr": "avg(rate(node_cpu_seconds_total{job=\"opnsense_node\", mode=\"idle\"}[5m])) * 100",
+          "legendFormat": "Idle"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 50,
+            "lineWidth": 1,
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            }
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "User" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "System" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#F2495C" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Interrupt" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FF9830" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Nice" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Idle" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FFFFFF10" } }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": { "mode": "multi" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        }
+      }
+    },
+    {
+      "id": 13,
+      "title": "Memory Usage",
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 12,
+        "y": 6
+      },
+      "targets": [
+        {
+          "expr": "(1 - node_memory_free_bytes{job=\"opnsense_node\"} / node_memory_size_bytes{job=\"opnsense_node\"}) * 100",
+          "legendFormat": "Memory"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        },
+        "showThresholdMarkers": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 75 },
+              { "color": "red", "value": 90 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 14,
+      "title": "Memory Breakdown",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 9,
+        "x": 15,
+        "y": 6
+      },
+      "targets": [
+        {
+          "expr": "node_memory_size_bytes{job=\"opnsense_node\"} - node_memory_free_bytes{job=\"opnsense_node\"} - node_memory_inactive_bytes{job=\"opnsense_node\"} - node_memory_cache_bytes{job=\"opnsense_node\"} - node_memory_buffer_bytes{job=\"opnsense_node\"}",
+          "legendFormat": "Used"
+        },
+        {
+          "expr": "node_memory_cache_bytes{job=\"opnsense_node\"}",
+          "legendFormat": "Cache"
+        },
+        {
+          "expr": "node_memory_buffer_bytes{job=\"opnsense_node\"}",
+          "legendFormat": "Buffer"
+        },
+        {
+          "expr": "node_memory_inactive_bytes{job=\"opnsense_node\"}",
+          "legendFormat": "Inactive"
+        },
+        {
+          "expr": "node_memory_free_bytes{job=\"opnsense_node\"}",
+          "legendFormat": "Free"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 50,
+            "lineWidth": 1,
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            }
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Used" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#F2495C" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Cache" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Buffer" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Inactive" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FADE2A" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Free" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#C8F2C2" } }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": { "mode": "multi" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        }
+      }
+    },
+    {
+      "id": 20,
+      "title": "Load & Filesystem",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 13
+      }
+    },
+    {
+      "id": 21,
+      "title": "Load Average",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 14
+      },
+      "targets": [
+        {
+          "expr": "node_load1{job=\"opnsense_node\"}",
+          "legendFormat": "1m"
+        },
+        {
+          "expr": "node_load5{job=\"opnsense_node\"}",
+          "legendFormat": "5m"
+        },
+        {
+          "expr": "node_load15{job=\"opnsense_node\"}",
+          "legendFormat": "15m"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 2
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "1m" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#F2495C" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "5m" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FADE2A" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "15m" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": { "mode": "multi" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        }
+      }
+    },
+    {
+      "id": 22,
+      "title": "Filesystem Usage",
+      "type": "bargauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 14
+      },
+      "targets": [
+        {
+          "expr": "(1 - node_filesystem_avail_bytes{job=\"opnsense_node\", fstype!~\"tmpfs|devfs|procfs|nullfs\"} / node_filesystem_size_bytes{job=\"opnsense_node\", fstype!~\"tmpfs|devfs|procfs|nullfs\"}) * 100",
+          "legendFormat": "{{ mountpoint }}"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 75 },
+              { "color": "red", "value": 90 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 30,
+      "title": "Firewall Overview",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      }
+    },
+    {
+      "id": 31,
+      "title": "Blocked Packets by Interface",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 23
+      },
+      "targets": [
+        {
+          "expr": "rate(opnsense_firewall_in_ipv4_block_packets[5m])",
+          "legendFormat": "{{ interface }} In"
+        },
+        {
+          "expr": "rate(opnsense_firewall_out_ipv4_block_packets[5m])",
+          "legendFormat": "{{ interface }} Out"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "pps",
+          "custom": {
+            "fillOpacity": 15,
+            "lineWidth": 2,
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            }
+          }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        }
+      }
+    },
+    {
+      "id": 32,
+      "title": "Passed Packets by Interface",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 23
+      },
+      "targets": [
+        {
+          "expr": "rate(opnsense_firewall_in_ipv4_pass_packets[5m])",
+          "legendFormat": "{{ interface }} In"
+        },
+        {
+          "expr": "rate(opnsense_firewall_out_ipv4_pass_packets[5m])",
+          "legendFormat": "{{ interface }} Out"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "pps",
+          "custom": {
+            "fillOpacity": 15,
+            "lineWidth": 2,
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            }
+          }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        }
+      }
+    },
+    {
+      "id": 40,
+      "title": "Interface Traffic",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 31
+      }
+    },
+    {
+      "id": 41,
+      "title": "WAN (igc5) Traffic",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 32
+      },
+      "targets": [
+        {
+          "expr": "rate(node_network_receive_bytes_total{job=\"opnsense_node\", device=\"igc5\"}[5m]) * 8",
+          "legendFormat": "In"
+        },
+        {
+          "expr": "-rate(node_network_transmit_bytes_total{job=\"opnsense_node\", device=\"igc5\"}[5m]) * 8",
+          "legendFormat": "Out"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps",
+          "custom": {
+            "fillOpacity": 20,
+            "lineWidth": 2
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "In" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Out" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#F2495C" } }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": { "mode": "multi" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        }
+      }
+    },
+    {
+      "id": 42,
+      "title": "InfraNET (lagg0) Traffic",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 32
+      },
+      "targets": [
+        {
+          "expr": "rate(node_network_receive_bytes_total{job=\"opnsense_node\", device=\"lagg0\"}[5m]) * 8",
+          "legendFormat": "In"
+        },
+        {
+          "expr": "-rate(node_network_transmit_bytes_total{job=\"opnsense_node\", device=\"lagg0\"}[5m]) * 8",
+          "legendFormat": "Out"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps",
+          "custom": {
+            "fillOpacity": 20,
+            "lineWidth": 2
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "In" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Out" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": { "mode": "multi" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        }
+      }
+    },
+    {
+      "id": 43,
+      "title": "HomeNET (igc3) Traffic",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 32
+      },
+      "targets": [
+        {
+          "expr": "rate(node_network_receive_bytes_total{job=\"opnsense_node\", device=\"igc3\"}[5m]) * 8",
+          "legendFormat": "In"
+        },
+        {
+          "expr": "-rate(node_network_transmit_bytes_total{job=\"opnsense_node\", device=\"igc3\"}[5m]) * 8",
+          "legendFormat": "Out"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps",
+          "custom": {
+            "fillOpacity": 20,
+            "lineWidth": 2
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "In" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Out" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": { "mode": "multi" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        }
+      }
+    },
+    {
+      "id": 50,
+      "title": "Interface Errors & Drops",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 40
+      }
+    },
+    {
+      "id": 51,
+      "title": "Receive Errors",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 41
+      },
+      "targets": [
+        {
+          "expr": "rate(node_network_receive_errs_total{job=\"opnsense_node\"}[5m])",
+          "legendFormat": "{{ device }} Errors"
+        },
+        {
+          "expr": "rate(node_network_receive_drop_total{job=\"opnsense_node\"}[5m])",
+          "legendFormat": "{{ device }} Drops"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "pps",
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 2
+          }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        }
+      }
+    },
+    {
+      "id": 52,
+      "title": "Transmit Errors",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 41
+      },
+      "targets": [
+        {
+          "expr": "rate(node_network_transmit_errs_total{job=\"opnsense_node\"}[5m])",
+          "legendFormat": "{{ device }} Errors"
+        },
+        {
+          "expr": "rate(node_network_transmit_drop_total{job=\"opnsense_node\"}[5m])",
+          "legendFormat": "{{ device }} Drops"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "pps",
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 2
+          }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        }
+      }
+    },
+    {
+      "id": 60,
+      "title": "Gateway Health",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 49
+      }
+    },
+    {
+      "id": 61,
+      "title": "Gateway RTT",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 50
+      },
+      "targets": [
+        {
+          "expr": "opnsense_gateways_rtt_milliseconds",
+          "legendFormat": "{{ name }}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 2
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 50 },
+              { "color": "red", "value": 100 }
+            ]
+          }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        }
+      }
+    },
+    {
+      "id": 62,
+      "title": "Gateway Packet Loss",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 50
+      },
+      "targets": [
+        {
+          "expr": "opnsense_gateways_loss_percentage",
+          "legendFormat": "{{ name }}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 2
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 1 },
+              { "color": "red", "value": 5 }
+            ]
+          }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        }
+      }
+    },
+    {
+      "id": 63,
+      "title": "Gateway Status",
+      "type": "table",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 50
+      },
+      "targets": [
+        {
+          "expr": "opnsense_gateways_status",
+          "legendFormat": "{{ name }}",
+          "format": "table",
+          "instant": true
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "job": true,
+              "opnsense_instance": true,
+              "instance": true
+            },
+            "renameByName": {
+              "name": "Gateway",
+              "address": "Address",
+              "Value": "Status"
+            }
+          }
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "sortBy": [{ "displayName": "Gateway", "desc": false }]
+      },
+      "fieldConfig": {
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Status" },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "0": { "text": "Down", "color": "red", "index": 0 },
+                      "1": { "text": "Up", "color": "green", "index": 1 },
+                      "2": { "text": "Unknown", "color": "orange", "index": 2 },
+                      "3": { "text": "Pending", "color": "yellow", "index": 3 }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 70,
+      "title": "WireGuard VPN",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 58
+      }
+    },
+    {
+      "id": 71,
+      "title": "WireGuard Interfaces",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 59
+      },
+      "targets": [
+        {
+          "expr": "count(opnsense_wireguard_interface_received_bytes_total)",
+          "legendFormat": "Interfaces"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 72,
+      "title": "WireGuard Peer Status",
+      "type": "table",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 9,
+        "x": 6,
+        "y": 59
+      },
+      "targets": [
+        {
+          "expr": "opnsense_wireguard_peer_last_handshake_seconds",
+          "legendFormat": "{{ peer }}",
+          "format": "table",
+          "instant": true
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "job": true,
+              "opnsense_instance": true,
+              "instance": true
+            },
+            "renameByName": {
+              "peer": "Peer",
+              "interface": "Interface",
+              "Value": "Last Handshake (s)"
+            }
+          }
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "sortBy": [{ "displayName": "Interface", "desc": false }]
+      },
+      "fieldConfig": {
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Last Handshake (s)" },
+            "properties": [
+              { "id": "unit", "value": "s" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 73,
+      "title": "VPN Traffic",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 9,
+        "x": 15,
+        "y": 59
+      },
+      "targets": [
+        {
+          "expr": "rate(opnsense_wireguard_interface_received_bytes_total[5m]) * 8",
+          "legendFormat": "{{ interface }} In"
+        },
+        {
+          "expr": "-rate(opnsense_wireguard_interface_sent_bytes_total[5m]) * 8",
+          "legendFormat": "{{ interface }} Out"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps",
+          "custom": {
+            "fillOpacity": 20,
+            "lineWidth": 2
+          }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        }
+      }
+    },
+    {
+      "id": 80,
+      "title": "Services",
+      "type": "row",
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 67
+      },
+      "panels": [
+        {
+          "id": 81,
+          "title": "Services Status",
+          "type": "table",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 68
+          },
+          "targets": [
+            {
+              "expr": "opnsense_services_status",
+              "legendFormat": "{{ name }}",
+              "format": "table",
+              "instant": true
+            }
+          ],
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Time": true,
+                  "__name__": true,
+                  "job": true,
+                  "opnsense_instance": true,
+                  "instance": true
+                },
+                "renameByName": {
+                  "name": "Service",
+                  "description": "Description",
+                  "Value": "Status"
+                }
+              }
+            }
+          ],
+          "options": {
+            "showHeader": true,
+            "cellHeight": "sm",
+            "sortBy": [{ "displayName": "Service", "desc": false }]
+          },
+          "fieldConfig": {
+            "overrides": [
+              {
+                "matcher": { "id": "byName", "options": "Status" },
+                "properties": [
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "type": "value",
+                        "options": {
+                          "0": { "text": "Stopped", "color": "red", "index": 0 },
+                          "1": { "text": "Running", "color": "green", "index": 1 }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 90,
+      "title": "Firewall Logs",
+      "type": "row",
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 68
+      },
+      "panels": [
+        {
+          "id": 91,
+          "title": "Log Volume",
+          "type": "timeseries",
+          "datasource": {
+            "type": "loki",
+            "uid": "Loki"
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 12,
+            "x": 0,
+            "y": 69
+          },
+          "targets": [
+            {
+              "expr": "sum by (level) (count_over_time({device_type=\"firewall\"}[1m]))",
+              "legendFormat": "{{ level }}"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "short",
+              "custom": {
+                "fillOpacity": 20,
+                "lineWidth": 2
+              }
+            }
+          },
+          "options": {
+            "tooltip": { "mode": "multi" },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": ["mean", "max", "lastNotNull"]
+            }
+          }
+        },
+        {
+          "id": 92,
+          "title": "Firewall Logs",
+          "type": "logs",
+          "datasource": {
+            "type": "loki",
+            "uid": "Loki"
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 12,
+            "x": 12,
+            "y": 69
+          },
+          "targets": [
+            {
+              "expr": "{device_type=\"firewall\"}",
+              "legendFormat": ""
+            }
+          ],
+          "options": {
+            "showTime": true,
+            "showLabels": true,
+            "showCommonLabels": false,
+            "wrapLogMessage": true,
+            "prettifyLogMessage": false,
+            "enableLogDetails": true,
+            "sortOrder": "Descending"
+          }
+        }
+      ]
+    }
+  ]
+}

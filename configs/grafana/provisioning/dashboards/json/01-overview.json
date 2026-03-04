@@ -5,176 +5,64 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "links": [
-    {
-      "title": "ESXi Hosts",
-      "url": "/d/esxi-hosts",
-      "type": "link",
-      "targetBlank": false,
-      "keepTime": true
-    },
-    {
-      "title": "VMs",
-      "url": "/d/vms-detail",
-      "type": "link",
-      "targetBlank": false,
-      "keepTime": true
-    },
-    {
-      "title": "OPNsense",
-      "url": "/d/opnsense-firewall-v2",
-      "type": "link",
-      "targetBlank": false,
-      "keepTime": true
-    },
-    {
-      "title": "NAS",
-      "url": "/d/synology-nas-v2",
-      "type": "link",
-      "targetBlank": false,
-      "keepTime": true
-    },
-    {
-      "title": "Switch",
-      "url": "/d/sg2218-switch-v2",
-      "type": "link",
-      "targetBlank": false,
-      "keepTime": true
-    },
-    {
-      "title": "AP",
-      "url": "/d/iptime-ap-v2",
-      "type": "link",
-      "targetBlank": false,
-      "keepTime": true
-    },
-    {
-      "title": "Logs",
-      "url": "/d/logs-explorer",
-      "type": "link",
-      "targetBlank": false,
-      "keepTime": true
-    },
-    {
-      "title": "OCI Cloud",
-      "url": "/d/oci-cloud-v2",
-      "type": "link",
-      "targetBlank": false,
-      "keepTime": true
-    },
-    {
-      "title": "Observer",
-      "url": "/d/observer-v2",
-      "type": "link",
-      "targetBlank": false,
-      "keepTime": true
-    }
-  ],
+  "id": null,
+  "liveNow": false,
   "panels": [
     {
-      "title": "Device Status",
+      "id": 1,
+      "title": "Infrastructure Status",
       "type": "row",
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
         "y": 0
       },
-      "collapsed": false
+      "panels": []
     },
     {
-      "title": "vCenter",
+      "id": 2,
+      "title": "OPNsense",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
+        "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 4,
-        "w": 3,
+        "h": 3,
+        "w": 4,
         "x": 0,
         "y": 1
       },
       "targets": [
         {
-          "expr": "up{job=\"vmware\"}",
-          "legendFormat": "vCenter"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "text": "DOWN",
-                  "color": "red"
-                },
-                "1": {
-                  "text": "UP",
-                  "color": "green"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-          }
-        }
-      },
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value"
-      }
-    },
-    {
-      "title": "OPNsense API",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 3,
-        "y": 1
-      },
-      "targets": [
-        {
           "expr": "up{job=\"opnsense\"}",
-          "legendFormat": "OPN API"
+          "legendFormat": "OPNsense",
+          "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
           "mappings": [
             {
+              "type": "value",
               "options": {
                 "0": {
                   "text": "DOWN",
-                  "color": "red"
+                  "color": "red",
+                  "index": 0
                 },
                 "1": {
                   "text": "UP",
-                  "color": "green"
+                  "color": "green",
+                  "index": 1
                 }
-              },
-              "type": "value"
+              }
             }
           ],
           "thresholds": {
+            "mode": "absolute",
             "steps": [
               {
                 "color": "red",
@@ -185,108 +73,75 @@
                 "value": 1
               }
             ]
+          },
+          "color": {
+            "mode": "thresholds"
           }
         }
       },
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value"
-      }
-    },
-    {
-      "title": "OPNsense Node",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto"
       },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 6,
-        "y": 1
-      },
-      "targets": [
+      "links": [
         {
-          "expr": "up{job=\"opnsense_node\"}",
-          "legendFormat": "OPN Node"
+          "title": "OPNsense",
+          "url": "/d/opnsense-firewall-v3",
+          "targetBlank": false
         }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "text": "DOWN",
-                  "color": "red"
-                },
-                "1": {
-                  "text": "UP",
-                  "color": "green"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-          }
-        }
-      },
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value"
-      }
+      ]
     },
     {
-      "title": "SG2218 Switch",
+      "id": 3,
+      "title": "Switch",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
+        "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 9,
+        "h": 3,
+        "w": 4,
+        "x": 4,
         "y": 1
       },
       "targets": [
         {
           "expr": "up{job=\"snmp_switch\"}",
-          "legendFormat": "SG2218"
+          "legendFormat": "Switch",
+          "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
           "mappings": [
             {
+              "type": "value",
               "options": {
                 "0": {
                   "text": "DOWN",
-                  "color": "red"
+                  "color": "red",
+                  "index": 0
                 },
                 "1": {
                   "text": "UP",
-                  "color": "green"
+                  "color": "green",
+                  "index": 1
                 }
-              },
-              "type": "value"
+              }
             }
           ],
           "thresholds": {
+            "mode": "absolute",
             "steps": [
               {
                 "color": "red",
@@ -297,52 +152,154 @@
                 "value": 1
               }
             ]
+          },
+          "color": {
+            "mode": "thresholds"
           }
         }
       },
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value"
-      }
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto"
+      },
+      "links": [
+        {
+          "title": "Switch",
+          "url": "/d/sg2218-switch-v3",
+          "targetBlank": false
+        }
+      ]
     },
     {
-      "title": "Synology NAS",
+      "id": 4,
+      "title": "AP",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
+        "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 4,
-        "w": 3,
+        "h": 3,
+        "w": 4,
+        "x": 8,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "up{job=\"snmp_ap\"}",
+          "legendFormat": "AP",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "red",
+                  "index": 0
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green",
+                  "index": 1
+                }
+              }
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto"
+      },
+      "links": [
+        {
+          "title": "AP",
+          "url": "/d/iptime-ap-v3",
+          "targetBlank": false
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "NAS",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
         "x": 12,
         "y": 1
       },
       "targets": [
         {
           "expr": "up{job=\"snmp_nas\"}",
-          "legendFormat": "NAS"
+          "legendFormat": "NAS",
+          "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
           "mappings": [
             {
+              "type": "value",
               "options": {
                 "0": {
                   "text": "DOWN",
-                  "color": "red"
+                  "color": "red",
+                  "index": 0
                 },
                 "1": {
                   "text": "UP",
-                  "color": "green"
+                  "color": "green",
+                  "index": 1
                 }
-              },
-              "type": "value"
+              }
             }
           ],
           "thresholds": {
+            "mode": "absolute",
             "steps": [
               {
                 "color": "red",
@@ -353,164 +310,75 @@
                 "value": 1
               }
             ]
+          },
+          "color": {
+            "mode": "thresholds"
           }
         }
       },
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value"
-      }
-    },
-    {
-      "title": "ipTime AP",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto"
       },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 15,
-        "y": 1
-      },
-      "targets": [
+      "links": [
         {
-          "expr": "up{job=\"snmp_ap\"}",
-          "legendFormat": "AP"
+          "title": "NAS",
+          "url": "/d/synology-nas-v3",
+          "targetBlank": false
         }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "text": "DOWN",
-                  "color": "red"
-                },
-                "1": {
-                  "text": "UP",
-                  "color": "green"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-          }
-        }
-      },
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value"
-      }
+      ]
     },
     {
-      "title": "OCI Cloud",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 2,
-        "x": 18,
-        "y": 1
-      },
-      "targets": [
-        {
-          "expr": "up{job=\"oci_node\"}",
-          "legendFormat": "ratatosk"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "text": "DOWN",
-                  "color": "red"
-                },
-                "1": {
-                  "text": "UP",
-                  "color": "green"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-          }
-        }
-      },
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value"
-      }
-    },
-    {
+      "id": 6,
       "title": "Observer",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
+        "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 4,
-        "w": 2,
-        "x": 20,
+        "h": 3,
+        "w": 4,
+        "x": 16,
         "y": 1
       },
       "targets": [
         {
           "expr": "up{job=\"observer_node\"}",
-          "legendFormat": "Observer"
+          "legendFormat": "Observer",
+          "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
           "mappings": [
             {
+              "type": "value",
               "options": {
                 "0": {
                   "text": "DOWN",
-                  "color": "red"
+                  "color": "red",
+                  "index": 0
                 },
                 "1": {
                   "text": "UP",
-                  "color": "green"
+                  "color": "green",
+                  "index": 1
                 }
-              },
-              "type": "value"
+              }
             }
           ],
           "thresholds": {
+            "mode": "absolute",
             "steps": [
               {
                 "color": "red",
@@ -521,37 +389,1263 @@
                 "value": 1
               }
             ]
+          },
+          "color": {
+            "mode": "thresholds"
           }
         }
       },
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value"
-      }
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto"
+      },
+      "links": [
+        {
+          "title": "Observer",
+          "url": "/d/observer-v3",
+          "targetBlank": false
+        }
+      ]
     },
     {
-      "title": "Active Alerts",
+      "id": 7,
+      "title": "OCI",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
+        "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 4,
-        "w": 2,
-        "x": 22,
+        "h": 3,
+        "w": 4,
+        "x": 20,
         "y": 1
       },
       "targets": [
         {
-          "expr": "count(ALERTS{alertstate=\"firing\"}) or vector(0)",
-          "legendFormat": "Firing"
+          "expr": "up{job=\"oci_node\"}",
+          "legendFormat": "OCI",
+          "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "red",
+                  "index": 0
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green",
+                  "index": 1
+                }
+              }
+            }
+          ],
           "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto"
+      },
+      "links": [
+        {
+          "title": "OCI",
+          "url": "/d/oci-cloud-v3",
+          "targetBlank": false
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "ESXi Cluster Status",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "panels": []
+    },
+    {
+      "id": 9,
+      "title": "vCenter Status",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 0,
+        "y": 5
+      },
+      "targets": [
+        {
+          "expr": "up{job=\"vmware\"}",
+          "legendFormat": "vCenter",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "red",
+                  "index": 0
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green",
+                  "index": 1
+                }
+              }
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto"
+      }
+    },
+    {
+      "id": 10,
+      "title": "Hosts UP",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 2,
+        "y": 5
+      },
+      "targets": [
+        {
+          "expr": "count(vmware_host_power_state == 1) or vector(0)",
+          "legendFormat": "Hosts",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto"
+      }
+    },
+    {
+      "id": 11,
+      "title": "VMs Running",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 4,
+        "y": 5
+      },
+      "targets": [
+        {
+          "expr": "count(vmware_vm_power_state == 1) or vector(0)",
+          "legendFormat": "VMs",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto"
+      }
+    },
+    {
+      "id": 12,
+      "title": "Cluster CPU",
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 6,
+        "y": 5
+      },
+      "targets": [
+        {
+          "expr": "avg(vmware_host_cpu_usage / vmware_host_cpu_max * 100)",
+          "legendFormat": "CPU",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "decimals": 1,
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      }
+    },
+    {
+      "id": 13,
+      "title": "Cluster Memory",
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 9,
+        "y": 5
+      },
+      "targets": [
+        {
+          "expr": "sum(vmware_host_memory_usage) / sum(vmware_host_memory_max) * 100",
+          "legendFormat": "Memory",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "decimals": 1,
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      }
+    },
+    {
+      "id": 14,
+      "title": "Resource Utilization",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "panels": []
+    },
+    {
+      "id": 15,
+      "title": "CPU Utilization by Device",
+      "type": "bargauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 9
+      },
+      "targets": [
+        {
+          "expr": "100 - avg(rate(node_cpu_seconds_total{mode=\"idle\",job=\"opnsense_node\"}[5m])) * 100",
+          "legendFormat": "OPNsense",
+          "refId": "A"
+        },
+        {
+          "expr": "synology_cpu_user{job=\"snmp_nas\"} + synology_cpu_system{job=\"snmp_nas\"}",
+          "legendFormat": "NAS",
+          "refId": "B"
+        },
+        {
+          "expr": "tplink_cpu_1m{job=\"snmp_switch_system\"}",
+          "legendFormat": "Switch",
+          "refId": "C"
+        },
+        {
+          "expr": "100 - avg(rate(node_cpu_seconds_total{mode=\"idle\",job=\"observer_node\"}[5m])) * 100",
+          "legendFormat": "Observer",
+          "refId": "D"
+        },
+        {
+          "expr": "100 - avg(rate(node_cpu_seconds_total{mode=\"idle\",job=\"oci_node\"}[5m])) * 100",
+          "legendFormat": "OCI",
+          "refId": "E"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OPNsense"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#F2495C",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "NAS"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5794F2",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Switch"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#73BF69",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Observer"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#B877D9",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OCI"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#FF9830",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      }
+    },
+    {
+      "id": 16,
+      "title": "Memory Utilization by Device",
+      "type": "bargauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "targets": [
+        {
+          "expr": "(1 - node_memory_free_bytes{job=\"opnsense_node\"}/node_memory_size_bytes{job=\"opnsense_node\"}) * 100",
+          "legendFormat": "OPNsense",
+          "refId": "A"
+        },
+        {
+          "expr": "(synology_memory_total{job=\"snmp_nas\"} - synology_memory_available{job=\"snmp_nas\"}) / synology_memory_total{job=\"snmp_nas\"} * 100",
+          "legendFormat": "NAS",
+          "refId": "B"
+        },
+        {
+          "expr": "tplink_memory_usage{job=\"snmp_switch_system\"}",
+          "legendFormat": "Switch",
+          "refId": "C"
+        },
+        {
+          "expr": "(1 - node_memory_MemAvailable_bytes{job=\"observer_node\"}/node_memory_MemTotal_bytes{job=\"observer_node\"}) * 100",
+          "legendFormat": "Observer",
+          "refId": "D"
+        },
+        {
+          "expr": "(1 - node_memory_MemAvailable_bytes{job=\"oci_node\"}/node_memory_MemTotal_bytes{job=\"oci_node\"}) * 100",
+          "legendFormat": "OCI",
+          "refId": "E"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OPNsense"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#F2495C",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "NAS"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5794F2",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Switch"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#73BF69",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Observer"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#B877D9",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OCI"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#FF9830",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      }
+    },
+    {
+      "id": 17,
+      "title": "Storage Overview",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "panels": []
+    },
+    {
+      "id": 18,
+      "title": "Datastore Usage",
+      "type": "bargauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 0,
+        "y": 16
+      },
+      "targets": [
+        {
+          "expr": "(vmware_datastore_capacity_size - vmware_datastore_freespace_size) / vmware_datastore_capacity_size * 100",
+          "legendFormat": "{{ name }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        }
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      }
+    },
+    {
+      "id": 19,
+      "title": "NAS Volume Usage",
+      "type": "bargauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 8,
+        "y": 16
+      },
+      "targets": [
+        {
+          "expr": "(synology_raid_total_size{raidName=\"Volume 1\"} - synology_raid_free_size{raidName=\"Volume 1\"}) / synology_raid_total_size{raidName=\"Volume 1\"} * 100",
+          "legendFormat": "NAS Volume 1",
+          "refId": "A"
+        },
+        {
+          "expr": "(synology_raid_total_size{raidName=\"Volume 2\"} - synology_raid_free_size{raidName=\"Volume 2\"}) / synology_raid_total_size{raidName=\"Volume 2\"} * 100",
+          "legendFormat": "NAS Volume 2",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        }
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      }
+    },
+    {
+      "id": 20,
+      "title": "Server Disk Usage",
+      "type": "bargauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 16,
+        "y": 16
+      },
+      "targets": [
+        {
+          "expr": "(1 - node_filesystem_avail_bytes{job=\"opnsense_node\",mountpoint=\"/\"} / node_filesystem_size_bytes{job=\"opnsense_node\",mountpoint=\"/\"}) * 100",
+          "legendFormat": "OPNsense /",
+          "refId": "A"
+        },
+        {
+          "expr": "(1 - node_filesystem_avail_bytes{job=\"observer_node\",mountpoint=\"/\"} / node_filesystem_size_bytes{job=\"observer_node\",mountpoint=\"/\"}) * 100",
+          "legendFormat": "Observer /",
+          "refId": "B"
+        },
+        {
+          "expr": "(1 - node_filesystem_avail_bytes{job=\"observer_node\",mountpoint=\"/data\"} / node_filesystem_size_bytes{job=\"observer_node\",mountpoint=\"/data\"}) * 100",
+          "legendFormat": "Observer /data",
+          "refId": "C"
+        },
+        {
+          "expr": "(1 - node_filesystem_avail_bytes{job=\"oci_node\",mountpoint=\"/\"} / node_filesystem_size_bytes{job=\"oci_node\",mountpoint=\"/\"}) * 100",
+          "legendFormat": "OCI /",
+          "refId": "D"
+        },
+        {
+          "expr": "(1 - node_filesystem_avail_bytes{job=\"oci_node\",mountpoint=\"/data\"} / node_filesystem_size_bytes{job=\"oci_node\",mountpoint=\"/data\"}) * 100",
+          "legendFormat": "OCI /data",
+          "refId": "E"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        }
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      }
+    },
+    {
+      "id": 21,
+      "title": "Network & Connectivity",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "panels": []
+    },
+    {
+      "id": 22,
+      "title": "WAN Traffic",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 23
+      },
+      "targets": [
+        {
+          "expr": "rate(node_network_receive_bytes_total{job=\"opnsense_node\",device=\"igc5\"}[5m]) * 8",
+          "legendFormat": "In",
+          "refId": "A"
+        },
+        {
+          "expr": "-rate(node_network_transmit_bytes_total{job=\"opnsense_node\",device=\"igc5\"}[5m]) * 8",
+          "legendFormat": "Out",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps",
+          "custom": {
+            "fillOpacity": 20,
+            "lineWidth": 2,
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "In"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#73BF69",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Out"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5794F2",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 23,
+      "title": "Gateway RTT",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 23
+      },
+      "targets": [
+        {
+          "expr": "opnsense_gateways_rtt_milliseconds",
+          "legendFormat": "{{ name }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 2,
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 24,
+      "title": "External Probes",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 23
+      },
+      "targets": [
+        {
+          "expr": "probe_success{job=\"blackbox_http\",instance=~\".*ratatosk.*\"}",
+          "legendFormat": "ratatosk.io",
+          "refId": "A"
+        },
+        {
+          "expr": "probe_success{job=\"blackbox_http\",instance=~\".*umami.*\"}",
+          "legendFormat": "Umami",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "red",
+                  "index": 0
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green",
+                  "index": 1
+                }
+              }
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "vertical"
+      }
+    },
+    {
+      "id": 25,
+      "title": "Active Alerts",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 31
+      },
+      "panels": []
+    },
+    {
+      "id": 26,
+      "title": "Active Alerts Count",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 3,
+        "x": 0,
+        "y": 32
+      },
+      "targets": [
+        {
+          "expr": "count(ALERTS{alertstate=\"firing\"}) or vector(0)",
+          "legendFormat": "Firing",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
             "steps": [
               {
                 "color": "green",
@@ -572,747 +1666,71 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value"
-      }
-    },
-    {
-      "title": "Resource Usage",
-      "type": "row",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 5
-      },
-      "collapsed": false
-    },
-    {
-      "title": "ESXi Host CPU",
-      "type": "gauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 0,
-        "y": 6
-      },
-      "targets": [
-        {
-          "expr": "vmware_host_cpu_usage / vmware_host_cpu_max * 100",
-          "legendFormat": "{{ host_name }}"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 70
-              },
-              {
-                "color": "red",
-                "value": 85
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "title": "ESXi Host Memory",
-      "type": "gauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 6,
-        "y": 6
-      },
-      "targets": [
-        {
-          "expr": "vmware_host_memory_usage / vmware_host_memory_max * 100",
-          "legendFormat": "{{ host_name }}"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 80
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "title": "OPNsense CPU",
-      "type": "gauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 12,
-        "y": 6
-      },
-      "targets": [
-        {
-          "expr": "100 - (avg(rate(node_cpu_seconds_total{job=\"opnsense_node\", mode=\"idle\"}[5m])) * 100)",
-          "legendFormat": "CPU"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 60
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "title": "OPNsense Memory",
-      "type": "gauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 18,
-        "y": 6
-      },
-      "targets": [
-        {
-          "expr": "(1 - (node_memory_free_bytes{job=\"opnsense_node\"} + node_memory_inactive_bytes{job=\"opnsense_node\"} + node_memory_cache_bytes{job=\"opnsense_node\"} + node_memory_buffer_bytes{job=\"opnsense_node\"}) / node_memory_size_bytes{job=\"opnsense_node\"}) * 100",
-          "legendFormat": "Memory"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 70
-              },
-              {
-                "color": "red",
-                "value": 85
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "title": "NAS CPU",
-      "type": "gauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 4,
-        "x": 0,
-        "y": 12
-      },
-      "targets": [
-        {
-          "expr": "100 - synology_cpu_idle{job=\"snmp_nas\"}",
-          "legendFormat": "CPU"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 60
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "title": "NAS Memory",
-      "type": "gauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 4,
-        "x": 4,
-        "y": 12
-      },
-      "targets": [
-        {
-          "expr": "(1 - (synology_memory_available{job=\"snmp_nas\"} + synology_memory_buffer{job=\"snmp_nas\"} + synology_memory_cached{job=\"snmp_nas\"}) / synology_memory_total{job=\"snmp_nas\"}) * 100",
-          "legendFormat": "Memory"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 70
-              },
-              {
-                "color": "red",
-                "value": 85
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "title": "OCI CPU",
-      "type": "gauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 4,
-        "x": 8,
-        "y": 12
-      },
-      "targets": [
-        {
-          "expr": "100 - (avg(rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"idle\"}[5m])) * 100)",
-          "legendFormat": "CPU"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 60
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "title": "OCI Memory",
-      "type": "gauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 4,
-        "x": 12,
-        "y": 12
-      },
-      "targets": [
-        {
-          "expr": "(1 - node_memory_MemAvailable_bytes{job=\"oci_node\"} / node_memory_MemTotal_bytes{job=\"oci_node\"}) * 100",
-          "legendFormat": "Memory"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 70
-              },
-              {
-                "color": "red",
-                "value": 85
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "title": "Observer CPU",
-      "type": "gauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 4,
-        "x": 16,
-        "y": 12
-      },
-      "targets": [
-        {
-          "expr": "100 - (avg(rate(node_cpu_seconds_total{job=\"observer_node\", mode=\"idle\"}[5m])) * 100)",
-          "legendFormat": "CPU"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 60
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "title": "Observer Memory",
-      "type": "gauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 4,
-        "x": 20,
-        "y": 12
-      },
-      "targets": [
-        {
-          "expr": "(1 - node_memory_MemAvailable_bytes{job=\"observer_node\"} / node_memory_MemTotal_bytes{job=\"observer_node\"}) * 100",
-          "legendFormat": "Memory"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 70
-              },
-              {
-                "color": "red",
-                "value": 85
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "title": "Disk Overview",
-      "type": "row",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 18
-      },
-      "collapsed": false
-    },
-    {
-      "title": "Disk Usage",
-      "type": "bargauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 24,
-        "x": 0,
-        "y": 19
-      },
-      "targets": [
-        {
-          "expr": "(1 - node_filesystem_avail_bytes{job=\"opnsense_node\", mountpoint=\"/\"} / node_filesystem_size_bytes{job=\"opnsense_node\", mountpoint=\"/\"}) * 100",
-          "legendFormat": "OPNsense /"
-        },
-        {
-          "expr": "(1 - node_filesystem_avail_bytes{job=\"oci_node\", mountpoint=\"/\"} / node_filesystem_size_bytes{job=\"oci_node\", mountpoint=\"/\"}) * 100",
-          "legendFormat": "OCI /"
-        },
-        {
-          "expr": "(1 - node_filesystem_avail_bytes{job=\"oci_node\", mountpoint=\"/data\"} / node_filesystem_size_bytes{job=\"oci_node\", mountpoint=\"/data\"}) * 100",
-          "legendFormat": "OCI /data"
-        },
-        {
-          "expr": "(1 - node_filesystem_avail_bytes{job=\"observer_node\", mountpoint=\"/\"} / node_filesystem_size_bytes{job=\"observer_node\", mountpoint=\"/\"}) * 100",
-          "legendFormat": "Observer /"
-        },
-        {
-          "expr": "(1 - node_filesystem_avail_bytes{job=\"observer_node\", mountpoint=\"/data\"} / node_filesystem_size_bytes{job=\"observer_node\", mountpoint=\"/data\"}) * 100",
-          "legendFormat": "Observer /data"
-        },
-        {
-          "expr": "(synology_raid_total_size{raidName=\"Volume 1\"} - synology_raid_free_size{raidName=\"Volume 1\"}) / synology_raid_total_size{raidName=\"Volume 1\"} * 100",
-          "legendFormat": "NAS Volume 1"
-        },
-        {
-          "expr": "(synology_raid_total_size{raidName=\"Volume 2\"} - synology_raid_free_size{raidName=\"Volume 2\"}) / synology_raid_total_size{raidName=\"Volume 2\"} * 100",
-          "legendFormat": "NAS Volume 2"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ]
-          }
-        }
-      },
-      "options": {
-        "orientation": "horizontal",
-        "displayMode": "gradient",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
-          ]
-        }
-      }
-    },
-    {
-      "title": "Storage",
-      "type": "row",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 24
-      },
-      "collapsed": false
-    },
-    {
-      "title": "NAS System Temp",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 8,
-        "x": 0,
-        "y": 25
-      },
-      "targets": [
-        {
-          "expr": "synology_system_temperature",
-          "legendFormat": "Temperature"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "celsius",
-          "thresholds": {
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 45
-              },
-              {
-                "color": "red",
-                "value": 60
-              }
-            ]
-          }
-        }
-      },
-      "options": {
-        "colorMode": "background"
-      }
-    },
-    {
-      "title": "NAS RAID Usage",
-      "type": "gauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 16,
-        "x": 8,
-        "y": 25
-      },
-      "targets": [
-        {
-          "expr": "(synology_raid_total_size - synology_raid_free_size) / synology_raid_total_size * 100",
-          "legendFormat": "{{ raidName }}"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "title": "Network",
-      "type": "row",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 30
-      },
-      "collapsed": false
-    },
-    {
-      "title": "WAN Traffic",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 0,
-        "y": 31
-      },
-      "targets": [
-        {
-          "expr": "rate(node_network_receive_bytes_total{job=\"opnsense_node\", device=\"igc5\"}[5m]) * 8",
-          "legendFormat": "Inbound"
+          ],
+          "fields": "",
+          "values": false
         },
-        {
-          "expr": "-rate(node_network_transmit_bytes_total{job=\"opnsense_node\", device=\"igc5\"}[5m]) * 8",
-          "legendFormat": "Outbound"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "bps",
-          "custom": {
-            "fillOpacity": 20
-          }
-        }
+        "orientation": "auto"
       }
     },
     {
-      "title": "Gateway RTT",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 31
-      },
-      "targets": [
-        {
-          "expr": "opnsense_gateways_rtt_milliseconds",
-          "legendFormat": "{{ name }}"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "ms",
-          "custom": {
-            "fillOpacity": 10
-          }
-        }
-      }
-    },
-    {
-      "title": "Alerts",
-      "type": "row",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 38
-      },
-      "collapsed": false
-    },
-    {
+      "id": 27,
       "title": "Firing Alerts",
       "type": "table",
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS}"
+        "uid": "VictoriaMetrics"
       },
       "gridPos": {
         "h": 6,
-        "w": 24,
-        "x": 0,
-        "y": 39
+        "w": 21,
+        "x": 3,
+        "y": 32
       },
       "targets": [
         {
           "expr": "ALERTS{alertstate=\"firing\"}",
           "format": "table",
-          "instant": true
+          "instant": true,
+          "refId": "A"
         }
       ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          }
+        }
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ]
+        }
+      },
       "transformations": [
         {
           "id": "organize",
           "options": {
             "excludeByName": {
-              "Time": false,
               "__name__": true,
-              "alertstate": true
+              "alertstate": true,
+              "Value": true
             },
-            "indexByName": {}
+            "indexByName": {},
+            "renameByName": {}
           }
         }
       ]
@@ -1322,7 +1740,8 @@
   "schemaVersion": 39,
   "tags": [
     "homelab",
-    "overview"
+    "overview",
+    "v3"
   ],
   "templating": {
     "list": [
@@ -1335,7 +1754,8 @@
         "hide": 2,
         "name": "DS_VICTORIAMETRICS",
         "type": "datasource",
-        "query": "prometheus"
+        "query": "prometheus",
+        "refresh": 1
       }
     ]
   },
@@ -1343,6 +1763,74 @@
     "from": "now-6h",
     "to": "now"
   },
-  "title": "Overview",
-  "uid": "homelab-overview"
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Homelab Overview",
+  "uid": "homelab-overview",
+  "version": 1,
+  "links": [
+    {
+      "title": "ESXi Hosts",
+      "url": "/d/esxi-hosts",
+      "type": "link",
+      "targetBlank": false,
+      "keepTime": true
+    },
+    {
+      "title": "VMs",
+      "url": "/d/vms-detail",
+      "type": "link",
+      "targetBlank": false,
+      "keepTime": true
+    },
+    {
+      "title": "OPNsense",
+      "url": "/d/opnsense-firewall-v3",
+      "type": "link",
+      "targetBlank": false,
+      "keepTime": true
+    },
+    {
+      "title": "NAS",
+      "url": "/d/synology-nas-v3",
+      "type": "link",
+      "targetBlank": false,
+      "keepTime": true
+    },
+    {
+      "title": "Switch",
+      "url": "/d/sg2218-switch-v3",
+      "type": "link",
+      "targetBlank": false,
+      "keepTime": true
+    },
+    {
+      "title": "AP",
+      "url": "/d/iptime-ap-v3",
+      "type": "link",
+      "targetBlank": false,
+      "keepTime": true
+    },
+    {
+      "title": "OCI Cloud",
+      "url": "/d/oci-cloud-v3",
+      "type": "link",
+      "targetBlank": false,
+      "keepTime": true
+    },
+    {
+      "title": "Observer",
+      "url": "/d/observer-v3",
+      "type": "link",
+      "targetBlank": false,
+      "keepTime": true
+    },
+    {
+      "title": "Logs",
+      "url": "/d/logs-explorer",
+      "type": "link",
+      "targetBlank": false,
+      "keepTime": true
+    }
+  ]
 }
