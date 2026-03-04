@@ -934,7 +934,7 @@
       "targets": [
         {
           "expr": "(vmware_datastore_capacity_size - vmware_datastore_freespace_size) / vmware_datastore_capacity_size * 100",
-          "legendFormat": "DS: {{ datastore }}",
+          "legendFormat": "DS: {{ds_name}}",
           "refId": "A"
         },
         {

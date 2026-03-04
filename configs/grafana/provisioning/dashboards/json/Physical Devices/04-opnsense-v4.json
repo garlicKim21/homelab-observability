@@ -1778,12 +1778,12 @@
       "targets": [
         {
           "expr": "rate(opnsense_wireguard_peer_received_bytes_total[5m]) * 8",
-          "legendFormat": "{{ interface }} In",
+          "legendFormat": "{{peer_name}} In",
           "refId": "A"
         },
         {
           "expr": "-rate(opnsense_wireguard_peer_transmitted_bytes_total[5m]) * 8",
-          "legendFormat": "{{ interface }} Out",
+          "legendFormat": "{{peer_name}} Out",
           "refId": "B"
         }
       ],
