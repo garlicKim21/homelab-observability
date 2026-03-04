@@ -751,7 +751,7 @@
           "targets": [
             {
               "expr": "vmware_host_cpu_usage{host_name=\"esxi01.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi01.basphere.local\"} * 100",
-              "legendFormat": "CPU %",
+              "legendFormat": "Usage %",
               "refId": "A"
             },
             {
@@ -840,7 +840,7 @@
           }
         },
         {
-          "title": "Memory Usage (GB)",
+          "title": "Memory Usage (MB)",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -1003,7 +1003,7 @@
           }
         },
         {
-          "title": "Memory Balloon & Swap & Latency",
+          "title": "Memory Balloon & Swap",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -1161,7 +1161,7 @@
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "short",
+              "unit": "pps",
               "min": 0,
               "custom": {
                 "fillOpacity": 10
@@ -1472,7 +1472,7 @@
           "targets": [
             {
               "expr": "vmware_host_cpu_usage{host_name=\"esxi02.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi02.basphere.local\"} * 100",
-              "legendFormat": "CPU %",
+              "legendFormat": "Usage %",
               "refId": "A"
             },
             {
@@ -1561,7 +1561,7 @@
           }
         },
         {
-          "title": "Memory Usage (GB)",
+          "title": "Memory Usage (MB)",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -1724,7 +1724,7 @@
           }
         },
         {
-          "title": "Memory Balloon & Swap & Latency",
+          "title": "Memory Balloon & Swap",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -1882,7 +1882,7 @@
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "short",
+              "unit": "pps",
               "min": 0,
               "custom": {
                 "fillOpacity": 10
@@ -2193,7 +2193,7 @@
           "targets": [
             {
               "expr": "vmware_host_cpu_usage{host_name=\"esxi03.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi03.basphere.local\"} * 100",
-              "legendFormat": "CPU %",
+              "legendFormat": "Usage %",
               "refId": "A"
             },
             {
@@ -2282,7 +2282,7 @@
           }
         },
         {
-          "title": "Memory Usage (GB)",
+          "title": "Memory Usage (MB)",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -2445,7 +2445,7 @@
           }
         },
         {
-          "title": "Memory Balloon & Swap & Latency",
+          "title": "Memory Balloon & Swap",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -2603,7 +2603,7 @@
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "short",
+              "unit": "pps",
               "min": 0,
               "custom": {
                 "fillOpacity": 10
@@ -2914,7 +2914,7 @@
           "targets": [
             {
               "expr": "vmware_host_cpu_usage{host_name=\"esxi04.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi04.basphere.local\"} * 100",
-              "legendFormat": "CPU %",
+              "legendFormat": "Usage %",
               "refId": "A"
             },
             {
@@ -3003,7 +3003,7 @@
           }
         },
         {
-          "title": "Memory Usage (GB)",
+          "title": "Memory Usage (MB)",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -3166,7 +3166,7 @@
           }
         },
         {
-          "title": "Memory Balloon & Swap & Latency",
+          "title": "Memory Balloon & Swap",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -3324,7 +3324,7 @@
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "short",
+              "unit": "pps",
               "min": 0,
               "custom": {
                 "fillOpacity": 10
@@ -3635,7 +3635,7 @@
           "targets": [
             {
               "expr": "vmware_host_cpu_usage{host_name=\"esxi05.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi05.basphere.local\"} * 100",
-              "legendFormat": "CPU %",
+              "legendFormat": "Usage %",
               "refId": "A"
             },
             {
@@ -3724,7 +3724,7 @@
           }
         },
         {
-          "title": "Memory Usage (GB)",
+          "title": "Memory Usage (MB)",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -3887,7 +3887,7 @@
           }
         },
         {
-          "title": "Memory Balloon & Swap & Latency",
+          "title": "Memory Balloon & Swap",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -4045,7 +4045,7 @@
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "short",
+              "unit": "pps",
               "min": 0,
               "custom": {
                 "fillOpacity": 10
@@ -4356,7 +4356,7 @@
           "targets": [
             {
               "expr": "vmware_host_cpu_usage{host_name=\"esxi06.basphere.local\"} / vmware_host_cpu_max{host_name=\"esxi06.basphere.local\"} * 100",
-              "legendFormat": "CPU %",
+              "legendFormat": "Usage %",
               "refId": "A"
             },
             {
@@ -4445,7 +4445,7 @@
           }
         },
         {
-          "title": "Memory Usage (GB)",
+          "title": "Memory Usage (MB)",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -4608,7 +4608,7 @@
           }
         },
         {
-          "title": "Memory Balloon & Swap & Latency",
+          "title": "Memory Balloon & Swap",
           "type": "timeseries",
           "datasource": {
             "type": "prometheus",
@@ -4766,7 +4766,7 @@
           ],
           "fieldConfig": {
             "defaults": {
-              "unit": "short",
+              "unit": "pps",
               "min": 0,
               "custom": {
                 "fillOpacity": 10
