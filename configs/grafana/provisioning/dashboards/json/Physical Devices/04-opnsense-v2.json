@@ -616,7 +616,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "1 min"
+              "options": "1m"
             },
             "properties": [
               {
@@ -631,7 +631,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "5 min"
+              "options": "5m"
             },
             "properties": [
               {
@@ -646,7 +646,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "15 min"
+              "options": "15m"
             },
             "properties": [
               {
