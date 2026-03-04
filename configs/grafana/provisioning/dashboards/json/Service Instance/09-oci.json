@@ -497,7 +497,8 @@
             "stacking": {
               "mode": "normal"
             },
-            "lineWidth": 1
+            "lineWidth": 1,
+            "showPoints": "never"
           }
         },
         "overrides": [
@@ -702,7 +703,8 @@
             "stacking": {
               "mode": "normal"
             },
-            "lineWidth": 1
+            "lineWidth": 1,
+            "showPoints": "never"
           }
         },
         "overrides": [
@@ -828,7 +830,8 @@
           "unit": "short",
           "custom": {
             "fillOpacity": 10,
-            "lineWidth": 1
+            "lineWidth": 1,
+            "showPoints": "never"
           }
         }
       },
@@ -994,7 +997,8 @@
           "unit": "Bps",
           "custom": {
             "fillOpacity": 10,
-            "lineWidth": 1
+            "lineWidth": 1,
+            "showPoints": "never"
           }
         },
         "overrides": [
@@ -1072,7 +1076,8 @@
           "unit": "bps",
           "custom": {
             "fillOpacity": 10,
-            "lineWidth": 1
+            "lineWidth": 1,
+            "showPoints": "never"
           }
         },
         "overrides": [
@@ -1158,7 +1163,8 @@
           "unit": "s",
           "custom": {
             "fillOpacity": 10,
-            "lineWidth": 1
+            "lineWidth": 1,
+            "showPoints": "never"
           }
         }
       },
@@ -1199,7 +1205,8 @@
           "unit": "percent",
           "custom": {
             "fillOpacity": 10,
-            "lineWidth": 1
+            "lineWidth": 1,
+            "showPoints": "never"
           }
         }
       },
@@ -1255,7 +1262,8 @@
                 "stacking": {
                   "mode": "normal"
                 },
-                "lineWidth": 1
+                "lineWidth": 1,
+                "showPoints": "never"
               }
             }
           },
@@ -1301,7 +1309,8 @@
               "unit": "ops",
               "custom": {
                 "fillOpacity": 10,
-                "lineWidth": 1
+                "lineWidth": 1,
+                "showPoints": "never"
               }
             }
           },
@@ -1342,7 +1351,8 @@
               "unit": "bytes",
               "custom": {
                 "fillOpacity": 10,
-                "lineWidth": 1
+                "lineWidth": 1,
+                "showPoints": "never"
               }
             }
           },
@@ -1397,7 +1407,8 @@
               "unit": "bytes",
               "custom": {
                 "fillOpacity": 10,
-                "lineWidth": 1
+                "lineWidth": 1,
+                "showPoints": "never"
               }
             }
           },
@@ -1438,7 +1449,8 @@
               "unit": "bps",
               "custom": {
                 "fillOpacity": 10,
-                "lineWidth": 1
+                "lineWidth": 1,
+                "showPoints": "never"
               }
             }
           },
@@ -1494,7 +1506,8 @@
               "unit": "percent",
               "custom": {
                 "fillOpacity": 10,
-                "lineWidth": 1
+                "lineWidth": 1,
+                "showPoints": "never"
               }
             }
           },
@@ -1535,7 +1548,8 @@
               "unit": "bytes",
               "custom": {
                 "fillOpacity": 10,
-                "lineWidth": 1
+                "lineWidth": 1,
+                "showPoints": "never"
               }
             }
           },

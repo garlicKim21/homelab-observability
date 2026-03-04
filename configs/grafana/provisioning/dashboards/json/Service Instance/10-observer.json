@@ -57,7 +57,12 @@
       "id": 1,
       "title": "Status",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
       "collapsed": false,
       "panels": []
     },
@@ -65,8 +70,16 @@
       "id": 2,
       "title": "Server Status",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 1 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 1
+      },
       "targets": [
         {
           "expr": "up{job=\"observer_node\"}",
@@ -80,16 +93,30 @@
             {
               "type": "value",
               "options": {
-                "0": { "text": "DOWN", "color": "red", "index": 0 },
-                "1": { "text": "UP", "color": "green", "index": 1 }
+                "0": {
+                  "text": "DOWN",
+                  "color": "red",
+                  "index": 0
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green",
+                  "index": 1
+                }
               }
             }
           ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "red", "value": null },
-              { "color": "green", "value": 1 }
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
             ]
           }
         }
@@ -98,15 +125,27 @@
         "colorMode": "background",
         "graphMode": "none",
         "textMode": "value",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 3,
       "title": "Uptime",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 1 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 1
+      },
       "targets": [
         {
           "expr": "time() - node_boot_time_seconds{job=\"observer_node\"}",
@@ -120,7 +159,10 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null }
+              {
+                "color": "green",
+                "value": null
+              }
             ]
           }
         }
@@ -129,15 +171,27 @@
         "colorMode": "background",
         "graphMode": "none",
         "textMode": "value",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 4,
       "title": "Containers",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 1 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 1
+      },
       "targets": [
         {
           "expr": "count(container_last_seen{job=\"observer_cadvisor\", name=~\".+\", container_label_com_docker_compose_service=~\".+\"}) or vector(0)",
@@ -150,7 +204,10 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null }
+              {
+                "color": "green",
+                "value": null
+              }
             ]
           }
         }
@@ -159,15 +216,27 @@
         "colorMode": "background",
         "graphMode": "none",
         "textMode": "value",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 5,
       "title": "VictoriaMetrics",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 1 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 1
+      },
       "targets": [
         {
           "expr": "up{job=\"victoriametrics\"}",
@@ -181,16 +250,30 @@
             {
               "type": "value",
               "options": {
-                "0": { "text": "DOWN", "color": "red", "index": 0 },
-                "1": { "text": "UP", "color": "green", "index": 1 }
+                "0": {
+                  "text": "DOWN",
+                  "color": "red",
+                  "index": 0
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green",
+                  "index": 1
+                }
               }
             }
           ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "red", "value": null },
-              { "color": "green", "value": 1 }
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
             ]
           }
         }
@@ -199,15 +282,27 @@
         "colorMode": "background",
         "graphMode": "none",
         "textMode": "value",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 6,
       "title": "Alertmanager",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 1 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 1
+      },
       "targets": [
         {
           "expr": "up{job=\"alertmanager\"}",
@@ -221,16 +316,30 @@
             {
               "type": "value",
               "options": {
-                "0": { "text": "DOWN", "color": "red", "index": 0 },
-                "1": { "text": "UP", "color": "green", "index": 1 }
+                "0": {
+                  "text": "DOWN",
+                  "color": "red",
+                  "index": 0
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green",
+                  "index": 1
+                }
               }
             }
           ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "red", "value": null },
-              { "color": "green", "value": 1 }
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
             ]
           }
         }
@@ -239,15 +348,27 @@
         "colorMode": "background",
         "graphMode": "none",
         "textMode": "value",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 7,
       "title": "Grafana",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 1 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 1
+      },
       "targets": [
         {
           "expr": "up{job=\"grafana\"}",
@@ -261,16 +382,30 @@
             {
               "type": "value",
               "options": {
-                "0": { "text": "DOWN", "color": "red", "index": 0 },
-                "1": { "text": "UP", "color": "green", "index": 1 }
+                "0": {
+                  "text": "DOWN",
+                  "color": "red",
+                  "index": 0
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green",
+                  "index": 1
+                }
               }
             }
           ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "red", "value": null },
-              { "color": "green", "value": 1 }
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
             ]
           }
         }
@@ -279,14 +414,23 @@
         "colorMode": "background",
         "graphMode": "none",
         "textMode": "value",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 8,
       "title": "CPU & Memory",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
       "collapsed": false,
       "panels": []
     },
@@ -294,8 +438,16 @@
       "id": 9,
       "title": "CPU",
       "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 3, "x": 0, "y": 6 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 0,
+        "y": 6
+      },
       "targets": [
         {
           "expr": "100 - (avg(rate(node_cpu_seconds_total{job=\"observer_node\", mode=\"idle\"}[5m])) * 100)",
@@ -311,24 +463,45 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 75 },
-              { "color": "red", "value": 80 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
             ]
           }
         }
       },
       "options": {
         "showThresholdMarkers": true,
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 10,
       "title": "CPU by Mode",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 9, "x": 3, "y": 6 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 9,
+        "x": 3,
+        "y": 6
+      },
       "targets": [
         {
           "expr": "avg by (mode)(rate(node_cpu_seconds_total{job=\"observer_node\"}[5m])) * 100",
@@ -342,59 +515,130 @@
           "min": 0,
           "custom": {
             "fillOpacity": 50,
-            "stacking": { "mode": "normal" }
+            "stacking": {
+              "mode": "normal"
+            },
+            "showPoints": "never"
           }
         },
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "user" },
+            "matcher": {
+              "id": "byName",
+              "options": "user"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#5794F2"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "system" },
+            "matcher": {
+              "id": "byName",
+              "options": "system"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FF6D00" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#FF6D00"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "iowait" },
+            "matcher": {
+              "id": "byName",
+              "options": "iowait"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#F2495C" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#F2495C"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "irq" },
+            "matcher": {
+              "id": "byName",
+              "options": "irq"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#B877D9" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#B877D9"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "nice" },
+            "matcher": {
+              "id": "byName",
+              "options": "nice"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FADE2A" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#FADE2A"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "idle" },
+            "matcher": {
+              "id": "byName",
+              "options": "idle"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#73BF69"
+                }
+              }
             ]
           }
         ]
       },
       "options": {
-        "tooltip": { "mode": "multi", "sort": "desc" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 11,
       "title": "Memory",
       "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 3, "x": 12, "y": 6 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 12,
+        "y": 6
+      },
       "targets": [
         {
           "expr": "(1 - node_memory_MemAvailable_bytes{job=\"observer_node\"} / node_memory_MemTotal_bytes{job=\"observer_node\"}) * 100",
@@ -410,24 +654,45 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 80 },
-              { "color": "red", "value": 85 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 80
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
             ]
           }
         }
       },
       "options": {
         "showThresholdMarkers": true,
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 12,
       "title": "Memory Breakdown",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 9, "x": 15, "y": 6 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 9,
+        "x": 15,
+        "y": 6
+      },
       "targets": [
         {
           "expr": "node_memory_MemTotal_bytes{job=\"observer_node\"} - node_memory_MemAvailable_bytes{job=\"observer_node\"}",
@@ -455,46 +720,96 @@
           "unit": "bytes",
           "custom": {
             "fillOpacity": 50,
-            "stacking": { "mode": "normal" }
+            "stacking": {
+              "mode": "normal"
+            },
+            "showPoints": "never"
           }
         },
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "Used" },
+            "matcher": {
+              "id": "byName",
+              "options": "Used"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#F2495C" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#F2495C"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "Cached" },
+            "matcher": {
+              "id": "byName",
+              "options": "Cached"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#5794F2"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "Buffers" },
+            "matcher": {
+              "id": "byName",
+              "options": "Buffers"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#37872D" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#37872D"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "Available" },
+            "matcher": {
+              "id": "byName",
+              "options": "Available"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#73BF69"
+                }
+              }
             ]
           }
         ]
       },
       "options": {
-        "tooltip": { "mode": "multi", "sort": "desc" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 13,
       "title": "Load & Filesystem",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 13 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 13
+      },
       "collapsed": false,
       "panels": []
     },
@@ -502,8 +817,16 @@
       "id": 14,
       "title": "Load Average",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 8, "x": 0, "y": 14 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 0,
+        "y": 14
+      },
       "targets": [
         {
           "expr": "node_load1{job=\"observer_node\"}",
@@ -525,21 +848,36 @@
         "defaults": {
           "unit": "short",
           "custom": {
-            "fillOpacity": 10
+            "fillOpacity": 10,
+            "showPoints": "never"
           }
         }
       },
       "options": {
-        "tooltip": { "mode": "multi", "sort": "desc" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 15,
       "title": "Disk Usage",
       "type": "bargauge",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 8, "x": 8, "y": 14 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 8,
+        "y": 14
+      },
       "targets": [
         {
           "expr": "(1 - node_filesystem_avail_bytes{job=\"observer_node\", mountpoint=\"/\"} / node_filesystem_size_bytes{job=\"observer_node\", mountpoint=\"/\"}) * 100",
@@ -560,40 +898,73 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 80 },
-              { "color": "red", "value": 85 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 80
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
             ]
           }
         },
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "Root" },
+            "matcher": {
+              "id": "byName",
+              "options": "Root"
+            },
             "properties": [
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "green", "value": null },
-                    { "color": "yellow", "value": 85 },
-                    { "color": "red", "value": 90 }
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 85
+                    },
+                    {
+                      "color": "red",
+                      "value": 90
+                    }
                   ]
                 }
               }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "Data" },
+            "matcher": {
+              "id": "byName",
+              "options": "Data"
+            },
             "properties": [
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "green", "value": null },
-                    { "color": "yellow", "value": 80 },
-                    { "color": "red", "value": 85 }
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 80
+                    },
+                    {
+                      "color": "red",
+                      "value": 85
+                    }
                   ]
                 }
               }
@@ -604,15 +975,27 @@
       "options": {
         "orientation": "horizontal",
         "displayMode": "gradient",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 16,
       "title": "Network Traffic",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 8, "x": 16, "y": 14 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 16,
+        "y": 14
+      },
       "targets": [
         {
           "expr": "rate(node_network_receive_bytes_total{job=\"observer_node\", device!~\"lo|docker.*|br-.*|veth.*\"}[5m]) * 8",
@@ -629,34 +1012,64 @@
         "defaults": {
           "unit": "bps",
           "custom": {
-            "fillOpacity": 20
+            "fillOpacity": 20,
+            "showPoints": "never"
           }
         },
         "overrides": [
           {
-            "matcher": { "id": "byRegexp", "options": ".*In$" },
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*In$"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#5794F2"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byRegexp", "options": ".*Out$" },
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*Out$"
+            },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FF9830" } }
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#FF9830"
+                }
+              }
             ]
           }
         ]
       },
       "options": {
-        "tooltip": { "mode": "multi", "sort": "desc" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 17,
       "title": "Monitoring Stack",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 21 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
       "collapsed": false,
       "panels": []
     },
@@ -664,8 +1077,16 @@
       "id": 18,
       "title": "Container CPU by Service",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 22 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 22
+      },
       "targets": [
         {
           "expr": "rate(container_cpu_usage_seconds_total{job=\"observer_cadvisor\", name!=\"\"}[5m]) * 100",
@@ -678,21 +1099,38 @@
           "unit": "percent",
           "custom": {
             "fillOpacity": 20,
-            "stacking": { "mode": "normal" }
+            "stacking": {
+              "mode": "normal"
+            },
+            "showPoints": "never"
           }
         }
       },
       "options": {
-        "tooltip": { "mode": "multi", "sort": "desc" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 19,
       "title": "Container Memory by Service",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 22 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 22
+      },
       "targets": [
         {
           "expr": "container_memory_usage_bytes{job=\"observer_cadvisor\", name!=\"\"}",
@@ -705,20 +1143,34 @@
           "unit": "bytes",
           "custom": {
             "fillOpacity": 20,
-            "stacking": { "mode": "normal" }
+            "stacking": {
+              "mode": "normal"
+            },
+            "showPoints": "never"
           }
         }
       },
       "options": {
-        "tooltip": { "mode": "multi", "sort": "desc" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 20,
       "title": "VictoriaMetrics Performance",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 29 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 29
+      },
       "collapsed": false,
       "panels": []
     },
@@ -726,8 +1178,16 @@
       "id": 21,
       "title": "Active Time Series",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 4, "x": 0, "y": 30 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 4,
+        "x": 0,
+        "y": 30
+      },
       "targets": [
         {
           "expr": "vm_rows{type=\"storage/small\"}",
@@ -741,7 +1201,10 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null }
+              {
+                "color": "green",
+                "value": null
+              }
             ]
           }
         }
@@ -750,15 +1213,27 @@
         "colorMode": "background",
         "graphMode": "none",
         "textMode": "value",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 22,
       "title": "Ingestion Rate",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 10, "x": 4, "y": 30 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 10,
+        "x": 4,
+        "y": 30
+      },
       "targets": [
         {
           "expr": "rate(vm_rows_inserted_total[5m])",
@@ -770,21 +1245,36 @@
         "defaults": {
           "unit": "rowsps",
           "custom": {
-            "fillOpacity": 20
+            "fillOpacity": 20,
+            "showPoints": "never"
           }
         }
       },
       "options": {
-        "tooltip": { "mode": "multi", "sort": "desc" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 23,
       "title": "Query Duration",
       "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 10, "x": 14, "y": 30 },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 10,
+        "x": 14,
+        "y": 30
+      },
       "targets": [
         {
           "expr": "vm_request_duration_seconds{job=\"victoriametrics\", quantile=\"0.99\"}",
@@ -796,28 +1286,48 @@
         "defaults": {
           "unit": "s",
           "custom": {
-            "fillOpacity": 10
+            "fillOpacity": 10,
+            "showPoints": "never"
           }
         }
       },
       "options": {
-        "tooltip": { "mode": "multi", "sort": "desc" },
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
       }
     },
     {
       "id": 24,
       "title": "VictoriaMetrics Health",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 37 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 37
+      },
       "collapsed": true,
       "panels": [
         {
           "id": 25,
           "title": "Memory Usage",
           "type": "timeseries",
-          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-          "gridPos": { "h": 7, "w": 8, "x": 0, "y": 38 },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 0,
+            "y": 38
+          },
           "targets": [
             {
               "expr": "process_resident_memory_bytes{job=\"victoriametrics\"}",
@@ -829,21 +1339,36 @@
             "defaults": {
               "unit": "bytes",
               "custom": {
-                "fillOpacity": 20
+                "fillOpacity": 20,
+                "showPoints": "never"
               }
             }
           },
           "options": {
-            "tooltip": { "mode": "multi", "sort": "desc" },
-            "legend": { "displayMode": "list", "placement": "bottom" }
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom"
+            }
           }
         },
         {
           "id": 26,
           "title": "Disk Usage",
           "type": "timeseries",
-          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-          "gridPos": { "h": 7, "w": 8, "x": 8, "y": 38 },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 8,
+            "y": 38
+          },
           "targets": [
             {
               "expr": "vm_data_size_bytes",
@@ -855,21 +1380,36 @@
             "defaults": {
               "unit": "bytes",
               "custom": {
-                "fillOpacity": 20
+                "fillOpacity": 20,
+                "showPoints": "never"
               }
             }
           },
           "options": {
-            "tooltip": { "mode": "multi", "sort": "desc" },
-            "legend": { "displayMode": "list", "placement": "bottom" }
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom"
+            }
           }
         },
         {
           "id": 27,
           "title": "Slow Inserts",
           "type": "timeseries",
-          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-          "gridPos": { "h": 7, "w": 8, "x": 16, "y": 38 },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 16,
+            "y": 38
+          },
           "targets": [
             {
               "expr": "rate(vm_slow_row_inserts_total{job=\"victoriametrics\"}[5m])",
@@ -881,21 +1421,37 @@
             "defaults": {
               "unit": "ops",
               "custom": {
-                "fillOpacity": 15
+                "fillOpacity": 15,
+                "showPoints": "never"
               },
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
-                  { "color": "green", "value": null },
-                  { "color": "yellow", "value": 0.1 },
-                  { "color": "red", "value": 1 }
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 0.1
+                  },
+                  {
+                    "color": "red",
+                    "value": 1
+                  }
                 ]
               }
             }
           },
           "options": {
-            "tooltip": { "mode": "multi", "sort": "desc" },
-            "legend": { "displayMode": "list", "placement": "bottom" }
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom"
+            }
           }
         }
       ]
@@ -904,15 +1460,28 @@
       "id": 28,
       "title": "Disk & Network I/O",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 38 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 38
+      },
       "collapsed": true,
       "panels": [
         {
           "id": 29,
           "title": "Disk I/O",
           "type": "timeseries",
-          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 39 },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 39
+          },
           "targets": [
             {
               "expr": "rate(node_disk_read_bytes_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m])",
@@ -929,35 +1498,68 @@
             "defaults": {
               "unit": "Bps",
               "custom": {
-                "fillOpacity": 15
+                "fillOpacity": 15,
+                "showPoints": "never"
               }
             },
             "overrides": [
               {
-                "matcher": { "id": "byRegexp", "options": ".*Read$" },
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": ".*Read$"
+                },
                 "properties": [
-                  { "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "#73BF69"
+                    }
+                  }
                 ]
               },
               {
-                "matcher": { "id": "byRegexp", "options": ".*Write$" },
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": ".*Write$"
+                },
                 "properties": [
-                  { "id": "color", "value": { "mode": "fixed", "fixedColor": "#F2495C" } }
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "#F2495C"
+                    }
+                  }
                 ]
               }
             ]
           },
           "options": {
-            "tooltip": { "mode": "multi", "sort": "desc" },
-            "legend": { "displayMode": "list", "placement": "bottom" }
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom"
+            }
           }
         },
         {
           "id": 30,
           "title": "Disk IOPS",
           "type": "timeseries",
-          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 39 },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 39
+          },
           "targets": [
             {
               "expr": "rate(node_disk_reads_completed_total{job=\"observer_node\", device!~\"loop.*|dm-.*\"}[5m])",
@@ -974,13 +1576,20 @@
             "defaults": {
               "unit": "iops",
               "custom": {
-                "fillOpacity": 15
+                "fillOpacity": 15,
+                "showPoints": "never"
               }
             }
           },
           "options": {
-            "tooltip": { "mode": "multi", "sort": "desc" },
-            "legend": { "displayMode": "list", "placement": "bottom" }
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom"
+            }
           }
         }
       ]
@@ -989,15 +1598,28 @@
       "id": 31,
       "title": "Docker Containers",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 39 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 39
+      },
       "collapsed": true,
       "panels": [
         {
           "id": 32,
           "title": "Container Status",
           "type": "table",
-          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-          "gridPos": { "h": 7, "w": 24, "x": 0, "y": 40 },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 40
+          },
           "targets": [
             {
               "expr": "sum by (name) (rate(container_cpu_usage_seconds_total{job=\"observer_cadvisor\", name=~\".+\"}[5m])) * 100",
@@ -1025,37 +1647,79 @@
             "defaults": {},
             "overrides": [
               {
-                "matcher": { "id": "byName", "options": "Value #A" },
+                "matcher": {
+                  "id": "byName",
+                  "options": "Value #A"
+                },
                 "properties": [
-                  { "id": "displayName", "value": "CPU %" },
-                  { "id": "unit", "value": "percent" },
-                  { "id": "decimals", "value": 2 }
+                  {
+                    "id": "displayName",
+                    "value": "CPU %"
+                  },
+                  {
+                    "id": "unit",
+                    "value": "percent"
+                  },
+                  {
+                    "id": "decimals",
+                    "value": 2
+                  }
                 ]
               },
               {
-                "matcher": { "id": "byName", "options": "Value #B" },
+                "matcher": {
+                  "id": "byName",
+                  "options": "Value #B"
+                },
                 "properties": [
-                  { "id": "displayName", "value": "Memory Usage" },
-                  { "id": "unit", "value": "bytes" }
+                  {
+                    "id": "displayName",
+                    "value": "Memory Usage"
+                  },
+                  {
+                    "id": "unit",
+                    "value": "bytes"
+                  }
                 ]
               },
               {
-                "matcher": { "id": "byName", "options": "Value #C" },
+                "matcher": {
+                  "id": "byName",
+                  "options": "Value #C"
+                },
                 "properties": [
-                  { "id": "displayName", "value": "Memory Limit" },
-                  { "id": "unit", "value": "bytes" }
+                  {
+                    "id": "displayName",
+                    "value": "Memory Limit"
+                  },
+                  {
+                    "id": "unit",
+                    "value": "bytes"
+                  }
                 ]
               },
               {
-                "matcher": { "id": "byName", "options": "name" },
+                "matcher": {
+                  "id": "byName",
+                  "options": "name"
+                },
                 "properties": [
-                  { "id": "displayName", "value": "Container" }
+                  {
+                    "id": "displayName",
+                    "value": "Container"
+                  }
                 ]
               },
               {
-                "matcher": { "id": "byName", "options": "Time" },
+                "matcher": {
+                  "id": "byName",
+                  "options": "Time"
+                },
                 "properties": [
-                  { "id": "custom.hidden", "value": true }
+                  {
+                    "id": "custom.hidden",
+                    "value": true
+                  }
                 ]
               }
             ]
@@ -1063,12 +1727,18 @@
           "transformations": [
             {
               "id": "seriesToColumns",
-              "options": { "byField": "name" }
+              "options": {
+                "byField": "name"
+              }
             },
             {
               "id": "organize",
               "options": {
-                "excludeByName": { "Time 1": true, "Time 2": true, "Time 3": true },
+                "excludeByName": {
+                  "Time 1": true,
+                  "Time 2": true,
+                  "Time 3": true
+                },
                 "renameByName": {}
               }
             }
@@ -1076,7 +1746,10 @@
           "options": {
             "showHeader": true,
             "sortBy": [
-              { "displayName": "Memory Usage", "desc": true }
+              {
+                "displayName": "Memory Usage",
+                "desc": true
+              }
             ]
           }
         }
@@ -1086,7 +1759,12 @@
       "id": 33,
       "title": "Per-Container ($container)",
       "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 40 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 40
+      },
       "collapsed": true,
       "repeat": "container",
       "panels": [
@@ -1094,8 +1772,16 @@
           "id": 34,
           "title": "$container CPU",
           "type": "timeseries",
-          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 41 },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 41
+          },
           "targets": [
             {
               "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"observer_cadvisor\", name=\"$container\"}[5m]))",
@@ -1113,38 +1799,86 @@
               "unit": "short",
               "decimals": 3,
               "custom": {
-                "fillOpacity": 10
+                "fillOpacity": 10,
+                "showPoints": "never"
               }
             },
             "overrides": [
               {
-                "matcher": { "id": "byFrameRefID", "options": "A" },
+                "matcher": {
+                  "id": "byFrameRefID",
+                  "options": "A"
+                },
                 "properties": [
-                  { "id": "color", "value": { "fixedColor": "green", "mode": "fixed" } }
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "green",
+                      "mode": "fixed"
+                    }
+                  }
                 ]
               },
               {
-                "matcher": { "id": "byFrameRefID", "options": "B" },
+                "matcher": {
+                  "id": "byFrameRefID",
+                  "options": "B"
+                },
                 "properties": [
-                  { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 10] } },
-                  { "id": "custom.fillOpacity", "value": 0 },
-                  { "id": "custom.lineWidth", "value": 2 },
-                  { "id": "color", "value": { "fixedColor": "orange", "mode": "fixed" } }
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        10,
+                        10
+                      ]
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 2
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "orange",
+                      "mode": "fixed"
+                    }
+                  }
                 ]
               }
             ]
           },
           "options": {
-            "tooltip": { "mode": "multi", "sort": "desc" },
-            "legend": { "displayMode": "list", "placement": "bottom" }
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom"
+            }
           }
         },
         {
           "id": 35,
           "title": "$container Memory",
           "type": "timeseries",
-          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 41 },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 41
+          },
           "targets": [
             {
               "expr": "sum(container_memory_usage_bytes{job=\"observer_cadvisor\", name=\"$container\"})",
@@ -1161,24 +1895,55 @@
             "defaults": {
               "unit": "bytes",
               "custom": {
-                "fillOpacity": 10
+                "fillOpacity": 10,
+                "showPoints": "never"
               }
             },
             "overrides": [
               {
-                "matcher": { "id": "byFrameRefID", "options": "B" },
+                "matcher": {
+                  "id": "byFrameRefID",
+                  "options": "B"
+                },
                 "properties": [
-                  { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 10] } },
-                  { "id": "custom.fillOpacity", "value": 0 },
-                  { "id": "custom.lineWidth", "value": 2 },
-                  { "id": "color", "value": { "fixedColor": "red", "mode": "fixed" } }
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "fill": "dash",
+                      "dash": [
+                        10,
+                        10
+                      ]
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 2
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "red",
+                      "mode": "fixed"
+                    }
+                  }
                 ]
               }
             ]
           },
           "options": {
-            "tooltip": { "mode": "multi", "sort": "desc" },
-            "legend": { "displayMode": "list", "placement": "bottom" }
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom"
+            }
           }
         }
       ]

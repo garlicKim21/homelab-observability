@@ -415,7 +415,7 @@
             "fillOpacity": 10,
             "gradientMode": "none",
             "spanNulls": false,
-            "showPoints": "auto",
+            "showPoints": "never",
             "pointSize": 5,
             "axisBorderShow": false,
             "scaleDistribution": {
@@ -469,7 +469,7 @@
             "fillOpacity": 10,
             "gradientMode": "none",
             "spanNulls": false,
-            "showPoints": "auto",
+            "showPoints": "never",
             "pointSize": 5,
             "axisBorderShow": false,
             "scaleDistribution": {
@@ -739,7 +739,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -854,7 +854,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -917,7 +917,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -980,7 +980,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -1118,7 +1118,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -1233,7 +1233,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -1296,7 +1296,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -1359,7 +1359,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -1497,7 +1497,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -1612,7 +1612,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -1675,7 +1675,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -1738,7 +1738,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -1876,7 +1876,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -1991,7 +1991,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -2054,7 +2054,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -2117,7 +2117,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -2255,7 +2255,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -2370,7 +2370,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -2433,7 +2433,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -2496,7 +2496,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -2634,7 +2634,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -2749,7 +2749,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -2812,7 +2812,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
@@ -2875,7 +2875,7 @@
                 "fillOpacity": 10,
                 "gradientMode": "none",
                 "spanNulls": false,
-                "showPoints": "auto",
+                "showPoints": "never",
                 "pointSize": 5,
                 "axisBorderShow": false,
                 "scaleDistribution": {
