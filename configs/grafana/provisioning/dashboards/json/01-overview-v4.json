@@ -938,8 +938,8 @@
           "refId": "A"
         },
         {
-          "expr": "(synology_volume_size_total_mb - synology_volume_size_free_mb) / synology_volume_size_total_mb * 100",
-          "legendFormat": "NAS: {{ volume }}",
+          "expr": "(synology_raid_total_size - synology_raid_free_size) / synology_raid_total_size * 100",
+          "legendFormat": "NAS: {{raidName}}",
           "refId": "B"
         },
         {
