@@ -1006,7 +1006,7 @@
       },
       "targets": [
         {
-          "expr": "(synology_memory_total - synology_memory_available) / synology_memory_total * 100",
+          "expr": "(synology_memory_total - synology_memory_available - synology_memory_cached - synology_memory_buffer) / synology_memory_total * 100",
           "legendFormat": "NAS MEM",
           "refId": "A"
         }
