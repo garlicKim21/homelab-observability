@@ -932,7 +932,7 @@
     },
     {
       "id": 30,
-      "title": "Disk Health",
+      "title": "Temperature",
       "type": "row",
       "gridPos": {
         "h": 1,
@@ -944,9 +944,9 @@
       "panels": []
     },
     {
-      "id": 31,
-      "title": "Disk Status",
-      "type": "table",
+      "id": 33,
+      "title": "System Temperature",
+      "type": "timeseries",
       "datasource": {
         "type": "prometheus",
         "uid": "VictoriaMetrics"
@@ -959,138 +959,59 @@
       },
       "targets": [
         {
-          "expr": "synology_disk_status{job=\"snmp_nas\"}",
-          "legendFormat": "{{diskID}}",
-          "refId": "A",
-          "instant": true
-        },
-        {
-          "expr": "synology_disk_temperature{job=\"snmp_nas\"}",
-          "legendFormat": "{{diskID}}",
-          "refId": "B",
-          "instant": true
+          "expr": "synology_system_temperature{job=\"snmp_nas\"}",
+          "legendFormat": "System",
+          "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "noValue": "N/A",
+          "unit": "celsius",
           "custom": {
-            "displayMode": "auto"
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Value #A"
-            },
-            "properties": [
+            "showPoints": "never",
+            "lineWidth": 2,
+            "fillOpacity": 15,
+            "spanNulls": false
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
               {
-                "id": "displayName",
-                "value": "Status"
+                "color": "#73BF69",
+                "value": null
               },
               {
-                "id": "mappings",
-                "value": [
-                  {
-                    "type": "value",
-                    "options": {
-                      "1": {
-                        "text": "Normal",
-                        "color": "#73BF69"
-                      },
-                      "2": {
-                        "text": "Initialized",
-                        "color": "#5794F2"
-                      },
-                      "3": {
-                        "text": "NotInitialized",
-                        "color": "#FADE2A"
-                      },
-                      "4": {
-                        "text": "SystemPartitionFailed",
-                        "color": "#F2495C"
-                      },
-                      "5": {
-                        "text": "Crashed",
-                        "color": "#F2495C"
-                      }
-                    }
-                  }
-                ]
+                "color": "#FADE2A",
+                "value": 60
               },
               {
-                "id": "custom.displayMode",
-                "value": "color-background"
+                "color": "#F2495C",
+                "value": 75
               }
             ]
           },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Value #B"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Temperature (°C)"
-              },
-              {
-                "id": "unit",
-                "value": "celsius"
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "#73BF69",
-                      "value": null
-                    },
-                    {
-                      "color": "#FADE2A",
-                      "value": 40
-                    },
-                    {
-                      "color": "#F2495C",
-                      "value": 50
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "custom.displayMode",
-                "value": "color-background"
-              }
-            ]
-          }
-        ]
+          "noValue": "N/A"
+        }
       },
       "options": {
-        "sortBy": [
-          {
-            "displayName": "diskID",
-            "desc": false
-          }
-        ]
-      },
-      "transformations": [
-        {
-          "id": "labelsToFields",
-          "options": {
-            "valueLabel": "diskID"
-          }
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
         },
-        {
-          "id": "merge",
-          "options": {}
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
         }
-      ]
+      }
     },
     {
       "id": 32,
-      "title": "Disk Temperature Trend",
+      "title": "Disk Temperature",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -1152,6 +1073,194 @@
             "lastNotNull"
           ]
         }
+      }
+    },
+    {
+      "id": 34,
+      "title": "Disk Health",
+      "type": "row",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 29
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 31,
+      "title": "Disk Status",
+      "type": "table",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 30
+      },
+      "targets": [
+        {
+          "expr": "synology_disk_status{job=\"snmp_nas\"}",
+          "refId": "status",
+          "instant": true,
+          "format": "table"
+        },
+        {
+          "expr": "synology_disk_temperature{job=\"snmp_nas\"}",
+          "refId": "temp",
+          "instant": true,
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "diskID"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Time 1": true,
+              "Time 2": true,
+              "__name__": true,
+              "__name__ 1": true,
+              "__name__ 2": true,
+              "device": true,
+              "device 1": true,
+              "device 2": true,
+              "device_type": true,
+              "device_type 1": true,
+              "device_type 2": true,
+              "diskIndex": true,
+              "diskIndex 1": true,
+              "diskIndex 2": true,
+              "instance": true,
+              "instance 1": true,
+              "instance 2": true,
+              "job": true,
+              "job 1": true,
+              "job 2": true
+            },
+            "renameByName": {
+              "diskID": "Disk",
+              "diskModel": "Model",
+              "Value #status": "Status",
+              "Value #temp": "Temperature"
+            },
+            "indexByName": {
+              "diskID": 0,
+              "diskModel": 1,
+              "Value #status": 2,
+              "Value #temp": 3
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "noValue": "N/A",
+          "custom": {
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Status"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "1": {
+                        "text": "Normal",
+                        "color": "#73BF69"
+                      },
+                      "2": {
+                        "text": "Initialized",
+                        "color": "#5794F2"
+                      },
+                      "3": {
+                        "text": "NotInitialized",
+                        "color": "#FADE2A"
+                      },
+                      "4": {
+                        "text": "SystemPartitionFailed",
+                        "color": "#F2495C"
+                      },
+                      "5": {
+                        "text": "Crashed",
+                        "color": "#F2495C"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Temperature"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "celsius"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "#73BF69",
+                      "value": null
+                    },
+                    {
+                      "color": "#FADE2A",
+                      "value": 40
+                    },
+                    {
+                      "color": "#F2495C",
+                      "value": 50
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true,
+        "sortBy": [
+          {
+            "displayName": "Disk",
+            "desc": false
+          }
+        ]
       }
     },
     {
