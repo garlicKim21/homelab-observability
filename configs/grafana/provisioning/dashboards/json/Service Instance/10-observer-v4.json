@@ -199,7 +199,7 @@
       },
       "targets": [
         {
-          "expr": "count(container_last_seen{job=\"cadvisor\", name!=\"\", name!~\"POD|.*pause.*\"})",
+          "expr": "count(container_start_time_seconds{job=\"observer_cadvisor\", name=~\".+\"})",
           "legendFormat": "__auto",
           "refId": "A"
         }
