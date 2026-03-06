@@ -50,13 +50,13 @@ groups:
           description: "VictoriaMetrics 메모리 사용량: {{ $value | printf \"%.0f\" }}MB (1GB 초과)"
 
       - alert: VMSlowInserts
-        expr: rate(vm_slow_row_inserts_total[5m]) > 0
-        for: 5m
+        expr: rate(vm_slow_row_inserts_total[5m]) > 5
+        for: 10m
         labels:
           severity: warning
         annotations:
           summary: "VictoriaMetrics slow insert 발생"
-          description: "데이터 쓰기 지연이 발생하고 있습니다. 디스크 I/O 또는 리소스 부족 확인 필요."
+          description: "데이터 쓰기 지연이 발생하고 있습니다 ({{ $value | printf \"%.1f\" }}/s). 디스크 I/O 또는 리소스 부족 확인 필요."
 
       - alert: VMTooManyTimeSeries
         expr: vm_rows{type="storage/small"} > 5000000
