@@ -44,7 +44,12 @@ data/                       # 런타임 데이터 (gitignore)
 | Loki             | loki       | http://loki:3100             |
 | Alertmanager     | alertmanager | http://alertmanager:9093   |
 
+## Dashboard Style Guide
+
+대시보드를 새로 만들거나 수정할 때 반드시 [docs/dashboard-style-guide.md](docs/dashboard-style-guide.md)를 따를 것. 패널 제목, textMode, 색상, 장비 식별자 등의 일관성 규칙이 정의되어 있음.
+
 ## Docs
 
 - [docs/deployment.md](docs/deployment.md) - 배포 절차 상세
 - [docs/dashboards.md](docs/dashboards.md) - 대시보드 목록 및 수정 가이드
+- [docs/dashboard-style-guide.md](docs/dashboard-style-guide.md) - 대시보드 UI 스타일 가이드
