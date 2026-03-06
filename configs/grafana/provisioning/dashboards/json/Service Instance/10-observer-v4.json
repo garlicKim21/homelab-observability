@@ -50,7 +50,7 @@
     },
     {
       "id": 2,
-      "title": "Observer Node Status",
+      "title": "Status",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -58,7 +58,7 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 6,
+        "w": 4,
         "x": 0,
         "y": 1
       },
@@ -66,6 +66,7 @@
         "colorMode": "background",
         "graphMode": "none",
         "textMode": "value_and_name",
+        "justifyMode": "center",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -112,14 +113,14 @@
       "targets": [
         {
           "expr": "up{job=\"observer_node\"}",
-          "legendFormat": "Observer Node",
+          "legendFormat": "Observer",
           "refId": "A"
         }
       ]
     },
     {
       "id": 3,
-      "title": "System Uptime",
+      "title": "Uptime",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -127,14 +128,15 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 6,
-        "x": 6,
+        "w": 4,
+        "x": 4,
         "y": 1
       },
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
+        "justifyMode": "center",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -143,7 +145,7 @@
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "dtdurations",
+          "unit": "s",
           "color": {
             "mode": "fixed",
             "fixedColor": "#73BF69"
@@ -154,7 +156,51 @@
       "targets": [
         {
           "expr": "time() - node_boot_time_seconds{job=\"observer_node\"}",
-          "legendFormat": "Uptime",
+          "legendFormat": "__auto",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Containers",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 8,
+        "y": 1
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#5794F2"
+          },
+          "noValue": "N/A"
+        }
+      },
+      "targets": [
+        {
+          "expr": "count(container_last_seen{job=\"cadvisor\", name!=\"\", name!~\"POD|.*pause.*\"})",
+          "legendFormat": "__auto",
           "refId": "A"
         }
       ]
@@ -177,7 +223,8 @@
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
+        "justifyMode": "center",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -197,7 +244,7 @@
       "targets": [
         {
           "expr": "vm_rows{type=\"storage/small\"}",
-          "legendFormat": "Time Series",
+          "legendFormat": "__auto",
           "refId": "A"
         }
       ]
@@ -220,7 +267,8 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
+        "justifyMode": "center",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -267,7 +315,7 @@
       "targets": [
         {
           "expr": "count(ALERTS{alertstate=\"firing\"}) or vector(0)",
-          "legendFormat": "Firing Alerts",
+          "legendFormat": "__auto",
           "refId": "A"
         }
       ]
