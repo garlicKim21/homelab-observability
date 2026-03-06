@@ -315,7 +315,7 @@ services:
   # vmware_exporter가 수집하지 않는 호스트별 datastore latency
   # ---------------------------------------------------------------------------
   telegraf:
-    image: telegraf:1.33
+    image: telegraf:1.37.3
     container_name: telegraf
     restart: unless-stopped
     mem_limit: 256m
