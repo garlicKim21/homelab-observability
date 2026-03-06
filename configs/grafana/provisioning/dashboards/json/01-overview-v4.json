@@ -2803,9 +2803,14 @@
       },
       "targets": [
         {
-          "expr": "synology_raid_status{raidName=~\"Volume.*\"}",
-          "legendFormat": "{{raidName}}",
+          "expr": "synology_raid_status{raidName=\"Volume 1\"}",
+          "legendFormat": "Volume 1",
           "refId": "A"
+        },
+        {
+          "expr": "synology_raid_status{raidName=\"Volume 2\"}",
+          "legendFormat": "Volume 2",
+          "refId": "B"
         }
       ],
       "fieldConfig": {
