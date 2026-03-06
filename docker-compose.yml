@@ -311,6 +311,30 @@ services:
       - monitoring
 
   # ---------------------------------------------------------------------------
+  # Telegraf - vSphere 데이터스토어 성능 메트릭 보완 수집
+  # vmware_exporter가 수집하지 않는 호스트별 datastore latency
+  # ---------------------------------------------------------------------------
+  telegraf:
+    image: telegraf:1.33
+    container_name: telegraf
+    restart: unless-stopped
+    mem_limit: 256m
+    cpus: 0.25
+    dns:
+      - ${DNS_SERVER}
+    environment:
+      - VCENTER_HOST=${VCENTER_HOST:-vcsa.basphere.local}
+      - VCENTER_USER=${VCENTER_USER:?Set VCENTER_USER in .env}
+      - VCENTER_PASSWORD=${VCENTER_PASSWORD:?Set VCENTER_PASSWORD in .env}
+    volumes:
+      - ./configs/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    depends_on:
+      victoriametrics:
+        condition: service_healthy
+    networks:
+      - monitoring
+
+  # ---------------------------------------------------------------------------
   # Discord Webhook Proxy
   # Alertmanager webhook → Discord webhook 형식 변환
   # ---------------------------------------------------------------------------
