@@ -1498,15 +1498,14 @@
             "spanNulls": false
           },
           "color": {
-            "mode": "fixed",
-            "fixedColor": "#FF9830"
+            "mode": "palette-classic"
           },
           "noValue": "N/A"
         }
       },
       "targets": [
         {
-          "expr": "rate(vm_rows_inserted_total[$__rate_interval])",
+          "expr": "rate(vm_rows_inserted_total[$__rate_interval]) > 0",
           "legendFormat": "{{type}}",
           "refId": "A"
         }
