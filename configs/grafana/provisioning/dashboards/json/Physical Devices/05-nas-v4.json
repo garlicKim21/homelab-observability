@@ -306,7 +306,7 @@
       },
       "targets": [
         {
-          "expr": "synology_raid_status{job=\"snmp_nas\"}",
+          "expr": "synology_raid_status{job=\"snmp_nas\", raidName=~\"Volume.*\"}",
           "legendFormat": "{{raidName}}",
           "refId": "A"
         }
