@@ -838,7 +838,7 @@
       },
       "targets": [
         {
-          "expr": "(1 - synology_raid_free_size{job=\"snmp_nas\"} / synology_raid_total_size{job=\"snmp_nas\"}) * 100",
+          "expr": "(1 - synology_raid_free_size{job=\"snmp_nas\", raidName=~\"Volume.*\"} / synology_raid_total_size{job=\"snmp_nas\", raidName=~\"Volume.*\"}) * 100",
           "legendFormat": "{{raidName}}",
           "refId": "A"
         }
@@ -881,7 +881,7 @@
     },
     {
       "id": 22,
-      "title": "RAID Free Space Trend",
+      "title": "Volume Usage Trend",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -895,14 +895,16 @@
       },
       "targets": [
         {
-          "expr": "synology_raid_free_size{job=\"snmp_nas\"}",
+          "expr": "(1 - synology_raid_free_size{job=\"snmp_nas\", raidName=~\"Volume.*\"} / synology_raid_total_size{job=\"snmp_nas\", raidName=~\"Volume.*\"}) * 100",
           "legendFormat": "{{raidName}}",
           "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "bytes",
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
           "custom": {
             "showPoints": "never",
             "lineWidth": 2,
