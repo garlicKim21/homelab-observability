@@ -52,18 +52,22 @@
       "targets": [
         {
           "expr": "up{job=\"opnsense_node\"}",
-          "legendFormat": "Status",
+          "legendFormat": "OPNsense",
           "refId": "A"
         }
       ],
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value",
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "orientation": "auto",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
-          ]
+          ],
+          "fields": "",
+          "values": false
         }
       },
       "fieldConfig": {
@@ -1705,7 +1709,7 @@
       },
       "targets": [
         {
-          "expr": "opnsense_wireguard_peer_last_handshake_seconds",
+          "expr": "time() - opnsense_wireguard_peer_last_handshake_seconds",
           "legendFormat": "{{ peer }}",
           "format": "table",
           "instant": true,
@@ -1726,7 +1730,7 @@
             "renameByName": {
               "peer": "Peer",
               "interface": "Interface",
-              "Value": "Last Handshake (s)"
+              "Value": "Last Handshake"
             }
           }
         }
@@ -1749,7 +1753,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Last Handshake (s)"
+              "options": "Last Handshake"
             },
             "properties": [
               {

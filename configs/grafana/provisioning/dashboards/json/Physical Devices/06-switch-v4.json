@@ -51,7 +51,7 @@
     },
     {
       "id": 1,
-      "title": "Switch Status",
+      "title": "Status",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -173,9 +173,9 @@
         "overrides": []
       },
       "options": {
-        "colorMode": "none",
+        "colorMode": "value",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {

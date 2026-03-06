@@ -51,7 +51,7 @@
     },
     {
       "id": 1,
-      "title": "AP Status",
+      "title": "Status",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -70,7 +70,7 @@
             "uid": "VictoriaMetrics"
           },
           "expr": "up{job=\"snmp_ap\"}",
-          "legendFormat": "AP",
+          "legendFormat": "AX3000BMC",
           "refId": "A"
         }
       ],
@@ -173,9 +173,9 @@
         "overrides": []
       },
       "options": {
-        "colorMode": "none",
+        "colorMode": "value",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
@@ -306,40 +306,6 @@
       }
     },
     {
-      "id": 101,
-      "title": "CPU & Memory",
-      "type": "row",
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 4
-      },
-      "panels": [
-        {
-          "id": 50,
-          "title": "CPU & Memory Not Available",
-          "type": "text",
-          "gridPos": {
-            "h": 4,
-            "w": 24,
-            "x": 0,
-            "y": 5
-          },
-          "options": {
-            "mode": "markdown",
-            "content": "### CPU & Memory Metrics Not Available\n\nipTIME AP does not expose CPU/Memory metrics via standard SNMP MIBs (IF-MIB). Proprietary OIDs for this device have not been documented. Only interface traffic and status metrics are available via SNMP."
-          },
-          "fieldConfig": {
-            "defaults": {
-              "noValue": "N/A"
-            }
-          }
-        }
-      ]
-    },
-    {
       "id": 102,
       "title": "WiFi Band Traffic",
       "type": "row",
@@ -348,7 +314,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 4
       }
     },
     {
@@ -363,7 +329,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 10
+        "y": 5
       },
       "targets": [
         {
@@ -470,7 +436,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 10
+        "y": 5
       },
       "targets": [
         {
@@ -574,7 +540,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 13
       }
     },
     {
@@ -589,7 +555,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 19
+        "y": 14
       },
       "targets": [
         {
@@ -697,7 +663,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 19
+        "y": 14
       },
       "targets": [
         {
@@ -770,7 +736,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 22
       }
     },
     {
@@ -785,7 +751,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 28
+        "y": 23
       },
       "targets": [
         {
@@ -861,7 +827,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 28
+        "y": 23
       },
       "targets": [
         {
