@@ -1587,8 +1587,8 @@
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 6,
-        "w": 6,
+        "h": 8,
+        "w": 12,
         "x": 0,
         "y": 44
       },
@@ -1653,9 +1653,9 @@
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 6,
+        "h": 8,
+        "w": 12,
+        "x": 12,
         "y": 44
       },
       "options": {
@@ -1683,8 +1683,7 @@
             "spanNulls": false
           },
           "color": {
-            "mode": "fixed",
-            "fixedColor": "#FADE2A"
+            "mode": "palette-classic"
           },
           "noValue": "N/A"
         }
@@ -1692,7 +1691,7 @@
       "targets": [
         {
           "expr": "vm_request_duration_seconds{job=\"victoriametrics\", quantile=\"0.99\"}",
-          "legendFormat": "p99 Duration",
+          "legendFormat": "{{path}}",
           "refId": "A"
         }
       ]
@@ -1707,10 +1706,10 @@
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 12,
-        "y": 44
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 52
       },
       "options": {
         "showThresholdMarkers": true,
@@ -1751,7 +1750,7 @@
       "targets": [
         {
           "expr": "1 - (rate(vm_cache_misses_total{job=\"victoriametrics\"}[$__rate_interval]) / rate(vm_cache_requests_total{job=\"victoriametrics\"}[$__rate_interval]))",
-          "legendFormat": "Cache Hit Ratio",
+          "legendFormat": "{{type}}",
           "refId": "A"
         }
       ]
@@ -1766,10 +1765,10 @@
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 18,
-        "y": 44
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 52
       },
       "options": {
         "tooltip": {
@@ -1819,7 +1818,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 50
+        "y": 60
       },
       "panels": []
     },
@@ -1835,7 +1834,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 51
+        "y": 61
       },
       "options": {
         "tooltip": {
@@ -1887,7 +1886,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 51
+        "y": 61
       },
       "options": {
         "tooltip": {
