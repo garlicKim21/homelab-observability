@@ -165,7 +165,7 @@
     },
     {
       "id": 3,
-      "title": "System Status",
+      "title": "System Fan",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -179,45 +179,51 @@
       },
       "targets": [
         {
-          "expr": "synology_system_status{device=\"ds1515\"}",
-          "legendFormat": "Status",
+          "expr": "synology_system_fan_status",
+          "legendFormat": "System Fan",
           "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#73BF69",
-                "value": null
-              }
-            ]
-          },
-          "noValue": "N/A",
           "mappings": [
             {
               "type": "value",
               "options": {
-                "1": {
-                  "text": "Normal",
-                  "color": "#73BF69",
+                "0": {
+                  "text": "FAULT",
+                  "color": "#F2495C",
                   "index": 0
                 },
-                "0": {
-                  "text": "Failed",
-                  "color": "#F2495C",
+                "1": {
+                  "text": "OK",
+                  "color": "#73BF69",
                   "index": 1
                 }
               }
             }
-          ]
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#F2495C",
+                "value": null
+              },
+              {
+                "color": "#73BF69",
+                "value": 1
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "noValue": "N/A"
         }
       },
       "options": {
-        "colorMode": "value",
+        "colorMode": "background",
         "graphMode": "none",
         "textMode": "value",
         "justifyMode": "center",
@@ -233,7 +239,7 @@
     },
     {
       "id": 4,
-      "title": "Temperature",
+      "title": "CPU Fan",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -247,30 +253,45 @@
       },
       "targets": [
         {
-          "expr": "synology_system_temperature{job=\"snmp_nas\"}",
-          "legendFormat": "Temperature",
+          "expr": "synology_cpu_fan_status",
+          "legendFormat": "CPU Fan",
           "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "celsius",
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "FAULT",
+                  "color": "#F2495C",
+                  "index": 0
+                },
+                "1": {
+                  "text": "OK",
+                  "color": "#73BF69",
+                  "index": 1
+                }
+              }
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "#73BF69",
+                "color": "#F2495C",
                 "value": null
               },
               {
-                "color": "#FADE2A",
-                "value": 60
-              },
-              {
-                "color": "#F2495C",
-                "value": 75
+                "color": "#73BF69",
+                "value": 1
               }
             ]
+          },
+          "color": {
+            "mode": "thresholds"
           },
           "noValue": "N/A"
         }
