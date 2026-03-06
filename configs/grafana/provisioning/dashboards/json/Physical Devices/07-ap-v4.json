@@ -233,7 +233,7 @@
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
@@ -293,7 +293,7 @@
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
