@@ -1278,61 +1278,206 @@
     },
     {
       "id": 41,
-      "title": "Storage IOPS",
+      "title": "Volume 1 IOPS (HDD)",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 0,
-        "y": 30
+        "y": 39
       },
       "targets": [
         {
-          "expr": "rate(synology_storageio_reads{job=\"snmp_nas\"}[5m])",
-          "legendFormat": "Read - {{storageioDevice}}",
+          "expr": "sum(rate(synology_storageio_reads{storageioDevice=~\"sda|sdb\"}[5m]))",
+          "legendFormat": "Read",
           "refId": "A"
         },
         {
-          "expr": "rate(synology_storageio_writes{job=\"snmp_nas\"}[5m])",
-          "legendFormat": "Write - {{storageioDevice}}",
+          "expr": "-sum(rate(synology_storageio_writes{storageioDevice=~\"sda|sdb\"}[5m]))",
+          "legendFormat": "Write",
           "refId": "B"
         }
       ],
       "fieldConfig": {
         "defaults": {
           "unit": "iops",
-          "custom": {
-            "showPoints": "never",
-            "lineWidth": 2,
-            "fillOpacity": 15,
-            "spanNulls": false
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#5794F2"
           },
-          "noValue": "N/A"
+          "noValue": "0",
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 15,
+            "pointSize": 5,
+            "spanNulls": true,
+            "axisLabel": "Read (+) / Write (-)"
+          }
         },
         "overrides": [
           {
             "matcher": {
-              "id": "byRegexp",
-              "options": "^Read.*"
+              "id": "byName",
+              "options": "Write"
             },
             "properties": [
               {
                 "id": "color",
                 "value": {
                   "mode": "fixed",
-                  "fixedColor": "#73BF69"
+                  "fixedColor": "#B877D9"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [5, 5]
                 }
               }
             ]
+          }
+        ]
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 42,
+      "title": "Volume 2 IOPS (SSD)",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 39
+      },
+      "targets": [
+        {
+          "expr": "sum(rate(synology_storageio_reads{storageioDevice=~\"sdc|sdd|sde\"}[5m]))",
+          "legendFormat": "Read",
+          "refId": "A"
+        },
+        {
+          "expr": "-sum(rate(synology_storageio_writes{storageioDevice=~\"sdc|sdd|sde\"}[5m]))",
+          "legendFormat": "Write",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "iops",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#5794F2"
           },
+          "noValue": "0",
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 15,
+            "pointSize": 5,
+            "spanNulls": true,
+            "axisLabel": "Read (+) / Write (-)"
+          }
+        },
+        "overrides": [
           {
             "matcher": {
-              "id": "byRegexp",
-              "options": "^Write.*"
+              "id": "byName",
+              "options": "Write"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#B877D9"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [5, 5]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 43,
+      "title": "Volume 1 I/O Load (HDD)",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 46
+      },
+      "targets": [
+        {
+          "expr": "avg(synology_storageio_load{storageioDevice=~\"sda|sdb\"})",
+          "legendFormat": "Avg Load",
+          "refId": "A"
+        },
+        {
+          "expr": "max(synology_storageio_load{storageioDevice=~\"sda|sdb\"})",
+          "legendFormat": "Max Load",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#FF9830"
+          },
+          "noValue": "0",
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 20,
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Max Load"
             },
             "properties": [
               {
@@ -1341,73 +1486,111 @@
                   "mode": "fixed",
                   "fixedColor": "#F2495C"
                 }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 5
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [5, 5]
+                }
               }
             ]
           }
         ]
       },
       "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        },
         "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "mean",
-            "max",
-            "lastNotNull"
-          ]
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
         }
       }
     },
     {
-      "id": 42,
-      "title": "Storage I/O Load",
+      "id": 44,
+      "title": "Volume 2 I/O Load (SSD)",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 12,
-        "y": 30
+        "y": 46
       },
       "targets": [
         {
-          "expr": "synology_storageio_load{job=\"snmp_nas\"}",
-          "legendFormat": "{{storageioDevice}}",
+          "expr": "avg(synology_storageio_load{storageioDevice=~\"sdc|sdd|sde\"})",
+          "legendFormat": "Avg Load",
           "refId": "A"
+        },
+        {
+          "expr": "max(synology_storageio_load{storageioDevice=~\"sdc|sdd|sde\"})",
+          "legendFormat": "Max Load",
+          "refId": "B"
         }
       ],
       "fieldConfig": {
         "defaults": {
           "unit": "percent",
-          "custom": {
-            "showPoints": "never",
-            "lineWidth": 2,
-            "fillOpacity": 15,
-            "spanNulls": false
+          "min": 0,
+          "max": 100,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#FF9830"
           },
-          "noValue": "N/A"
-        }
+          "noValue": "0",
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 20,
+            "pointSize": 5,
+            "spanNulls": true
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Max Load"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#F2495C"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 5
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [5, 5]
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        },
         "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": [
-            "mean",
-            "max",
-            "lastNotNull"
-          ]
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
         }
       }
     },
