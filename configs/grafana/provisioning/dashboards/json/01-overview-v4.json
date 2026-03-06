@@ -84,7 +84,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -154,7 +154,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -213,7 +213,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -283,7 +283,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -293,7 +293,7 @@
     },
     {
       "id": 6,
-      "title": "Switch",
+      "title": "SG2218",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -308,7 +308,7 @@
       "targets": [
         {
           "expr": "up{job=\"snmp_switch\"}",
-          "legendFormat": "Switch",
+          "legendFormat": "SG2218",
           "refId": "A"
         }
       ],
@@ -353,7 +353,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -363,7 +363,7 @@
     },
     {
       "id": 7,
-      "title": "AP",
+      "title": "AX3000BMC",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -378,7 +378,7 @@
       "targets": [
         {
           "expr": "up{job=\"snmp_ap\"}",
-          "legendFormat": "AP",
+          "legendFormat": "AX3000BMC",
           "refId": "A"
         }
       ],
@@ -423,7 +423,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -493,7 +493,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -563,7 +563,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1509,7 +1509,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1663,7 +1663,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1713,7 +1713,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1784,7 +1784,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1838,7 +1838,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1910,7 +1910,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1982,7 +1982,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -2045,7 +2045,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -2099,7 +2099,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -2157,7 +2157,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -2215,7 +2215,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -2651,7 +2651,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -2721,7 +2721,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -2864,7 +2864,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -3368,7 +3368,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
