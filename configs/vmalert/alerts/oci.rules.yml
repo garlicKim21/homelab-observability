@@ -18,13 +18,13 @@ groups:
           description: "OCI 인스턴스가 2분 이상 응답하지 않습니다. VPN 연결 또는 인스턴스 상태를 확인하세요."
 
       - alert: OCIDiskAlmostFull
-        expr: (1 - node_filesystem_avail_bytes{job="oci_node", mountpoint="/"} / node_filesystem_size_bytes{job="oci_node", mountpoint="/"}) * 100 > 90
+        expr: (1 - node_filesystem_avail_bytes{job="oci_node", mountpoint="/"} / node_filesystem_size_bytes{job="oci_node", mountpoint="/"}) * 100 > 95
         for: 5m
         labels:
           severity: critical
           device_type: cloud
         annotations:
-          summary: "OCI 루트 디스크 사용률 90% 초과"
+          summary: "OCI 루트 디스크 사용률 95% 초과"
           description: "루트 파티션(/) 사용률: {{ $value | printf \"%.1f\" }}%. 시스템 로그/패키지 정리가 필요할 수 있습니다."
 
       - alert: OCIDataDiskAlmostFull
@@ -61,13 +61,13 @@ groups:
           description: "메모리 사용률: {{ $value | printf \"%.1f\" }}%. 컨테이너 리소스 제한을 확인하세요."
 
       - alert: OCIDiskWarning
-        expr: (1 - node_filesystem_avail_bytes{job="oci_node", mountpoint="/"} / node_filesystem_size_bytes{job="oci_node", mountpoint="/"}) * 100 > 75
+        expr: (1 - node_filesystem_avail_bytes{job="oci_node", mountpoint="/"} / node_filesystem_size_bytes{job="oci_node", mountpoint="/"}) * 100 > 90
         for: 5m
         labels:
           severity: warning
           device_type: cloud
         annotations:
-          summary: "OCI 루트 디스크 사용률 75% 초과"
+          summary: "OCI 루트 디스크 사용률 90% 초과"
           description: "루트 파티션(/) 사용률: {{ $value | printf \"%.1f\" }}%."
 
       - alert: OCIDataDiskWarning

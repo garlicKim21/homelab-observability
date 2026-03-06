@@ -135,6 +135,17 @@ echo "=== Docker Compose Up ==="
 docker compose up -d
 echo ""
 
+# ---- vmalert 규칙 리로드 ----
+echo "=== vmalert 규칙 리로드 ==="
+if curl -s -o /dev/null -w "%{http_code}" -X POST http://localhost:8880/-/reload | grep -q "204"; then
+  echo "  [OK] vmalert 규칙 리로드 완료"
+else
+  echo "  [WARN] vmalert 리로드 실패 (서비스 시작 중일 수 있음, 재시도)"
+  sleep 3
+  curl -s -X POST http://localhost:8880/-/reload && echo "  [OK] 재시도 성공" || echo "  [WARN] 재시도 실패"
+fi
+echo ""
+
 # ---- 상태 확인 ----
 echo "=== 컨테이너 상태 ==="
 docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | head -20
