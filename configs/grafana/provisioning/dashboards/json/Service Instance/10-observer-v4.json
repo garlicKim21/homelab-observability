@@ -243,7 +243,7 @@
       },
       "targets": [
         {
-          "expr": "vm_rows{type=\"storage/small\"}",
+          "expr": "vm_cache_entries{type=\"storage/hour_metric_ids\"}",
           "legendFormat": "__auto",
           "refId": "A"
         }
