@@ -223,7 +223,7 @@
     },
     {
       "id": 5,
-      "title": "NAS",
+      "title": "DS1515+",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -238,7 +238,7 @@
       "targets": [
         {
           "expr": "up{job=\"snmp_nas\"}",
-          "legendFormat": "NAS",
+          "legendFormat": "DS1515+",
           "refId": "A"
         }
       ],
@@ -934,7 +934,7 @@
     },
     {
       "id": 57,
-      "title": "NAS CPU",
+      "title": "DS1515+ CPU",
       "type": "gauge",
       "datasource": {
         "type": "prometheus",
@@ -992,7 +992,7 @@
     },
     {
       "id": 58,
-      "title": "NAS MEM",
+      "title": "DS1515+ MEM",
       "type": "gauge",
       "datasource": {
         "type": "prometheus",
@@ -1050,7 +1050,7 @@
     },
     {
       "id": 59,
-      "title": "Switch CPU",
+      "title": "SG2218 CPU",
       "type": "gauge",
       "datasource": {
         "type": "prometheus",
@@ -1108,7 +1108,7 @@
     },
     {
       "id": 60,
-      "title": "Switch MEM",
+      "title": "SG2218 MEM",
       "type": "gauge",
       "datasource": {
         "type": "prometheus",
@@ -1166,7 +1166,7 @@
     },
     {
       "id": 61,
-      "title": "Ratatosk CPU",
+      "title": "Ratatosk.io CPU",
       "type": "gauge",
       "datasource": {
         "type": "prometheus",
@@ -1224,7 +1224,7 @@
     },
     {
       "id": 62,
-      "title": "Ratatosk MEM",
+      "title": "Ratatosk.io MEM",
       "type": "gauge",
       "datasource": {
         "type": "prometheus",
