@@ -59,13 +59,13 @@ groups:
           description: "데이터 쓰기 지연이 발생하고 있습니다 ({{ $value | printf \"%.1f\" }}/s). 디스크 I/O 또는 리소스 부족 확인 필요."
 
       - alert: VMTooManyTimeSeries
-        expr: vm_rows{type="storage/small"} > 5000000
+        expr: vm_cache_entries{type="storage/metricName"} > 50000
         for: 10m
         labels:
           severity: info
         annotations:
-          summary: "VictoriaMetrics 시계열 수가 많습니다"
-          description: "현재 {{ $value | printf \"%.0f\" }}개 시계열. 홈랩 규모 대비 과도할 수 있음."
+          summary: "VictoriaMetrics 활성 시계열 수가 많습니다"
+          description: "현재 {{ $value | printf \"%.0f\" }}개 활성 시계열. 홈랩 규모(정상 ~1000) 대비 과도할 수 있음. 불필요한 scrape 대상이나 high-cardinality 레이블을 점검하세요."
 
       # -----------------------------------------------------------------------
       # Scrape 실패 감지
