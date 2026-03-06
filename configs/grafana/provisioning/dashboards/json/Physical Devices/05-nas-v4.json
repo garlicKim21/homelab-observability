@@ -838,7 +838,7 @@
       },
       "targets": [
         {
-          "expr": "(1 - synology_raid_free_size{job=\"snmp_nas\", raidName=~\"Volume.*\"} / synology_raid_total_size{job=\"snmp_nas\", raidName=~\"Volume.*\"}) * 100",
+          "expr": "sort_by_label((1 - synology_raid_free_size{job=\"snmp_nas\", raidName=~\"Volume.*\"} / synology_raid_total_size{job=\"snmp_nas\", raidName=~\"Volume.*\"}) * 100, \"raidName\")",
           "legendFormat": "{{raidName}}",
           "refId": "A"
         }
@@ -895,7 +895,7 @@
       },
       "targets": [
         {
-          "expr": "(1 - synology_raid_free_size{job=\"snmp_nas\", raidName=~\"Volume.*\"} / synology_raid_total_size{job=\"snmp_nas\", raidName=~\"Volume.*\"}) * 100",
+          "expr": "sort_by_label((1 - synology_raid_free_size{job=\"snmp_nas\", raidName=~\"Volume.*\"} / synology_raid_total_size{job=\"snmp_nas\", raidName=~\"Volume.*\"}) * 100, \"raidName\")",
           "legendFormat": "{{raidName}}",
           "refId": "A"
         }
