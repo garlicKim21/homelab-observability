@@ -386,7 +386,7 @@
       },
       "targets": [
         {
-          "expr": "synology_raid_status{job=\"snmp_nas\", raidName=~\"Volume.*\"}",
+          "expr": "sort_by_label(synology_raid_status{job=\"snmp_nas\", raidName=~\"Volume.*\"}, \"raidName\")",
           "legendFormat": "{{raidName}}",
           "refId": "A"
         }
