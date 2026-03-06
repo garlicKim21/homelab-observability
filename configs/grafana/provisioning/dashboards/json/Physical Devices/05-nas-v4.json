@@ -560,7 +560,7 @@
       },
       "targets": [
         {
-          "expr": "(1 - synology_memory_available{job=\"snmp_nas\"} / synology_memory_total{job=\"snmp_nas\"}) * 100",
+          "expr": "(synology_memory_total{job=\"snmp_nas\"} - synology_memory_available{job=\"snmp_nas\"} - synology_memory_cached{job=\"snmp_nas\"} - synology_memory_buffer{job=\"snmp_nas\"}) / synology_memory_total{job=\"snmp_nas\"} * 100",
           "legendFormat": "Memory",
           "refId": "A"
         }
