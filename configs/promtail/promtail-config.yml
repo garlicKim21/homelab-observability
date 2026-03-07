@@ -79,18 +79,19 @@ scrape_configs:
                 device_type:
 
   # =========================================================================
-  # Syslog Receiver (UDP) - ESXi 등 UDP만 지원하는 장비용
+  # Syslog Receiver (TCP:1515) - rsyslog 릴레이 경유 ESXi 로그
+  # ESXi → rsyslog (RFC 3164→5424 변환) → Promtail
   # =========================================================================
-  - job_name: syslog_udp
+  - job_name: syslog_esxi
     syslog:
-      listen_address: 0.0.0.0:1514
-      listen_protocol: udp
+      listen_address: 0.0.0.0:1515
+      listen_protocol: tcp
+      idle_timeout: 60s
+      label_structured_data: true
       labels:
         job: "syslog"
-        transport: "udp"
+        device_type: "esxi"
     relabel_configs:
-      - source_labels: ["__syslog_connection_ip_address"]
-        target_label: "host_ip"
       - source_labels: ["__syslog_message_hostname"]
         target_label: "host"
       - source_labels: ["__syslog_message_facility"]
@@ -99,34 +100,3 @@ scrape_configs:
         target_label: "severity"
       - source_labels: ["__syslog_message_app_name"]
         target_label: "app"
-    pipeline_stages:
-      - match:
-          selector: '{host_ip=~"<FIREWALL_IP_1>|<FIREWALL_IP_2>|<FIREWALL_IP_3>"}'  # 방화벽 IP로 교체
-          stages:
-            - labels:
-                device_type: ""
-            - template:
-                source: device_type
-                template: "firewall"
-            - labels:
-                device_type:
-      - match:
-          selector: '{host_ip=~"<ESXI_IP_PATTERN>"}'  # ESXi 호스트 IP 패턴으로 교체
-          stages:
-            - labels:
-                device_type: ""
-            - template:
-                source: device_type
-                template: "esxi"
-            - labels:
-                device_type:
-      - match:
-          selector: '{host_ip="<NAS_IP>"}'  # NAS IP로 교체
-          stages:
-            - labels:
-                device_type: ""
-            - template:
-                source: device_type
-                template: "nas"
-            - labels:
-                device_type:

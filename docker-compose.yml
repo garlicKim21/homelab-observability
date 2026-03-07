@@ -224,13 +224,29 @@ services:
       loki:
         condition: service_healthy
     ports:
-      - "1514:1514/tcp"    # Syslog TCP
-      - "1514:1514/udp"    # Syslog UDP
+      - "1514:1514/tcp"    # Syslog TCP (OPNsense 등 RFC 5424)
       - "9080:9080"        # Promtail HTTP (status/metrics)
     volumes:
       - ./configs/promtail/promtail-config.yml:/etc/promtail/config.yml:ro
     command:
       - "-config.file=/etc/promtail/config.yml"
+    networks:
+      - monitoring
+
+  # ---------------------------------------------------------------------------
+  # rsyslog - RFC 3164 → RFC 5424 변환 릴레이
+  # ESXi syslog (BSD format)을 Promtail이 파싱 가능한 형식으로 변환
+  # ---------------------------------------------------------------------------
+  rsyslog:
+    build: ./configs/rsyslog
+    container_name: rsyslog
+    restart: unless-stopped
+    mem_limit: 64m
+    cpus: 0.1
+    depends_on:
+      - promtail
+    ports:
+      - "1514:1514/udp"    # Syslog UDP (ESXi)
     networks:
       - monitoring
 
