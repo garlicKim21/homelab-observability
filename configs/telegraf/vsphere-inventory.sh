@@ -17,7 +17,7 @@ export GOVC_PASSWORD="${VCENTER_PASSWORD}"
 export GOVC_INSECURE=true
 
 # --- VM 메트릭 ---
-vm_paths=$(govc find / -type m 2>/dev/null || true)
+mapfile -t vm_arr < <(govc find / -type m 2>/dev/null || true)
 vm_total=0
 powered_on=0
 powered_off=0
@@ -25,9 +25,9 @@ vm_templates=0
 snapshot_total=0
 snapshot_lines=""
 
-if [[ -n "$vm_paths" ]]; then
-  # govc vm.info -json accepts multiple paths
-  vm_info=$(govc vm.info -json $vm_paths 2>/dev/null || echo '{}')
+if [[ ${#vm_arr[@]} -gt 0 ]]; then
+  # govc vm.info -json accepts multiple paths (quoted to handle spaces)
+  vm_info=$(govc vm.info -json "${vm_arr[@]}" 2>/dev/null || echo '{}')
 
   # Count VMs excluding templates (config.template == true)
   vm_total=$(echo "$vm_info" | jq '[.virtualMachines[] | select(.config.template != true)] | length' 2>/dev/null || echo 0)
