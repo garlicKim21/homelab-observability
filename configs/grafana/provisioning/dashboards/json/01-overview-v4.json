@@ -2008,7 +2008,7 @@
       "title": "Total VMs",
       "type": "stat",
       "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 36 },
+      "gridPos": { "h": 4, "w": 5, "x": 0, "y": 36 },
       "targets": [{ "expr": "vsphere_inventory_vm_total_value", "legendFormat": "Total VMs", "refId": "A" }],
       "fieldConfig": { "defaults": {
         "unit": "short",
@@ -2022,7 +2022,7 @@
       "title": "VMs Running",
       "type": "stat",
       "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 36 },
+      "gridPos": { "h": 4, "w": 5, "x": 5, "y": 36 },
       "targets": [{ "expr": "vsphere_inventory_vm_powered_on_value", "legendFormat": "VMs Running", "refId": "A" }],
       "fieldConfig": { "defaults": {
         "unit": "short",
@@ -2036,7 +2036,7 @@
       "title": "VMs Stopped",
       "type": "stat",
       "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 36 },
+      "gridPos": { "h": 4, "w": 5, "x": 10, "y": 36 },
       "targets": [{ "expr": "vsphere_inventory_vm_powered_off_value", "legendFormat": "VMs Stopped", "refId": "A" }],
       "fieldConfig": { "defaults": {
         "unit": "short",
@@ -2046,11 +2046,26 @@
       "options": { "colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": { "calcs": ["lastNotNull"] } }
     },
     {
+      "id": 27,
+      "title": "vMotion (1h)",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "gridPos": { "h": 4, "w": 5, "x": 15, "y": 36 },
+      "targets": [{ "expr": "increase(vsphere_inventory_cluster_vmotion_total_value[1h])", "legendFormat": "vMotion", "refId": "A" }],
+      "fieldConfig": { "defaults": {
+        "unit": "short",
+        "decimals": 0,
+        "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#5794F2", "value": 1 }, { "color": "#FADE2A", "value": 5 }] },
+        "color": { "mode": "thresholds" }, "noValue": "0"
+      }},
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
       "id": 26,
       "title": "VM Snapshots",
       "type": "stat",
       "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 36 },
+      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 36 },
       "targets": [{ "expr": "vsphere_inventory_vm_snapshot_total_value", "legendFormat": "Snapshots", "refId": "A" }],
       "fieldConfig": { "defaults": {
         "unit": "short",
