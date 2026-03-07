@@ -80,7 +80,7 @@ scrape_configs:
 
   # =========================================================================
   # Syslog Receiver (TCP:1515) - rsyslog 릴레이 경유 ESXi 로그
-  # ESXi → rsyslog (RFC 3164→5424 변환) → Promtail
+  # ESXi (RFC 3164) → rsyslog (RFC 5424 변환) → Promtail
   # =========================================================================
   - job_name: syslog_esxi
     syslog:
