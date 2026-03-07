@@ -9,17 +9,16 @@ VictoriaMetrics, Grafana 11, Loki, Promtail, vmalert, Alertmanager, Docker Compo
 ## Deploy Target
 
 ```bash
-# SSH 접속 (.env의 MONITORING_VM_IP 참조)
+# SSH 접속
 ssh -i ~/.ssh/<your-key> <user>@<MONITORING_VM_IP>
 
-# 전체 배포
-rsync -avz -e "ssh -i ~/.ssh/<your-key>" \
-  configs/ <user>@<MONITORING_VM_IP>:~/basphere-observability/configs/
-
-# Grafana 재시작
+# 배포 워크플로우: git push → 서버에서 deploy.sh
+git push
 ssh -i ~/.ssh/<your-key> <user>@<MONITORING_VM_IP> \
-  "cd ~/basphere-observability && docker compose restart grafana"
+  "cd ~/basphere-observability && ./deploy.sh"
 ```
+
+`deploy.sh`: git pull → Python 플레이스홀더 치환 → docker compose up -d → vmalert reload
 
 ## Project Structure
 

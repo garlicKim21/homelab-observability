@@ -27,30 +27,24 @@ Grafana provisioning을 통해 자동 로드됨 (`dashboards.yml` 설정).
 
 1. **로컬에서 JSON 편집**
    ```bash
-   vi configs/grafana/provisioning/dashboards/json/01-overview.json
+   vi configs/grafana/provisioning/dashboards/json/01-overview-v4.json
    ```
 
-2. **rsync로 서버 배포**
+2. **Git push → 서버 배포**
    ```bash
-   rsync -avz -e "ssh -i ~/.ssh/<your-key>" \
-     configs/grafana/provisioning/dashboards/json/ \
-     <user>@<MONITORING_VM_IP>:~/basphere-observability/configs/grafana/provisioning/dashboards/json/
+   git add -A && git commit -m "Update dashboard" && git push
+   ssh -i ~/.ssh/<your-key> <user>@<MONITORING_VM_IP> "cd ~/basphere-observability && ./deploy.sh"
    ```
+   `deploy.sh`가 자동으로 git pull → 플레이스홀더 치환 → docker compose up -d → vmalert reload 수행.
 
-3. **Grafana 재시작**
-   ```bash
-   ssh -i ~/.ssh/<your-key> <user>@<MONITORING_VM_IP> \
-     "cd ~/basphere-observability && docker compose restart grafana"
-   ```
-
-4. **브라우저에서 확인**
+3. **브라우저에서 확인**
    - `https://grafana.basphere.dev/d/<UID>` 접속하여 변경사항 확인
 
 ## 데이터소스 / Job 이름 매핑
 
 | 데이터소스 | Job 이름 | Exporter | 용도 |
 |-----------|---------|----------|------|
-| VictoriaMetrics | `vmware` | vmware_exporter (:9272) | ESXi/VM 메트릭 |
+| VictoriaMetrics | (push) | Telegraf vSphere → InfluxDB protocol (:8089) | ESXi/VM/Datastore 메트릭 |
 | VictoriaMetrics | `snmp_switch` | snmp_exporter (:9116) | SG2218 스위치 |
 | VictoriaMetrics | `snmp_nas` | snmp_exporter (:9116) | Synology NAS |
 | VictoriaMetrics | `snmp_ap` | snmp_exporter (:9116) | ipTime AP |
@@ -58,7 +52,7 @@ Grafana provisioning을 통해 자동 로드됨 (`dashboards.yml` 설정).
 | VictoriaMetrics | `blackbox_http` | blackbox_exporter (:9115) | 외부 HTTP 프로빙 (ratatosk.io, umami) |
 | VictoriaMetrics | `blackbox_internal` | blackbox_exporter (:9115) | 내부 HTTP 프로빙 (VPN 경유) |
 | VictoriaMetrics | `oci_node` | node_exporter (:9100) | OCI 인스턴스 시스템 메트릭 |
-| VictoriaMetrics | `oci_cadvisor` | cadvisor (:8085) | OCI 컨테이너 CPU/Memory |
+| VictoriaMetrics | `oci_cadvisor` | cadvisor (:8080) | OCI 컨테이너 CPU/Memory |
 | VictoriaMetrics | `oci_postgres` | postgres_exporter (:9187) | OCI PostgreSQL 메트릭 |
 | VictoriaMetrics | `observer_node` | node_exporter (:9100) | Observer 서버 |
 | Loki | - | promtail (:1514) | syslog 수신 |
