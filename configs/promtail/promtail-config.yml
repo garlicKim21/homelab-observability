@@ -79,10 +79,10 @@ scrape_configs:
                 device_type:
 
   # =========================================================================
-  # Syslog Receiver (TCP:1515) - rsyslog 릴레이 경유 ESXi 로그
-  # ESXi (RFC 3164) → rsyslog (RFC 5424 변환) → Promtail
+  # Syslog Receiver (TCP:1515) - rsyslog 릴레이 경유
+  # ESXi/vCenter (RFC 3164) → rsyslog (RFC 5424 변환) → Promtail
   # =========================================================================
-  - job_name: syslog_esxi
+  - job_name: syslog_relay
     syslog:
       listen_address: 0.0.0.0:1515
       listen_protocol: tcp
@@ -90,7 +90,6 @@ scrape_configs:
       label_structured_data: true
       labels:
         job: "syslog"
-        device_type: "esxi"
     relabel_configs:
       - source_labels: ["__syslog_message_hostname"]
         target_label: "host"
@@ -100,3 +99,21 @@ scrape_configs:
         target_label: "severity"
       - source_labels: ["__syslog_message_app_name"]
         target_label: "app"
+    pipeline_stages:
+      # hostname 기반 device_type 분류
+      - match:
+          selector: '{host=~"esxi.*"}'
+          stages:
+            - template:
+                source: device_type
+                template: "esxi"
+            - labels:
+                device_type:
+      - match:
+          selector: '{host="vcsa"}'
+          stages:
+            - template:
+                source: device_type
+                template: "vcenter"
+            - labels:
+                device_type:
