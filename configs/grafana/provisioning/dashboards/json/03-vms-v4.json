@@ -32,13 +32,13 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 6,
+        "w": 8,
         "x": 0,
         "y": 1
       },
       "targets": [
         {
-          "expr": "count(vmware_vm_power_state == 1)",
+          "expr": "count(vsphere_vm_sys_uptime_latest > 0)",
           "legendFormat": "Running",
           "refId": "A"
         }
@@ -69,6 +69,7 @@
         "colorMode": "background",
         "graphMode": "none",
         "textMode": "value_and_name",
+        "justifyMode": "center",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -78,60 +79,6 @@
     },
     {
       "id": 3,
-      "title": "VMs Stopped",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 6,
-        "x": 6,
-        "y": 1
-      },
-      "targets": [
-        {
-          "expr": "count(vmware_vm_power_state == 0)",
-          "legendFormat": "Stopped",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#73BF69",
-                "value": null
-              },
-              {
-                "color": "#FADE2A",
-                "value": 1
-              }
-            ]
-          },
-          "color": {
-            "mode": "thresholds"
-          },
-          "unit": "short",
-          "noValue": "0"
-        }
-      },
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value_and_name",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
-      }
-    },
-    {
-      "id": 4,
       "title": "Total VMs",
       "type": "stat",
       "datasource": {
@@ -140,13 +87,13 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 6,
-        "x": 12,
+        "w": 8,
+        "x": 8,
         "y": 1
       },
       "targets": [
         {
-          "expr": "count(vmware_vm_power_state)",
+          "expr": "count(vsphere_vm_sys_uptime_latest)",
           "legendFormat": "Total VMs",
           "refId": "A"
         }
@@ -173,6 +120,7 @@
         "colorMode": "background",
         "graphMode": "none",
         "textMode": "value_and_name",
+        "justifyMode": "center",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -181,28 +129,31 @@
       }
     },
     {
-      "id": 5,
-      "title": "VM Snapshots",
-      "type": "stat",
+      "id": 4,
+      "title": "Avg VM CPU",
+      "type": "gauge",
       "datasource": {
         "type": "prometheus",
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
         "h": 3,
-        "w": 6,
-        "x": 18,
+        "w": 4,
+        "x": 16,
         "y": 1
       },
       "targets": [
         {
-          "expr": "sum(vmware_vm_snapshots)",
-          "legendFormat": "Snapshots",
+          "expr": "avg(vsphere_vm_cpu_usage_average)",
+          "legendFormat": "Avg CPU",
           "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -212,25 +163,80 @@
               },
               {
                 "color": "#FADE2A",
-                "value": 5
+                "value": 70
               },
               {
                 "color": "#F2495C",
-                "value": 20
+                "value": 85
               }
             ]
           },
           "color": {
             "mode": "thresholds"
           },
-          "unit": "short",
-          "noValue": "0"
+          "noValue": "N/A"
         }
       },
       "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value_and_name",
+        "showThresholdMarkers": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 5,
+      "title": "Avg VM MEM",
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 20,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "avg(vsphere_vm_mem_usage_average)",
+          "legendFormat": "Avg MEM",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 75
+              },
+              {
+                "color": "#F2495C",
+                "value": 90
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "showThresholdMarkers": true,
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -267,8 +273,8 @@
       },
       "targets": [
         {
-          "expr": "topk(10, vmware_vm_cpu_usage_average)",
-          "legendFormat": "{{ vm_name }}",
+          "expr": "topk(10, vsphere_vm_cpu_usagemhz_average)",
+          "legendFormat": "{{ vmname }}",
           "refId": "A"
         }
       ],
@@ -325,14 +331,14 @@
       },
       "targets": [
         {
-          "expr": "topk(10, vmware_vm_cpu_usage_average)",
-          "legendFormat": "{{ vm_name }}",
+          "expr": "topk(10, vsphere_vm_cpu_usage_average)",
+          "legendFormat": "{{ vmname }}",
           "refId": "A"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "MHz",
+          "unit": "percent",
           "custom": {
             "showPoints": "never",
             "spanNulls": false,
@@ -387,8 +393,8 @@
       },
       "targets": [
         {
-          "expr": "topk(10, vmware_vm_mem_usage_average)",
-          "legendFormat": "{{ vm_name }}",
+          "expr": "topk(10, vsphere_vm_mem_usage_average)",
+          "legendFormat": "{{ vmname }}",
           "refId": "A"
         }
       ],
@@ -447,8 +453,8 @@
       },
       "targets": [
         {
-          "expr": "topk(10, vmware_vm_mem_usage_average)",
-          "legendFormat": "{{ vm_name }}",
+          "expr": "topk(10, vsphere_vm_mem_usage_average)",
+          "legendFormat": "{{ vmname }}",
           "refId": "A"
         }
       ],
@@ -509,8 +515,8 @@
       },
       "targets": [
         {
-          "expr": "topk(10, vmware_vm_disk_read_average)",
-          "legendFormat": "{{ vm_name }}",
+          "expr": "topk(10, vsphere_vm_disk_read_average)",
+          "legendFormat": "{{ vmname }}",
           "refId": "A"
         }
       ],
@@ -567,8 +573,8 @@
       },
       "targets": [
         {
-          "expr": "topk(10, vmware_vm_disk_write_average)",
-          "legendFormat": "{{ vm_name }}",
+          "expr": "topk(10, vsphere_vm_disk_write_average)",
+          "legendFormat": "{{ vmname }}",
           "refId": "A"
         }
       ],
@@ -638,8 +644,8 @@
       },
       "targets": [
         {
-          "expr": "topk(10, vmware_vm_net_received_average)",
-          "legendFormat": "{{ vm_name }}",
+          "expr": "topk(10, vsphere_vm_net_received_average)",
+          "legendFormat": "{{ vmname }}",
           "refId": "A"
         }
       ],
@@ -696,8 +702,8 @@
       },
       "targets": [
         {
-          "expr": "topk(10, vmware_vm_net_transmitted_average)",
-          "legendFormat": "{{ vm_name }}",
+          "expr": "topk(10, vsphere_vm_net_transmitted_average)",
+          "legendFormat": "{{ vmname }}",
           "refId": "A"
         }
       ],
@@ -737,79 +743,6 @@
           ]
         }
       }
-    },
-    {
-      "id": 50,
-      "title": "Guest Disk Usage",
-      "type": "row",
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 40
-      },
-      "panels": []
-    },
-    {
-      "id": 51,
-      "title": "Top 10 VMs by Guest Disk Usage",
-      "type": "bargauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 41
-      },
-      "targets": [
-        {
-          "expr": "topk(10, (vmware_vm_guest_disk_capacity - vmware_vm_guest_disk_free) / vmware_vm_guest_disk_capacity * 100)",
-          "legendFormat": "{{ vm_name }} - {{ disk_path }}",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#73BF69",
-                "value": null
-              },
-              {
-                "color": "#FADE2A",
-                "value": 75
-              },
-              {
-                "color": "#F2495C",
-                "value": 90
-              }
-            ]
-          },
-          "color": {
-            "mode": "thresholds"
-          },
-          "noValue": "N/A"
-        }
-      },
-      "options": {
-        "orientation": "horizontal",
-        "displayMode": "gradient",
-        "showUnfilled": true,
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
-      }
     }
   ],
   "refresh": "30s",
@@ -817,7 +750,7 @@
   "tags": [
     "homelab",
     "vm",
-    "vmware",
+    "vsphere",
     "v4"
   ],
   "templating": {

@@ -1,7 +1,7 @@
 # =============================================================================
 # Basphere Observability - Docker Compose
 # Phase 1: Core Stack (VictoriaMetrics + vmalert + Alertmanager + Grafana)
-# Phase 2: ESXi Monitoring (vmware_exporter → vCenter API)
+# Phase 2: ESXi Monitoring (Telegraf vSphere → vCenter API)
 # Phase 4: Network Devices (snmp_exporter → SG2218, NAS, AP)
 # Phase 5: Log Aggregation (Loki + Promtail syslog receiver)
 # =============================================================================
@@ -133,33 +133,6 @@ services:
       interval: 30s
       timeout: 5s
       retries: 3
-    networks:
-      - monitoring
-
-  # ---------------------------------------------------------------------------
-  # vmware_exporter - vCenter/ESXi 메트릭 수집 (Phase 2)
-  # vSphere API를 통해 vCenter에서 ESXi 6대 전체 메트릭 수집
-  # ---------------------------------------------------------------------------
-  vmware_exporter:
-    image: pryorda/vmware_exporter:v0.18.4
-    container_name: vmware_exporter
-    restart: unless-stopped
-    mem_limit: 512m
-    cpus: 0.5
-    ports:
-      - "9272:9272"
-    environment:
-      - VSPHERE_HOST=${VCENTER_HOST:-vcsa.basphere.local}
-      - VSPHERE_USER=${VCENTER_USER:?Set VCENTER_USER in .env}
-      - VSPHERE_PASSWORD=${VCENTER_PASSWORD:?Set VCENTER_PASSWORD in .env}
-      - VSPHERE_IGNORE_SSL=True
-      - VSPHERE_SPECS_SIZE=2000
-      # 수집 대상 선택
-      - VSPHERE_COLLECT_HOSTS=True
-      - VSPHERE_COLLECT_DATASTORES=True
-      - VSPHERE_COLLECT_VMS=True
-      - VSPHERE_COLLECT_VMGUESTS=True
-      - VSPHERE_COLLECT_SNAPSHOTS=True
     networks:
       - monitoring
 
@@ -311,8 +284,8 @@ services:
       - monitoring
 
   # ---------------------------------------------------------------------------
-  # Telegraf - vSphere 데이터스토어 성능 메트릭 보완 수집
-  # vmware_exporter가 수집하지 않는 호스트별 datastore latency
+  # Telegraf - vSphere 전체 메트릭 수집 (vmware_exporter 대체)
+  # vCenter API를 통해 호스트/VM/데이터스토어 메트릭 수집
   # ---------------------------------------------------------------------------
   telegraf:
     image: telegraf:1.37.3

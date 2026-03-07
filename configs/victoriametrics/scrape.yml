@@ -37,18 +37,6 @@ scrape_configs:
           instance: "grafana"
 
   # =========================================================================
-  # Phase 2: vmware_exporter (vCenter/ESXi)
-  # =========================================================================
-  - job_name: "vmware"
-    scrape_interval: 60s
-    scrape_timeout: 50s
-    metrics_path: /metrics
-    static_configs:
-      - targets: ["vmware_exporter:9272"]
-        labels:
-          instance: "vcenter"
-
-  # =========================================================================
   # Phase 3: OPNsense 모니터링
   # opnsense-exporter: 방화벽, 게이트웨이, DNS, VPN 등 (OPNsense API)
   # node_exporter: CPU, 메모리, 디스크, 네트워크 (OPNsense 플러그인)

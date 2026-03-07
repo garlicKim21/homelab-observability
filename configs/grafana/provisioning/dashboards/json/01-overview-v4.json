@@ -108,7 +108,7 @@
       },
       "targets": [
         {
-          "expr": "up{job=\"vmware\"}",
+          "expr": "clamp_max(count(vsphere_host_sys_uptime_latest), 1)",
           "legendFormat": "vCenter",
           "refId": "A"
         }
@@ -178,7 +178,7 @@
       },
       "targets": [
         {
-          "expr": "count(vmware_host_power_state == 1)",
+          "expr": "count(vsphere_host_sys_uptime_latest > 0)",
           "legendFormat": "ESXi Hosts",
           "refId": "A"
         }
@@ -716,7 +716,7 @@
       },
       "targets": [
         {
-          "expr": "vmware_vm_cpu_usage_average{vm_name=\"VMware vCenter Server\"} / 100",
+          "expr": "vsphere_vm_cpu_usage_average{vmname=\"VMware vCenter Server\"}",
           "legendFormat": "vCenter CPU",
           "refId": "A"
         }
@@ -774,7 +774,7 @@
       },
       "targets": [
         {
-          "expr": "vmware_vm_mem_usage_average{vm_name=\"VMware vCenter Server\"} / 100",
+          "expr": "vsphere_vm_mem_usage_average{vmname=\"VMware vCenter Server\"}",
           "legendFormat": "vCenter MEM",
           "refId": "A"
         }
@@ -832,7 +832,7 @@
       },
       "targets": [
         {
-          "expr": "sum(vmware_host_cpu_usage) / sum(vmware_host_cpu_max) * 100",
+          "expr": "avg(vsphere_host_cpu_usage_average)",
           "legendFormat": "vSphere Cluster CPU",
           "refId": "A"
         }
@@ -890,7 +890,7 @@
       },
       "targets": [
         {
-          "expr": "sum(vmware_host_memory_usage) / sum(vmware_host_memory_max) * 100",
+          "expr": "avg(vsphere_host_mem_usage_average)",
           "legendFormat": "vSphere Cluster MEM",
           "refId": "A"
         }
@@ -2019,7 +2019,7 @@
       },
       "targets": [
         {
-          "expr": "count(vmware_vm_power_state)",
+          "expr": "count(vsphere_vm_sys_uptime_latest)",
           "legendFormat": "Total VMs",
           "refId": "A"
         }
@@ -2069,7 +2069,7 @@
       },
       "targets": [
         {
-          "expr": "count(vmware_vm_power_state == 1)",
+          "expr": "count(vsphere_vm_sys_uptime_latest > 0)",
           "legendFormat": "Running",
           "refId": "A"
         }
@@ -2123,7 +2123,7 @@
       },
       "targets": [
         {
-          "expr": "count(vmware_vm_power_state == 0)",
+          "expr": "count(vsphere_vm_sys_uptime_latest) - count(vsphere_vm_sys_uptime_latest > 0)",
           "legendFormat": "Stopped",
           "refId": "A"
         }
@@ -2181,7 +2181,7 @@
       },
       "targets": [
         {
-          "expr": "count(vmware_vm_snapshots > 0) or vector(0)",
+          "expr": "vector(0)",
           "legendFormat": "Snapshots",
           "refId": "A"
         }
@@ -2239,8 +2239,8 @@
       },
       "targets": [
         {
-          "expr": "vmware_host_cpu_usage / vmware_host_cpu_max * 100",
-          "legendFormat": "{{host_name}}",
+          "expr": "vsphere_host_cpu_usage_average",
+          "legendFormat": "{{esxhostname}}",
           "refId": "A"
         }
       ],
@@ -2297,8 +2297,8 @@
       },
       "targets": [
         {
-          "expr": "vmware_host_memory_usage / vmware_host_memory_max * 100",
-          "legendFormat": "{{host_name}}",
+          "expr": "vsphere_host_mem_usage_average",
+          "legendFormat": "{{esxhostname}}",
           "refId": "A"
         }
       ],
@@ -3231,17 +3231,17 @@
       },
       "targets": [
         {
-          "expr": "(vmware_datastore_capacity_size{ds_name=\"01-VM-Block\"} - vmware_datastore_freespace_size{ds_name=\"01-VM-Block\"}) / vmware_datastore_capacity_size{ds_name=\"01-VM-Block\"} * 100",
+          "expr": "vsphere_datastore_disk_used_latest{dsname=\"01-VM-Block\"} / vsphere_datastore_disk_capacity_latest{dsname=\"01-VM-Block\"} * 100",
           "legendFormat": "DS: 01-VM-Block",
           "refId": "A"
         },
         {
-          "expr": "(vmware_datastore_capacity_size{ds_name=\"02-Container-Storage\"} - vmware_datastore_freespace_size{ds_name=\"02-Container-Storage\"}) / vmware_datastore_capacity_size{ds_name=\"02-Container-Storage\"} * 100",
+          "expr": "vsphere_datastore_disk_used_latest{dsname=\"02-Container-Storage\"} / vsphere_datastore_disk_capacity_latest{dsname=\"02-Container-Storage\"} * 100",
           "legendFormat": "DS: 02-Container-Storage",
           "refId": "B"
         },
         {
-          "expr": "(vmware_datastore_capacity_size{ds_name=\"03-Content-Library\"} - vmware_datastore_freespace_size{ds_name=\"03-Content-Library\"}) / vmware_datastore_capacity_size{ds_name=\"03-Content-Library\"} * 100",
+          "expr": "vsphere_datastore_disk_used_latest{dsname=\"03-Content-Library\"} / vsphere_datastore_disk_capacity_latest{dsname=\"03-Content-Library\"} * 100",
           "legendFormat": "DS: 03-Content-Library",
           "refId": "C"
         },
