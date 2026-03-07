@@ -223,7 +223,7 @@
       },
       "targets": [
         {
-          "expr": "vsphere_inventory_vm_total or count(vsphere_vm_sys_uptime_latest)",
+          "expr": "vsphere_inventory_vm_total_value",
           "legendFormat": "Total VMs",
           "refId": "A"
         }
@@ -274,7 +274,7 @@
       },
       "targets": [
         {
-          "expr": "vsphere_inventory_vm_powered_off",
+          "expr": "vsphere_inventory_vm_powered_off_value",
           "legendFormat": "VMs Stopped",
           "refId": "A"
         }
@@ -333,7 +333,7 @@
       },
       "targets": [
         {
-          "expr": "vsphere_inventory_vm_snapshot_total",
+          "expr": "vsphere_inventory_vm_snapshot_total_value",
           "legendFormat": "Snapshots",
           "refId": "A"
         }
