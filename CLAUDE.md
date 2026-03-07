@@ -47,6 +47,16 @@ data/                       # 런타임 데이터 (gitignore)
 
 대시보드를 새로 만들거나 수정할 때 반드시 [docs/dashboard-style-guide.md](docs/dashboard-style-guide.md)를 따를 것. 패널 제목, textMode, 색상, 장비 식별자 등의 일관성 규칙이 정의되어 있음.
 
+## Security (Public Repo)
+
+이 repo는 **PUBLIC**. 커밋 전 민감 정보 노출 확인 필수.
+
+- 실제 IP, SSH 키 이름, 사용자명, 비밀번호 커밋 금지
+- Docs에서 SSH 예시는 `<your-key>`, `<user>`, `<MONITORING_VM_IP>` 플레이스홀더 사용
+- 실제 값은 서버 `.env`에만 보관, git에는 `<PLACEHOLDER>` 형태
+- 커밋 전 체크: `git diff --cached | grep -iE "192\.168|172\.24|10\.0\.0|password|secret|token|webhook"`
+- gitignored 민감 파일: `.env`, `docs/architecture.md`, `docs/security-notes.md`
+
 ## Docs
 
 - [docs/deployment.md](docs/deployment.md) - 배포 절차 상세
