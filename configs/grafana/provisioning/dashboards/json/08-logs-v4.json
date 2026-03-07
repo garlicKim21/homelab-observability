@@ -140,7 +140,7 @@
               {
                 "id": "color",
                 "value": {
-                  "fixedColor": "#C4162A",
+                  "fixedColor": "#B877D9",
                   "mode": "fixed"
                 }
               }
@@ -155,7 +155,7 @@
               {
                 "id": "color",
                 "value": {
-                  "fixedColor": "#F2495C",
+                  "fixedColor": "#B877D9",
                   "mode": "fixed"
                 }
               }
@@ -170,7 +170,7 @@
               {
                 "id": "color",
                 "value": {
-                  "fixedColor": "#F2495C",
+                  "fixedColor": "#B877D9",
                   "mode": "fixed"
                 }
               }
@@ -185,7 +185,7 @@
               {
                 "id": "color",
                 "value": {
-                  "fixedColor": "#FF9830",
+                  "fixedColor": "#FF5286",
                   "mode": "fixed"
                 }
               }
@@ -245,7 +245,7 @@
               {
                 "id": "color",
                 "value": {
-                  "fixedColor": "#A9A9A9",
+                  "fixedColor": "#6ED0E0",
                   "mode": "fixed"
                 }
               }
