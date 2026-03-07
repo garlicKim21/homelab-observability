@@ -11,7 +11,7 @@ groups:
       # Critical: vCenter/Telegraf 연결 확인
       # -----------------------------------------------------------------------
       - alert: VCenterUnreachable
-        expr: absent(vsphere_host_cpu_usage_average)
+        expr: absent(vsphere_host_cpu_usage_average{cpu="instance-total"})
         for: 5m
         labels:
           severity: critical
@@ -36,8 +36,8 @@ groups:
       # -----------------------------------------------------------------------
       - alert: DatastoreAlmostFull
         expr: >
-          vsphere_datastore_disk_used_latest
-          / vsphere_datastore_disk_capacity_latest > 0.9
+          max by (dsname) (vsphere_datastore_disk_used_latest)
+          / max by (dsname) (vsphere_datastore_disk_capacity_latest) > 0.9
         for: 5m
         labels:
           severity: critical
@@ -51,7 +51,7 @@ groups:
       # Warning: 호스트 리소스
       # -----------------------------------------------------------------------
       - alert: ESXiHighCPU
-        expr: vsphere_host_cpu_usage_average > 85
+        expr: vsphere_host_cpu_usage_average{cpu="instance-total"} > 85
         for: 10m
         labels:
           severity: warning
@@ -74,8 +74,8 @@ groups:
 
       - alert: DatastoreHighUsage
         expr: >
-          vsphere_datastore_disk_used_latest
-          / vsphere_datastore_disk_capacity_latest > 0.75
+          max by (dsname) (vsphere_datastore_disk_used_latest)
+          / max by (dsname) (vsphere_datastore_disk_capacity_latest) > 0.75
         for: 30m
         labels:
           severity: warning
@@ -86,7 +86,7 @@ groups:
             {{ $value | humanizePercentage }}입니다.
 
       - alert: ESXiHighNetworkUsage
-        expr: vsphere_host_net_usage_average / 1024 > 800
+        expr: vsphere_host_net_usage_average{interface="instance-total"} / 1024 > 800
         for: 10m
         labels:
           severity: warning

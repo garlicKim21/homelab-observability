@@ -832,7 +832,7 @@
       },
       "targets": [
         {
-          "expr": "avg(vsphere_host_cpu_usage_average)",
+          "expr": "avg(vsphere_host_cpu_usage_average{cpu=\"instance-total\"})",
           "legendFormat": "vSphere Cluster CPU",
           "refId": "A"
         }
@@ -2005,56 +2005,6 @@
     },
     {
       "id": 23,
-      "title": "Total VMs",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 8,
-        "x": 0,
-        "y": 36
-      },
-      "targets": [
-        {
-          "expr": "count(vsphere_vm_sys_uptime_latest)",
-          "legendFormat": "Total VMs",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#5794F2",
-                "value": null
-              }
-            ]
-          },
-          "color": {
-            "mode": "thresholds"
-          },
-          "noValue": "0"
-        }
-      },
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
-      }
-    },
-    {
-      "id": 24,
       "title": "VMs Running",
       "type": "stat",
       "datasource": {
@@ -2063,14 +2013,14 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
-        "x": 8,
+        "w": 12,
+        "x": 0,
         "y": 36
       },
       "targets": [
         {
           "expr": "count(vsphere_vm_sys_uptime_latest > 0)",
-          "legendFormat": "Running",
+          "legendFormat": "VMs Running",
           "refId": "A"
         }
       ],
@@ -2105,65 +2055,8 @@
             "lastNotNull"
           ]
         }
-      }
-    },
-    {
-      "id": 25,
-      "title": "VMs Stopped",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
       },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 14,
-        "y": 36
-      },
-      "targets": [
-        {
-          "expr": "count(vsphere_vm_sys_uptime_latest) - count(vsphere_vm_sys_uptime_latest > 0)",
-          "legendFormat": "Stopped",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#73BF69",
-                "value": null
-              },
-              {
-                "color": "#FADE2A",
-                "value": 1
-              },
-              {
-                "color": "#FF9830",
-                "value": 5
-              }
-            ]
-          },
-          "color": {
-            "mode": "thresholds"
-          },
-          "noValue": "0"
-        }
-      },
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
-      }
+      "description": "Telegraf vSphere reports running VMs only. Powered-off VMs are not included."
     },
     {
       "id": 26,
@@ -2175,8 +2068,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 20,
+        "w": 12,
+        "x": 12,
         "y": 36
       },
       "targets": [
@@ -2221,7 +2114,8 @@
             "lastNotNull"
           ]
         }
-      }
+      },
+      "description": "Telegraf vSphere does not support snapshot metrics. This panel is a placeholder."
     },
     {
       "id": 21,
@@ -2239,7 +2133,7 @@
       },
       "targets": [
         {
-          "expr": "vsphere_host_cpu_usage_average",
+          "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\"}",
           "legendFormat": "{{esxhostname}}",
           "refId": "A"
         }
@@ -3231,17 +3125,17 @@
       },
       "targets": [
         {
-          "expr": "vsphere_datastore_disk_used_latest{dsname=\"01-VM-Block\"} / vsphere_datastore_disk_capacity_latest{dsname=\"01-VM-Block\"} * 100",
+          "expr": "max by (dsname) (vsphere_datastore_disk_used_latest{dsname=\"01-VM-Block\"}) / max by (dsname) (vsphere_datastore_disk_capacity_latest{dsname=\"01-VM-Block\"}) * 100",
           "legendFormat": "DS: 01-VM-Block",
           "refId": "A"
         },
         {
-          "expr": "vsphere_datastore_disk_used_latest{dsname=\"02-Container-Storage\"} / vsphere_datastore_disk_capacity_latest{dsname=\"02-Container-Storage\"} * 100",
+          "expr": "max by (dsname) (vsphere_datastore_disk_used_latest{dsname=\"02-Container-Storage\"}) / max by (dsname) (vsphere_datastore_disk_capacity_latest{dsname=\"02-Container-Storage\"}) * 100",
           "legendFormat": "DS: 02-Container-Storage",
           "refId": "B"
         },
         {
-          "expr": "vsphere_datastore_disk_used_latest{dsname=\"03-Content-Library\"} / vsphere_datastore_disk_capacity_latest{dsname=\"03-Content-Library\"} * 100",
+          "expr": "max by (dsname) (vsphere_datastore_disk_used_latest{dsname=\"03-Content-Library\"}) / max by (dsname) (vsphere_datastore_disk_capacity_latest{dsname=\"03-Content-Library\"}) * 100",
           "legendFormat": "DS: 03-Content-Library",
           "refId": "C"
         },
