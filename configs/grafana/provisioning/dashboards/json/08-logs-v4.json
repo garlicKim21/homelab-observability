@@ -105,8 +105,8 @@
             "type": "loki",
             "uid": "Loki"
           },
-          "expr": "sum by (level)(count_over_time({device_type=~\"$device_type\", level=~\"$level\"}[$__interval]))",
-          "legendFormat": "{{ level }}",
+          "expr": "sum by (severity)(count_over_time({device_type=~\"$device_type\", severity=~\"$level\"}[$__interval]))",
+          "legendFormat": "{{ severity }}",
           "refId": "A"
         }
       ],
@@ -164,7 +164,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "err"
+              "options": "error"
             },
             "properties": [
               {
@@ -209,7 +209,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "info"
+              "options": "informational"
             },
             "properties": [
               {
@@ -287,7 +287,7 @@
             "type": "loki",
             "uid": "Loki"
           },
-          "expr": "{device_type=~\"$device_type\", level=~\"$level\"}",
+          "expr": "{device_type=~\"$device_type\", severity=~\"$level\"}",
           "legendFormat": "",
           "refId": "A"
         }
@@ -351,12 +351,12 @@
           "type": "loki",
           "uid": "Loki"
         },
-        "definition": "label_values(level)",
+        "definition": "label_values(severity)",
         "hide": 0,
         "includeAll": true,
         "multi": true,
         "name": "level",
-        "query": "label_values(level)",
+        "query": "label_values(severity)",
         "refresh": 2,
         "regex": "",
         "sort": 1,
