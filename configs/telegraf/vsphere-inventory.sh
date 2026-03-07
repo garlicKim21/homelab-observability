@@ -15,6 +15,7 @@ export GOVC_URL="https://${VCENTER_HOST}"
 export GOVC_USERNAME="${VCENTER_USER}"
 export GOVC_PASSWORD="${VCENTER_PASSWORD}"
 export GOVC_INSECURE=true
+export GOVMOMI_HOME=/tmp/.govmomi
 
 # --- VM 메트릭 ---
 mapfile -t vm_arr < <(govc find / -type m 2>/dev/null || true)
