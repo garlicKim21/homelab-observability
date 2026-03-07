@@ -1,5 +1,7 @@
 {
-  "annotations": { "list": [] },
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
@@ -8,279 +10,3566 @@
   "liveNow": false,
   "panels": [
     {
-      "id": 1, "title": "Cluster Overview", "type": "row", "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }, "panels": []
+      "id": 1,
+      "title": "Cluster Overview",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "panels": []
     },
     {
-      "id": 2, "title": "vCenter Status", "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 3, "w": 4, "x": 0, "y": 1 },
-      "targets": [{ "expr": "clamp_max(count(vsphere_host_sys_uptime_latest), 1)", "legendFormat": "vCenter", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "mappings": [{ "type": "value", "options": { "0": { "text": "DOWN", "color": "#F2495C", "index": 0 }, "1": { "text": "UP", "color": "#73BF69", "index": 1 } } }],
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#F2495C", "value": null }, { "color": "#73BF69", "value": 1 }] },
-        "color": { "mode": "thresholds" }, "noValue": "N/A"
-      }},
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value_and_name", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"] } }
+      "id": 2,
+      "title": "vCenter Status",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 0,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "clamp_max(count(vsphere_host_sys_uptime_latest), 1)",
+          "legendFormat": "vCenter",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "#F2495C",
+                  "index": 0
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "#73BF69",
+                  "index": 1
+                }
+              }
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#F2495C",
+                "value": null
+              },
+              {
+                "color": "#73BF69",
+                "value": 1
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
     },
     {
-      "id": 3, "title": "Hosts Online", "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 3, "w": 4, "x": 4, "y": 1 },
-      "targets": [{ "expr": "count(vsphere_host_sys_uptime_latest > 0)", "legendFormat": "Hosts Online", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#F2495C", "value": null }, { "color": "#FADE2A", "value": 1 }, { "color": "#73BF69", "value": 3 }] },
-        "color": { "mode": "thresholds" }, "unit": "short", "noValue": "0"
-      }},
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value_and_name", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"] } }
+      "id": 3,
+      "title": "Hosts Online",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 4,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "count(vsphere_host_sys_uptime_latest > 0)",
+          "legendFormat": "Hosts Online",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#F2495C",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 1
+              },
+              {
+                "color": "#73BF69",
+                "value": 3
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "short",
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
     },
     {
-      "id": 4, "title": "VMs Running", "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 3, "w": 4, "x": 8, "y": 1 },
-      "targets": [{ "expr": "count(vsphere_vm_sys_uptime_latest > 0)", "legendFormat": "VMs Running", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#FF9830", "value": null }, { "color": "#73BF69", "value": 1 }] },
-        "color": { "mode": "thresholds" }, "unit": "short", "noValue": "0"
-      }},
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value_and_name", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"] } }
+      "id": 4,
+      "title": "VMs Running",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 12,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "count(vsphere_vm_sys_uptime_latest > 0)",
+          "legendFormat": "VMs Running",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#FF9830",
+                "value": null
+              },
+              {
+                "color": "#73BF69",
+                "value": 1
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "short",
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
     },
     {
-      "id": 7, "title": "Total VMs", "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 3, "w": 3, "x": 12, "y": 1 },
-      "targets": [{ "expr": "vsphere_inventory_vm_total or count(vsphere_vm_sys_uptime_latest)", "legendFormat": "Total VMs", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#5794F2", "value": null }] },
-        "color": { "mode": "thresholds" }, "unit": "short", "noValue": "0"
-      }},
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value_and_name", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"] } }
+      "id": 7,
+      "title": "Total VMs",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 8,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "vsphere_inventory_vm_total or count(vsphere_vm_sys_uptime_latest)",
+          "legendFormat": "Total VMs",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#5794F2",
+                "value": null
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "short",
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
     },
     {
-      "id": 90, "title": "VMs Stopped", "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 3, "w": 3, "x": 15, "y": 1 },
-      "targets": [{ "expr": "vsphere_inventory_vm_powered_off", "legendFormat": "VMs Stopped", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 1 }, { "color": "#F2495C", "value": 3 }] },
-        "color": { "mode": "thresholds" }, "unit": "short", "noValue": "0"
-      }},
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value_and_name", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"] } }
+      "id": 90,
+      "title": "VMs Stopped",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 16,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "vsphere_inventory_vm_powered_off",
+          "legendFormat": "VMs Stopped",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 1
+              },
+              {
+                "color": "#F2495C",
+                "value": 3
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "short",
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
     },
     {
-      "id": 91, "title": "Snapshots", "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 3, "w": 3, "x": 18, "y": 1 },
-      "targets": [{ "expr": "vsphere_inventory_vm_snapshot_total", "legendFormat": "Snapshots", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 1 }, { "color": "#F2495C", "value": 5 }] },
-        "color": { "mode": "thresholds" }, "unit": "short", "noValue": "0"
-      }},
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value_and_name", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"] } }
+      "id": 91,
+      "title": "VM Snapshots",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 20,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "vsphere_inventory_vm_snapshot_total",
+          "legendFormat": "Snapshots",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 1
+              },
+              {
+                "color": "#F2495C",
+                "value": 5
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "short",
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
     },
     {
-      "id": 92, "title": "vMotion Total", "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 3, "w": 3, "x": 21, "y": 1 },
-      "targets": [{ "expr": "sum(vsphere_inventory_cluster_vmotion_total)", "legendFormat": "vMotion", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#5794F2", "value": null }] },
-        "color": { "mode": "thresholds" }, "unit": "short", "noValue": "0"
-      }},
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value_and_name", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"] } }
+      "id": 10,
+      "title": "CPU & Memory Trends",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "panels": []
     },
     {
-      "id": 5, "title": "Cluster CPU", "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 3, "w": 4, "x": 16, "y": 1 },
-      "targets": [{ "expr": "avg(vsphere_host_cpu_usage_average{cpu=\"instance-total\"})", "legendFormat": "CPU %", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "unit": "percent", "min": 0, "max": 100,
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 70 }, { "color": "#F2495C", "value": 85 }] },
-        "color": { "mode": "thresholds" }, "noValue": "N/A"
-      }},
-      "options": { "showThresholdMarkers": true, "reduceOptions": { "calcs": ["lastNotNull"] } }
+      "id": 8,
+      "title": "Cluster CPU",
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 0,
+        "y": 5
+      },
+      "targets": [
+        {
+          "expr": "avg(vsphere_host_cpu_usage_average{cpu=\"instance-total\"})",
+          "legendFormat": "Cluster",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 70
+              },
+              {
+                "color": "#F2495C",
+                "value": 85
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "showThresholdMarkers": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
     },
     {
-      "id": 6, "title": "Cluster MEM", "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 3, "w": 4, "x": 20, "y": 1 },
-      "targets": [{ "expr": "avg(vsphere_host_mem_usage_average)", "legendFormat": "Memory %", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "unit": "percent", "min": 0, "max": 100,
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 75 }, { "color": "#F2495C", "value": 90 }] },
-        "color": { "mode": "thresholds" }, "noValue": "N/A"
-      }},
-      "options": { "showThresholdMarkers": true, "reduceOptions": { "calcs": ["lastNotNull"] } }
+      "id": 11,
+      "title": "Cluster CPU Trend",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 9,
+        "x": 3,
+        "y": 5
+      },
+      "targets": [
+        {
+          "expr": "avg(vsphere_host_cpu_usage_average{cpu=\"instance-total\"})",
+          "legendFormat": "Cluster CPU",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "custom": {
+            "showPoints": "never",
+            "spanNulls": false,
+            "lineWidth": 2,
+            "fillOpacity": 15
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
     },
     {
-      "id": 10, "title": "CPU & Memory Trends", "type": "row", "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 4 }, "panels": []
+      "id": 9,
+      "title": "Cluster MEM",
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 12,
+        "y": 5
+      },
+      "targets": [
+        {
+          "expr": "avg(vsphere_host_mem_usage_average)",
+          "legendFormat": "Cluster",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 75
+              },
+              {
+                "color": "#F2495C",
+                "value": 90
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "showThresholdMarkers": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
     },
     {
-      "id": 8, "title": "CPU Usage", "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 3, "x": 0, "y": 5 },
-      "targets": [{ "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\"}", "legendFormat": "{{ esxhostname }}", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "unit": "percent", "min": 0, "max": 100,
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 70 }, { "color": "#F2495C", "value": 85 }] },
-        "color": { "mode": "thresholds" }, "noValue": "N/A"
-      }},
-      "options": { "showThresholdMarkers": true, "reduceOptions": { "calcs": ["lastNotNull"] } }
+      "id": 12,
+      "title": "Cluster MEM Trend",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 9,
+        "x": 15,
+        "y": 5
+      },
+      "targets": [
+        {
+          "expr": "avg(vsphere_host_mem_usage_average)",
+          "legendFormat": "Cluster MEM",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "custom": {
+            "showPoints": "never",
+            "spanNulls": false,
+            "lineWidth": 2,
+            "fillOpacity": 15
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
     },
     {
-      "id": 11, "title": "CPU Usage by Host", "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 9, "x": 3, "y": 5 },
-      "targets": [{ "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\"}", "legendFormat": "{{ esxhostname }}", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "unit": "percent", "min": 0, "max": 100,
-        "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A"
-      }},
-      "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } }
+      "id": 20,
+      "title": "Datastore Health",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
+      "panels": []
     },
     {
-      "id": 9, "title": "Memory Usage", "type": "gauge",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 3, "x": 12, "y": 5 },
-      "targets": [{ "expr": "vsphere_host_mem_usage_average", "legendFormat": "{{ esxhostname }}", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "unit": "percent", "min": 0, "max": 100,
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 75 }, { "color": "#F2495C", "value": 90 }] },
-        "color": { "mode": "thresholds" }, "noValue": "N/A"
-      }},
-      "options": { "showThresholdMarkers": true, "reduceOptions": { "calcs": ["lastNotNull"] } }
+      "id": 21,
+      "title": "Datastore Usage",
+      "type": "bargauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 13
+      },
+      "targets": [
+        {
+          "expr": "max by (dsname) (vsphere_datastore_disk_used_latest{dsname=~\"0[1-3]-.+\"}) / 1024 / 1024",
+          "legendFormat": "{{ dsname }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "decgbytes",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 500
+              },
+              {
+                "color": "#F2495C",
+                "value": 800
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
     },
     {
-      "id": 12, "title": "Memory Usage by Host", "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 9, "x": 15, "y": 5 },
-      "targets": [{ "expr": "vsphere_host_mem_usage_average", "legendFormat": "{{ esxhostname }}", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "unit": "percent", "min": 0, "max": 100,
-        "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A"
-      }},
-      "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } }
+      "id": 22,
+      "title": "Datastore Usage Trend",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 13
+      },
+      "targets": [
+        {
+          "expr": "max by (dsname) (vsphere_datastore_disk_used_latest{dsname=~\"0[1-3]-.+\"}) / max by (dsname) (vsphere_datastore_disk_capacity_latest{dsname=~\"0[1-3]-.+\"}) * 100",
+          "legendFormat": "{{ dsname }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 75
+              },
+              {
+                "color": "#F2495C",
+                "value": 90
+              }
+            ]
+          },
+          "custom": {
+            "showPoints": "never",
+            "spanNulls": false,
+            "lineWidth": 2,
+            "fillOpacity": 15
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
     },
     {
-      "id": 20, "title": "Datastore Health", "type": "row", "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 12 }, "panels": []
-    },
-    {
-      "id": 21, "title": "Datastore Usage", "type": "bargauge",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 13 },
-      "targets": [{ "expr": "max by (dsname) (vsphere_datastore_disk_used_latest{dsname=~\"0[1-3]-.+\"}) / 1024 / 1024 / 1024", "legendFormat": "{{ dsname }}", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "unit": "decgbytes",
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 500 }, { "color": "#F2495C", "value": 800 }] },
-        "color": { "mode": "thresholds" }, "noValue": "N/A"
-      }},
-      "options": { "orientation": "horizontal", "displayMode": "gradient", "showUnfilled": true, "reduceOptions": { "calcs": ["lastNotNull"] } }
-    },
-    {
-      "id": 22, "title": "Datastore Usage Trend", "type": "timeseries",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 13 },
-      "targets": [{ "expr": "max by (dsname) (vsphere_datastore_disk_used_latest{dsname=~\"0[1-3]-.+\"}) / max by (dsname) (vsphere_datastore_disk_capacity_latest{dsname=~\"0[1-3]-.+\"}) * 100", "legendFormat": "{{ dsname }}", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "unit": "percent", "min": 0, "max": 100,
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 75 }, { "color": "#F2495C", "value": 90 }] },
-        "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A"
-      }},
-      "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } }
-    },
-    {
-      "id": 30, "title": "Host: esxi-01", "type": "row", "collapsed": true,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 20 },
+      "id": 30,
+      "title": "Host: esxi-01",
+      "type": "row",
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
       "panels": [
-        { "id": 31, "title": "esxi-01 CPU", "type": "gauge", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 3, "x": 0, "y": 21 }, "targets": [{ "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi01.*\"}", "legendFormat": "CPU %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 70 }, { "color": "#F2495C", "value": 85 }] }, "color": { "mode": "thresholds" }, "noValue": "N/A" }}, "options": { "showThresholdMarkers": true, "reduceOptions": { "calcs": ["lastNotNull"] } } },
-        { "id": 32, "title": "esxi-01 CPU Trend", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 9, "x": 3, "y": 21 }, "targets": [{ "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi01.*\"}", "legendFormat": "CPU %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 33, "title": "esxi-01 MEM", "type": "gauge", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 3, "x": 12, "y": 21 }, "targets": [{ "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi01.*\"}", "legendFormat": "MEM %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 75 }, { "color": "#F2495C", "value": 90 }] }, "color": { "mode": "thresholds" }, "noValue": "N/A" }}, "options": { "showThresholdMarkers": true, "reduceOptions": { "calcs": ["lastNotNull"] } } },
-        { "id": 34, "title": "esxi-01 MEM Trend", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 9, "x": 15, "y": 21 }, "targets": [{ "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi01.*\"}", "legendFormat": "MEM %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 35, "title": "esxi-01 Network Traffic", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 0, "y": 28 }, "targets": [{ "expr": "vsphere_host_net_bytesRx_average{esxhostname=~\"esxi01.*\"}", "legendFormat": "{{ interface }} In", "refId": "A" }, { "expr": "-vsphere_host_net_bytesTx_average{esxhostname=~\"esxi01.*\"}", "legendFormat": "{{ interface }} Out", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "KBs", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 36, "title": "esxi-01 Disk Throughput", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 12, "y": 28 }, "targets": [{ "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi01.*\"}", "legendFormat": "Read", "refId": "A" }, { "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi01.*\"}", "legendFormat": "Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "KBs", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 37, "title": "esxi-01 Datastore Latency", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 0, "y": 35 }, "targets": [{ "expr": "vsphere_host_datastore_totalReadLatency_average{esxhostname=~\"esxi01.*\"}", "legendFormat": "{{ dsname }} Read", "refId": "A" }, { "expr": "vsphere_host_datastore_totalWriteLatency_average{esxhostname=~\"esxi01.*\"}", "legendFormat": "{{ dsname }} Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "ms", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 38, "title": "esxi-01 Datastore IOPS", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 12, "y": 35 }, "targets": [{ "expr": "vsphere_host_datastore_read_average{esxhostname=~\"esxi01.*\"}", "legendFormat": "{{ dsname }} Read", "refId": "A" }, { "expr": "-vsphere_host_datastore_write_average{esxhostname=~\"esxi01.*\"}", "legendFormat": "{{ dsname }} Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "iops", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } }
+        {
+          "id": 31,
+          "title": "esxi-01 CPU",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 0,
+            "y": 21
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi01.*\"}",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#73BF69",
+                    "value": null
+                  },
+                  {
+                    "color": "#FADE2A",
+                    "value": 70
+                  },
+                  {
+                    "color": "#F2495C",
+                    "value": 85
+                  }
+                ]
+              },
+              "color": {
+                "mode": "thresholds"
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "showThresholdMarkers": true,
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 32,
+          "title": "esxi-01 CPU Trend",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 3,
+            "y": 21
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi01.*\"}",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 33,
+          "title": "esxi-01 MEM",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 12,
+            "y": 21
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi01.*\"}",
+              "legendFormat": "MEM %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#73BF69",
+                    "value": null
+                  },
+                  {
+                    "color": "#FADE2A",
+                    "value": 75
+                  },
+                  {
+                    "color": "#F2495C",
+                    "value": 90
+                  }
+                ]
+              },
+              "color": {
+                "mode": "thresholds"
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "showThresholdMarkers": true,
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 34,
+          "title": "esxi-01 MEM Trend",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 15,
+            "y": 21
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi01.*\"}",
+              "legendFormat": "MEM %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 35,
+          "title": "esxi-01 Network Traffic",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 28
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_net_bytesRx_average{esxhostname=~\"esxi01.*\",interface!=\"instance-total\"}",
+              "legendFormat": "{{ interface }} In",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_net_bytesTx_average{esxhostname=~\"esxi01.*\",interface!=\"instance-total\"}",
+              "legendFormat": "{{ interface }} Out",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 36,
+          "title": "esxi-01 Disk Throughput",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 28
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi01.*\",disk=\"naa.6001405e5b0f035db767d4b26da2d1da\"}",
+              "legendFormat": "01-VM-Block Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi01.*\",disk=\"naa.6001405e5b0f035db767d4b26da2d1da\"}",
+              "legendFormat": "01-VM-Block Write",
+              "refId": "B"
+            },
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi01.*\",disk=\"naa.6001405722e8deed16d2d4662d8c32df\"}",
+              "legendFormat": "02-Container-Storage Read",
+              "refId": "C"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi01.*\",disk=\"naa.6001405722e8deed16d2d4662d8c32df\"}",
+              "legendFormat": "02-Container-Storage Write",
+              "refId": "D"
+            },
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi01.*\",disk=\"naa.60014056b78746cda247d45dbd8576de\"}",
+              "legendFormat": "03-Content-Library Read",
+              "refId": "E"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi01.*\",disk=\"naa.60014056b78746cda247d45dbd8576de\"}",
+              "legendFormat": "03-Content-Library Write",
+              "refId": "F"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 37,
+          "title": "esxi-01 Datastore Latency",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 35
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_datastore_totalReadLatency_average{esxhostname=~\"esxi01.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Read",
+              "refId": "A"
+            },
+            {
+              "expr": "vsphere_host_datastore_totalWriteLatency_average{esxhostname=~\"esxi01.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "ms",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 38,
+          "title": "esxi-01 Datastore IOPS",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 35
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_datastore_read_average{esxhostname=~\"esxi01.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_datastore_write_average{esxhostname=~\"esxi01.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "iops",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        }
       ]
     },
     {
-      "id": 40, "title": "Host: esxi-02", "type": "row", "collapsed": true,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 21 },
+      "id": 40,
+      "title": "Host: esxi-02",
+      "type": "row",
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
       "panels": [
-        { "id": 41, "title": "esxi-02 CPU", "type": "gauge", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 3, "x": 0, "y": 22 }, "targets": [{ "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi02.*\"}", "legendFormat": "CPU %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 70 }, { "color": "#F2495C", "value": 85 }] }, "color": { "mode": "thresholds" }, "noValue": "N/A" }}, "options": { "showThresholdMarkers": true, "reduceOptions": { "calcs": ["lastNotNull"] } } },
-        { "id": 42, "title": "esxi-02 CPU Trend", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 9, "x": 3, "y": 22 }, "targets": [{ "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi02.*\"}", "legendFormat": "CPU %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 43, "title": "esxi-02 MEM", "type": "gauge", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 3, "x": 12, "y": 22 }, "targets": [{ "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi02.*\"}", "legendFormat": "MEM %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 75 }, { "color": "#F2495C", "value": 90 }] }, "color": { "mode": "thresholds" }, "noValue": "N/A" }}, "options": { "showThresholdMarkers": true, "reduceOptions": { "calcs": ["lastNotNull"] } } },
-        { "id": 44, "title": "esxi-02 MEM Trend", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 9, "x": 15, "y": 22 }, "targets": [{ "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi02.*\"}", "legendFormat": "MEM %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 45, "title": "esxi-02 Network Traffic", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 0, "y": 29 }, "targets": [{ "expr": "vsphere_host_net_bytesRx_average{esxhostname=~\"esxi02.*\"}", "legendFormat": "{{ interface }} In", "refId": "A" }, { "expr": "-vsphere_host_net_bytesTx_average{esxhostname=~\"esxi02.*\"}", "legendFormat": "{{ interface }} Out", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "KBs", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 46, "title": "esxi-02 Disk Throughput", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 12, "y": 29 }, "targets": [{ "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi02.*\"}", "legendFormat": "Read", "refId": "A" }, { "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi02.*\"}", "legendFormat": "Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "KBs", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 47, "title": "esxi-02 Datastore Latency", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 0, "y": 36 }, "targets": [{ "expr": "vsphere_host_datastore_totalReadLatency_average{esxhostname=~\"esxi02.*\"}", "legendFormat": "{{ dsname }} Read", "refId": "A" }, { "expr": "vsphere_host_datastore_totalWriteLatency_average{esxhostname=~\"esxi02.*\"}", "legendFormat": "{{ dsname }} Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "ms", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 48, "title": "esxi-02 Datastore IOPS", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 12, "y": 36 }, "targets": [{ "expr": "vsphere_host_datastore_read_average{esxhostname=~\"esxi02.*\"}", "legendFormat": "{{ dsname }} Read", "refId": "A" }, { "expr": "-vsphere_host_datastore_write_average{esxhostname=~\"esxi02.*\"}", "legendFormat": "{{ dsname }} Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "iops", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } }
+        {
+          "id": 41,
+          "title": "esxi-02 CPU",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 0,
+            "y": 22
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi02.*\"}",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#73BF69",
+                    "value": null
+                  },
+                  {
+                    "color": "#FADE2A",
+                    "value": 70
+                  },
+                  {
+                    "color": "#F2495C",
+                    "value": 85
+                  }
+                ]
+              },
+              "color": {
+                "mode": "thresholds"
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "showThresholdMarkers": true,
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 42,
+          "title": "esxi-02 CPU Trend",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 3,
+            "y": 22
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi02.*\"}",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 43,
+          "title": "esxi-02 MEM",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 12,
+            "y": 22
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi02.*\"}",
+              "legendFormat": "MEM %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#73BF69",
+                    "value": null
+                  },
+                  {
+                    "color": "#FADE2A",
+                    "value": 75
+                  },
+                  {
+                    "color": "#F2495C",
+                    "value": 90
+                  }
+                ]
+              },
+              "color": {
+                "mode": "thresholds"
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "showThresholdMarkers": true,
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 44,
+          "title": "esxi-02 MEM Trend",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 15,
+            "y": 22
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi02.*\"}",
+              "legendFormat": "MEM %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 45,
+          "title": "esxi-02 Network Traffic",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 29
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_net_bytesRx_average{esxhostname=~\"esxi02.*\",interface!=\"instance-total\"}",
+              "legendFormat": "{{ interface }} In",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_net_bytesTx_average{esxhostname=~\"esxi02.*\",interface!=\"instance-total\"}",
+              "legendFormat": "{{ interface }} Out",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 46,
+          "title": "esxi-02 Disk Throughput",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 29
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi02.*\",disk=\"naa.6001405e5b0f035db767d4b26da2d1da\"}",
+              "legendFormat": "01-VM-Block Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi02.*\",disk=\"naa.6001405e5b0f035db767d4b26da2d1da\"}",
+              "legendFormat": "01-VM-Block Write",
+              "refId": "B"
+            },
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi02.*\",disk=\"naa.6001405722e8deed16d2d4662d8c32df\"}",
+              "legendFormat": "02-Container-Storage Read",
+              "refId": "C"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi02.*\",disk=\"naa.6001405722e8deed16d2d4662d8c32df\"}",
+              "legendFormat": "02-Container-Storage Write",
+              "refId": "D"
+            },
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi02.*\",disk=\"naa.60014056b78746cda247d45dbd8576de\"}",
+              "legendFormat": "03-Content-Library Read",
+              "refId": "E"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi02.*\",disk=\"naa.60014056b78746cda247d45dbd8576de\"}",
+              "legendFormat": "03-Content-Library Write",
+              "refId": "F"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 47,
+          "title": "esxi-02 Datastore Latency",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 36
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_datastore_totalReadLatency_average{esxhostname=~\"esxi02.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Read",
+              "refId": "A"
+            },
+            {
+              "expr": "vsphere_host_datastore_totalWriteLatency_average{esxhostname=~\"esxi02.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "ms",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 48,
+          "title": "esxi-02 Datastore IOPS",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 36
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_datastore_read_average{esxhostname=~\"esxi02.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_datastore_write_average{esxhostname=~\"esxi02.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "iops",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        }
       ]
     },
     {
-      "id": 50, "title": "Host: esxi-03", "type": "row", "collapsed": true,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 22 },
+      "id": 50,
+      "title": "Host: esxi-03",
+      "type": "row",
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
       "panels": [
-        { "id": 51, "title": "esxi-03 CPU", "type": "gauge", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 3, "x": 0, "y": 23 }, "targets": [{ "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi03.*\"}", "legendFormat": "CPU %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 70 }, { "color": "#F2495C", "value": 85 }] }, "color": { "mode": "thresholds" }, "noValue": "N/A" }}, "options": { "showThresholdMarkers": true, "reduceOptions": { "calcs": ["lastNotNull"] } } },
-        { "id": 52, "title": "esxi-03 CPU Trend", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 9, "x": 3, "y": 23 }, "targets": [{ "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi03.*\"}", "legendFormat": "CPU %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 53, "title": "esxi-03 MEM", "type": "gauge", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 3, "x": 12, "y": 23 }, "targets": [{ "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi03.*\"}", "legendFormat": "MEM %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 75 }, { "color": "#F2495C", "value": 90 }] }, "color": { "mode": "thresholds" }, "noValue": "N/A" }}, "options": { "showThresholdMarkers": true, "reduceOptions": { "calcs": ["lastNotNull"] } } },
-        { "id": 54, "title": "esxi-03 MEM Trend", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 9, "x": 15, "y": 23 }, "targets": [{ "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi03.*\"}", "legendFormat": "MEM %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 55, "title": "esxi-03 Network Traffic", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 0, "y": 30 }, "targets": [{ "expr": "vsphere_host_net_bytesRx_average{esxhostname=~\"esxi03.*\"}", "legendFormat": "{{ interface }} In", "refId": "A" }, { "expr": "-vsphere_host_net_bytesTx_average{esxhostname=~\"esxi03.*\"}", "legendFormat": "{{ interface }} Out", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "KBs", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 56, "title": "esxi-03 Disk Throughput", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 12, "y": 30 }, "targets": [{ "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi03.*\"}", "legendFormat": "Read", "refId": "A" }, { "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi03.*\"}", "legendFormat": "Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "KBs", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 57, "title": "esxi-03 Datastore Latency", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 0, "y": 37 }, "targets": [{ "expr": "vsphere_host_datastore_totalReadLatency_average{esxhostname=~\"esxi03.*\"}", "legendFormat": "{{ dsname }} Read", "refId": "A" }, { "expr": "vsphere_host_datastore_totalWriteLatency_average{esxhostname=~\"esxi03.*\"}", "legendFormat": "{{ dsname }} Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "ms", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 58, "title": "esxi-03 Datastore IOPS", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 12, "y": 37 }, "targets": [{ "expr": "vsphere_host_datastore_read_average{esxhostname=~\"esxi03.*\"}", "legendFormat": "{{ dsname }} Read", "refId": "A" }, { "expr": "-vsphere_host_datastore_write_average{esxhostname=~\"esxi03.*\"}", "legendFormat": "{{ dsname }} Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "iops", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } }
+        {
+          "id": 51,
+          "title": "esxi-03 CPU",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 0,
+            "y": 23
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi03.*\"}",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#73BF69",
+                    "value": null
+                  },
+                  {
+                    "color": "#FADE2A",
+                    "value": 70
+                  },
+                  {
+                    "color": "#F2495C",
+                    "value": 85
+                  }
+                ]
+              },
+              "color": {
+                "mode": "thresholds"
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "showThresholdMarkers": true,
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 52,
+          "title": "esxi-03 CPU Trend",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 3,
+            "y": 23
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi03.*\"}",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 53,
+          "title": "esxi-03 MEM",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 12,
+            "y": 23
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi03.*\"}",
+              "legendFormat": "MEM %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#73BF69",
+                    "value": null
+                  },
+                  {
+                    "color": "#FADE2A",
+                    "value": 75
+                  },
+                  {
+                    "color": "#F2495C",
+                    "value": 90
+                  }
+                ]
+              },
+              "color": {
+                "mode": "thresholds"
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "showThresholdMarkers": true,
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 54,
+          "title": "esxi-03 MEM Trend",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 15,
+            "y": 23
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi03.*\"}",
+              "legendFormat": "MEM %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 55,
+          "title": "esxi-03 Network Traffic",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 30
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_net_bytesRx_average{esxhostname=~\"esxi03.*\",interface!=\"instance-total\"}",
+              "legendFormat": "{{ interface }} In",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_net_bytesTx_average{esxhostname=~\"esxi03.*\",interface!=\"instance-total\"}",
+              "legendFormat": "{{ interface }} Out",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 56,
+          "title": "esxi-03 Disk Throughput",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 30
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi03.*\",disk=\"naa.6001405e5b0f035db767d4b26da2d1da\"}",
+              "legendFormat": "01-VM-Block Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi03.*\",disk=\"naa.6001405e5b0f035db767d4b26da2d1da\"}",
+              "legendFormat": "01-VM-Block Write",
+              "refId": "B"
+            },
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi03.*\",disk=\"naa.6001405722e8deed16d2d4662d8c32df\"}",
+              "legendFormat": "02-Container-Storage Read",
+              "refId": "C"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi03.*\",disk=\"naa.6001405722e8deed16d2d4662d8c32df\"}",
+              "legendFormat": "02-Container-Storage Write",
+              "refId": "D"
+            },
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi03.*\",disk=\"naa.60014056b78746cda247d45dbd8576de\"}",
+              "legendFormat": "03-Content-Library Read",
+              "refId": "E"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi03.*\",disk=\"naa.60014056b78746cda247d45dbd8576de\"}",
+              "legendFormat": "03-Content-Library Write",
+              "refId": "F"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 57,
+          "title": "esxi-03 Datastore Latency",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 37
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_datastore_totalReadLatency_average{esxhostname=~\"esxi03.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Read",
+              "refId": "A"
+            },
+            {
+              "expr": "vsphere_host_datastore_totalWriteLatency_average{esxhostname=~\"esxi03.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "ms",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 58,
+          "title": "esxi-03 Datastore IOPS",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 37
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_datastore_read_average{esxhostname=~\"esxi03.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_datastore_write_average{esxhostname=~\"esxi03.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "iops",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        }
       ]
     },
     {
-      "id": 60, "title": "Host: esxi-04", "type": "row", "collapsed": true,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 23 },
+      "id": 60,
+      "title": "Host: esxi-04",
+      "type": "row",
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 23
+      },
       "panels": [
-        { "id": 61, "title": "esxi-04 CPU", "type": "gauge", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 3, "x": 0, "y": 24 }, "targets": [{ "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi04.*\"}", "legendFormat": "CPU %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 70 }, { "color": "#F2495C", "value": 85 }] }, "color": { "mode": "thresholds" }, "noValue": "N/A" }}, "options": { "showThresholdMarkers": true, "reduceOptions": { "calcs": ["lastNotNull"] } } },
-        { "id": 62, "title": "esxi-04 CPU Trend", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 9, "x": 3, "y": 24 }, "targets": [{ "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi04.*\"}", "legendFormat": "CPU %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 63, "title": "esxi-04 MEM", "type": "gauge", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 3, "x": 12, "y": 24 }, "targets": [{ "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi04.*\"}", "legendFormat": "MEM %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 75 }, { "color": "#F2495C", "value": 90 }] }, "color": { "mode": "thresholds" }, "noValue": "N/A" }}, "options": { "showThresholdMarkers": true, "reduceOptions": { "calcs": ["lastNotNull"] } } },
-        { "id": 64, "title": "esxi-04 MEM Trend", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 9, "x": 15, "y": 24 }, "targets": [{ "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi04.*\"}", "legendFormat": "MEM %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 65, "title": "esxi-04 Network Traffic", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 0, "y": 31 }, "targets": [{ "expr": "vsphere_host_net_bytesRx_average{esxhostname=~\"esxi04.*\"}", "legendFormat": "{{ interface }} In", "refId": "A" }, { "expr": "-vsphere_host_net_bytesTx_average{esxhostname=~\"esxi04.*\"}", "legendFormat": "{{ interface }} Out", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "KBs", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 66, "title": "esxi-04 Disk Throughput", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 12, "y": 31 }, "targets": [{ "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi04.*\"}", "legendFormat": "Read", "refId": "A" }, { "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi04.*\"}", "legendFormat": "Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "KBs", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 67, "title": "esxi-04 Datastore Latency", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 0, "y": 38 }, "targets": [{ "expr": "vsphere_host_datastore_totalReadLatency_average{esxhostname=~\"esxi04.*\"}", "legendFormat": "{{ dsname }} Read", "refId": "A" }, { "expr": "vsphere_host_datastore_totalWriteLatency_average{esxhostname=~\"esxi04.*\"}", "legendFormat": "{{ dsname }} Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "ms", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 68, "title": "esxi-04 Datastore IOPS", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 12, "y": 38 }, "targets": [{ "expr": "vsphere_host_datastore_read_average{esxhostname=~\"esxi04.*\"}", "legendFormat": "{{ dsname }} Read", "refId": "A" }, { "expr": "-vsphere_host_datastore_write_average{esxhostname=~\"esxi04.*\"}", "legendFormat": "{{ dsname }} Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "iops", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } }
+        {
+          "id": 61,
+          "title": "esxi-04 CPU",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 0,
+            "y": 24
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi04.*\"}",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#73BF69",
+                    "value": null
+                  },
+                  {
+                    "color": "#FADE2A",
+                    "value": 70
+                  },
+                  {
+                    "color": "#F2495C",
+                    "value": 85
+                  }
+                ]
+              },
+              "color": {
+                "mode": "thresholds"
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "showThresholdMarkers": true,
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 62,
+          "title": "esxi-04 CPU Trend",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 3,
+            "y": 24
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi04.*\"}",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 63,
+          "title": "esxi-04 MEM",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 12,
+            "y": 24
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi04.*\"}",
+              "legendFormat": "MEM %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#73BF69",
+                    "value": null
+                  },
+                  {
+                    "color": "#FADE2A",
+                    "value": 75
+                  },
+                  {
+                    "color": "#F2495C",
+                    "value": 90
+                  }
+                ]
+              },
+              "color": {
+                "mode": "thresholds"
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "showThresholdMarkers": true,
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 64,
+          "title": "esxi-04 MEM Trend",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 15,
+            "y": 24
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi04.*\"}",
+              "legendFormat": "MEM %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 65,
+          "title": "esxi-04 Network Traffic",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 31
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_net_bytesRx_average{esxhostname=~\"esxi04.*\",interface!=\"instance-total\"}",
+              "legendFormat": "{{ interface }} In",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_net_bytesTx_average{esxhostname=~\"esxi04.*\",interface!=\"instance-total\"}",
+              "legendFormat": "{{ interface }} Out",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 66,
+          "title": "esxi-04 Disk Throughput",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 31
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi04.*\",disk=\"naa.6001405e5b0f035db767d4b26da2d1da\"}",
+              "legendFormat": "01-VM-Block Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi04.*\",disk=\"naa.6001405e5b0f035db767d4b26da2d1da\"}",
+              "legendFormat": "01-VM-Block Write",
+              "refId": "B"
+            },
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi04.*\",disk=\"naa.6001405722e8deed16d2d4662d8c32df\"}",
+              "legendFormat": "02-Container-Storage Read",
+              "refId": "C"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi04.*\",disk=\"naa.6001405722e8deed16d2d4662d8c32df\"}",
+              "legendFormat": "02-Container-Storage Write",
+              "refId": "D"
+            },
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi04.*\",disk=\"naa.60014056b78746cda247d45dbd8576de\"}",
+              "legendFormat": "03-Content-Library Read",
+              "refId": "E"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi04.*\",disk=\"naa.60014056b78746cda247d45dbd8576de\"}",
+              "legendFormat": "03-Content-Library Write",
+              "refId": "F"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 67,
+          "title": "esxi-04 Datastore Latency",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 38
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_datastore_totalReadLatency_average{esxhostname=~\"esxi04.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Read",
+              "refId": "A"
+            },
+            {
+              "expr": "vsphere_host_datastore_totalWriteLatency_average{esxhostname=~\"esxi04.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "ms",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 68,
+          "title": "esxi-04 Datastore IOPS",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 38
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_datastore_read_average{esxhostname=~\"esxi04.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_datastore_write_average{esxhostname=~\"esxi04.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "iops",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        }
       ]
     },
     {
-      "id": 70, "title": "Host: esxi-05", "type": "row", "collapsed": true,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 24 },
+      "id": 70,
+      "title": "Host: esxi-05",
+      "type": "row",
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
       "panels": [
-        { "id": 71, "title": "esxi-05 CPU", "type": "gauge", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 3, "x": 0, "y": 25 }, "targets": [{ "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi05.*\"}", "legendFormat": "CPU %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 70 }, { "color": "#F2495C", "value": 85 }] }, "color": { "mode": "thresholds" }, "noValue": "N/A" }}, "options": { "showThresholdMarkers": true, "reduceOptions": { "calcs": ["lastNotNull"] } } },
-        { "id": 72, "title": "esxi-05 CPU Trend", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 9, "x": 3, "y": 25 }, "targets": [{ "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi05.*\"}", "legendFormat": "CPU %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 73, "title": "esxi-05 MEM", "type": "gauge", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 3, "x": 12, "y": 25 }, "targets": [{ "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi05.*\"}", "legendFormat": "MEM %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 75 }, { "color": "#F2495C", "value": 90 }] }, "color": { "mode": "thresholds" }, "noValue": "N/A" }}, "options": { "showThresholdMarkers": true, "reduceOptions": { "calcs": ["lastNotNull"] } } },
-        { "id": 74, "title": "esxi-05 MEM Trend", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 9, "x": 15, "y": 25 }, "targets": [{ "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi05.*\"}", "legendFormat": "MEM %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 75, "title": "esxi-05 Network Traffic", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 0, "y": 32 }, "targets": [{ "expr": "vsphere_host_net_bytesRx_average{esxhostname=~\"esxi05.*\"}", "legendFormat": "{{ interface }} In", "refId": "A" }, { "expr": "-vsphere_host_net_bytesTx_average{esxhostname=~\"esxi05.*\"}", "legendFormat": "{{ interface }} Out", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "KBs", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 76, "title": "esxi-05 Disk Throughput", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 12, "y": 32 }, "targets": [{ "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi05.*\"}", "legendFormat": "Read", "refId": "A" }, { "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi05.*\"}", "legendFormat": "Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "KBs", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 77, "title": "esxi-05 Datastore Latency", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 0, "y": 39 }, "targets": [{ "expr": "vsphere_host_datastore_totalReadLatency_average{esxhostname=~\"esxi05.*\"}", "legendFormat": "{{ dsname }} Read", "refId": "A" }, { "expr": "vsphere_host_datastore_totalWriteLatency_average{esxhostname=~\"esxi05.*\"}", "legendFormat": "{{ dsname }} Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "ms", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 78, "title": "esxi-05 Datastore IOPS", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 12, "y": 39 }, "targets": [{ "expr": "vsphere_host_datastore_read_average{esxhostname=~\"esxi05.*\"}", "legendFormat": "{{ dsname }} Read", "refId": "A" }, { "expr": "-vsphere_host_datastore_write_average{esxhostname=~\"esxi05.*\"}", "legendFormat": "{{ dsname }} Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "iops", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } }
+        {
+          "id": 71,
+          "title": "esxi-05 CPU",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 0,
+            "y": 25
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi05.*\"}",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#73BF69",
+                    "value": null
+                  },
+                  {
+                    "color": "#FADE2A",
+                    "value": 70
+                  },
+                  {
+                    "color": "#F2495C",
+                    "value": 85
+                  }
+                ]
+              },
+              "color": {
+                "mode": "thresholds"
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "showThresholdMarkers": true,
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 72,
+          "title": "esxi-05 CPU Trend",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 3,
+            "y": 25
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi05.*\"}",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 73,
+          "title": "esxi-05 MEM",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 12,
+            "y": 25
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi05.*\"}",
+              "legendFormat": "MEM %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#73BF69",
+                    "value": null
+                  },
+                  {
+                    "color": "#FADE2A",
+                    "value": 75
+                  },
+                  {
+                    "color": "#F2495C",
+                    "value": 90
+                  }
+                ]
+              },
+              "color": {
+                "mode": "thresholds"
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "showThresholdMarkers": true,
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 74,
+          "title": "esxi-05 MEM Trend",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 15,
+            "y": 25
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi05.*\"}",
+              "legendFormat": "MEM %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 75,
+          "title": "esxi-05 Network Traffic",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 32
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_net_bytesRx_average{esxhostname=~\"esxi05.*\",interface!=\"instance-total\"}",
+              "legendFormat": "{{ interface }} In",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_net_bytesTx_average{esxhostname=~\"esxi05.*\",interface!=\"instance-total\"}",
+              "legendFormat": "{{ interface }} Out",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 76,
+          "title": "esxi-05 Disk Throughput",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 32
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi05.*\",disk=\"naa.6001405e5b0f035db767d4b26da2d1da\"}",
+              "legendFormat": "01-VM-Block Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi05.*\",disk=\"naa.6001405e5b0f035db767d4b26da2d1da\"}",
+              "legendFormat": "01-VM-Block Write",
+              "refId": "B"
+            },
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi05.*\",disk=\"naa.6001405722e8deed16d2d4662d8c32df\"}",
+              "legendFormat": "02-Container-Storage Read",
+              "refId": "C"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi05.*\",disk=\"naa.6001405722e8deed16d2d4662d8c32df\"}",
+              "legendFormat": "02-Container-Storage Write",
+              "refId": "D"
+            },
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi05.*\",disk=\"naa.60014056b78746cda247d45dbd8576de\"}",
+              "legendFormat": "03-Content-Library Read",
+              "refId": "E"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi05.*\",disk=\"naa.60014056b78746cda247d45dbd8576de\"}",
+              "legendFormat": "03-Content-Library Write",
+              "refId": "F"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 77,
+          "title": "esxi-05 Datastore Latency",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 39
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_datastore_totalReadLatency_average{esxhostname=~\"esxi05.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Read",
+              "refId": "A"
+            },
+            {
+              "expr": "vsphere_host_datastore_totalWriteLatency_average{esxhostname=~\"esxi05.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "ms",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 78,
+          "title": "esxi-05 Datastore IOPS",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 39
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_datastore_read_average{esxhostname=~\"esxi05.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_datastore_write_average{esxhostname=~\"esxi05.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "iops",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        }
       ]
     },
     {
-      "id": 80, "title": "Host: esxi-06", "type": "row", "collapsed": true,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 25 },
+      "id": 80,
+      "title": "Host: esxi-06",
+      "type": "row",
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 25
+      },
       "panels": [
-        { "id": 81, "title": "esxi-06 CPU", "type": "gauge", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 3, "x": 0, "y": 26 }, "targets": [{ "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi06.*\"}", "legendFormat": "CPU %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 70 }, { "color": "#F2495C", "value": 85 }] }, "color": { "mode": "thresholds" }, "noValue": "N/A" }}, "options": { "showThresholdMarkers": true, "reduceOptions": { "calcs": ["lastNotNull"] } } },
-        { "id": 82, "title": "esxi-06 CPU Trend", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 9, "x": 3, "y": 26 }, "targets": [{ "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi06.*\"}", "legendFormat": "CPU %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 83, "title": "esxi-06 MEM", "type": "gauge", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 3, "x": 12, "y": 26 }, "targets": [{ "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi06.*\"}", "legendFormat": "MEM %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 75 }, { "color": "#F2495C", "value": 90 }] }, "color": { "mode": "thresholds" }, "noValue": "N/A" }}, "options": { "showThresholdMarkers": true, "reduceOptions": { "calcs": ["lastNotNull"] } } },
-        { "id": 84, "title": "esxi-06 MEM Trend", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 9, "x": 15, "y": 26 }, "targets": [{ "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi06.*\"}", "legendFormat": "MEM %", "refId": "A" }], "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 85, "title": "esxi-06 Network Traffic", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 0, "y": 33 }, "targets": [{ "expr": "vsphere_host_net_bytesRx_average{esxhostname=~\"esxi06.*\"}", "legendFormat": "{{ interface }} In", "refId": "A" }, { "expr": "-vsphere_host_net_bytesTx_average{esxhostname=~\"esxi06.*\"}", "legendFormat": "{{ interface }} Out", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "KBs", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 86, "title": "esxi-06 Disk Throughput", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 12, "y": 33 }, "targets": [{ "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi06.*\"}", "legendFormat": "Read", "refId": "A" }, { "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi06.*\"}", "legendFormat": "Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "KBs", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 87, "title": "esxi-06 Datastore Latency", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 0, "y": 40 }, "targets": [{ "expr": "vsphere_host_datastore_totalReadLatency_average{esxhostname=~\"esxi06.*\"}", "legendFormat": "{{ dsname }} Read", "refId": "A" }, { "expr": "vsphere_host_datastore_totalWriteLatency_average{esxhostname=~\"esxi06.*\"}", "legendFormat": "{{ dsname }} Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "ms", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } },
-        { "id": 88, "title": "esxi-06 Datastore IOPS", "type": "timeseries", "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" }, "gridPos": { "h": 7, "w": 12, "x": 12, "y": 40 }, "targets": [{ "expr": "vsphere_host_datastore_read_average{esxhostname=~\"esxi06.*\"}", "legendFormat": "{{ dsname }} Read", "refId": "A" }, { "expr": "-vsphere_host_datastore_write_average{esxhostname=~\"esxi06.*\"}", "legendFormat": "{{ dsname }} Write", "refId": "B" }], "fieldConfig": { "defaults": { "unit": "iops", "custom": { "showPoints": "never", "spanNulls": false, "lineWidth": 2, "fillOpacity": 15 }, "noValue": "N/A" }}, "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["mean", "max", "lastNotNull"] } } }
+        {
+          "id": 81,
+          "title": "esxi-06 CPU",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 0,
+            "y": 26
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi06.*\"}",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#73BF69",
+                    "value": null
+                  },
+                  {
+                    "color": "#FADE2A",
+                    "value": 70
+                  },
+                  {
+                    "color": "#F2495C",
+                    "value": 85
+                  }
+                ]
+              },
+              "color": {
+                "mode": "thresholds"
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "showThresholdMarkers": true,
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 82,
+          "title": "esxi-06 CPU Trend",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 3,
+            "y": 26
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_cpu_usage_average{cpu=\"instance-total\",esxhostname=~\"esxi06.*\"}",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 83,
+          "title": "esxi-06 MEM",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 12,
+            "y": 26
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi06.*\"}",
+              "legendFormat": "MEM %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#73BF69",
+                    "value": null
+                  },
+                  {
+                    "color": "#FADE2A",
+                    "value": 75
+                  },
+                  {
+                    "color": "#F2495C",
+                    "value": 90
+                  }
+                ]
+              },
+              "color": {
+                "mode": "thresholds"
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "showThresholdMarkers": true,
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 84,
+          "title": "esxi-06 MEM Trend",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 15,
+            "y": 26
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_mem_usage_average{esxhostname=~\"esxi06.*\"}",
+              "legendFormat": "MEM %",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 85,
+          "title": "esxi-06 Network Traffic",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 33
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_net_bytesRx_average{esxhostname=~\"esxi06.*\",interface!=\"instance-total\"}",
+              "legendFormat": "{{ interface }} In",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_net_bytesTx_average{esxhostname=~\"esxi06.*\",interface!=\"instance-total\"}",
+              "legendFormat": "{{ interface }} Out",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 86,
+          "title": "esxi-06 Disk Throughput",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 33
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi06.*\",disk=\"naa.6001405e5b0f035db767d4b26da2d1da\"}",
+              "legendFormat": "01-VM-Block Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi06.*\",disk=\"naa.6001405e5b0f035db767d4b26da2d1da\"}",
+              "legendFormat": "01-VM-Block Write",
+              "refId": "B"
+            },
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi06.*\",disk=\"naa.6001405722e8deed16d2d4662d8c32df\"}",
+              "legendFormat": "02-Container-Storage Read",
+              "refId": "C"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi06.*\",disk=\"naa.6001405722e8deed16d2d4662d8c32df\"}",
+              "legendFormat": "02-Container-Storage Write",
+              "refId": "D"
+            },
+            {
+              "expr": "vsphere_host_disk_read_average{esxhostname=~\"esxi06.*\",disk=\"naa.60014056b78746cda247d45dbd8576de\"}",
+              "legendFormat": "03-Content-Library Read",
+              "refId": "E"
+            },
+            {
+              "expr": "-vsphere_host_disk_write_average{esxhostname=~\"esxi06.*\",disk=\"naa.60014056b78746cda247d45dbd8576de\"}",
+              "legendFormat": "03-Content-Library Write",
+              "refId": "F"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "KBs",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 87,
+          "title": "esxi-06 Datastore Latency",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 40
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_datastore_totalReadLatency_average{esxhostname=~\"esxi06.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Read",
+              "refId": "A"
+            },
+            {
+              "expr": "vsphere_host_datastore_totalWriteLatency_average{esxhostname=~\"esxi06.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "ms",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        },
+        {
+          "id": 88,
+          "title": "esxi-06 Datastore IOPS",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 40
+          },
+          "targets": [
+            {
+              "expr": "vsphere_host_datastore_read_average{esxhostname=~\"esxi06.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Read",
+              "refId": "A"
+            },
+            {
+              "expr": "-vsphere_host_datastore_write_average{esxhostname=~\"esxi06.*\",dsname=~\"0[1-3]-.+\"}",
+              "legendFormat": "{{ dsname }} Write",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "iops",
+              "custom": {
+                "showPoints": "never",
+                "spanNulls": false,
+                "lineWidth": 2,
+                "fillOpacity": 15
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ]
+            }
+          }
+        }
       ]
     }
   ],
   "refresh": "30s",
   "schemaVersion": 39,
-  "tags": ["homelab", "esxi", "vsphere", "v4"],
-  "templating": { "list": [] },
-  "time": { "from": "now-6h", "to": "now" },
+  "tags": [
+    "homelab",
+    "esxi",
+    "vsphere",
+    "v4"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
   "timepicker": {},
   "timezone": "browser",
   "title": "Yggdrasil - ESXi Cluster & Hosts",
