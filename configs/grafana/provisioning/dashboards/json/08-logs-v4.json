@@ -43,7 +43,7 @@
             "type": "loki",
             "uid": "Loki"
           },
-          "expr": "sum by (device_type)(count_over_time({device_type=~\"$device_type\"}[$__interval]))",
+          "expr": "sum by (device_type)(count_over_time({device_type=~\"$device_type\", host=~\"$host\"}[$__interval]))",
           "legendFormat": "{{ device_type }}",
           "refId": "A"
         }
@@ -105,7 +105,7 @@
             "type": "loki",
             "uid": "Loki"
           },
-          "expr": "sum by (severity)(count_over_time({device_type=~\"$device_type\", severity=~\"$level\"}[$__interval]))",
+          "expr": "sum by (severity)(count_over_time({device_type=~\"$device_type\", host=~\"$host\", severity=~\"$level\"}[$__interval]))",
           "legendFormat": "{{ severity }}",
           "refId": "A"
         }
@@ -287,7 +287,7 @@
             "type": "loki",
             "uid": "Loki"
           },
-          "expr": "{device_type=~\"$device_type\", severity=~\"$level\"}",
+          "expr": "{device_type=~\"$device_type\", host=~\"$host\", severity=~\"$level\"}",
           "legendFormat": "",
           "refId": "A"
         }
@@ -340,6 +340,28 @@
         "sort": 1,
         "type": "query",
         "label": "Device Type"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "loki",
+          "uid": "Loki"
+        },
+        "definition": "label_values({device_type=~\"$device_type\"}, host)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "host",
+        "query": "label_values({device_type=~\"$device_type\"}, host)",
+        "refresh": 2,
+        "regex": "",
+        "sort": 1,
+        "type": "query",
+        "label": "Host"
       },
       {
         "current": {
