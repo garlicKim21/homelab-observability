@@ -48,8 +48,41 @@
     {
       "id": 7, "title": "Total VMs", "type": "stat",
       "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 3, "w": 4, "x": 12, "y": 1 },
-      "targets": [{ "expr": "count(vsphere_vm_sys_uptime_latest)", "legendFormat": "Total VMs", "refId": "A" }],
+      "gridPos": { "h": 3, "w": 3, "x": 12, "y": 1 },
+      "targets": [{ "expr": "vsphere_inventory_vm_total or count(vsphere_vm_sys_uptime_latest)", "legendFormat": "Total VMs", "refId": "A" }],
+      "fieldConfig": { "defaults": {
+        "thresholds": { "mode": "absolute", "steps": [{ "color": "#5794F2", "value": null }] },
+        "color": { "mode": "thresholds" }, "unit": "short", "noValue": "0"
+      }},
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value_and_name", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
+      "id": 90, "title": "VMs Stopped", "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "gridPos": { "h": 3, "w": 3, "x": 15, "y": 1 },
+      "targets": [{ "expr": "vsphere_inventory_vm_powered_off", "legendFormat": "VMs Stopped", "refId": "A" }],
+      "fieldConfig": { "defaults": {
+        "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 1 }, { "color": "#F2495C", "value": 3 }] },
+        "color": { "mode": "thresholds" }, "unit": "short", "noValue": "0"
+      }},
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value_and_name", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
+      "id": 91, "title": "Snapshots", "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "gridPos": { "h": 3, "w": 3, "x": 18, "y": 1 },
+      "targets": [{ "expr": "vsphere_inventory_vm_snapshot_total", "legendFormat": "Snapshots", "refId": "A" }],
+      "fieldConfig": { "defaults": {
+        "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 1 }, { "color": "#F2495C", "value": 5 }] },
+        "color": { "mode": "thresholds" }, "unit": "short", "noValue": "0"
+      }},
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value_and_name", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
+      "id": 92, "title": "vMotion Total", "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "gridPos": { "h": 3, "w": 3, "x": 21, "y": 1 },
+      "targets": [{ "expr": "sum(vsphere_inventory_cluster_vmotion_total)", "legendFormat": "vMotion", "refId": "A" }],
       "fieldConfig": { "defaults": {
         "thresholds": { "mode": "absolute", "steps": [{ "color": "#5794F2", "value": null }] },
         "color": { "mode": "thresholds" }, "unit": "short", "noValue": "0"

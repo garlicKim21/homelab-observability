@@ -288,7 +288,7 @@ services:
   # vCenter API를 통해 호스트/VM/데이터스토어 메트릭 수집
   # ---------------------------------------------------------------------------
   telegraf:
-    image: telegraf:1.37.3
+    build: ./configs/telegraf
     container_name: telegraf
     restart: unless-stopped
     mem_limit: 256m

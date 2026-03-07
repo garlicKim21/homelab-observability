@@ -2005,117 +2005,59 @@
     },
     {
       "id": 23,
+      "title": "Total VMs",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 36 },
+      "targets": [{ "expr": "vsphere_inventory_vm_total", "legendFormat": "Total VMs", "refId": "A" }],
+      "fieldConfig": { "defaults": {
+        "unit": "short",
+        "thresholds": { "mode": "absolute", "steps": [{ "color": "#5794F2", "value": null }] },
+        "color": { "mode": "thresholds" }, "noValue": "0"
+      }},
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
+      "id": 24,
       "title": "VMs Running",
       "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 12,
-        "x": 0,
-        "y": 36
-      },
-      "targets": [
-        {
-          "expr": "count(vsphere_vm_sys_uptime_latest > 0)",
-          "legendFormat": "VMs Running",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#FF9830",
-                "value": null
-              },
-              {
-                "color": "#73BF69",
-                "value": 1
-              }
-            ]
-          },
-          "color": {
-            "mode": "thresholds"
-          },
-          "noValue": "0"
-        }
-      },
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
-      },
-      "description": "Telegraf vSphere reports running VMs only. Powered-off VMs are not included."
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 36 },
+      "targets": [{ "expr": "vsphere_inventory_vm_powered_on", "legendFormat": "VMs Running", "refId": "A" }],
+      "fieldConfig": { "defaults": {
+        "unit": "short",
+        "thresholds": { "mode": "absolute", "steps": [{ "color": "#FF9830", "value": null }, { "color": "#73BF69", "value": 1 }] },
+        "color": { "mode": "thresholds" }, "noValue": "0"
+      }},
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
+      "id": 25,
+      "title": "VMs Stopped",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 36 },
+      "targets": [{ "expr": "vsphere_inventory_vm_powered_off", "legendFormat": "VMs Stopped", "refId": "A" }],
+      "fieldConfig": { "defaults": {
+        "unit": "short",
+        "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 1 }, { "color": "#F2495C", "value": 3 }] },
+        "color": { "mode": "thresholds" }, "noValue": "0"
+      }},
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": { "calcs": ["lastNotNull"] } }
     },
     {
       "id": 26,
       "title": "VM Snapshots",
       "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 12,
-        "x": 12,
-        "y": 36
-      },
-      "targets": [
-        {
-          "expr": "vector(0)",
-          "legendFormat": "Snapshots",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#73BF69",
-                "value": null
-              },
-              {
-                "color": "#FADE2A",
-                "value": 1
-              },
-              {
-                "color": "#F2495C",
-                "value": 5
-              }
-            ]
-          },
-          "color": {
-            "mode": "thresholds"
-          },
-          "noValue": "0"
-        }
-      },
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
-      },
-      "description": "Telegraf vSphere does not support snapshot metrics. This panel is a placeholder."
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 36 },
+      "targets": [{ "expr": "vsphere_inventory_vm_snapshot_total", "legendFormat": "Snapshots", "refId": "A" }],
+      "fieldConfig": { "defaults": {
+        "unit": "short",
+        "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 1 }, { "color": "#F2495C", "value": 5 }] },
+        "color": { "mode": "thresholds" }, "noValue": "0"
+      }},
+      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": { "calcs": ["lastNotNull"] } }
     },
     {
       "id": 21,
