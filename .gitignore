@@ -2,6 +2,7 @@
 .env
 homelab-infra-arch.txt
 docs/architecture.md
+docs/security-notes.md
 
 # Images (may contain sensitive info)
 images/
