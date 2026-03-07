@@ -117,3 +117,11 @@ scrape_configs:
                 template: "vcenter"
             - labels:
                 device_type:
+      - match:
+          selector: '{host="SG2218"}'
+          stages:
+            - template:
+                source: device_type
+                template: "switch"
+            - labels:
+                device_type:
