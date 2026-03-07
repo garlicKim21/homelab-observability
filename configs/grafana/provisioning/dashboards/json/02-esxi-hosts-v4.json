@@ -636,7 +636,7 @@
       },
       "targets": [
         {
-          "expr": "max by (dsname) (vsphere_datastore_disk_used_latest{dsname=~\"0[1-3]-.+\"}) / max by (dsname) (vsphere_datastore_disk_capacity_latest{dsname=~\"0[1-3]-.+\"}) * 100",
+          "expr": "max by (dsname) (last_over_time(vsphere_datastore_disk_used_latest{dsname=~\"0[1-3]-.+\"}[35m])) / max by (dsname) (last_over_time(vsphere_datastore_disk_capacity_latest{dsname=~\"0[1-3]-.+\"}[35m])) * 100",
           "legendFormat": "{{ dsname }}",
           "refId": "A"
         }
