@@ -302,7 +302,7 @@
             "type": "loki",
             "uid": "Loki"
           },
-          "expr": "{device_type=~\"$device_type\", host=~\"$host\", severity=~\"$level\"}",
+          "expr": "{device_type=~\"$device_type\", host=~\"$host\", severity=~\"$level\"} | label_format level=severity",
           "legendFormat": "",
           "refId": "A"
         }
