@@ -880,8 +880,8 @@
       },
       "targets": [
         {
-          "expr": "increase(vsphere_inventory_cluster_vmotion_total_value[1h])",
-          "legendFormat": "vMotion (1h)",
+          "expr": "vsphere_inventory_cluster_vmotion_total_value",
+          "legendFormat": "vMotion Total",
           "refId": "A"
         }
       ],
@@ -890,9 +890,9 @@
           "unit": "short",
           "decimals": 0,
           "custom": {
-            "fillOpacity": 30,
+            "fillOpacity": 10,
             "lineWidth": 2,
-            "drawStyle": "bars",
+            "drawStyle": "line",
             "barAlignment": 0,
             "showPoints": "never",
             "spanNulls": true,
