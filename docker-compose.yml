@@ -290,6 +290,7 @@ services:
   telegraf:
     build: ./configs/telegraf
     container_name: telegraf
+    hostname: telegraf
     restart: unless-stopped
     mem_limit: 256m
     cpus: 0.25
