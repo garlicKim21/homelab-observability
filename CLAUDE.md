@@ -4,7 +4,7 @@
 
 ## Tech Stack
 
-VictoriaMetrics, Grafana 11, Loki, Promtail, vmalert, Alertmanager, Docker Compose
+VictoriaMetrics, Grafana 11, Loki, Promtail, rsyslog, vmalert, Alertmanager, Docker Compose
 
 ## Deploy Target
 
@@ -29,6 +29,7 @@ configs/
   vmalert/alerts/           # alert 규칙 (.yml)
   alertmanager/             # 알림 라우팅 (Discord)
   loki/, promtail/          # 로그 수집
+  rsyslog/                  # RFC 3164→5424 변환 릴레이
   snmp_exporter/, blackbox/ # 네트워크 장비
 docker-compose.yml          # 전체 서비스 정의
 docs/                       # 상세 문서
