@@ -391,7 +391,7 @@
       },
       "targets": [
         {
-          "expr": "topk(10, vsphere_vm_cpu_usagemhz_average)",
+          "expr": "topk(10, vsphere_vm_cpu_usagemhz_average{cpu=\"instance-total\"})",
           "legendFormat": "{{ vmname }}",
           "refId": "A"
         }
@@ -449,7 +449,7 @@
       },
       "targets": [
         {
-          "expr": "topk(10, vsphere_vm_cpu_usage_average)",
+          "expr": "topk(10, vsphere_vm_cpu_usage_average{cpu=\"instance-total\"})",
           "legendFormat": "{{ vmname }}",
           "refId": "A"
         }
