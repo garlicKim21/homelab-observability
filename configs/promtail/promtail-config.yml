@@ -54,7 +54,7 @@ scrape_configs:
                 level:
             - template:
                 source: severity
-                template: "{{ ToLower .level }}"
+                template: "{{ $l := ToLower .level }}{{ if eq $l \"warn\" }}warning{{ else if eq $l \"err\" }}error{{ else if eq $l \"crit\" }}critical{{ else }}{{ $l }}{{ end }}"
             - labels:
                 severity:
       # logfmt 로그 포맷 (victoriametrics, vmalert, alertmanager, snmp_exporter, blackbox_exporter)
@@ -68,7 +68,7 @@ scrape_configs:
                 level:
             - template:
                 source: severity
-                template: "{{ ToLower .level }}"
+                template: "{{ $l := ToLower .level }}{{ if eq $l \"warn\" }}warning{{ else if eq $l \"err\" }}error{{ else if eq $l \"crit\" }}critical{{ else }}{{ $l }}{{ end }}"
             - labels:
                 severity:
       # Telegraf 로그 (prefix 기반)
@@ -81,7 +81,7 @@ scrape_configs:
                 level:
             - template:
                 source: severity
-                template: "{{ ToLower .level }}"
+                template: "{{ $l := ToLower .level }}{{ if eq $l \"warn\" }}warning{{ else if eq $l \"err\" }}error{{ else if eq $l \"crit\" }}critical{{ else }}{{ $l }}{{ end }}"
             - labels:
                 severity:
       # 일반 fallback — severity 추출 (cadvisor, rsyslog, discord-webhook-proxy 등)
@@ -92,7 +92,7 @@ scrape_configs:
                 expression: "(?i)\\b(?P<level>emerg|alert|crit(?:ical)?|err(?:or)?|warn(?:ing)?|notice|info(?:rmational)?|debug)\\b"
             - template:
                 source: severity
-                template: "{{ ToLower .level }}"
+                template: "{{ $l := ToLower .level }}{{ if eq $l \"warn\" }}warning{{ else if eq $l \"err\" }}error{{ else if eq $l \"crit\" }}critical{{ else }}{{ $l }}{{ end }}"
             - labels:
                 severity:
 
@@ -131,9 +131,12 @@ scrape_configs:
           expression: "^(?P<timestamp>\\w{3}\\s+\\d{1,2}\\s+\\d{2}:\\d{2}:\\d{2})\\s+(?P<hostname>\\S+)\\s+(?P<app>[^\\[:]+)(?:\\[(?P<pid>\\d+)\\])?:\\s+(?P<message>.*)"
       - labels:
           app:
-      # severity 추출 fallback
+      # severity 추출 + 정규화
       - regex:
-          expression: "(?i)\\b(?P<severity>emerg|alert|crit(?:ical)?|err(?:or)?|warn(?:ing)?|notice|info(?:rmational)?|debug)\\b"
+          expression: "(?i)\\b(?P<level>emerg|alert|crit(?:ical)?|err(?:or)?|warn(?:ing)?|notice|info(?:rmational)?|debug)\\b"
+      - template:
+          source: severity
+          template: "{{ $l := ToLower .level }}{{ if eq $l \"warn\" }}warning{{ else if eq $l \"err\" }}error{{ else if eq $l \"crit\" }}critical{{ else }}{{ $l }}{{ end }}"
       - labels:
           severity:
 

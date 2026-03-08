@@ -357,7 +357,7 @@
                 "type": "loki",
                 "uid": "Loki"
               },
-              "expr": "sum by (container_name)(count_over_time({device_type=\"container\", container_name=~\"$container_name\"}[$__interval]))",
+              "expr": "sum by (container_name)(count_over_time({device_type=~\"container|application\", container_name=~\"$container_name\"}[$__interval]))",
               "legendFormat": "{{ container_name }}",
               "refId": "A"
             }
@@ -486,12 +486,12 @@
           "type": "loki",
           "uid": "Loki"
         },
-        "definition": "label_values({device_type=\"container\"}, container_name)",
+        "definition": "label_values({device_type=~\"container|application\"}, container_name)",
         "hide": 0,
         "includeAll": true,
         "multi": true,
         "name": "container_name",
-        "query": "label_values({device_type=\"container\"}, container_name)",
+        "query": "label_values({device_type=~\"container|application\"}, container_name)",
         "refresh": 2,
         "regex": "",
         "sort": 1,

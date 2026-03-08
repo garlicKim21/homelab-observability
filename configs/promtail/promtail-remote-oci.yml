@@ -49,7 +49,7 @@ scrape_configs:
                 level:
             - template:
                 source: severity
-                template: "{{ ToLower .level }}"
+                template: "{{ $l := ToLower .level }}{{ if eq $l \"warn\" }}warning{{ else if eq $l \"err\" }}error{{ else if eq $l \"crit\" }}critical{{ else if eq $l \"log\" }}info{{ else }}{{ $l }}{{ end }}"
             - labels:
                 severity:
       # 일반 severity 추출 fallback
@@ -60,7 +60,7 @@ scrape_configs:
                 expression: "(?i)\\b(?P<level>emerg|alert|crit(?:ical)?|err(?:or)?|warn(?:ing)?|notice|info(?:rmational)?|debug)\\b"
             - template:
                 source: severity
-                template: "{{ ToLower .level }}"
+                template: "{{ $l := ToLower .level }}{{ if eq $l \"warn\" }}warning{{ else if eq $l \"err\" }}error{{ else if eq $l \"crit\" }}critical{{ else if eq $l \"log\" }}info{{ else }}{{ $l }}{{ end }}"
             - labels:
                 severity:
 
@@ -99,6 +99,9 @@ scrape_configs:
       - labels:
           app:
       - regex:
-          expression: "(?i)\\b(?P<severity>emerg|alert|crit(?:ical)?|err(?:or)?|warn(?:ing)?|notice|info(?:rmational)?|debug)\\b"
+          expression: "(?i)\\b(?P<level>emerg|alert|crit(?:ical)?|err(?:or)?|warn(?:ing)?|notice|info(?:rmational)?|debug)\\b"
+      - template:
+          source: severity
+          template: "{{ $l := ToLower .level }}{{ if eq $l \"warn\" }}warning{{ else if eq $l \"err\" }}error{{ else if eq $l \"crit\" }}critical{{ else if eq $l \"log\" }}info{{ else }}{{ $l }}{{ end }}"
       - labels:
           severity:
