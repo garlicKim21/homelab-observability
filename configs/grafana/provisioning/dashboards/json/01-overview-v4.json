@@ -572,6 +572,128 @@
       }
     },
     {
+      "id": 80,
+      "title": "Alert Summary",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "panels": []
+    },
+    {
+      "id": 81,
+      "title": "Active Alerts",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 5
+      },
+      "targets": [
+        {
+          "expr": "count(ALERTS{alertstate=\"firing\"}) or vector(0)",
+          "legendFormat": "Firing Alerts",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 1
+              },
+              {
+                "color": "#F2495C",
+                "value": 5
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "short",
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 82,
+      "title": "Recent Alerts",
+      "type": "table",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 18,
+        "x": 6,
+        "y": 5
+      },
+      "targets": [
+        {
+          "expr": "ALERTS{alertstate=\"firing\"}",
+          "legendFormat": "",
+          "refId": "A",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "noValue": "No active alerts"
+        }
+      },
+      "options": {
+        "showHeader": true
+      },
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "__name__": true,
+              "Value": true
+            },
+            "renameByName": {
+              "alertname": "Alert",
+              "severity": "Severity",
+              "instance": "Instance"
+            }
+          }
+        }
+      ]
+    },
+    {
       "id": 50,
       "title": "Resource Utilization",
       "type": "row",
@@ -580,7 +702,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 4
+        "y": 11
       },
       "panels": []
     },
@@ -596,7 +718,7 @@
         "h": 5,
         "w": 6,
         "x": 0,
-        "y": 5
+        "y": 12
       },
       "targets": [
         {
@@ -654,7 +776,7 @@
         "h": 5,
         "w": 6,
         "x": 6,
-        "y": 5
+        "y": 12
       },
       "targets": [
         {
@@ -712,7 +834,7 @@
         "h": 5,
         "w": 6,
         "x": 12,
-        "y": 5
+        "y": 12
       },
       "targets": [
         {
@@ -770,7 +892,7 @@
         "h": 5,
         "w": 6,
         "x": 18,
-        "y": 5
+        "y": 12
       },
       "targets": [
         {
@@ -828,7 +950,7 @@
         "h": 5,
         "w": 6,
         "x": 0,
-        "y": 10
+        "y": 17
       },
       "targets": [
         {
@@ -886,7 +1008,7 @@
         "h": 5,
         "w": 6,
         "x": 6,
-        "y": 10
+        "y": 17
       },
       "targets": [
         {
@@ -944,7 +1066,7 @@
         "h": 5,
         "w": 6,
         "x": 12,
-        "y": 10
+        "y": 17
       },
       "targets": [
         {
@@ -1002,7 +1124,7 @@
         "h": 5,
         "w": 6,
         "x": 18,
-        "y": 10
+        "y": 17
       },
       "targets": [
         {
@@ -1060,7 +1182,7 @@
         "h": 5,
         "w": 6,
         "x": 0,
-        "y": 15
+        "y": 22
       },
       "targets": [
         {
@@ -1118,7 +1240,7 @@
         "h": 5,
         "w": 6,
         "x": 6,
-        "y": 15
+        "y": 22
       },
       "targets": [
         {
@@ -1176,7 +1298,7 @@
         "h": 5,
         "w": 6,
         "x": 12,
-        "y": 15
+        "y": 22
       },
       "targets": [
         {
@@ -1234,7 +1356,7 @@
         "h": 5,
         "w": 6,
         "x": 18,
-        "y": 15
+        "y": 22
       },
       "targets": [
         {
@@ -1292,7 +1414,7 @@
         "h": 5,
         "w": 6,
         "x": 0,
-        "y": 20
+        "y": 27
       },
       "targets": [
         {
@@ -1350,7 +1472,7 @@
         "h": 5,
         "w": 6,
         "x": 6,
-        "y": 20
+        "y": 27
       },
       "targets": [
         {
@@ -1405,7 +1527,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 32
       },
       "panels": []
     },
@@ -1421,7 +1543,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 26
+        "y": 33
       },
       "targets": [
         {
@@ -1471,7 +1593,7 @@
         "h": 4,
         "w": 4,
         "x": 4,
-        "y": 26
+        "y": 33
       },
       "targets": [
         {
@@ -1529,7 +1651,7 @@
         "h": 4,
         "w": 4,
         "x": 8,
-        "y": 26
+        "y": 33
       },
       "targets": [
         {
@@ -1579,7 +1701,7 @@
         "h": 4,
         "w": 4,
         "x": 12,
-        "y": 26
+        "y": 33
       },
       "targets": [
         {
@@ -1629,7 +1751,7 @@
         "h": 4,
         "w": 4,
         "x": 16,
-        "y": 26
+        "y": 33
       },
       "targets": [
         {
@@ -1683,7 +1805,7 @@
         "h": 4,
         "w": 4,
         "x": 20,
-        "y": 26
+        "y": 33
       },
       "targets": [
         {
@@ -1730,7 +1852,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 30
+        "y": 37
       },
       "panels": []
     },
@@ -1746,7 +1868,7 @@
         "h": 4,
         "w": 6,
         "x": 0,
-        "y": 31
+        "y": 38
       },
       "targets": [
         {
@@ -1804,7 +1926,7 @@
         "h": 4,
         "w": 6,
         "x": 6,
-        "y": 31
+        "y": 38
       },
       "targets": [
         {
@@ -1858,7 +1980,7 @@
         "h": 4,
         "w": 6,
         "x": 12,
-        "y": 31
+        "y": 38
       },
       "targets": [
         {
@@ -1930,7 +2052,7 @@
         "h": 4,
         "w": 6,
         "x": 18,
-        "y": 31
+        "y": 38
       },
       "targets": [
         {
@@ -1999,7 +2121,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 35
+        "y": 42
       },
       "panels": []
     },
@@ -2007,72 +2129,280 @@
       "id": 23,
       "title": "Total VMs",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 5, "x": 0, "y": 36 },
-      "targets": [{ "expr": "vsphere_inventory_vm_total_value", "legendFormat": "Total VMs", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "unit": "short",
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#5794F2", "value": null }] },
-        "color": { "mode": "thresholds" }, "noValue": "0"
-      }},
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": { "calcs": ["lastNotNull"] } }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 0,
+        "y": 43
+      },
+      "targets": [
+        {
+          "expr": "vsphere_inventory_vm_total_value",
+          "legendFormat": "Total VMs",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#5794F2",
+                "value": null
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
     },
     {
       "id": 24,
       "title": "VMs Running",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 5, "x": 5, "y": 36 },
-      "targets": [{ "expr": "vsphere_inventory_vm_powered_on_value", "legendFormat": "VMs Running", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "unit": "short",
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#FF9830", "value": null }, { "color": "#73BF69", "value": 1 }] },
-        "color": { "mode": "thresholds" }, "noValue": "0"
-      }},
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": { "calcs": ["lastNotNull"] } }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 5,
+        "y": 43
+      },
+      "targets": [
+        {
+          "expr": "vsphere_inventory_vm_powered_on_value",
+          "legendFormat": "VMs Running",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#FF9830",
+                "value": null
+              },
+              {
+                "color": "#73BF69",
+                "value": 1
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
     },
     {
       "id": 25,
       "title": "VMs Stopped",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 5, "x": 10, "y": 36 },
-      "targets": [{ "expr": "vsphere_inventory_vm_powered_off_value", "legendFormat": "VMs Stopped", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "unit": "short",
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 1 }, { "color": "#F2495C", "value": 3 }] },
-        "color": { "mode": "thresholds" }, "noValue": "0"
-      }},
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": { "calcs": ["lastNotNull"] } }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 10,
+        "y": 43
+      },
+      "targets": [
+        {
+          "expr": "vsphere_inventory_vm_powered_off_value",
+          "legendFormat": "VMs Stopped",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 1
+              },
+              {
+                "color": "#F2495C",
+                "value": 3
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
     },
     {
       "id": 27,
       "title": "vMotion (1h)",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 5, "x": 15, "y": 36 },
-      "targets": [{ "expr": "increase(vsphere_inventory_cluster_vmotion_total_value[1h])", "legendFormat": "vMotion", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "unit": "short",
-        "decimals": 0,
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#5794F2", "value": 1 }, { "color": "#FADE2A", "value": 5 }] },
-        "color": { "mode": "thresholds" }, "noValue": "0"
-      }},
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": { "calcs": ["lastNotNull"] } }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 15,
+        "y": 43
+      },
+      "targets": [
+        {
+          "expr": "increase(vsphere_inventory_cluster_vmotion_total_value[1h])",
+          "legendFormat": "vMotion",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#5794F2",
+                "value": 1
+              },
+              {
+                "color": "#FADE2A",
+                "value": 5
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
     },
     {
       "id": 26,
       "title": "VM Snapshots",
       "type": "stat",
-      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
-      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 36 },
-      "targets": [{ "expr": "vsphere_inventory_vm_snapshot_total_value", "legendFormat": "Snapshots", "refId": "A" }],
-      "fieldConfig": { "defaults": {
-        "unit": "short",
-        "thresholds": { "mode": "absolute", "steps": [{ "color": "#73BF69", "value": null }, { "color": "#FADE2A", "value": 1 }, { "color": "#F2495C", "value": 5 }] },
-        "color": { "mode": "thresholds" }, "noValue": "0"
-      }},
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": { "calcs": ["lastNotNull"] } }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 43
+      },
+      "targets": [
+        {
+          "expr": "vsphere_inventory_vm_snapshot_total_value",
+          "legendFormat": "Snapshots",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 1
+              },
+              {
+                "color": "#F2495C",
+                "value": 5
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
     },
     {
       "id": 21,
@@ -2086,7 +2416,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 40
+        "y": 47
       },
       "targets": [
         {
@@ -2144,7 +2474,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 40
+        "y": 47
       },
       "targets": [
         {
@@ -2202,7 +2532,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 47
+        "y": 54
       },
       "targets": [
         {
@@ -2281,7 +2611,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 47
+        "y": 54
       },
       "targets": [
         {
@@ -2360,7 +2690,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 47
+        "y": 54
       },
       "targets": [
         {
@@ -2436,7 +2766,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 54
+        "y": 61
       },
       "panels": []
     },
@@ -2452,7 +2782,7 @@
         "h": 3,
         "w": 4,
         "x": 0,
-        "y": 55
+        "y": 62
       },
       "targets": [
         {
@@ -2522,7 +2852,7 @@
         "h": 3,
         "w": 4,
         "x": 4,
-        "y": 55
+        "y": 62
       },
       "targets": [
         {
@@ -2592,7 +2922,7 @@
         "h": 3,
         "w": 4,
         "x": 8,
-        "y": 55
+        "y": 62
       },
       "targets": [
         {
@@ -2650,7 +2980,7 @@
         "h": 3,
         "w": 12,
         "x": 12,
-        "y": 55
+        "y": 62
       },
       "targets": [
         {
@@ -2735,7 +3065,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 58
+        "y": 65
       },
       "targets": [
         {
@@ -2815,7 +3145,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 58
+        "y": 65
       },
       "targets": [
         {
@@ -2895,7 +3225,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 65
+        "y": 72
       },
       "targets": [
         {
@@ -2980,7 +3310,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 65
+        "y": 72
       },
       "targets": [
         {
@@ -3062,7 +3392,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 72
+        "y": 79
       },
       "panels": []
     },
@@ -3078,7 +3408,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 73
+        "y": 80
       },
       "targets": [
         {
@@ -3155,128 +3485,6 @@
           ]
         }
       }
-    },
-    {
-      "id": 80,
-      "title": "Alert Summary",
-      "type": "row",
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 80
-      },
-      "panels": []
-    },
-    {
-      "id": 81,
-      "title": "Active Alerts",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 0,
-        "y": 81
-      },
-      "targets": [
-        {
-          "expr": "count(ALERTS{alertstate=\"firing\"}) or vector(0)",
-          "legendFormat": "Firing Alerts",
-          "refId": "A"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#73BF69",
-                "value": null
-              },
-              {
-                "color": "#FADE2A",
-                "value": 1
-              },
-              {
-                "color": "#F2495C",
-                "value": 5
-              }
-            ]
-          },
-          "color": {
-            "mode": "thresholds"
-          },
-          "unit": "short",
-          "noValue": "0"
-        }
-      },
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "value",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
-      }
-    },
-    {
-      "id": 82,
-      "title": "Recent Alerts",
-      "type": "table",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 18,
-        "x": 6,
-        "y": 81
-      },
-      "targets": [
-        {
-          "expr": "ALERTS{alertstate=\"firing\"}",
-          "legendFormat": "",
-          "refId": "A",
-          "instant": true
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "noValue": "No active alerts"
-        }
-      },
-      "options": {
-        "showHeader": true
-      },
-      "transformations": [
-        {
-          "id": "labelsToFields",
-          "options": {}
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "__name__": true,
-              "Value": true
-            },
-            "renameByName": {
-              "alertname": "Alert",
-              "severity": "Severity",
-              "instance": "Instance"
-            }
-          }
-        }
-      ]
     }
   ],
   "refresh": "30s",
