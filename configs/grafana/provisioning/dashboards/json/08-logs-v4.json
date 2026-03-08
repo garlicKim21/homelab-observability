@@ -323,6 +323,82 @@
         "sortOrder": "Descending",
         "wrapLogMessage": false
       }
+    },
+    {
+      "id": 20,
+      "title": "Container Logs",
+      "type": "row",
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 30
+      },
+      "panels": [
+        {
+          "id": 21,
+          "title": "Log Volume by Container",
+          "type": "timeseries",
+          "datasource": {
+            "type": "loki",
+            "uid": "Loki"
+          },
+          "description": "Log event count per container over time. Stacked bars show relative contribution of each container.",
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 31
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "Loki"
+              },
+              "expr": "sum by (container_name)(count_over_time({device_type=\"container\", container_name=~\"$container_name\"}[$__interval]))",
+              "legendFormat": "{{ container_name }}",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "short",
+              "custom": {
+                "fillOpacity": 50,
+                "lineWidth": 0,
+                "barAlignment": 0,
+                "drawStyle": "bars",
+                "stacking": {
+                  "mode": "normal",
+                  "group": "A"
+                },
+                "showPoints": "never",
+                "spanNulls": false
+              },
+              "color": {
+                "mode": "palette-classic"
+              },
+              "noValue": "N/A"
+            }
+          },
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": [
+                "sum",
+                "lastNotNull"
+              ]
+            }
+          }
+        }
+      ]
     }
   ],
   "refresh": "30s",
@@ -399,6 +475,28 @@
         "sort": 1,
         "type": "query",
         "label": "Log Level"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "loki",
+          "uid": "Loki"
+        },
+        "definition": "label_values({device_type=\"container\"}, container_name)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "container_name",
+        "query": "label_values({device_type=\"container\"}, container_name)",
+        "refresh": 2,
+        "regex": "",
+        "sort": 1,
+        "type": "query",
+        "label": "Container"
       }
     ]
   },

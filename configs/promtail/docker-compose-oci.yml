@@ -1,0 +1,25 @@
+# =============================================================================
+# Promtail - OCI (Ratatosk) Standalone Deployment
+# Observer Loki로 컨테이너 + 호스트 로그 전송
+# =============================================================================
+# 사용법:
+#   1. OCI 서버에 이 파일과 promtail-remote-oci.yml 복사
+#   2. mkdir -p /data/promtail
+#   3. docker compose -f docker-compose-oci.yml up -d
+
+services:
+  promtail:
+    image: grafana/promtail:3.3.2
+    container_name: promtail
+    restart: unless-stopped
+    mem_limit: 256m
+    cpus: 0.25
+    volumes:
+      - ./promtail-remote-oci.yml:/etc/promtail/config.yml:ro
+      - /data/promtail:/data/promtail
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/log:/var/log/host:ro
+    command:
+      - "-config.file=/etc/promtail/config.yml"
+    ports:
+      - "9080:9080"

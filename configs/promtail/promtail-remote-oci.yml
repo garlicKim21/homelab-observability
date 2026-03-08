@@ -1,0 +1,104 @@
+# =============================================================================
+# Promtail Configuration - OCI (Ratatosk) Remote Agent
+# Docker 컨테이너 로그 + 호스트 OS 로그 → Observer Loki 전송
+# =============================================================================
+
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /data/promtail/positions.yaml
+
+clients:
+  - url: http://<OBSERVER_IP>:3100/loki/api/v1/push
+    batchwait: 1s
+    batchsize: 1048576  # 1MB
+    tenant_id: ""
+
+scrape_configs:
+  # =========================================================================
+  # Docker Container Logs - Ratatosk 컨테이너 자동 발견
+  # =========================================================================
+  - job_name: docker
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 30s
+    relabel_configs:
+      - source_labels: ["__meta_docker_container_name"]
+        regex: "/(.*)"
+        target_label: "container_name"
+      - source_labels: ["__meta_docker_container_label_com_docker_compose_service"]
+        target_label: "service"
+      - target_label: "device_type"
+        replacement: "application"
+      - target_label: "host"
+        replacement: "ratatosk"
+      - target_label: "job"
+        replacement: "docker"
+    pipeline_stages:
+      # Docker JSON 로그 래퍼 파싱
+      - docker: {}
+      # PostgreSQL 로그 파싱
+      - match:
+          selector: '{container_name=~".*postgres.*"}'
+          stages:
+            - regex:
+                expression: "^(?P<timestamp>[\\d-]+\\s[\\d:.]+\\s\\w+)\\s+\\[(?P<pid>\\d+)\\]\\s+(?P<level>LOG|ERROR|WARNING|FATAL|PANIC|DEBUG|INFO|NOTICE):"
+            - labels:
+                level:
+            - template:
+                source: severity
+                template: "{{ ToLower .level }}"
+            - labels:
+                severity:
+      # 일반 severity 추출 fallback
+      - match:
+          selector: '{severity=""}'
+          stages:
+            - regex:
+                expression: "(?i)\\b(?P<level>emerg|alert|crit(?:ical)?|err(?:or)?|warn(?:ing)?|notice|info(?:rmational)?|debug)\\b"
+            - template:
+                source: severity
+                template: "{{ ToLower .level }}"
+            - labels:
+                severity:
+
+  # =========================================================================
+  # Host OS Logs - Ratatosk (OCI) 호스트 로그
+  # =========================================================================
+  - job_name: host_logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          device_type: "cloud"
+          host: "ratatosk"
+          log_type: "syslog"
+          job: "host_logs"
+          __path__: /var/log/host/syslog
+      - targets:
+          - localhost
+        labels:
+          device_type: "cloud"
+          host: "ratatosk"
+          log_type: "auth"
+          job: "host_logs"
+          __path__: /var/log/host/auth.log
+      - targets:
+          - localhost
+        labels:
+          device_type: "cloud"
+          host: "ratatosk"
+          log_type: "kernel"
+          job: "host_logs"
+          __path__: /var/log/host/kern.log
+    pipeline_stages:
+      - regex:
+          expression: "^(?P<timestamp>\\w{3}\\s+\\d{1,2}\\s+\\d{2}:\\d{2}:\\d{2})\\s+(?P<hostname>\\S+)\\s+(?P<app>[^\\[:]+)(?:\\[(?P<pid>\\d+)\\])?:\\s+(?P<message>.*)"
+      - labels:
+          app:
+      - regex:
+          expression: "(?i)\\b(?P<severity>emerg|alert|crit(?:ical)?|err(?:or)?|warn(?:ing)?|notice|info(?:rmational)?|debug)\\b"
+      - labels:
+          severity:

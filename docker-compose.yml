@@ -4,6 +4,7 @@
 # Phase 2: ESXi Monitoring (Telegraf vSphere → vCenter API)
 # Phase 4: Network Devices (snmp_exporter → SG2218, NAS, AP)
 # Phase 5: Log Aggregation (Loki + Promtail syslog receiver)
+# Phase 6: Application Log Collection (Docker + Host logs)
 # =============================================================================
 
 services:
@@ -199,6 +200,7 @@ services:
     volumes:
       - ./configs/loki/loki-config.yml:/etc/loki/local-config.yaml:ro
       - /data/loki:/loki
+      - ./configs/loki/rules:/loki/rules/fake:ro
     command:
       - "-config.file=/etc/loki/local-config.yaml"
     healthcheck:
@@ -218,8 +220,8 @@ services:
     image: grafana/promtail:3.3.2
     container_name: promtail
     restart: unless-stopped
-    mem_limit: 256m
-    cpus: 0.25
+    mem_limit: 512m
+    cpus: 0.5
     depends_on:
       loki:
         condition: service_healthy
@@ -228,6 +230,9 @@ services:
       - "9080:9080"        # Promtail HTTP (status/metrics)
     volumes:
       - ./configs/promtail/promtail-config.yml:/etc/promtail/config.yml:ro
+      - /data/promtail:/data/promtail                    # positions 파일 영속화
+      - /var/run/docker.sock:/var/run/docker.sock:ro     # Docker service discovery
+      - /var/log:/var/log/host:ro                        # 호스트 OS 로그
     command:
       - "-config.file=/etc/promtail/config.yml"
     networks:

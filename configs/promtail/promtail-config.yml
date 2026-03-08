@@ -1,6 +1,6 @@
 # =============================================================================
-# Promtail Configuration - Syslog Receiver
-# OPNsense, ESXi, Synology NAS로부터 syslog 수신
+# Promtail Configuration - Syslog Receiver + Docker + Host Logs
+# OPNsense, ESXi, Synology NAS syslog 수신 + Observer 컨테이너/호스트 로그
 # =============================================================================
 
 server:
@@ -8,7 +8,7 @@ server:
   grpc_listen_port: 0
 
 positions:
-  filename: /tmp/positions.yaml
+  filename: /data/promtail/positions.yaml
 
 clients:
   - url: http://loki:3100/loki/api/v1/push
@@ -17,6 +17,126 @@ clients:
     tenant_id: ""
 
 scrape_configs:
+  # =========================================================================
+  # Docker Container Logs - Observer 서버 컨테이너 자동 발견 (Phase 6A)
+  # =========================================================================
+  - job_name: docker
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 30s
+        filters:
+          - name: label
+            values: ["com.docker.compose.service"]
+    relabel_configs:
+      - source_labels: ["__meta_docker_container_name"]
+        regex: "/(.*)"
+        target_label: "container_name"
+      - source_labels: ["__meta_docker_container_label_com_docker_compose_service"]
+        target_label: "service"
+      - target_label: "device_type"
+        replacement: "container"
+      - target_label: "host"
+        replacement: "observer"
+      - target_label: "job"
+        replacement: "docker"
+    pipeline_stages:
+      # Docker JSON 로그 래퍼 파싱
+      - docker: {}
+      # JSON 로그 포맷 (grafana, loki, promtail)
+      - match:
+          selector: '{service=~"grafana|loki|promtail"}'
+          stages:
+            - json:
+                expressions:
+                  level: level
+                  msg: msg
+            - labels:
+                level:
+            - template:
+                source: severity
+                template: "{{ ToLower .level }}"
+            - labels:
+                severity:
+      # logfmt 로그 포맷 (victoriametrics, vmalert, alertmanager, snmp_exporter, blackbox_exporter)
+      - match:
+          selector: '{service=~"victoriametrics|vmalert|alertmanager|snmp_exporter|blackbox_exporter"}'
+          stages:
+            - logfmt:
+                mapping:
+                  level: level
+            - labels:
+                level:
+            - template:
+                source: severity
+                template: "{{ ToLower .level }}"
+            - labels:
+                severity:
+      # Telegraf 로그 (prefix 기반)
+      - match:
+          selector: '{service="telegraf"}'
+          stages:
+            - regex:
+                expression: "^(?P<timestamp>\\d{4}-\\d{2}-\\d{2}T[\\d:.Z+-]+)\\s+(?P<level>\\w+)"
+            - labels:
+                level:
+            - template:
+                source: severity
+                template: "{{ ToLower .level }}"
+            - labels:
+                severity:
+      # 일반 fallback — severity 추출 (cadvisor, rsyslog, discord-webhook-proxy 등)
+      - match:
+          selector: '{severity=""}'
+          stages:
+            - regex:
+                expression: "(?i)\\b(?P<level>emerg|alert|crit(?:ical)?|err(?:or)?|warn(?:ing)?|notice|info(?:rmational)?|debug)\\b"
+            - template:
+                source: severity
+                template: "{{ ToLower .level }}"
+            - labels:
+                severity:
+
+  # =========================================================================
+  # Host OS Logs - Observer 서버 호스트 로그 (Phase 6A)
+  # =========================================================================
+  - job_name: host_logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          device_type: "server"
+          host: "observer"
+          log_type: "syslog"
+          job: "host_logs"
+          __path__: /var/log/host/syslog
+      - targets:
+          - localhost
+        labels:
+          device_type: "server"
+          host: "observer"
+          log_type: "auth"
+          job: "host_logs"
+          __path__: /var/log/host/auth.log
+      - targets:
+          - localhost
+        labels:
+          device_type: "server"
+          host: "observer"
+          log_type: "kernel"
+          job: "host_logs"
+          __path__: /var/log/host/kern.log
+    pipeline_stages:
+      # syslog 포맷 파싱: "Mon DD HH:MM:SS hostname process[pid]: message"
+      - regex:
+          expression: "^(?P<timestamp>\\w{3}\\s+\\d{1,2}\\s+\\d{2}:\\d{2}:\\d{2})\\s+(?P<hostname>\\S+)\\s+(?P<app>[^\\[:]+)(?:\\[(?P<pid>\\d+)\\])?:\\s+(?P<message>.*)"
+      - labels:
+          app:
+      # severity 추출 fallback
+      - regex:
+          expression: "(?i)\\b(?P<severity>emerg|alert|crit(?:ical)?|err(?:or)?|warn(?:ing)?|notice|info(?:rmational)?|debug)\\b"
+      - labels:
+          severity:
+
   # =========================================================================
   # Syslog Receiver (TCP) - 주요 수신 채널
   # =========================================================================

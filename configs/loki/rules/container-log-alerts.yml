@@ -1,0 +1,78 @@
+# =============================================================================
+# Loki Ruler - Container & Host Log Alert Rules (Phase 6C)
+# LogQL 기반 알림 → Alertmanager 전송
+# =============================================================================
+
+groups:
+  - name: container-log-alerts
+    rules:
+      # -----------------------------------------------------------------------
+      # Warning: 컨테이너 에러 로그 급증
+      # -----------------------------------------------------------------------
+      - alert: ContainerErrorLogSpike
+        expr: |
+          sum by (container_name)(
+            count_over_time({device_type="container", severity=~"error|err|crit|critical|emerg|alert"}[5m])
+          ) > 10
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "컨테이너 에러 로그 급증: {{ $labels.container_name }}"
+          description: "컨테이너 {{ $labels.container_name }}에서 5분간 에러 이상 로그 {{ $value }}건 감지."
+
+      # -----------------------------------------------------------------------
+      # Critical: OOM 감지
+      # -----------------------------------------------------------------------
+      - alert: ContainerOOMDetected
+        expr: |
+          count_over_time({device_type="container"} |~ "(?i)(out of memory|OOM|oom-kill)"[5m]) > 0
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: "컨테이너 OOM 감지"
+          description: "컨테이너 로그에서 OOM(Out of Memory) 이벤트가 감지되었습니다."
+
+      # -----------------------------------------------------------------------
+      # Warning: Connection Refused 다발
+      # -----------------------------------------------------------------------
+      - alert: ContainerConnectionRefused
+        expr: |
+          sum by (container_name)(
+            count_over_time({device_type="container"} |~ "(?i)connection refused"[5m])
+          ) > 5
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "컨테이너 연결 거부 다발: {{ $labels.container_name }}"
+          description: "컨테이너 {{ $labels.container_name }}에서 5분간 connection refused {{ $value }}건 감지."
+
+  - name: host-log-alerts
+    rules:
+      # -----------------------------------------------------------------------
+      # Warning: SSH 브루트포스 시도
+      # -----------------------------------------------------------------------
+      - alert: SSHBruteForceAttempt
+        expr: |
+          count_over_time({device_type="server", log_type="auth"} |~ "(?i)(Failed password|authentication failure|Invalid user)"[5m]) > 10
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "SSH 브루트포스 시도 감지: {{ $labels.host }}"
+          description: "{{ $labels.host }} 서버에서 5분간 SSH 인증 실패 {{ $value }}건 감지."
+
+      # -----------------------------------------------------------------------
+      # Critical: 커널 치명적 오류
+      # -----------------------------------------------------------------------
+      - alert: KernelCriticalError
+        expr: |
+          count_over_time({device_type="server", log_type="kernel"} |~ "(?i)(panic|hardware error|BUG:|Oops)"[5m]) > 0
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: "커널 치명적 오류 감지: {{ $labels.host }}"
+          description: "{{ $labels.host }} 서버에서 커널 패닉 또는 하드웨어 에러가 감지되었습니다."

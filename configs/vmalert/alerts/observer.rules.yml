@@ -83,13 +83,13 @@ groups:
           description: "Observer 서버 CAdvisor가 5분 이상 응답하지 않습니다. 컨테이너 메트릭 수집 불가."
 
       - alert: ObserverContainerDown
-        expr: count(container_last_seen{job="observer_cadvisor", container_label_com_docker_compose_service=~".+"}) < 11
+        expr: count(container_last_seen{job="observer_cadvisor", container_label_com_docker_compose_service=~".+"}) < 13
         for: 3m
         labels:
           severity: warning
         annotations:
           summary: "Observer 컨테이너 수 감소"
-          description: "Observer 서버 실행 중 컨테이너 수가 {{ $value }}개로, 예상(11개)보다 적습니다."
+          description: "Observer 서버 실행 중 컨테이너 수가 {{ $value }}개로, 예상(13개)보다 적습니다."
 
       - alert: ObserverContainerHighMemory
         expr: container_memory_usage_bytes{job="observer_cadvisor", container_label_com_docker_compose_service=~".+"} > 2147483648
