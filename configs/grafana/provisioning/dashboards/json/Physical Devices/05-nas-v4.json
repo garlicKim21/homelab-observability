@@ -538,11 +538,6 @@
           "expr": "synology_cpu_system{job=\"snmp_nas\"}",
           "legendFormat": "System",
           "refId": "B"
-        },
-        {
-          "expr": "synology_cpu_idle{job=\"snmp_nas\"}",
-          "legendFormat": "Idle",
-          "refId": "C"
         }
       ],
       "fieldConfig": {
@@ -587,21 +582,6 @@
                 "value": {
                   "mode": "fixed",
                   "fixedColor": "#F2495C"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Idle"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#FFFFFF10"
                 }
               }
             ]

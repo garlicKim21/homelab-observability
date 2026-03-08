@@ -358,11 +358,6 @@
           "expr": "avg(rate(node_cpu_seconds_total{job=\"opnsense_node\", mode=\"nice\"}[5m])) * 100",
           "legendFormat": "Nice",
           "refId": "D"
-        },
-        {
-          "expr": "avg(rate(node_cpu_seconds_total{job=\"opnsense_node\", mode=\"idle\"}[5m])) * 100",
-          "legendFormat": "Idle",
-          "refId": "E"
         }
       ],
       "fieldConfig": {
@@ -440,21 +435,6 @@
                 "value": {
                   "mode": "fixed",
                   "fixedColor": "#73BF69"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Idle"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#FFFFFF10"
                 }
               }
             ]
