@@ -42,9 +42,9 @@ scrape_configs:
     pipeline_stages:
       # Docker JSON 로그 래퍼 파싱
       - docker: {}
-      # JSON 로그 포맷 (grafana, loki, promtail)
+      # JSON 로그 포맷 (grafana, loki)
       - match:
-          selector: '{service=~"grafana|loki|promtail"}'
+          selector: '{service=~"grafana|loki"}'
           stages:
             - json:
                 expressions:
@@ -57,9 +57,9 @@ scrape_configs:
                 template: "{{ $l := ToLower .level }}{{ if eq $l \"warn\" }}warning{{ else if eq $l \"err\" }}error{{ else if eq $l \"crit\" }}critical{{ else }}{{ $l }}{{ end }}"
             - labels:
                 severity:
-      # logfmt 로그 포맷 (victoriametrics, vmalert, alertmanager, snmp_exporter, blackbox_exporter)
+      # logfmt 로그 포맷 (victoriametrics, vmalert, alertmanager, snmp_exporter, blackbox_exporter, opnsense-exporter)
       - match:
-          selector: '{service=~"victoriametrics|vmalert|alertmanager|snmp_exporter|blackbox_exporter"}'
+          selector: '{service=~"victoriametrics|vmalert|alertmanager|snmp_exporter|blackbox_exporter|opnsense-exporter|promtail"}'
           stages:
             - logfmt:
                 mapping:
