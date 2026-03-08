@@ -763,7 +763,7 @@
       },
       "targets": [
         {
-          "expr": "node_memory_MemTotal_bytes{job=\"observer_node\"} - node_memory_MemAvailable_bytes{job=\"observer_node\"} - node_memory_Buffers_bytes{job=\"observer_node\"} - node_memory_Cached_bytes{job=\"observer_node\"}",
+          "expr": "node_memory_MemTotal_bytes{job=\"observer_node\"} - node_memory_MemFree_bytes{job=\"observer_node\"} - node_memory_Buffers_bytes{job=\"observer_node\"} - node_memory_Cached_bytes{job=\"observer_node\"}",
           "legendFormat": "Used",
           "refId": "A"
         },

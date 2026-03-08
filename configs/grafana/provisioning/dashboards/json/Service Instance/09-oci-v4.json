@@ -489,14 +489,29 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Idle"
+              "options": "Soft IRQ"
             },
             "properties": [
               {
                 "id": "color",
                 "value": {
                   "mode": "fixed",
-                  "fixedColor": "#FFFFFF10"
+                  "fixedColor": "#B877D9"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Steal"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#FADE2A"
                 }
               }
             ]
@@ -505,34 +520,39 @@
       },
       "targets": [
         {
-          "expr": "avg by (mode) (rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"user\"}[$__rate_interval])) * 100",
+          "expr": "sum by (mode) (rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"user\"}[$__rate_interval])) / count(count by (cpu) (node_cpu_seconds_total{job=\"oci_node\"})) * 100",
           "legendFormat": "User",
           "refId": "A"
         },
         {
-          "expr": "avg by (mode) (rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"system\"}[$__rate_interval])) * 100",
+          "expr": "sum by (mode) (rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"system\"}[$__rate_interval])) / count(count by (cpu) (node_cpu_seconds_total{job=\"oci_node\"})) * 100",
           "legendFormat": "System",
           "refId": "B"
         },
         {
-          "expr": "avg by (mode) (rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"iowait\"}[$__rate_interval])) * 100",
+          "expr": "sum by (mode) (rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"iowait\"}[$__rate_interval])) / count(count by (cpu) (node_cpu_seconds_total{job=\"oci_node\"})) * 100",
           "legendFormat": "IO Wait",
           "refId": "C"
         },
         {
-          "expr": "avg by (mode) (rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"irq\"}[$__rate_interval])) * 100",
+          "expr": "sum by (mode) (rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"irq\"}[$__rate_interval])) / count(count by (cpu) (node_cpu_seconds_total{job=\"oci_node\"})) * 100",
           "legendFormat": "IRQ",
           "refId": "D"
         },
         {
-          "expr": "avg by (mode) (rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"nice\"}[$__rate_interval])) * 100",
-          "legendFormat": "Nice",
+          "expr": "sum by (mode) (rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"softirq\"}[$__rate_interval])) / count(count by (cpu) (node_cpu_seconds_total{job=\"oci_node\"})) * 100",
+          "legendFormat": "Soft IRQ",
           "refId": "E"
         },
         {
-          "expr": "avg by (mode) (rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"idle\"}[$__rate_interval])) * 100",
-          "legendFormat": "Idle",
+          "expr": "sum by (mode) (rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"nice\"}[$__rate_interval])) / count(count by (cpu) (node_cpu_seconds_total{job=\"oci_node\"})) * 100",
+          "legendFormat": "Nice",
           "refId": "F"
+        },
+        {
+          "expr": "sum by (mode) (rate(node_cpu_seconds_total{job=\"oci_node\", mode=\"steal\"}[$__rate_interval])) / count(count by (cpu) (node_cpu_seconds_total{job=\"oci_node\"})) * 100",
+          "legendFormat": "Steal",
+          "refId": "G"
         }
       ]
     },
@@ -702,7 +722,7 @@
       },
       "targets": [
         {
-          "expr": "node_memory_MemTotal_bytes{job=\"oci_node\"} - node_memory_MemAvailable_bytes{job=\"oci_node\"} - node_memory_Buffers_bytes{job=\"oci_node\"} - node_memory_Cached_bytes{job=\"oci_node\"}",
+          "expr": "node_memory_MemTotal_bytes{job=\"oci_node\"} - node_memory_MemFree_bytes{job=\"oci_node\"} - node_memory_Buffers_bytes{job=\"oci_node\"} - node_memory_Cached_bytes{job=\"oci_node\"}",
           "legendFormat": "Used",
           "refId": "A"
         },
