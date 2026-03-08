@@ -24,6 +24,57 @@
     },
     {
       "id": 2,
+      "title": "Total VMs",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 0,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "vsphere_inventory_vm_total_value",
+          "legendFormat": "Total",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#5794F2",
+                "value": null
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "short",
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 3,
       "title": "VMs Running",
       "type": "stat",
       "datasource": {
@@ -32,8 +83,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 8,
-        "x": 0,
+        "w": 4,
+        "x": 4,
         "y": 1
       },
       "targets": [
@@ -68,7 +119,7 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
         "justifyMode": "center",
         "reduceOptions": {
           "calcs": [
@@ -78,8 +129,8 @@
       }
     },
     {
-      "id": 3,
-      "title": "Total VMs",
+      "id": 6,
+      "title": "VMs Stopped",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
@@ -87,14 +138,14 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 8,
+        "w": 4,
         "x": 8,
         "y": 1
       },
       "targets": [
         {
-          "expr": "count(vsphere_vm_sys_uptime_latest)",
-          "legendFormat": "Total VMs",
+          "expr": "vsphere_inventory_vm_powered_off_value",
+          "legendFormat": "Stopped",
           "refId": "A"
         }
       ],
@@ -104,8 +155,16 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "#5794F2",
+                "color": "#73BF69",
                 "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 1
+              },
+              {
+                "color": "#F2495C",
+                "value": 3
               }
             ]
           },
@@ -119,7 +178,66 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "textMode": "value_and_name",
+        "textMode": "value",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 7,
+      "title": "VM Snapshots",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 12,
+        "y": 1
+      },
+      "targets": [
+        {
+          "expr": "vsphere_inventory_vm_snapshot_total_value",
+          "legendFormat": "Snapshots",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 1
+              },
+              {
+                "color": "#F2495C",
+                "value": 5
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "short",
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
         "justifyMode": "center",
         "reduceOptions": {
           "calcs": [
@@ -616,6 +734,60 @@
       }
     },
     {
+      "id": 33,
+      "title": "Disk I/O Trend - Top VMs",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 31
+      },
+      "targets": [
+        {
+          "expr": "topk(10, vsphere_vm_disk_read_average)",
+          "legendFormat": "{{ vmname }} Read",
+          "refId": "A"
+        },
+        {
+          "expr": "topk(10, vsphere_vm_disk_write_average) * -1",
+          "legendFormat": "{{ vmname }} Write",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "KBs",
+          "custom": {
+            "showPoints": "never",
+            "spanNulls": false,
+            "lineWidth": 2,
+            "fillOpacity": 15
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
       "id": 40,
       "title": "Top 10 Network",
       "type": "row",
@@ -624,7 +796,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 31
+        "y": 39
       },
       "panels": []
     },
@@ -640,7 +812,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 32
+        "y": 40
       },
       "targets": [
         {
@@ -698,7 +870,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 32
+        "y": 40
       },
       "targets": [
         {
@@ -739,6 +911,60 @@
         "showUnfilled": true,
         "reduceOptions": {
           "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 43,
+      "title": "Network I/O Trend - Top VMs",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 48
+      },
+      "targets": [
+        {
+          "expr": "topk(10, vsphere_vm_net_received_average)",
+          "legendFormat": "{{ vmname }} Rx",
+          "refId": "A"
+        },
+        {
+          "expr": "topk(10, vsphere_vm_net_transmitted_average) * -1",
+          "legendFormat": "{{ vmname }} Tx",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "KBs",
+          "custom": {
+            "showPoints": "never",
+            "spanNulls": false,
+            "lineWidth": 2,
+            "fillOpacity": 15
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
             "lastNotNull"
           ]
         }
