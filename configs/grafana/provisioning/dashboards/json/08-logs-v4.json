@@ -10,8 +10,8 @@
   "liveNow": false,
   "panels": [
     {
-      "id": 1,
-      "title": "Log Volume",
+      "id": 50,
+      "title": "Log Status",
       "type": "row",
       "collapsed": false,
       "gridPos": {
@@ -23,6 +23,250 @@
       "panels": []
     },
     {
+      "id": 51,
+      "title": "Log Rate",
+      "type": "stat",
+      "datasource": {
+        "type": "loki",
+        "uid": "Loki"
+      },
+      "description": "현재 초당 로그 수집 속도",
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 0,
+        "y": 1
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "Loki"
+          },
+          "expr": "sum(rate({device_type=~\".+\"}[5m]))",
+          "legendFormat": "Rate",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#F2495C",
+                "value": null
+              },
+              {
+                "color": "#73BF69",
+                "value": 1
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "short",
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 52,
+      "title": "Error Rate",
+      "type": "stat",
+      "datasource": {
+        "type": "loki",
+        "uid": "Loki"
+      },
+      "description": "5분간 error 이상 로그 건수",
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 4,
+        "y": 1
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "Loki"
+          },
+          "expr": "sum(count_over_time({device_type=~\".+\", severity=~\"error|err|crit|critical|emerg|alert\"}[5m]))",
+          "legendFormat": "Errors",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 10
+              },
+              {
+                "color": "#F2495C",
+                "value": 50
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "short",
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 53,
+      "title": "Active Log Alerts",
+      "type": "stat",
+      "datasource": {
+        "type": "alertmanager",
+        "uid": "Alertmanager"
+      },
+      "description": "Loki ruler에서 firing 중인 로그 알림 수",
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 8,
+        "y": 1
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "alertmanager",
+            "uid": "Alertmanager"
+          },
+          "refId": "A",
+          "queryType": "alertmanager"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#FADE2A",
+                "value": 1
+              },
+              {
+                "color": "#F2495C",
+                "value": 3
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "short",
+          "noValue": "0"
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      },
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "count"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "title": "Recent Log Alerts",
+      "type": "table",
+      "datasource": {
+        "type": "alertmanager",
+        "uid": "Alertmanager"
+      },
+      "description": "Alertmanager에서 활성 중인 로그 관련 알림 목록",
+      "gridPos": {
+        "h": 3,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "alertmanager",
+            "uid": "Alertmanager"
+          },
+          "refId": "A",
+          "queryType": "alertmanager"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "noValue": "No active alerts"
+        }
+      },
+      "options": {
+        "showHeader": true
+      }
+    },
+    {
+      "id": 1,
+      "title": "Log Volume",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "panels": []
+    },
+    {
       "id": 2,
       "title": "Log Volume by Source",
       "type": "timeseries",
@@ -30,12 +274,12 @@
         "type": "loki",
         "uid": "Loki"
       },
-      "description": "Log event count per device source over time. Stacked bars show relative contribution of each device.",
+      "description": "Log event count per device source over time.",
       "gridPos": {
         "h": 8,
-        "w": 12,
+        "w": 8,
         "x": 0,
-        "y": 1
+        "y": 5
       },
       "targets": [
         {
@@ -92,12 +336,12 @@
         "type": "loki",
         "uid": "Loki"
       },
-      "description": "Log event count per severity level over time. Stacked bars show relative contribution of each severity.",
+      "description": "Log event count per severity level over time.",
       "gridPos": {
         "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 1
+        "w": 8,
+        "x": 8,
+        "y": 5
       },
       "targets": [
         {
@@ -269,6 +513,68 @@
       }
     },
     {
+      "id": 21,
+      "title": "Log Volume by Container",
+      "type": "timeseries",
+      "datasource": {
+        "type": "loki",
+        "uid": "Loki"
+      },
+      "description": "Log event count per container over time.",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 5
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "Loki"
+          },
+          "expr": "sum by (container_name)(count_over_time({device_type=~\"container|application\", container_name=~\"$container_name\"}[$__interval]))",
+          "legendFormat": "{{ container_name }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "fillOpacity": 50,
+            "lineWidth": 0,
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            },
+            "showPoints": "never",
+            "spanNulls": false
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "noValue": "N/A"
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "sum",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
       "id": 10,
       "title": "Log Explorer",
       "type": "row",
@@ -277,7 +583,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 13
       },
       "panels": []
     },
@@ -294,7 +600,7 @@
         "h": 20,
         "w": 24,
         "x": 0,
-        "y": 10
+        "y": 14
       },
       "targets": [
         {
@@ -323,82 +629,6 @@
         "sortOrder": "Descending",
         "wrapLogMessage": false
       }
-    },
-    {
-      "id": 20,
-      "title": "Container Logs",
-      "type": "row",
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 30
-      },
-      "panels": [
-        {
-          "id": 21,
-          "title": "Log Volume by Container",
-          "type": "timeseries",
-          "datasource": {
-            "type": "loki",
-            "uid": "Loki"
-          },
-          "description": "Log event count per container over time. Stacked bars show relative contribution of each container.",
-          "gridPos": {
-            "h": 8,
-            "w": 24,
-            "x": 0,
-            "y": 31
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "loki",
-                "uid": "Loki"
-              },
-              "expr": "sum by (container_name)(count_over_time({device_type=~\"container|application\", container_name=~\"$container_name\"}[$__interval]))",
-              "legendFormat": "{{ container_name }}",
-              "refId": "A"
-            }
-          ],
-          "fieldConfig": {
-            "defaults": {
-              "unit": "short",
-              "custom": {
-                "fillOpacity": 50,
-                "lineWidth": 0,
-                "barAlignment": 0,
-                "drawStyle": "bars",
-                "stacking": {
-                  "mode": "normal",
-                  "group": "A"
-                },
-                "showPoints": "never",
-                "spanNulls": false
-              },
-              "color": {
-                "mode": "palette-classic"
-              },
-              "noValue": "N/A"
-            }
-          },
-          "options": {
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            },
-            "legend": {
-              "displayMode": "table",
-              "placement": "bottom",
-              "calcs": [
-                "sum",
-                "lastNotNull"
-              ]
-            }
-          }
-        }
-      ]
     }
   ],
   "refresh": "30s",
