@@ -26,7 +26,7 @@ groups:
       # -----------------------------------------------------------------------
       - alert: ContainerOOMDetected
         expr: |
-          count_over_time({device_type="container"} |~ "(?i)(out of memory|OOM|oom-kill)"[5m]) > 0
+          count_over_time({device_type="container"} !~ "rule_name=" |~ "(?i)(out of memory|OOM|oom-kill)"[5m]) > 0
         for: 0m
         labels:
           severity: critical
@@ -40,7 +40,7 @@ groups:
       - alert: ContainerConnectionRefused
         expr: |
           sum by (container_name)(
-            count_over_time({device_type="container"} |~ "(?i)connection refused"[5m])
+            count_over_time({device_type="container"} !~ "rule_name=" |~ "(?i)connection refused"[5m])
           ) > 5
         for: 0m
         labels:
