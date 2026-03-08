@@ -633,7 +633,7 @@
       },
       "targets": [
         {
-          "expr": "topk(10, vsphere_vm_disk_read_average)",
+          "expr": "topk(10, vsphere_vm_disk_read_average{disk=\"instance-total\"})",
           "legendFormat": "{{ vmname }}",
           "refId": "A"
         }
@@ -691,7 +691,7 @@
       },
       "targets": [
         {
-          "expr": "topk(10, vsphere_vm_disk_write_average)",
+          "expr": "topk(10, vsphere_vm_disk_write_average{disk=\"instance-total\"})",
           "legendFormat": "{{ vmname }}",
           "refId": "A"
         }
@@ -749,12 +749,12 @@
       },
       "targets": [
         {
-          "expr": "topk(10, vsphere_vm_disk_read_average)",
+          "expr": "topk(10, vsphere_vm_disk_read_average{disk=\"instance-total\"})",
           "legendFormat": "{{ vmname }} Read",
           "refId": "A"
         },
         {
-          "expr": "topk(10, vsphere_vm_disk_write_average) * -1",
+          "expr": "topk(10, vsphere_vm_disk_write_average{disk=\"instance-total\"}) * -1",
           "legendFormat": "{{ vmname }} Write",
           "refId": "B"
         }
@@ -816,7 +816,7 @@
       },
       "targets": [
         {
-          "expr": "topk(10, vsphere_vm_net_received_average)",
+          "expr": "topk(10, vsphere_vm_net_received_average{interface=\"instance-total\"})",
           "legendFormat": "{{ vmname }}",
           "refId": "A"
         }
@@ -874,7 +874,7 @@
       },
       "targets": [
         {
-          "expr": "topk(10, vsphere_vm_net_transmitted_average)",
+          "expr": "topk(10, vsphere_vm_net_transmitted_average{interface=\"instance-total\"})",
           "legendFormat": "{{ vmname }}",
           "refId": "A"
         }
@@ -932,12 +932,12 @@
       },
       "targets": [
         {
-          "expr": "topk(10, vsphere_vm_net_received_average)",
+          "expr": "topk(10, vsphere_vm_net_received_average{interface=\"instance-total\"})",
           "legendFormat": "{{ vmname }} Rx",
           "refId": "A"
         },
         {
-          "expr": "topk(10, vsphere_vm_net_transmitted_average) * -1",
+          "expr": "topk(10, vsphere_vm_net_transmitted_average{interface=\"instance-total\"}) * -1",
           "legendFormat": "{{ vmname }} Tx",
           "refId": "B"
         }
