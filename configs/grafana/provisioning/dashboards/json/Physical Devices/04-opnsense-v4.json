@@ -368,7 +368,7 @@
           "custom": {
             "drawStyle": "line",
             "fillOpacity": 50,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false,
             "stacking": {
@@ -561,7 +561,7 @@
           "custom": {
             "drawStyle": "line",
             "fillOpacity": 50,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false,
             "stacking": {
@@ -714,7 +714,7 @@
           "custom": {
             "drawStyle": "line",
             "fillOpacity": 15,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false
           },
@@ -885,7 +885,7 @@
           "custom": {
             "drawStyle": "line",
             "fillOpacity": 50,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false,
             "stacking": {
@@ -944,7 +944,7 @@
           "custom": {
             "drawStyle": "line",
             "fillOpacity": 50,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false,
             "stacking": {
@@ -1015,7 +1015,7 @@
           "custom": {
             "drawStyle": "line",
             "fillOpacity": 15,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false
           },
@@ -1102,7 +1102,7 @@
           "custom": {
             "drawStyle": "line",
             "fillOpacity": 15,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false
           },
@@ -1189,7 +1189,7 @@
           "custom": {
             "drawStyle": "line",
             "fillOpacity": 15,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false
           },
@@ -1288,7 +1288,7 @@
           "custom": {
             "drawStyle": "line",
             "fillOpacity": 15,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false
           },
@@ -1343,7 +1343,7 @@
           "custom": {
             "drawStyle": "line",
             "fillOpacity": 15,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false
           },
@@ -1405,7 +1405,7 @@
           "custom": {
             "drawStyle": "line",
             "fillOpacity": 15,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false
           },
@@ -1473,7 +1473,7 @@
           "custom": {
             "drawStyle": "line",
             "fillOpacity": 15,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false
           },
@@ -1777,7 +1777,7 @@
           "custom": {
             "drawStyle": "line",
             "fillOpacity": 15,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false
           },
@@ -1945,7 +1945,7 @@
               "custom": {
                 "drawStyle": "line",
                 "fillOpacity": 15,
-                "lineWidth": 2,
+                "lineWidth": 1,
                 "showPoints": "never",
                 "spanNulls": false
               },

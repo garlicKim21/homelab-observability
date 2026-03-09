@@ -67,6 +67,19 @@
 }
 ```
 
+### 시계열 (Timeseries) 패널 스타일
+
+#### 선 굵기
+- **lineWidth**: `1` (모든 시계열 패널 통일)
+- 예외: 로그 대시보드 바 차트는 `0`
+
+#### +/- 미러링 패널 (Network In/Out, Disk Read/Write 등)
+- **양수(+) 시리즈**: 실선 (기본)
+- **음수(-) 시리즈**: 점선 `{ "fill": "dash", "dash": [10, 5] }`
+- **axisLabel**: `"Read (+) / Write (-)"` 또는 `"In (+) / Out (-)"`
+- 음수 시리즈에 `fillOpacity: 10` 적용 (양수보다 약간 연하게)
+- 레이턴시 포함, 모든 +/- 미러링 패널에 동일 적용
+
 ### Unix Timestamp 메트릭
 `*_last_handshake_seconds` 같은 Unix timestamp 메트릭은 그대로 표시하면 안 됨.
 반드시 `time() - metric` 으로 경과 시간을 계산할 것.

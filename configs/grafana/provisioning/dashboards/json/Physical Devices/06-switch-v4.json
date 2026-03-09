@@ -440,7 +440,7 @@
           "max": 100,
           "custom": {
             "fillOpacity": 15,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false
           },
@@ -624,7 +624,7 @@
           "max": 100,
           "custom": {
             "fillOpacity": 15,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false
           },
@@ -713,7 +713,7 @@
           "unit": "bps",
           "custom": {
             "fillOpacity": 15,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false
           },
@@ -871,7 +871,7 @@
           "unit": "pps",
           "custom": {
             "fillOpacity": 15,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false
           },
@@ -947,7 +947,7 @@
           "unit": "pps",
           "custom": {
             "fillOpacity": 15,
-            "lineWidth": 2,
+            "lineWidth": 1,
             "showPoints": "never",
             "spanNulls": false
           },

@@ -401,7 +401,7 @@
           "max": 100,
           "custom": {
             "showPoints": "never",
-            "lineWidth": 2,
+            "lineWidth": 1,
             "fillOpacity": 50,
             "stacking": {
               "mode": "normal"
@@ -648,7 +648,7 @@
           "unit": "bytes",
           "custom": {
             "showPoints": "never",
-            "lineWidth": 2,
+            "lineWidth": 1,
             "fillOpacity": 50,
             "stacking": {
               "mode": "normal"
@@ -790,7 +790,7 @@
           "unit": "short",
           "custom": {
             "showPoints": "never",
-            "lineWidth": 2,
+            "lineWidth": 1,
             "fillOpacity": 15,
             "spanNulls": false
           },
@@ -922,7 +922,7 @@
           "unit": "bps",
           "custom": {
             "showPoints": "never",
-            "lineWidth": 2,
+            "lineWidth": 1,
             "fillOpacity": 15,
             "spanNulls": false
           },
@@ -960,6 +960,13 @@
               {
                 "id": "custom.transform",
                 "value": "negative-Y"
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [10, 5]
+                }
               }
             ]
           }
@@ -1012,7 +1019,7 @@
           "unit": "Bps",
           "custom": {
             "showPoints": "never",
-            "lineWidth": 2,
+            "lineWidth": 1,
             "fillOpacity": 15,
             "spanNulls": false
           },
@@ -1028,6 +1035,13 @@
               {
                 "id": "custom.transform",
                 "value": "negative-Y"
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [10, 5]
+                }
               }
             ]
           },
@@ -1040,6 +1054,13 @@
               {
                 "id": "custom.transform",
                 "value": "negative-Y"
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [10, 5]
+                }
               }
             ]
           }
@@ -1332,7 +1353,7 @@
           "unit": "percent",
           "custom": {
             "showPoints": "never",
-            "lineWidth": 2,
+            "lineWidth": 1,
             "fillOpacity": 15,
             "spanNulls": false
           },
@@ -1381,7 +1402,7 @@
           "unit": "bytes",
           "custom": {
             "showPoints": "never",
-            "lineWidth": 2,
+            "lineWidth": 1,
             "fillOpacity": 15,
             "spanNulls": false
           },
@@ -1442,7 +1463,7 @@
               "unit": "short",
               "custom": {
                 "showPoints": "never",
-                "lineWidth": 2,
+                "lineWidth": 1,
                 "fillOpacity": 15,
                 "spanNulls": false
               },
@@ -1491,7 +1512,7 @@
               "unit": "bytes",
               "custom": {
                 "showPoints": "never",
-                "lineWidth": 2,
+                "lineWidth": 1,
                 "fillOpacity": 15,
                 "spanNulls": false
               },
@@ -1612,7 +1633,7 @@
               "unit": "s",
               "custom": {
                 "showPoints": "never",
-                "lineWidth": 2,
+                "lineWidth": 1,
                 "fillOpacity": 50,
                 "stacking": {
                   "mode": "normal"
