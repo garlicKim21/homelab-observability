@@ -12,7 +12,7 @@ services:
   # VictoriaMetrics - 시계열 데이터베이스 (Prometheus 호환 TSDB)
   # ---------------------------------------------------------------------------
   victoriametrics:
-    image: victoriametrics/victoria-metrics:v1.106.1
+    image: victoriametrics/victoria-metrics:v1.137.0
     container_name: victoriametrics
     restart: unless-stopped
     mem_limit: 1536m
@@ -49,7 +49,7 @@ services:
   # VictoriaMetrics에 쿼리 → 규칙 평가 → Alertmanager로 전송
   # ---------------------------------------------------------------------------
   vmalert:
-    image: victoriametrics/vmalert:v1.106.1
+    image: victoriametrics/vmalert:v1.137.0
     container_name: vmalert
     restart: unless-stopped
     mem_limit: 256m
@@ -76,7 +76,7 @@ services:
   # Alertmanager - 알림 라우팅 및 Discord 전송
   # ---------------------------------------------------------------------------
   alertmanager:
-    image: prom/alertmanager:v0.27.0
+    image: prom/alertmanager:v0.31.1
     container_name: alertmanager
     restart: unless-stopped
     mem_limit: 128m
@@ -102,7 +102,7 @@ services:
   # Grafana - 시각화 대시보드
   # ---------------------------------------------------------------------------
   grafana:
-    image: grafana/grafana:11.4.0
+    image: grafana/grafana:12.4.0
     container_name: grafana
     restart: unless-stopped
     mem_limit: 512m
@@ -142,7 +142,7 @@ services:
   # TP-Link SG2218, Synology NAS, ipTime AP
   # ---------------------------------------------------------------------------
   snmp_exporter:
-    image: prom/snmp-exporter:v0.26.0
+    image: prom/snmp-exporter:v0.30.1
     container_name: snmp_exporter
     restart: unless-stopped
     mem_limit: 128m
@@ -254,7 +254,7 @@ services:
   # Blackbox Exporter - HTTP/HTTPS 엔드포인트 프로빙
   # ---------------------------------------------------------------------------
   blackbox_exporter:
-    image: prom/blackbox-exporter:v0.25.0
+    image: prom/blackbox-exporter:v0.27.0
     container_name: blackbox_exporter
     restart: unless-stopped
     mem_limit: 128m
