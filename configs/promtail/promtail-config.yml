@@ -169,6 +169,12 @@ scrape_configs:
       - source_labels: ["__syslog_message_app_name"]
         target_label: "app"
     pipeline_stages:
+      # severity 정규화: RFC 5424 원본 → 축약형 통일
+      - template:
+          source: severity
+          template: '{{ if eq .Value "informational" }}info{{ else }}{{ .Value }}{{ end }}'
+      - labels:
+          severity:
       # IP 기반으로 device_type 레이블 추가
       - match:
           selector: '{host_ip=~"<FIREWALL_IP_1>|<FIREWALL_IP_2>|<FIREWALL_IP_3>"}'  # 방화벽 IP로 교체
@@ -223,6 +229,12 @@ scrape_configs:
       - source_labels: ["__syslog_message_app_name"]
         target_label: "app"
     pipeline_stages:
+      # severity 정규화: RFC 5424 원본 → 축약형 통일
+      - template:
+          source: severity
+          template: '{{ if eq .Value "informational" }}info{{ else }}{{ .Value }}{{ end }}'
+      - labels:
+          severity:
       # hostname 기반 device_type 분류
       - match:
           selector: '{host=~"esxi.*"}'
