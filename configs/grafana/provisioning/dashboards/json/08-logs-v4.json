@@ -602,6 +602,7 @@
         "x": 0,
         "y": 14
       },
+      "interval": "5m",
       "targets": [
         {
           "datasource": {
