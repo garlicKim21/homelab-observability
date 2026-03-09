@@ -589,13 +589,13 @@
     },
     {
       "id": 61,
-      "title": "Warning+ Log Heatmap by Host",
+      "title": "Error+ Log Heatmap by Host",
       "type": "heatmap",
       "datasource": {
         "type": "loki",
         "uid": "Loki"
       },
-      "description": "호스트별 warning 이상 로그 밀도. 색이 진할수록 해당 호스트에서 경고/에러 로그가 많음.",
+      "description": "호스트별 error 이상 로그 밀도. 색이 진할수록 해당 호스트에서 에러 로그가 많음.",
       "gridPos": {
         "h": 8,
         "w": 24,
@@ -609,7 +609,7 @@
             "type": "loki",
             "uid": "Loki"
           },
-          "expr": "sum by (host)(count_over_time({device_type=~\"$device_type\", host=~\"$host\", severity=~\"warning|error|critical|alert|emergency\"}[$__interval]))",
+          "expr": "sum by (host)(count_over_time({device_type=~\"$device_type\", host=~\"$host\", severity=~\"error|critical|alert|emergency\"}[$__interval]))",
           "legendFormat": "{{ host }}",
           "refId": "A"
         }
