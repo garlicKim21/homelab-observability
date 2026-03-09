@@ -468,7 +468,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "informational"
+              "options": "info"
             },
             "properties": [
               {
@@ -575,6 +575,86 @@
       }
     },
     {
+      "id": 60,
+      "title": "Log Heatmap",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 13
+      },
+      "panels": []
+    },
+    {
+      "id": 61,
+      "title": "Log Activity Heatmap",
+      "type": "heatmap",
+      "datasource": {
+        "type": "loki",
+        "uid": "Loki"
+      },
+      "description": "시간대별 severity 로그 밀도. 색이 진할수록 로그 볼륨이 높음.",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "Loki"
+          },
+          "expr": "sum by (severity)(count_over_time({device_type=~\"$device_type\", host=~\"$host\", severity=~\"$level\"}[$__interval]))",
+          "legendFormat": "{{ severity }}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "scaleDistribution": {
+              "type": "linear"
+            }
+          }
+        }
+      },
+      "options": {
+        "calculate": false,
+        "cellGap": 2,
+        "color": {
+          "exponent": 0.5,
+          "fill": "#73BF69",
+          "mode": "scheme",
+          "reverse": false,
+          "scale": "exponential",
+          "scheme": "RdYlGn",
+          "steps": 128
+        },
+        "filterValues": {
+          "le": 0
+        },
+        "tooltip": {
+          "mode": "single",
+          "showColorScale": true
+        },
+        "yAxis": {
+          "reverse": true
+        },
+        "cellValues": {},
+        "rowsFrame": {
+          "layout": "auto"
+        },
+        "showValue": "never",
+        "legend": {
+          "show": true
+        }
+      }
+    },
+    {
       "id": 10,
       "title": "Log Explorer",
       "type": "row",
@@ -583,7 +663,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 22
       },
       "panels": []
     },
@@ -600,7 +680,7 @@
         "h": 20,
         "w": 24,
         "x": 0,
-        "y": 14
+        "y": 23
       },
       "targets": [
         {
