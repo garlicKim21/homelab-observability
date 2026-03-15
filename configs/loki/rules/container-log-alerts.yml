@@ -26,7 +26,7 @@ groups:
       # -----------------------------------------------------------------------
       - alert: ContainerOOMDetected
         expr: |
-          count_over_time({device_type="container", container_name!="loki"} |~ "(?i)(out of memory|OOM|oom-kill)"[5m]) > 0
+          count_over_time({device_type="container", container_name!="loki"} |~ "(?i)(out of memory|oom-kill|oom_killed|killed process)" !~ "(?i)(watching.*oom|enabled metrics|oom_event)"[5m]) > 0
         for: 0m
         labels:
           severity: critical
