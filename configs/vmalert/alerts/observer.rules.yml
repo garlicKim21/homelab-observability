@@ -11,13 +11,22 @@ groups:
       # Critical: 디스크 용량
       # -----------------------------------------------------------------------
       - alert: ObserverDiskAlmostFull
-        expr: (1 - node_filesystem_avail_bytes{job="observer_node", mountpoint="/"} / node_filesystem_size_bytes{job="observer_node", mountpoint="/"}) * 100 > 85
+        expr: (1 - node_filesystem_avail_bytes{job="observer_node", mountpoint="/"} / node_filesystem_size_bytes{job="observer_node", mountpoint="/"}) * 100 > 90
         for: 5m
         labels:
           severity: critical
         annotations:
-          summary: "Observer 디스크(/) 용량 부족"
-          description: "Observer 서버 디스크 사용률 {{ $value | printf \"%.1f\" }}%가 85%를 초과합니다. VM/Loki 데이터 정리 필요."
+          summary: "Observer OS 디스크(/) 용량 부족"
+          description: "Observer 서버 루트 파티션 사용률 {{ $value | printf \"%.1f\" }}%가 90%를 초과합니다."
+
+      - alert: ObserverDataDiskFull
+        expr: (1 - node_filesystem_avail_bytes{job="observer_node", mountpoint="/data"} / node_filesystem_size_bytes{job="observer_node", mountpoint="/data"}) * 100 > 85
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Observer 데이터 디스크(/data) 용량 부족"
+          description: "Observer 서버 데이터 파티션(/data) 사용률 {{ $value | printf \"%.1f\" }}%가 85%를 초과합니다. VM/Loki 데이터 정리 필요."
 
       # -----------------------------------------------------------------------
       # Warning: 시스템 리소스

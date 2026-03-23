@@ -14,7 +14,7 @@ if [[ ! -f .env ]]; then
   exit 1
 fi
 
-REQUIRED_VARS=(OCI_INSTANCE_IP AP_IP FIREWALL_IP_1 FIREWALL_IP_2 FIREWALL_IP_3 ESXI_IP_PATTERN NAS_IP SNMP_AUTH_PASS SNMP_PRIV_PASS SNMP_AP_AUTH_PASS SNMP_AP_PRIV_PASS SNMP_USERNAME SNMP_AP_USERNAME OPNSENSE_HOST SWITCH_HOST NAS_HOST VCENTER_HOST)
+REQUIRED_VARS=(OCI_INSTANCE_IP AP_IP FIREWALL_IP_1 FIREWALL_IP_2 FIREWALL_IP_3 ESXI_IP_PATTERN NAS_IP SNMP_AUTH_PASS SNMP_PRIV_PASS SNMP_AP_AUTH_PASS SNMP_AP_PRIV_PASS SNMP_USERNAME SNMP_AP_USERNAME OPNSENSE_HOST SWITCH_HOST NAS_HOST)
 for var in "${REQUIRED_VARS[@]}"; do
   val=$(grep "^${var}=" .env | head -1 | cut -d'=' -f2-)
   if [[ -z "$val" ]]; then
@@ -118,15 +118,16 @@ else:
 print("")
 PYEOF
 
-# ---- /data 디렉토리 검사 ----
-echo "=== 데이터 디렉토리 검사 ==="
-if [[ ! -d /data ]]; then
-  echo "[ERROR] /data 디렉토리가 없습니다!"
-  echo "  → sudo mkdir -p /data/{victoriametrics,loki,promtail}"
+# ---- /data 마운트 검사 ----
+echo "=== 데이터 디스크 마운트 검사 ==="
+if ! mountpoint -q /data 2>/dev/null; then
+  echo "[ERROR] /data가 마운트되지 않았습니다!"
+  echo "  → 별도 디스크(sdb1)가 마운트되지 않으면 메트릭/로그 데이터가 유실됩니다."
+  echo "  → 수동 마운트: sudo mount /data"
   echo "  → 배포를 중단합니다."
   exit 1
 fi
-echo "  [OK] /data 디렉토리 확인 ($(df -h /data | awk 'NR==2{print $2, "total,", $4, "free"}'))"
+echo "  [OK] /data 마운트 확인 ($(df -h /data | awk 'NR==2{print $2, "total,", $4, "free"}'))"
 echo ""
 
 # ---- Docker Compose ----

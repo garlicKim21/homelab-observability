@@ -17,6 +17,8 @@ services:
     restart: unless-stopped
     mem_limit: 1536m
     cpus: 1.5
+    dns:
+      - ${DNS_SERVER}  # 내부 DNS (basphere.local 해석)
     ports:
       - "8428:8428"       # HTTP API + Prometheus remote_write
       - "8089:8089"       # InfluxDB line protocol (Telegraf push용)
@@ -145,6 +147,8 @@ services:
     restart: unless-stopped
     mem_limit: 128m
     cpus: 0.25
+    dns:
+      - ${DNS_SERVER}
     ports:
       - "9116:9116"
     volumes:
@@ -164,9 +168,11 @@ services:
     restart: unless-stopped
     mem_limit: 128m
     cpus: 0.25
+    dns:
+      - ${DNS_SERVER}
     command:
       - --opnsense.protocol=https
-      - --opnsense.address=${OPNSENSE_HOST}
+      - --opnsense.address=cerberus.basphere.local
       - --exporter.instance-label=cerberus
       - --web.listen-address=:8080
       - --opnsense.insecure    # 내부 자체서명 인증서 허용
@@ -253,6 +259,8 @@ services:
     restart: unless-stopped
     mem_limit: 128m
     cpus: 0.25
+    dns:
+      - ${DNS_SERVER}
     ports:
       - "9115:9115"
     volumes:
@@ -302,8 +310,10 @@ services:
     restart: unless-stopped
     mem_limit: 256m
     cpus: 0.25
+    dns:
+      - ${DNS_SERVER}
     environment:
-      - VCENTER_HOST=${VCENTER_HOST:?Set VCENTER_HOST in .env}
+      - VCENTER_HOST=${VCENTER_HOST:-vcsa.basphere.local}
       - VCENTER_USER=${VCENTER_USER:?Set VCENTER_USER in .env}
       - VCENTER_PASSWORD=${VCENTER_PASSWORD:?Set VCENTER_PASSWORD in .env}
     volumes:
