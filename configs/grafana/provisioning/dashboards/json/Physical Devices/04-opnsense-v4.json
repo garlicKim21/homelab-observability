@@ -1629,22 +1629,90 @@
     },
     {
       "id": 101,
-      "title": "Tunnel Status",
+      "title": "Tunnel 1",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 8,
+        "h": 4,
         "w": 3,
         "x": 0,
         "y": 57
       },
       "targets": [
         {
-          "expr": "opnsense_ipsec_phase1_status",
-          "legendFormat": "{{description}}",
+          "expr": "opnsense_ipsec_phase1_status{description=~\".*Tunnel 1.*\"}",
+          "legendFormat": "Status",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "#F2495C",
+                  "index": 0
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "#73BF69",
+                  "index": 1
+                }
+              }
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#F2495C",
+                "value": null
+              },
+              {
+                "color": "#73BF69",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 105,
+      "title": "Tunnel 2",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 3,
+        "y": 57
+      },
+      "targets": [
+        {
+          "expr": "opnsense_ipsec_phase1_status{description=~\".*Tunnel 2.*\"}",
+          "legendFormat": "Status",
           "refId": "A"
         }
       ],
@@ -1697,22 +1765,22 @@
     },
     {
       "id": 102,
-      "title": "Connected Since",
+      "title": "Tunnel 1 Connected",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 8,
+        "h": 4,
         "w": 3,
-        "x": 3,
-        "y": 57
+        "x": 0,
+        "y": 61
       },
       "targets": [
         {
-          "expr": "time() - opnsense_ipsec_phase1_install_time",
-          "legendFormat": "{{description}}",
+          "expr": "opnsense_ipsec_phase1_install_time{description=~\".*Tunnel 1.*\"}",
+          "legendFormat": "Connected",
           "refId": "A"
         }
       ],
@@ -1720,6 +1788,55 @@
         "colorMode": "value",
         "graphMode": "none",
         "textMode": "value_and_name",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              }
+            ]
+          },
+          "noValue": "N/A"
+        }
+      }
+    },
+    {
+      "id": 106,
+      "title": "Tunnel 2 Connected",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 3,
+        "y": 61
+      },
+      "targets": [
+        {
+          "expr": "opnsense_ipsec_phase1_install_time{description=~\".*Tunnel 2.*\"}",
+          "legendFormat": "Connected",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "justifyMode": "center",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
