@@ -1636,8 +1636,8 @@
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 4,
-        "w": 6,
+        "h": 8,
+        "w": 3,
         "x": 0,
         "y": 57
       },
@@ -1697,28 +1697,23 @@
     },
     {
       "id": 102,
-      "title": "SA Lifetime",
+      "title": "Connected Since",
       "type": "stat",
       "datasource": {
         "type": "prometheus",
         "uid": "VictoriaMetrics"
       },
       "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 0,
-        "y": 61
+        "h": 8,
+        "w": 3,
+        "x": 3,
+        "y": 57
       },
       "targets": [
         {
-          "expr": "opnsense_ipsec_phase2_life_time",
-          "legendFormat": "Lifetime {{description}}",
+          "expr": "time() - opnsense_ipsec_phase1_install_time",
+          "legendFormat": "{{description}}",
           "refId": "A"
-        },
-        {
-          "expr": "opnsense_ipsec_phase2_rekey_time",
-          "legendFormat": "Rekey {{description}}",
-          "refId": "B"
         }
       ],
       "options": {
