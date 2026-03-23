@@ -1616,6 +1616,292 @@
       }
     },
     {
+      "id": 100,
+      "title": "IPSec Site-to-Site VPN",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 56
+      }
+    },
+    {
+      "id": 101,
+      "title": "Tunnel Status",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 57
+      },
+      "targets": [
+        {
+          "expr": "opnsense_ipsec_phase1_status",
+          "legendFormat": "{{description}}",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "#F2495C",
+                  "index": 0
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "#73BF69",
+                  "index": 1
+                }
+              }
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#F2495C",
+                "value": null
+              },
+              {
+                "color": "#73BF69",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 102,
+      "title": "SA Lifetime",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 61
+      },
+      "targets": [
+        {
+          "expr": "opnsense_ipsec_phase2_life_time",
+          "legendFormat": "Lifetime {{description}}",
+          "refId": "A"
+        },
+        {
+          "expr": "opnsense_ipsec_phase2_rekey_time",
+          "legendFormat": "Rekey {{description}}",
+          "refId": "B"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              }
+            ]
+          },
+          "noValue": "N/A"
+        }
+      }
+    },
+    {
+      "id": 103,
+      "title": "IPSec Traffic",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 9,
+        "x": 6,
+        "y": 57
+      },
+      "targets": [
+        {
+          "expr": "rate(opnsense_ipsec_phase1_bytes_in[5m])",
+          "legendFormat": "{{description}} In",
+          "refId": "A"
+        },
+        {
+          "expr": "-rate(opnsense_ipsec_phase1_bytes_out[5m])",
+          "legendFormat": "{{description}} Out",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps",
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "spanNulls": false,
+            "axisLabel": "In (+) / Out (-)"
+          },
+          "noValue": "N/A"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/Out$/"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [10, 5]
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 10
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 104,
+      "title": "IPSec Packets",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 9,
+        "x": 15,
+        "y": 57
+      },
+      "targets": [
+        {
+          "expr": "rate(opnsense_ipsec_phase1_packets_in[5m])",
+          "legendFormat": "{{description}} In",
+          "refId": "A"
+        },
+        {
+          "expr": "-rate(opnsense_ipsec_phase1_packets_out[5m])",
+          "legendFormat": "{{description}} Out",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "pps",
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "spanNulls": false,
+            "axisLabel": "In (+) / Out (-)"
+          },
+          "noValue": "N/A"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/Out$/"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [10, 5]
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 10
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
       "id": 70,
       "title": "WireGuard VPN",
       "type": "row",
@@ -1624,7 +1910,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 56
+        "y": 65
       }
     },
     {
@@ -1639,7 +1925,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 57
+        "y": 66
       },
       "targets": [
         {
@@ -1685,7 +1971,7 @@
         "h": 8,
         "w": 9,
         "x": 6,
-        "y": 57
+        "y": 66
       },
       "targets": [
         {
@@ -1757,7 +2043,7 @@
         "h": 8,
         "w": 9,
         "x": 15,
-        "y": 57
+        "y": 66
       },
       "targets": [
         {
@@ -1809,7 +2095,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 65
+        "y": 74
       },
       "panels": [
         {
@@ -1824,7 +2110,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 66
+            "y": 75
           },
           "targets": [
             {
@@ -1915,7 +2201,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 74
+        "y": 83
       },
       "panels": [
         {
@@ -1930,7 +2216,7 @@
             "h": 10,
             "w": 12,
             "x": 0,
-            "y": 75
+            "y": 84
           },
           "targets": [
             {
@@ -1980,7 +2266,7 @@
             "h": 10,
             "w": 12,
             "x": 12,
-            "y": 75
+            "y": 84
           },
           "targets": [
             {
