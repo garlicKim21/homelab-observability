@@ -194,6 +194,7 @@
       "fieldConfig": {
         "defaults": {
           "unit": "Bps",
+          "color": { "mode": "palette-classic" },
           "custom": {
             "showPoints": "never",
             "lineWidth": 1,
@@ -204,15 +205,8 @@
         },
         "overrides": [
           {
-            "matcher": { "id": "byRegexp", "options": "/In$/" },
-            "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }
-            ]
-          },
-          {
             "matcher": { "id": "byRegexp", "options": "/Out$/" },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } },
               { "id": "custom.transform", "value": "negative-Y" },
               { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } },
               { "id": "custom.fillOpacity", "value": 10 }
@@ -250,6 +244,7 @@
       "fieldConfig": {
         "defaults": {
           "unit": "pps",
+          "color": { "mode": "palette-classic" },
           "custom": {
             "showPoints": "never",
             "lineWidth": 1,
@@ -260,15 +255,8 @@
         },
         "overrides": [
           {
-            "matcher": { "id": "byRegexp", "options": "/In$/" },
-            "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }
-            ]
-          },
-          {
             "matcher": { "id": "byRegexp", "options": "/Out$/" },
             "properties": [
-              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } },
               { "id": "custom.transform", "value": "negative-Y" },
               { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } },
               { "id": "custom.fillOpacity", "value": 10 }
@@ -467,6 +455,7 @@
           "fieldConfig": {
             "defaults": {
               "unit": "Bps",
+              "color": { "mode": "palette-classic" },
               "custom": {
                 "showPoints": "never",
                 "lineWidth": 1,
@@ -477,15 +466,8 @@
             },
             "overrides": [
               {
-                "matcher": { "id": "byRegexp", "options": "/In$/" },
-                "properties": [
-                  { "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }
-                ]
-              },
-              {
                 "matcher": { "id": "byRegexp", "options": "/Out$/" },
                 "properties": [
-                  { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } },
                   { "id": "custom.transform", "value": "negative-Y" },
                   { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } },
                   { "id": "custom.fillOpacity", "value": 10 }
@@ -559,6 +541,7 @@
           "fieldConfig": {
             "defaults": {
               "unit": "pps",
+              "color": { "mode": "palette-classic" },
               "custom": {
                 "showPoints": "never",
                 "lineWidth": 1,
@@ -569,15 +552,8 @@
             },
             "overrides": [
               {
-                "matcher": { "id": "byRegexp", "options": "/In$/" },
-                "properties": [
-                  { "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }
-                ]
-              },
-              {
                 "matcher": { "id": "byRegexp", "options": "/Out$/" },
                 "properties": [
-                  { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } },
                   { "id": "custom.transform", "value": "negative-Y" },
                   { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } },
                   { "id": "custom.fillOpacity", "value": 10 }
