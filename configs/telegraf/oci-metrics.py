@@ -57,14 +57,26 @@ VPN_METRICS = {
 
 
 def load_oci_config(config_profile):
-    """Load OCI config and remap key_file path for container mount."""
-    config = oci.config.from_file(
-        file_location=OCI_CONFIG_PATH,
-        profile_name=config_profile,
-    )
-    # Host path → container path: /home/user/.oci/key.pem → /oci/key.pem
-    config["key_file"] = "/oci/" + os.path.basename(config["key_file"])
-    return config
+    """Load OCI config, remapping key_file to container mount path.
+
+    oci.config.from_file() validates key_file existence immediately,
+    which fails because the host path doesn't exist inside the container.
+    We parse the config manually and fix the path before validation.
+    """
+    import configparser
+
+    parser = configparser.ConfigParser()
+    parser.read(OCI_CONFIG_PATH)
+
+    section = config_profile if config_profile != "DEFAULT" else parser.default_section
+    raw = dict(parser[section])
+
+    # Remap key_file: host path → container mount path
+    if "key_file" in raw:
+        raw["key_file"] = "/oci/" + os.path.basename(raw["key_file"])
+
+    oci.config.validate_config(raw)
+    return raw
 
 
 def query_metric(client, compartment_id, namespace, metric_name):
