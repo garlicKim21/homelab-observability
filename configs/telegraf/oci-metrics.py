@@ -61,22 +61,30 @@ def load_oci_config(config_profile):
 
     oci.config.from_file() validates key_file existence immediately,
     which fails because the host path doesn't exist inside the container.
-    We parse the config manually and fix the path before validation.
+    We parse the INI file manually and fix the path before validation.
     """
-    import configparser
+    config = {}
+    target_section = config_profile.upper()
+    current_section = None
 
-    parser = configparser.ConfigParser()
-    parser.read(OCI_CONFIG_PATH)
-
-    section = config_profile if config_profile != "DEFAULT" else parser.default_section
-    raw = dict(parser[section])
+    with open(OCI_CONFIG_PATH, "r") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            if line.startswith("[") and line.endswith("]"):
+                current_section = line[1:-1].upper()
+                continue
+            if "=" in line and current_section == target_section:
+                key, _, value = line.partition("=")
+                config[key.strip()] = value.strip()
 
     # Remap key_file: host path → container mount path
-    if "key_file" in raw:
-        raw["key_file"] = "/oci/" + os.path.basename(raw["key_file"])
+    if "key_file" in config:
+        config["key_file"] = "/oci/" + os.path.basename(config["key_file"])
 
-    oci.config.validate_config(raw)
-    return raw
+    oci.config.validate_config(config)
+    return config
 
 
 def query_metric(client, compartment_id, namespace, metric_name):
