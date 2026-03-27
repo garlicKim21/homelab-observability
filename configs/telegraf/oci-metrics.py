@@ -158,7 +158,7 @@ def collect_drg(client, compartment_id, profile):
                 tags.append(f"drop_type={escape_tag(dims['dropType'])}")
 
             lines.append(
-                f"oci_drg,{','.join(tags)} {field}={dp.value} {ts_nano(dp.timestamp)}"
+                f"oci_drg,{','.join(tags)} {field}={dp.value}"
             )
     return lines
 
@@ -194,11 +194,11 @@ def collect_vpn(client, compartment_id, profile):
             # TunnelState is integer (0=down, 1=up)
             if field == "tunnel_state":
                 lines.append(
-                    f"oci_vpn,{','.join(tags)} {field}={int(dp.value)}i {ts_nano(dp.timestamp)}"
+                    f"oci_vpn,{','.join(tags)} {field}={int(dp.value)}i"
                 )
             else:
                 lines.append(
-                    f"oci_vpn,{','.join(tags)} {field}={dp.value} {ts_nano(dp.timestamp)}"
+                    f"oci_vpn,{','.join(tags)} {field}={dp.value}"
                 )
     return lines
 
