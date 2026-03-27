@@ -308,7 +308,7 @@ services:
     container_name: telegraf
     hostname: telegraf
     restart: unless-stopped
-    mem_limit: 256m
+    mem_limit: 384m
     cpus: 0.25
     dns:
       - ${DNS_SERVER}
@@ -316,8 +316,12 @@ services:
       - VCENTER_HOST=${VCENTER_HOST:-vcsa.basphere.local}
       - VCENTER_USER=${VCENTER_USER:?Set VCENTER_USER in .env}
       - VCENTER_PASSWORD=${VCENTER_PASSWORD:?Set VCENTER_PASSWORD in .env}
+      # OCI Monitoring API
+      - OCI_PROFILES=${OCI_PROFILES:-SINGAPORE}
+      - OCI_SINGAPORE_COMPARTMENT=${OCI_SG_COMPARTMENT_OCID:-}
     volumes:
       - ./configs/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - ~/.oci:/oci:ro    # OCI SDK config + PEM key
     depends_on:
       victoriametrics:
         condition: service_healthy

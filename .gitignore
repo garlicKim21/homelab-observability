@@ -3,6 +3,7 @@
 homelab-infra-arch.txt
 docs/architecture.md
 docs/security-notes.md
+*.pem
 
 # Images (may contain sensitive info)
 images/

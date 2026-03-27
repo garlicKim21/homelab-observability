@@ -1,0 +1,600 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "graphTooltip": 1,
+  "schemaVersion": 39,
+  "tags": ["homelab", "oci", "cloud", "network", "v4"],
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timezone": "browser",
+  "refresh": "30s",
+  "title": "OCI Cloud Network",
+  "uid": "oci-network-v4",
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "VictoriaMetrics",
+          "value": "VictoriaMetrics"
+        },
+        "hide": 2,
+        "name": "DS_VICTORIAMETRICS",
+        "type": "datasource",
+        "query": "prometheus"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": ["All"],
+          "value": ["$__all"]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "VictoriaMetrics"
+        },
+        "definition": "label_values(oci_drg_bytes_to, profile)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Profile",
+        "multi": true,
+        "name": "profile",
+        "query": "label_values(oci_drg_bytes_to, profile)",
+        "refresh": 2,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "id": 1,
+      "title": "DRG Overview",
+      "type": "row"
+    },
+    {
+      "id": 2,
+      "title": "Traffic In",
+      "type": "stat",
+      "gridPos": { "h": 3, "w": 8, "x": 0, "y": 1 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "targets": [
+        {
+          "expr": "sum(oci_drg_bytes_from{profile=~\"$profile\"})",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "#73BF69", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "textMode": "value",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Traffic Out",
+      "type": "stat",
+      "gridPos": { "h": 3, "w": 8, "x": 8, "y": 1 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "targets": [
+        {
+          "expr": "sum(oci_drg_bytes_to{profile=~\"$profile\"})",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "#5794F2", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "textMode": "value",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "Packet Drops",
+      "type": "stat",
+      "gridPos": { "h": 3, "w": 8, "x": 16, "y": 1 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "targets": [
+        {
+          "expr": "sum(oci_drg_drops_to{profile=~\"$profile\"}) + sum(oci_drg_drops_from{profile=~\"$profile\"})",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "pps",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "#73BF69", "value": null },
+              { "color": "#FADE2A", "value": 1 },
+              { "color": "#F2495C", "value": 100 }
+            ]
+          },
+          "noValue": "0"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "textMode": "value",
+        "justifyMode": "center",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        }
+      }
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 4 },
+      "id": 10,
+      "title": "DRG Traffic",
+      "type": "row"
+    },
+    {
+      "id": 11,
+      "title": "DRG Traffic (Bytes)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 5 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "targets": [
+        {
+          "expr": "oci_drg_bytes_from{profile=~\"$profile\"}",
+          "legendFormat": "{{attachment_type}} {{peer_region}} In",
+          "refId": "A"
+        },
+        {
+          "expr": "oci_drg_bytes_to{profile=~\"$profile\"}",
+          "legendFormat": "{{attachment_type}} {{peer_region}} Out",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps",
+          "custom": {
+            "showPoints": "never",
+            "lineWidth": 1,
+            "fillOpacity": 15,
+            "spanNulls": false,
+            "axisLabel": "In (+) / Out (-)"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byRegexp", "options": "/In$/" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byRegexp", "options": "/Out$/" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } },
+              { "id": "custom.transform", "value": "negative-Y" },
+              { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } },
+              { "id": "custom.fillOpacity", "value": 10 }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "desc" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        }
+      }
+    },
+    {
+      "id": 12,
+      "title": "DRG Packets",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 5 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "targets": [
+        {
+          "expr": "oci_drg_packets_from{profile=~\"$profile\"}",
+          "legendFormat": "{{attachment_type}} {{peer_region}} In",
+          "refId": "A"
+        },
+        {
+          "expr": "oci_drg_packets_to{profile=~\"$profile\"}",
+          "legendFormat": "{{attachment_type}} {{peer_region}} Out",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "pps",
+          "custom": {
+            "showPoints": "never",
+            "lineWidth": 1,
+            "fillOpacity": 15,
+            "spanNulls": false,
+            "axisLabel": "In (+) / Out (-)"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byRegexp", "options": "/In$/" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byRegexp", "options": "/Out$/" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } },
+              { "id": "custom.transform", "value": "negative-Y" },
+              { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } },
+              { "id": "custom.fillOpacity", "value": 10 }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "desc" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        }
+      }
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 13 },
+      "id": 20,
+      "title": "Packet Drops",
+      "type": "row"
+    },
+    {
+      "id": 21,
+      "title": "DRG Packet Drops",
+      "type": "timeseries",
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 14 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "targets": [
+        {
+          "expr": "oci_drg_drops_to{profile=~\"$profile\"}",
+          "legendFormat": "{{attachment_type}} {{peer_region}} To",
+          "refId": "A"
+        },
+        {
+          "expr": "oci_drg_drops_from{profile=~\"$profile\"}",
+          "legendFormat": "{{attachment_type}} {{peer_region}} From",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "pps",
+          "custom": {
+            "showPoints": "never",
+            "lineWidth": 1,
+            "fillOpacity": 15,
+            "spanNulls": false
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "#73BF69", "value": null },
+              { "color": "#FADE2A", "value": 1 },
+              { "color": "#F2495C", "value": 100 }
+            ]
+          },
+          "noValue": "0"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "desc" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        }
+      }
+    },
+    {
+      "id": 22,
+      "title": "Drops by Type",
+      "type": "timeseries",
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 14 },
+      "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+      "targets": [
+        {
+          "expr": "sum by (drop_type) (oci_drg_drops_to{profile=~\"$profile\"} + oci_drg_drops_from{profile=~\"$profile\"})",
+          "legendFormat": "{{drop_type}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "pps",
+          "custom": {
+            "showPoints": "never",
+            "lineWidth": 1,
+            "fillOpacity": 15,
+            "spanNulls": false,
+            "stacking": { "mode": "normal" }
+          },
+          "noValue": "0"
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "throughput" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FADE2A" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "noRoute" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#F2495C" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "others" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FF9830" } }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "desc" },
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["mean", "max", "lastNotNull"]
+        }
+      }
+    },
+    {
+      "collapsed": true,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 21 },
+      "id": 30,
+      "title": "VPN Tunnels (IPSec)",
+      "type": "row",
+      "panels": [
+        {
+          "id": 31,
+          "title": "Tunnel State",
+          "type": "stat",
+          "gridPos": { "h": 4, "w": 8, "x": 0, "y": 22 },
+          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+          "targets": [
+            {
+              "expr": "oci_vpn_tunnel_state{profile=~\"$profile\"}",
+              "legendFormat": "{{public_ip}}",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "#F2495C", "value": null },
+                  { "color": "#73BF69", "value": 1 }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "value",
+                  "options": {
+                    "0": { "text": "DOWN", "color": "#F2495C", "index": 0 },
+                    "1": { "text": "UP", "color": "#73BF69", "index": 1 }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "textMode": "value_and_name",
+            "justifyMode": "center",
+            "reduceOptions": {
+              "calcs": ["lastNotNull"]
+            }
+          }
+        },
+        {
+          "id": 32,
+          "title": "VPN Traffic (Bytes)",
+          "type": "timeseries",
+          "gridPos": { "h": 8, "w": 16, "x": 8, "y": 22 },
+          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+          "targets": [
+            {
+              "expr": "oci_vpn_bytes_received{profile=~\"$profile\"}",
+              "legendFormat": "{{public_ip}} In",
+              "refId": "A"
+            },
+            {
+              "expr": "oci_vpn_bytes_sent{profile=~\"$profile\"}",
+              "legendFormat": "{{public_ip}} Out",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "Bps",
+              "custom": {
+                "showPoints": "never",
+                "lineWidth": 1,
+                "fillOpacity": 15,
+                "spanNulls": false,
+                "axisLabel": "In (+) / Out (-)"
+              }
+            },
+            "overrides": [
+              {
+                "matcher": { "id": "byRegexp", "options": "/In$/" },
+                "properties": [
+                  { "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }
+                ]
+              },
+              {
+                "matcher": { "id": "byRegexp", "options": "/Out$/" },
+                "properties": [
+                  { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } },
+                  { "id": "custom.transform", "value": "negative-Y" },
+                  { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } },
+                  { "id": "custom.fillOpacity", "value": 10 }
+                ]
+              }
+            ]
+          },
+          "options": {
+            "tooltip": { "mode": "multi", "sort": "desc" },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": ["mean", "max", "lastNotNull"]
+            }
+          }
+        },
+        {
+          "id": 33,
+          "title": "VPN Packet Errors",
+          "type": "timeseries",
+          "gridPos": { "h": 8, "w": 8, "x": 0, "y": 26 },
+          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+          "targets": [
+            {
+              "expr": "oci_vpn_packets_error{profile=~\"$profile\"}",
+              "legendFormat": "{{public_ip}}",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "pps",
+              "custom": {
+                "showPoints": "never",
+                "lineWidth": 1,
+                "fillOpacity": 15,
+                "spanNulls": false
+              },
+              "color": { "mode": "fixed", "fixedColor": "#F2495C" },
+              "noValue": "0"
+            },
+            "overrides": []
+          },
+          "options": {
+            "tooltip": { "mode": "multi", "sort": "desc" },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": ["mean", "max", "lastNotNull"]
+            }
+          }
+        },
+        {
+          "id": 34,
+          "title": "VPN Packets",
+          "type": "timeseries",
+          "gridPos": { "h": 8, "w": 16, "x": 8, "y": 26 },
+          "datasource": { "type": "prometheus", "uid": "VictoriaMetrics" },
+          "targets": [
+            {
+              "expr": "oci_vpn_packets_received{profile=~\"$profile\"}",
+              "legendFormat": "{{public_ip}} In",
+              "refId": "A"
+            },
+            {
+              "expr": "oci_vpn_packets_sent{profile=~\"$profile\"}",
+              "legendFormat": "{{public_ip}} Out",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "pps",
+              "custom": {
+                "showPoints": "never",
+                "lineWidth": 1,
+                "fillOpacity": 15,
+                "spanNulls": false,
+                "axisLabel": "In (+) / Out (-)"
+              }
+            },
+            "overrides": [
+              {
+                "matcher": { "id": "byRegexp", "options": "/In$/" },
+                "properties": [
+                  { "id": "color", "value": { "mode": "fixed", "fixedColor": "#73BF69" } }
+                ]
+              },
+              {
+                "matcher": { "id": "byRegexp", "options": "/Out$/" },
+                "properties": [
+                  { "id": "color", "value": { "mode": "fixed", "fixedColor": "#5794F2" } },
+                  { "id": "custom.transform", "value": "negative-Y" },
+                  { "id": "custom.lineStyle", "value": { "fill": "dash", "dash": [10, 5] } },
+                  { "id": "custom.fillOpacity", "value": 10 }
+                ]
+              }
+            ]
+          },
+          "options": {
+            "tooltip": { "mode": "multi", "sort": "desc" },
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": ["mean", "max", "lastNotNull"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
